@@ -1,0 +1,910 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs,microtype,enumitem,xcolor,fancyhdr}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+  urlcolor=blue!45!black,pdftitle={An upper bound on the Berry-Esseen constant for independent summands},
+  pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small The independent Berry--Esseen constant}
+\fancyhead[R]{\small Research draft}
+\fancyfoot[C]{\thepage}
+\numberwithin{equation}{section}
+\newtheorem{candidate}{Proposed theorem}[section]
+\newtheorem{lemma}[candidate]{Lemma}
+\newtheorem{proposition}[candidate]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[candidate]{Remark}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\Unif}{Unif}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\CE}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
+\newcommand{\ii}{\mathrm i}
+\input{values.tex}
+
+\title{An upper bound on the Berry--Esseen constant\\ for independent summands}
+\author{Logan Bell}
+\date{7 September 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+\begin{abstract}
+Let $\Delta$ be the Kolmogorov distance between a standardized sum of
+independent centered real random variables and the standard normal law,
+and let $L$ be the normalized sum of third absolute moments. We propose
+the uniform bound $\Delta<\CandidateUpper\,L$. The argument treats a
+summand of maximal variance separately and bounds the real and imaginary
+parts of the zero-bias error in terms of third-moment excess over
+symmetric two-point laws. A quadratic term in the logarithm strengthens
+the characteristic-function product bound. Prawitz's smoothing
+inequality then reduces the intermediate range of $L$ to a finite
+interval calculation; analytic estimates cover small and large $L$.
+The supplement contains the arithmetic implementation and complete
+partition records. Independent mathematical review remains outstanding.
+
+\end{abstract}
+
+\section{The problem and the candidate bound}\label{sec:statement}
+
+
+
+Let $X_1,\ldots,X_n$ be a finite independent family of centered real random
+variables. Assume
+\[
+  0<V=\sum_{j=1}^n\E X_j^2<\infty,
+  \qquad \sum_{j=1}^n\E|X_j|^3<\infty.
+\]
+Write $\Phi$ and $\phi$ for the standard normal distribution function and
+density, and set
+\begin{equation}\label{eq:problem}
+  S=\frac{\sum_jX_j}{\sqrt V},\qquad
+  L=\frac{\sum_j\E|X_j|^3}{V^{3/2}},\qquad
+  \Delta=\sup_{x\in\R}|\Prob(S\le x)-\Phi(x)|.
+\end{equation}
+Thus $\Cind=\sup\Delta/L$, over all such arrays, is the unrestricted
+independent Berry--Esseen constant. Esseen's lower bound is
+\begin{equation}\label{eq:esseen}
+  \CE=\frac{\sqrt{10}+3}{6\sqrt{2\pi}}
+      =0.40973218370239634299\ldots\le\Cind;
+\end{equation}
+see \citet{Esseen1956} and the discussion in \citet{Shevtsova2012}.
+The conjectured equality $\Cind=\CE$ remains open.
+
+\begin{candidate}\label{thm:candidate}
+For the arrays in \eqref{eq:problem},
+\begin{equation}\label{eq:candidate}
+  \Delta<\CandidateUpper\,L<0.475\,L,
+  \qquad \CE\le\Cind<\CandidateUpper.
+\end{equation}
+\end{candidate}
+
+The arithmetic assumptions and completed checks for this proposed bound
+are stated in Section~\ref{sec:certificate}. For comparison,
+\citet{Shevtsova2013} obtained the upper bounds $0.5583$ for independent
+summands and $0.4690$ for identically distributed summands.
+\citet{Schulz2016} proved the sharp constant $\CE$ for binomial laws.
+
+The proof uses the zero-bias and Fourier framework of \citet{Tyurin2009}
+and the smoothing inequality recorded in \citet{Shevtsova2012}.
+Comparison with symmetric two-point sums also appears in the
+smooth-function results of \citet{MattnerShevtsova2019}. We derive below
+the estimates used here, including their aggregation across unequal
+variances.
+
+\subsection{Normalization and moment parameters}
+Replace each $X_j$ by $X_j/\sqrt V$, reuse the notation $X_j$, and
+discard summands of variance zero. Then $S=\sum_jX_j$ and the total
+variance is one. Put
+\[
+ v_j=\E X_j^2,\qquad b_j=\E|X_j|^3,\qquad
+ \tau=\sum_jv_j^{3/2},\qquad \sum_jv_j=1,\quad \sum_jb_j=L.
+\]
+The differences $b_j-v_j^{3/2}$ are nonnegative and sum to $L-\tau$.
+They vanish for centered symmetric two-point summands. Relabel the
+summands so that $v_1=\max_jv_j$, and put $d=v_1$ and $b=b_1$.
+The moment parameters satisfy
+\begin{equation}\label{eq:moment-domain}
+ b\ge d^{3/2},\qquad
+ d^{3/2}\le\tau\le\min\{L-b+d^{3/2},\sqrt d\},\qquad \tau\le L.
+\end{equation}
+Indeed $b_j\ge v_j^{3/2}$ and $v_j\le d$ imply
+$\tau\le\sqrt d\sum_jv_j=\sqrt d$. In particular
+$\tau^2\le d\le\tau^{2/3}$.
+For the remaining summands, write
+\begin{equation}\label{eq:remainder-state}
+ w=1-d,\qquad B_R=L-b,\qquad \tau_R=\tau-d^{3/2},\qquad
+ a_R=\min\{d,w,B_R^{2/3},\tau_R^{2/3}\}.
+\end{equation}
+For $j\ge2$, we have $v_j\le d$, $v_j\le w$,
+$v_j^{3/2}\le b_j\le B_R$, and $v_j^{3/2}\le\tau_R$. Thus
+$v_j\le a_R$. Every realizable tuple satisfies these constraints;
+maximizing over the possibly larger set they define gives an upper bound.
+
+Section~\ref{sec:products} bounds products of characteristic functions.
+Sections~\ref{sec:directional} and~\ref{sec:quadratic} estimate the
+zero-bias error of each summand and aggregate these errors.
+Section~\ref{sec:distinguished} combines the estimates while treating
+$X_1$ separately. Smoothing and the interval calculation occupy
+Sections~\ref{sec:smoothing} and~\ref{sec:certificate}.
+
+\section{Bounds for characteristic-function products}\label{sec:products}
+
+For a random variable $X$, let $f_X(t)=\E e^{\ii tX}$. Since
+$f_X(-t)=\overline{f_X(t)}$, it suffices to bound its modulus for
+$t\ge0$. For a nonempty index set $J$, put
+\[
+ V_0=\sum_{j\in J}v_j,\qquad B=\sum_{j\in J}b_j,\qquad
+ \tau_0=\sum_{j\in J}v_j^{3/2},
+\]
+and let $a$ satisfy $v_j\le a$ for every $j\in J$. We need bounds for
+the product over $J$ and for the product after any one index is omitted.
+Products over the empty set equal one.
+
+\subsection{Cubic and trigonometric bounds}
+Define
+\begin{equation}\label{eq:kappa}
+ \kappa_* = \sup_{x>0}\frac{\cos x-1+x^2/2}{x^3},
+ \qquad \kappa=\frac{49581}{500000}=0.099162.
+\end{equation}
+Let $\theta$ be the maximizer in \eqref{eq:kappa}. For $V_0,E_0>0$,
+$t\ge0$, and $u=E_0t/V_0$, put
+\begin{equation}\label{eq:tyurin-exponent}
+ \psi(t;V_0,E_0)=
+ \begin{cases}
+   V_0t^2/2-\kappa_*E_0t^3,&u<\theta,\\
+   V_0^3E_0^{-2}(1-\cos u),&\theta\le u\le2\pi,\\
+   0,&u>2\pi.
+ \end{cases}
+\end{equation}
+The characteristic-function bounds in \citet[Lemma~1]{Tyurin2009} give,
+with $v=\E X^2>0$ and $b=\E|X|^3\ge v^{3/2}$ in the second formula,
+\begin{align}
+ \Big|\prod_j f_{X_j}(t)\Big|
+   &\le \exp\{-\psi(t;V_0,B+\tau_0)\},\label{eq:aggregate-cf}\\
+ |f_X(t)|&\le A(t;v,b)
+   :=\sqrt{1-2\psi(t;v,b+v^{3/2})}.\label{eq:single-cf}
+\end{align}
+For fixed parameters, $\psi$ first increases and then decreases with
+$t$, and is zero after the cosine branch. On the cubic branch,
+$\partial_t\psi=t(V_0-3\kappa_*E_0t)$; on the cosine branch,
+$\partial_t\psi=(V_0^2/E_0)\sin u\le0$. Thus the upper bounds in
+\eqref{eq:aggregate-cf}--\eqref{eq:single-cf} attain their maxima on a
+frequency interval at an endpoint. On the cosine branch,
+\begin{align*}
+ \partial_{V_0}\psi
+ &=\frac{V_0^2}{E_0^2}\{3(1-\cos u)-u\sin u\}\ge0,\\
+ \partial_{E_0}\psi
+ &=\frac{V_0^3}{E_0^3}\{u\sin u-2(1-\cos u)\}\le0.
+\end{align*}
+The same signs hold on the cubic branch. The maximizing equation for
+$\theta$ makes the formulas agree at the joins. Consequently the upper
+bounds decrease with the variance argument and increase with the moment
+argument on the domains just specified.
+
+For $r(x)=(\cos x-1+x^2/2)/x^3$, differentiation gives
+\[
+ r'(x)=-\frac{h(x)}{2x^4},\quad
+ h(x)=x^2+2x\sin x+6(\cos x-1),\quad
+ h'(x)=4\cos(x/2)\{x\cos(x/2)-2\sin(x/2)\}.
+\]
+The expression in braces decreases from zero on $(0,2\pi)$.
+Consequently $h$ decreases on $(0,\pi)$ and increases on $(\pi,2\pi)$,
+with $h(\pi)=\pi^2-12<0$ and $h(2\pi)=4\pi^2>0$.
+Thus $h$ has exactly one zero in $(\pi,2\pi)$. For $x\ge2\pi$,
+$r(x)\le1/(4\pi)<3/32\le r(4)$. The zero is therefore the unique global maximizer of $r$.
+The scalar checker isolates it in $(3.99,4)$ and encloses
+$\kappa_*<0.099161913515<\kappa$ with Arb, a library for rigorous
+ball arithmetic.
+
+The cubic expression $V_0t^2/2-\kappa E_0t^3$ is a lower bound for
+\eqref{eq:tyurin-exponent} at every frequency. The numerical cosine
+lower bound is used only when the entire argument interval lies in
+$[4,2\pi]$, which is contained in the cosine branch since $\theta<4$.
+
+\subsection{A logarithmic correction}
+For each summand indexed by $J$, define
+\[
+ h_j=\frac{v_jt^2}{2}-\kappa(b_j+v_j^{3/2})t^3,
+ \qquad q_j=\max(h_j,0),\qquad
+ H=\frac{V_0t^2}{2}-\kappa(B+\tau_0)t^3.
+\]
+Since $b_j\ge v_j^{3/2}$,
+\begin{equation}\label{eq:q-cap}
+ 0\le q_j\le m(t,a):=
+ \max_{0\le x\le t\sqrt a}(x^2/2-2\kappa x^3)
+ \le\frac1{216\kappa^2}<\frac12.
+\end{equation}
+The maximum in $m$ occurs at $x=\min(t\sqrt a,1/(6\kappa))$.
+The single-summand bound gives $|f_{X_j}(t)|\le\sqrt{1-2q_j}$.
+Applying $-\tfrac12\log(1-2q)\ge q+q^2$ and using
+$\sum_jq_j\ge\sum_jh_j=H$ gives
+\begin{equation}\label{eq:log-product}
+ \prod_j|f_{X_j}(t)|\le\exp\left\{-H-\sum_jq_j^2\right\}.
+\end{equation}
+
+\begin{lemma}\label{lem:quadratic-charge}
+Let $A_0=t^2/2-2\kappa\sqrt a\,t^3$. When $A_0\ge0$,
+\begin{equation}\label{eq:Q}
+ \sum_jq_j^2\ge
+ Q:=\left(\max\left\{0,
+       A_0\frac{\tau_0}{\sqrt{V_0}}-\kappa t^3(B-\tau_0)
+     \right\}\right)^2.
+\end{equation}
+For $A_0<0$, take $Q=0$.
+\end{lemma}
+\begin{proof}
+Since $v_j\le a$ and $q_j\ge h_j$,
+\[
+ q_j+\kappa t^3(b_j-v_j^{3/2})
+ \ge v_j(t^2/2-2\kappa\sqrt{v_j}\,t^3)\ge A_0v_j.
+\]
+When $A_0\ge0$, taking $\ell_2$ norms and applying the triangle
+inequality gives
+\[
+ \|(q_j)\|_2\ge A_0\|(v_j)\|_2-\kappa t^3(B-\tau_0).
+\]
+Cauchy--Schwarz gives $\tau_0\le\sqrt{V_0}\|(v_j)\|_2$.
+Taking the maximum of the right side and zero, then squaring, proves
+\eqref{eq:Q}.
+\end{proof}
+After omitting index $i$, the linear sum is $H-h_i\ge H-m$.
+Also $\sum_{j\ne i}q_j^2\ge\max(0,Q-m^2)$. Hence
+\begin{equation}\label{eq:corrected-products}
+ \begin{split}
+ F_0(t;V_0,B,a,\tau_0)&=\min\{1,e^{-H-Q}\},\\
+ D_0(t;V_0,B,a,\tau_0)&=\min\{1,e^{-H+m-\max(0,Q-m^2)}\}.
+ \end{split}
+\end{equation}
+Here $D_0$ bounds the product after any one index is omitted. We may
+also omit the quadratic correction in either expression. When several
+upper bounds apply, we take their pointwise minimum. For the empty
+index set, set $F_0=D_0=1$.
+
+To bound \eqref{eq:corrected-products} when $\tau_0$ ranges over an
+interval $[\ell,h]$, suppose first that $A_0\ge0$ and $t>0$. Put
+\[
+ k=\kappa t^3,\qquad a_0=A_0/\sqrt{V_0}+k,\qquad c_0=kB.
+\]
+Apart from terms independent of $\tau_0$, either exponent has the form
+\[
+ k\tau_0-\max\{0,(a_0\tau_0-c_0)_+^2-m_0^2\},
+ \qquad z_+=\max(z,0),
+\]
+where $m_0=0$ for $F_0$ and $m_0=m$ for $D_0$. Its derivative is $k$
+until $a_0\tau_0-c_0=m_0$, and then $k-2a_0(a_0\tau_0-c_0)$.
+It is maximized on $[\ell,h]$ at
+\[
+ \min\{h,\max\{\ell,\tau_*\}\},\qquad
+ \tau_*=\frac{c_0+\max\{m_0,k/(2a_0)\}}{a_0}.
+\]
+When $A_0<0$, $Q=0$ and the exponent is increasing in $\tau_0$.
+At $t=0$ both product bounds equal one.
+
+\section{Real and imaginary zero-bias errors}\label{sec:directional}
+
+For a centered variable of positive variance $v$, its zero-bias law is
+defined by
+\begin{equation}\label{eq:zero-bias}
+ v\E g'(X^*)=\E[Xg(X)]
+\end{equation}
+for absolutely continuous test functions for which the expectations
+exist. The first Wasserstein distance between two laws is the infimum
+of $\E|U-V|$ over couplings with those laws. By
+\citet[Theorem~3]{Tyurin2009}, the distance between $X$ and $X^*$
+is at most $\E|X|^3/(2v)$. Applying this bound to $e^{\ii tx}$ gives
+\begin{equation}\label{eq:classical-zero-bias}
+ |f_X(t)-f_{X^*}(t)|\le |t|\frac{\E|X|^3}{2v}.
+\end{equation}
+To retain information lost by this bound, let $W$ have mean zero and
+variance one, and put $Y=|W|$, $\rho=\E Y^3$, and $e=\rho-1$.
+Then $e\ge0$ and
+\begin{equation}\label{eq:moment-excess}
+ \E[(Y-1)^2(Y+1/2)]=e.
+\end{equation}
+At $e=0$, $W$ has the Rademacher distribution: it takes the values
+$-1$ and $1$ with probability $1/2$ each. Its characteristic function
+is $\cos x$, and that of its zero-bias law is $\sinc x$.
+
+\begin{lemma}\label{lem:peano}
+For every real $x$,
+\begin{equation}\label{eq:real-cf}
+ |\Re f_W(x)-\cos x|\le e|x|^3/6,
+ \qquad
+ |\Re f_{W^*}(x)-\sinc x|\le e|x|/2,
+\end{equation}
+where $\sinc x=\sin(x)/x$ with its continuous value at zero.
+\end{lemma}
+\begin{proof}
+For an even function $f$ with Lipschitz continuous second derivative,
+define
+\[
+ R_f(y)=f(y)-f(1)-\frac{f'(1)}2(y^2-1),\qquad y\ge0.
+\]
+Taylor's integral formula gives
+$R_f(y)=\int_0^{\max(1,y)}K_y(u)f'''(u)\,du$ with a nonnegative
+kernel $K_y$. If $y\le1$, the kernel is $u(y-1)^2/2$ on $[0,y]$ and
+$(1-u)(u-y^2)/2$ on $[y,1]$. If $y\ge1$, it is
+$u(y-1)^2/2$ on $[0,1]$ and $(y-u)^2/2$ on $[1,y]$.
+Its integral is $(y-1)^2(y+1/2)/6$. Apply this identity to
+$f(y)=\cos(xy)$, use $\|f'''\|_\infty\le|x|^3$, and take
+expectations in \eqref{eq:moment-excess}. The tangent's quadratic term
+has expectation zero because $\E Y^2=1$.
+
+Define the square-biased law by
+$\E g(W^\square)=\E[W^2g(W)]$ for bounded measurable $g$.
+The zero-bias representation is $W^*=UW^\square$, with $U$ uniform
+on $[0,1]$ and independent of $W^\square$.
+For $z\ge0$,
+\[
+ \Prob(|W^*|\le z)=\E[Y\min(z,Y)]\le\min(z,1).
+\]
+Thus $|W^*|$ stochastically dominates $\Unif[0,1]$. Their first
+Wasserstein distance is their mean difference
+$\rho/2-1/2=e/2$. Apply the Lipschitz bound for $y\mapsto\cos(xy)$.
+\end{proof}
+
+\begin{lemma}\label{lem:imaginary}
+For all real $x$,
+\begin{align}
+ |\Im(f_W(x)-f_{W^*}(x))|
+   &\le (|x|/2+|x|^3/6)\sqrt{e(\rho+5/3)},\label{eq:imaginary-error}\\
+ |\Im f_W(x)|&\le |x|^3\sqrt{e(\rho+5/3)}/6.\label{eq:imaginary-cf}
+\end{align}
+\end{lemma}
+\begin{proof}
+It suffices to take $x>0$. Define
+$A(y)=x\sinc(xy)+\cos(xy)/x$. The identity \eqref{eq:zero-bias}
+and centering give
+\[
+ \Im(f_W(x)-f_{W^*}(x))=\E[W(A(Y)-A(1))].
+\]
+Since $|\sinc'(z)|\le |z|/3$, we have
+$|A'(y)|\le x(1+x^2/3)y$ and hence
+\[
+ |A(y)-A(1)|\le (x/2+x^3/6)|y^2-1|.
+\]
+Cauchy--Schwarz and \eqref{eq:moment-excess} give
+\[
+ \E[Y|Y^2-1|]\le
+ \sqrt{e\,\E\!\left[\frac{Y^2(Y+1)^2}{Y+1/2}\right]}
+ \le\sqrt{e(\rho+5/3)}.
+\]
+The final inequality follows from
+\[
+ \frac{y^2(y+1)^2}{y+1/2}=y^3+\frac32y^2+
+ \frac{y^2}{4(y+1/2)},\qquad
+ \frac{y^2}{y+1/2}\le\frac{2+4y^2}{9}.
+\]
+The second inequality is equivalent to $(y-1)^2(4y+1)\ge0$.
+For \eqref{eq:imaginary-cf}, repeat the same argument with
+$A(y)=x\sinc(xy)$ and $|A'(y)|\le x^3y/3$.
+\end{proof}
+
+\section{A quadratic minorant and the aggregate error}\label{sec:quadratic}
+
+\begin{lemma}\label{lem:supporting-quadratic}
+For $0<x\le2$, put
+\[
+ F_x(y)=\cos(xy)-y\sin(xy)/x,\qquad
+ A_x=\cos x+(1+x^2)\sinc x.
+\]
+Then $F_x(y)\ge F_x(1)-A_x(y^2-1)/2$ for $y\ge0$. Consequently
+\begin{equation}\label{eq:one-sided-real}
+ \Re(f_W(x)-f_{W^*}(x))\ge\cos x-\sinc x.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Set $h_x(z)=\cos z+(1+x^2)\sinc z$ and $A_x=h_x(x)$.
+The tangent is $F_x(1)-A_x(y^2-1)/2$. Multiply the difference
+from this tangent by $x^2$ and put $z=xy$. Its derivative is
+$z[A_x-h_x(z)]$.
+
+The function $h_x$ is strictly decreasing on $(0,\pi)$. On
+$[\pi,2\pi]$ it is at most one, and for $z\ge2\pi$ it is at most
+$1+5/(2\pi)<11/6$. Alternating Taylor lower bounds give
+\[
+ A_x\ge p_0(x^2),\qquad
+ p_0(u)=2+u/3-7u^2/60+17u^3/2520-u^4/5040.
+\]
+For $0\le u\le4$,
+$p_0''(u)=(-98+17u-u^2)/420<0$, so
+$p_0(u)\ge\min(p_0(0),p_0(4))=194/105>11/6$.
+The tangent difference decreases up to $z=x$ and increases afterwards.
+Its minimum is zero. Taking expectations, and using $\E Y^2=1$,
+proves \eqref{eq:one-sided-real}.
+\end{proof}
+
+For $0\le x\le2$, let $g=\sinc x-\cos x\ge0$ and
+$c=x/2+x^3/6$. Lemmas~\ref{lem:peano} and
+\ref{lem:supporting-quadratic} give
+\begin{equation}\label{eq:real-interval}
+ -g\le\Re(f_W-f_{W^*})\le-g+ce,
+ \qquad |\Re(f_W-f_{W^*})|^2\le g^2+c^2e^2.
+\end{equation}
+The alternating series gives the increasing upper bound
+\begin{equation}\label{eq:alpha}
+ \frac{2g}{x}\le\alpha(x):=
+ \begin{cases}
+  2x/3-x^3/15+x^5/420,&0\le x\le2,\\
+  2x/3,&x>2.
+ \end{cases}
+\end{equation}
+The quotient at zero is defined by continuity. On $[0,2]$ the
+polynomial is at most $2x/3$. Put $q(x)=1+x^2/3$.
+Combining \eqref{eq:real-interval} with \eqref{eq:imaginary-error} and
+\eqref{eq:classical-zero-bias}, we obtain
+\begin{equation}\label{eq:directional-prefactor}
+ |f_W(x)-f_{W^*}(x)|\le\frac{|x|}{2}
+ \min\left\{\rho,
+   \sqrt{\alpha(|x|)^2+q(x)^2(\rho-1)(2\rho+2/3)}\right\}.
+\end{equation}
+For $x>2$ the square root is at least $\rho$, so the minimum simply
+uses \eqref{eq:classical-zero-bias}. Reflection and continuity handle
+negative $x$ and zero.
+
+\begin{proposition}\label{prop:aggregation}
+For a nonempty subset of summands with moment sums $B,\tau_0$ and
+individual variances at most $a$,
+\begin{equation}\label{eq:aggregate-error}
+ \sum_j v_j|f_{X_j}(t)-f_{X_j^*}(t)|\le\frac t2
+ P(t;B,a,\tau_0),\qquad t\ge0,
+\end{equation}
+where, with $x=t\sqrt a$,
+\begin{equation}\label{eq:P}
+ P(t;B,a,\tau_0)=\min\left\{B,
+  \sqrt{\alpha(x)^2\tau_0^2+q(x)^2(B-\tau_0)(2B+2\tau_0/3)}\right\}.
+\end{equation}
+The bound $P$ increases with $t,a,B$ and decreases with $\tau_0$.
+For the empty subset, set $P=0$.
+\end{proposition}
+\begin{proof}
+The square root in \eqref{eq:directional-prefactor} is increasing in
+$x$ and concave in $\rho\ge1$. In the variable $e=\rho-1$, its
+quadratic has discriminant $(64/9)q^4-8q^2\alpha^2>0$, since
+$\alpha\le2x/3$ and
+$q^2-4x^2/3=(1-x^2/3)^2\ge0$.
+The second derivative of the square root has the opposite sign to this
+discriminant; continuity handles a zero radicand at an endpoint.
+After scaling \eqref{eq:directional-prefactor} to variance $v_j$,
+each term has the factor $tv_j^{3/2}/2$ and moment ratio
+$\rho_j=b_j/v_j^{3/2}$. Replace $t\sqrt{v_j}$ by $t\sqrt a$ and
+apply Jensen's inequality with weights $v_j^{3/2}/\tau_0$; their
+weighted mean of $\rho_j$ is $B/\tau_0$. This gives the square root
+in \eqref{eq:P}. The classical bounds also give $tB/2$.
+
+The expression under the square root in \eqref{eq:P} is
+\[
+ 2q^2B^2-\frac43q^2B\tau_0+
+ (\alpha^2-2q^2/3)\tau_0^2.
+\]
+Its nonconstant coefficients in $\tau_0$ are nonpositive. Its other
+monotonicities follow from the original nonnegative-factor expression.
+\end{proof}
+
+\subsection{A characteristic-function bound using moment excess}
+Squaring the real-part estimate in Lemma~\ref{lem:peano} and adding
+the square of the bound in \eqref{eq:imaginary-cf} gives another
+single-summand bound. If
+$\tau_j=v^{3/2}$ and $C=|\cos(t\sqrt v)|$, then
+\begin{equation}\label{eq:paired-cf}
+ |f_X(t)|^2\le C^2+\frac{C(b-\tau_j)|t|^3}{3}
+       +\frac{t^6(b-\tau_j)(2b+2\tau_j/3)}{36}.
+\end{equation}
+This holds for every real $t$. We use the smaller of its square root
+and \eqref{eq:single-cf}, evaluated at $|t|$.
+The displayed terms increase with $C,b,|t|$ and decrease with $\tau_j$
+when $b\ge\tau_j$. On a parameter interval, first bound $C$ over the
+entire cosine argument interval, then apply these monotonicities.
+
+\section{A summand of maximal variance}\label{sec:distinguished}
+
+The independent-sum zero-bias identity, with total variance one, is
+\begin{equation}\label{eq:sum-zero-bias}
+ f_{S^*}(t)=\sum_i v_i f_{X_i^*}(t)\prod_{j\ne i}f_{X_j}(t).
+\end{equation}
+For the remaining summands, use the product bound
+\[
+ R(t)=\min\{e^{-\psi(t;w,B_R+\tau_R)},
+                  F_0(t;w,B_R,a_R,\tau_R)\}.
+\]
+If the remainder is empty, set $R(t)=D_R(t)=1$.
+Let $A(t)$ be the minimum of the single-summand bounds
+\eqref{eq:single-cf} and the square root of \eqref{eq:paired-cf} for
+$X_1$. Let $D_R(t)$ be the bound $D_0$ for the remaining summands,
+and $D_S(t)$ the corresponding bound for the whole sum. We also evaluate
+these bounds with $Q$ omitted and take the smaller interval upper bounds.
+Proposition~\ref{prop:aggregation} gives
+
+\begin{equation}\label{eq:distinguished-error}
+ \begin{split}
+ |f_S(t)-f_{S^*}(t)|\le\frac t2\bigl\{&
+ P(t;b,d,d^{3/2})R(t)\\
+ &+P(t;B_R,a_R,\tau_R)A(t)D_R(t)\bigr\}.
+ \end{split}
+\end{equation}
+The whole-sum estimate is $(t/2)P(t;L,d,\tau)D_S(t)$, and the
+classical estimate is $tL/2$. Thus
+$|f_S(t)-f_{S^*}(t)|\le(tL/2)\mathcal B(t)$, where
+\begin{equation}\label{eq:B}
+ \mathcal B(t)=\min\left\{1,\frac{P(t;L,d,\tau)D_S(t)}L,
+ \frac{P(t;b,d,d^{3/2})R(t)+P(t;B_R,a_R,\tau_R)A(t)D_R(t)}L
+ \right\}.
+\end{equation}
+This formula also defines the endpoint value $\mathcal B(0)$.
+
+For the characteristic function itself, use
+\begin{equation}\label{eq:whole-cf}
+ F_S(t)=\min\{e^{-\psi(t;1,L+\tau)},\ A(t)R(t),\
+                    F_0(t;1,L,d,\tau)\}.
+\end{equation}
+
+All terms use the same actual $\tau$; an interval evaluation allows its
+whole range in the parameter box. The calculation also bounds the last
+term of \eqref{eq:B} by separating the moment fraction
+$\lambda=b/L$ from two normalized errors. Put
+\[
+ U_1=\frac{P(t;b,d,d^{3/2})R(t)}b,\qquad
+ U_R=\frac{P(t;B_R,a_R,\tau_R)A(t)D_R(t)}{B_R}.
+\]
+If $B_R=0$, set $U_R=0$. Both quantities lie in $[0,1]$, and the
+last term in \eqref{eq:B} equals $\lambda U_1+(1-\lambda)U_R$.
+Suppose a box gives $\lambda\in[\lambda_-,\lambda_+]\subseteq[0,1]$
+and $U_i\le\overline U_i$. Then
+\begin{equation}\label{eq:moment-fraction}
+ \lambda U_1+(1-\lambda)U_R\le
+ \max_{\lambda\in\{\lambda_-,\lambda_+\}}
+       \{\lambda\overline U_1+(1-\lambda)\overline U_R\}.
+\end{equation}
+The right side is the maximum of an affine function on an interval.
+We take the smaller of this bound and a direct interval evaluation of
+the numerator in \eqref{eq:B}, divided by a lower bound for $L$.
+When a denominator in the separate bounds for $U_i$ has lower endpoint
+zero, the bound $U_i\le1$ is used.
+
+Write $D(t)=f_S(t)-e^{-t^2/2}$. The zero-bias identity gives
+$f_S'(t)=-t f_{S^*}(t)$, and hence
+\[
+ D'(t)+tD(t)=t(f_S(t)-f_{S^*}(t)),\qquad D(0)=0.
+\]
+Multiplication by $e^{t^2/2}$ and integration yield
+\[
+ D(t)=e^{-t^2/2}\int_0^t u(f_S(u)-f_{S^*}(u))e^{u^2/2}\,du.
+\]
+Taking absolute values gives
+\begin{equation}\label{eq:ode-comparison}
+ \frac{|f_S(t)-e^{-t^2/2}|}{L}
+ \le R_\Delta(t):=e^{-t^2/2}
+       \int_0^t \frac{u^2}{2}\mathcal B(u)e^{u^2/2}\,du.
+\end{equation}
+
+\section{Smoothing and numerical integration}\label{sec:smoothing}
+
+For $0<u<1$, put
+\[
+ K(u)=\frac{1-u}{2}+
+ \frac{\ii}{2}\left((1-u)\cot(\pi u)+\frac1\pi\right).
+\]
+Prawitz's inequality, in the form stated by
+\citet[Lemma~4.1]{Shevtsova2012} and \citet[eq.~(46)]{Tyurin2009},
+gives for any $T>0$ and $0<s<1$
+\begin{equation}\label{eq:prawitz}
+ \frac\Delta L\le
+ 2\int_0^s|K(u)|R_\Delta(Tu)\,du+
+ \frac{2\int_s^1|K(u)|F_S(Tu)\,du+G(T,s)}{L},
+\end{equation}
+where
+\begin{equation}\label{eq:gaussian-correction}
+ G(T,s)=2\int_0^s\left|K(u)-\frac{\ii}{2\pi u}\right|
+          e^{-T^2u^2/2}\,du+\frac{E_1(T^2s^2/2)}{2\pi},
+ \qquad E_1(z)=\int_z^\infty\frac{e^{-v}}v\,dv.
+\end{equation}
+
+\subsection{Integration over a frequency interval}
+On a frequency interval $[a,b]$, let $\mathcal B_j$ be an upper bound for
+$\mathcal B$, and write
+\[
+ I_a=\int_0^a u^2\mathcal B(u)e^{u^2/2}/2\,du.
+\]
+Let $A_j$ be an upper bound for $2\pi u|K(u)|$ on
+$u\in[a/T,b/T]$. Under the change of variable $t=Tu$, the first term of
+\eqref{eq:prawitz}, restricted to $[a,b]$, is at most
+\begin{equation}\label{eq:fubini-cell}
+ \frac{A_j}{\pi}\left\{
+ I_a\frac{E_1(a^2/2)-E_1(b^2/2)}2+
+ \mathcal B_j\left(\frac{b^3-a^3}{18}
+                  -\frac{a^3}{6}\log\frac ba\right)\right\}.
+\end{equation}
+To see this, split the integral defining $R_\Delta(t)$ at $a$.
+The part up to $a$ contributes
+$\int_a^b I_a e^{-t^2/2}/t\,dt$, which equals the first term in
+braces. For the remaining part, use $e^{-(t^2-u^2)/2}\le1$ and
+interchange the nonnegative integrals:
+\[
+ \int_a^b\frac1t\int_a^t\frac{u^2}{2}\,du\,dt
+ =\frac{b^3-a^3}{18}-\frac{a^3}{6}\log\frac ba.
+\]
+At $a=0$, $I_a=0$ and the expression in braces in
+\eqref{eq:fubini-cell} is $\mathcal B_jb^3/18$.
+In the calculation, $I_a$ is replaced by an upper bound accumulated
+from the preceding intervals. For $a>0$, we also integrate the bound
+$|f_S-e^{-t^2/2}|\le F_S+e^{-t^2/2}$ over $[a,b]$ and use the
+smaller of the two upper bounds for that integral.
+
+\subsection{The Gaussian correction}
+Direct subtraction of the singular part of $K$ gives
+\begin{equation}\label{eq:regular-kernel}
+ 2\left|K(u)-\frac{\ii}{2\pi u}\right|
+   =(1-u)\sqrt{1+h(u)^2},\qquad
+ h(u)=\frac1{\pi u}-\cot(\pi u).
+\end{equation}
+Set $h(0)=0$ by continuity. The partial-fraction identity \citep[eq.~4.22.3]{DLMF} is
+\[
+ h(u)=\frac{2u}{\pi}\sum_{n=1}^\infty\frac1{n^2-u^2}.
+\]
+For $0\le u\le s<1$ and any integer $M\ge1$, define
+\[
+ c_M(s)=\frac{\pi^2/6-\sum_{n=1}^M n^{-2}}
+                  {1-s^2/(M+1)^2},\qquad
+ h_M(u)=\frac{2u}{\pi}\left(\sum_{n=1}^M\frac1{n^2-u^2}
+                                   +c_M(s)\right).
+\]
+For $n\ge M+1$ and $0\le u\le s$,
+$1/(n^2-u^2)\le n^{-2}/(1-s^2/(M+1)^2)$. Summing gives
+$0\le h(u)\le h_M(u)$. In the computation, $c_M(s)$ is replaced by
+an upper dyadic endpoint. Since $s<1$, every denominator in the finite
+sum is positive on $[0,s]$. Hence
+\begin{equation}\label{eq:gaussian-majorant}
+ G(T,s)\le \int_0^s(1-u)\sqrt{1+h_M(u)^2}e^{-T^2u^2/2}\,du
+       +\frac{E_1(T^2s^2/2)}{2\pi}.
+\end{equation}
+The calculation uses $M=8$ and Arb to enclose the integral in
+\eqref{eq:gaussian-majorant}; the integration routine is described in
+Section~\ref{sec:arithmetic}. We also evaluate the following bound and
+use the smaller upper endpoint:
+
+\begin{equation}\label{eq:simple-gaussian}
+ G(T,s)\le\int_0^s(1-u+\pi^2u^2/18)e^{-T^2u^2/2}\,du
+               +\frac{E_1(T^2s^2/2)}{2\pi},
+\end{equation}
+also supplied by \citet[Lemma~4.1]{Shevtsova2012}. Its integral is
+expressible using the error function and elementary functions.
+
+\section{The interval calculation}\label{sec:certificate}
+
+The interval calculation covers $L\in[L_-,L_+]$, where
+$L_-\approx0.006$ and $L_+\approx1.15$ are the following exact dyadic
+rationals, represented by the stored binary64 endpoints:
+
+\begin{equation}\label{eq:exact-endpoints}
+ L_-=\frac{3458764513820541}{576460752303423488},\qquad
+ L_+=\frac{2589569785738035}{2251799813685248}.
+\end{equation}
+
+\subsection{Small and large moments}
+For $0<L\le L_-$, Corollary~4.18 of \citet{Shevtsova2012} gives
+\begin{equation}\label{eq:small-L}
+ \Delta/L\le\CE+0.3413L^{1/3}
+      \le\CE+0.3413L_-^{1/3}<\SmallUpper.
+\end{equation}
+This corollary applies because $L_-<0.01$. The scalar checker
+recomputes the last enclosure.
+
+For every mean-zero variance-one law, Cantelli's inequality and
+reflection give
+\begin{equation}\label{eq:cantelli}
+ \Delta\le\sup_{x>0}\left(\Phi(x)-\frac{x^2}{1+x^2}\right)
+      <\VarianceUpper.
+\end{equation}
+For completeness, at $x\ge0$ the lower CDF bound follows from Cantelli,
+while the opposite difference is at most $1-\Phi(x)\le1/2$.
+Reflection handles $x<0$, including either one-sided convention at atoms.
+The displayed supremum exceeds $1/2$. Its stationary point is unique:
+the logarithmic derivative of
+$2x/((1+x^2)^2\phi(x))$ is
+$(x^2-1)^2/(x(1+x^2))\ge0$, and the ratio increases from zero to
+infinity. Arb isolation of the stationary point gives
+\begin{equation}\label{eq:large-L}
+ \Delta/L<\LargeUpper\qquad(L\ge L_+).
+\end{equation}
+
+\subsection{Subdivision of the parameter domain}
+For each closed interval $L\in[\ell,H]$, the calculation starts from
+\[
+ 0\le d\le\min\{1,H^{2/3}\},\qquad
+ 0\le b\le H,\qquad 0\le\tau\le\min\{1,H\},
+\]
+with outward-rounded endpoints. The constraints in
+\eqref{eq:moment-domain} tighten this box. A box is accepted when its
+computed upper bound is finite and below $0.475$ throughout the box.
+It is discarded when the constraints prove it infeasible; otherwise,
+it is divided into two closed boxes whose union contains it. The stored
+tree records each split and terminal decision. The finer claimed
+constant $\CandidateUpper$ is checked against the recorded maxima
+after this subdivision is complete.
+
+For each box, the evaluator tries three pairs of smoothing parameters
+$T,s$ and takes the minimum of the resulting bounds. Each pair divides
+$[0,Ts]$ and $[Ts,T]$ into 512 equal frequency intervals.
+The pairs are chosen by the rules in
+\path{verify/kernel/refined_integral.py}, with scale and shift pairs
+$(1,0)$, $(1.02,-0.02)$, and $(1.04,-0.02)$ from
+\path{verify/kernel/batch_weights.py}. The upper endpoint of the
+box's $\tau$ interval selects an input to these rules through
+\path{verify/kernel/gaussian_batch.py}. The resulting binary64 values
+of $T,s$ are treated as exact dyadic parameters; each bound is evaluated
+over the actual moment box.
+
+Before subdivision, the calculation tries two bounds uniform over
+$(d,b,\tau)$. The first uses \eqref{eq:cantelli} in the looser form
+$\Delta/L\le0.54093655/\ell$. The second applies the smoothing
+integral with $d_U=H^{2/3}$ and $E_U=2H$, rounded upward, using
+\[
+ \mathcal B_U(t)=\min\{1,e^{-t^2/2+\kappa E_Ut^3+m(t,d_U)}\},
+ \qquad F_U(t)=e^{-\psi(t;1,E_U)}.
+\]
+These follow from $\tau\le L\le H$ and the product bounds of
+Section~\ref{sec:products}. If either proves the acceptance bound for
+the whole $L$ interval, the record has a single accepted node.
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Quantity & Value\\
+\midrule
+Closed $L$ intervals & \BandCount\\
+Partition nodes & \NodeCount\\
+Accepted leaves & \AcceptedCount\\
+Infeasible leaves & \InfeasibleCount\\
+Largest recorded upper endpoint & \RecordedUpper\\
+Upper bound for $L\le L_-$ & $<\SmallUpper$\\
+Upper bound for $L\ge L_+$ & $<\LargeUpper$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Of the \BandCount{} intervals, 545 used the moment-parameter bounds, 215 used the
+uniform smoothing bound, and seven used the variance bound. Every
+accepted leaf has a finite upper endpoint. Together with the two
+complementary estimates, their maximum gives
+\[
+ \Cind\le\max\{\RecordedUpper,\SmallUpper,\LargeUpper\}
+ <\CandidateUpper.
+\]
+
+\subsection{Completed computation and subsequent checks}
+The original calculation evaluated every accepted-leaf bound. The
+supplement records three kinds of subsequent checks:
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \emph{Saved-record checking} checks file and source-code digests,
+tree syntax and counts, contiguous $L$ intervals, recorded upper
+endpoints, and the scalar enclosures in
+\eqref{eq:small-L}--\eqref{eq:large-L}. It does not recompute the
+quadrature at accepted leaves.
+\item \emph{Geometric replay} uses the archived implementation to
+reconstruct every box reduction and split, check every infeasibility
+decision, and verify coverage of all \BandCount{} intervals. It also
+checks the analytic complements.
+\item \emph{Numerical replay} additionally recomputes quadrature at
+accepted leaves. The recorded replay recomputed all 4,944 accepted
+leaves in three intervals, selected by lower endpoints nearest $0.006$,
+$0.25$, and $0.48$. The checksums of their ordered numerical results and
+their maxima matched the original records. Quadrature in the remaining
+intervals has not all been recomputed.
+\end{enumerate}
+The records contain these checksums and maxima; individual numerical
+values can be recovered by repeating the computation. Independent
+mathematical review remains outstanding.
+
+\subsection{Arithmetic assumptions and reproduction}\label{sec:arithmetic}
+The transcendental constants are enclosed with 100-bit Arb arithmetic.
+The vector calculation assumes IEEE-754 binary64 elementary operations
+and square root, rounding to nearest, gradual underflow, and no unsafe
+fast-math transformations. Interval operations use \texttt{nextafter}
+to round endpoints outward. Nonnegative cumulative sums and dot products
+are multiplied by $1+4N2^{-53}$ and rounded upward, where $N=512$ is
+the number of frequency intervals in each range for each smoothing
+choice. The full factor is used for every prefix of a cumulative sum.
+
+For a nonnegative lower bound $p$ on an exponent, the negative
+exponential is bounded using
+\[
+ P_{16}(x)=\sum_{j=0}^{16}\frac{x^j}{j!},\qquad
+ e^{-p}\le P_{16}(p/64)^{-64}\quad(0\le p<25).
+\]
+The implementation evaluates this polynomial with downward rounding,
+takes the reciprocal upward, and performs six upward-rounded squarings.
+For $p\ge25$, it uses an upper enclosure of $e^{-25}$.
+The routine is \texttt{exp\_upper\_from\_nonnegative\_lower} in
+\path{verify/kernel/interval_bounds.py}.
+
+The Gaussian integral in \eqref{eq:gaussian-majorant} is evaluated by
+\texttt{gaussian\_G} in \path{verify/kernel/gaussian_batch.py}, using
+Arb's \texttt{acb.integral}. Its callback passes the integration
+routine's analyticity requirement to the square root through
+\texttt{sqrt(analytic=analytic)}. The returned ball must be finite and
+its imaginary part must contain zero. The validity of the integration
+also depends on Arb's integration contract and the callback's branch
+handling. The summation allowance, exponential bound, and integration
+procedure are included in the outstanding arithmetic audit.
+
+The nine arithmetic source files are identified by SHA-256 digests.
+The recorded numerical runtime is Python~3.12.10, NumPy~2.4.6,
+python-flint~0.8.0, and SciPy~1.15.3. The complete interval records are
+in \path{certificates/cover.json}; the proposed bound and scalar
+endpoints are summarized in \path{result.json}.
+The supplement's \path{verify/README.md} gives the commands for checking
+the saved records, reconstructing the partition, and recomputing
+selected numerical bounds.
+
+\section{Possible refinements}\label{sec:questions}
+
+Two relaxations remain in the estimates: the triangle inequality
+replaces the modulus of a sum of complex zero-bias errors by the sum of
+their moduli, and the moment constraints may admit unrealizable tuples.
+A finer parameter partition can reduce interval-enclosure error, but
+cannot recover the information lost in either relaxation.
+
+\subsection{Higher-order terms in the logarithm}
+The following higher-order bounds were not used in the completed
+calculation. With the notation of Lemma~\ref{lem:quadratic-charge},
+H\"older interpolation gives, for every integer $p\ge2$,
+\[
+ \|(v_j)\|_{3/2}
+ \le \|(v_j)\|_1^{(2p-3)/(3p-3)}\|(v_j)\|_p^{p/(3p-3)}.
+\]
+Since $\|(v_j)\|_{3/2}=\tau_0^{2/3}$ and $\|(v_j)\|_1=V_0$,
+\[
+ \|(v_j)\|_p\ge\frac{\tau_0^{2-2/p}}{V_0^{2-3/p}}.
+\]
+
+If $A_0\ge0$, the same norm triangle inequality gives
+\begin{equation}\label{eq:higher-charge}
+ \sum_jq_j^p\ge Q_p:=
+ \left(\max\left\{0,A_0\frac{\tau_0^{2-2/p}}{V_0^{2-3/p}}
+                      -\kappa t^3(B-\tau_0)\right\}\right)^p.
+\end{equation}
+Take $Q_p=0$ otherwise. For $0\le q<1/2$,
+\[
+ -\tfrac12\log(1-2q)=\sum_{p=1}^{\infty}\frac{2^{p-1}}p q^p.
+\]
+Truncating the series and using \eqref{eq:higher-charge} gives the
+full-product bound below. Omitting an index reduces each $p$th-power
+sum by at most $m^p$, which gives the second bound. For any integer
+$P\ge2$,
+\begin{equation}\label{eq:higher-products}
+ \begin{split}
+ \prod_j|f_{X_j}(t)|
+   &\le\exp\left\{-H-\sum_{p=2}^P\frac{2^{p-1}}p Q_p\right\},\\
+ \prod_{j\ne i}|f_{X_j}(t)|
+   &\le\exp\left\{-H+m-\sum_{p=2}^P\frac{2^{p-1}}p
+                              \max(0,Q_p-m^p)\right\}.
+ \end{split}
+\end{equation}
+Take the minimum of each displayed bound, one, and any other applicable
+product bound.
+
+\subsection{Aggregation and phase information}
+The real-part interval in \eqref{eq:real-interval} gives
+\[
+ |\Re(f_W-f_{W^*})|^2\le\max\{g^2,(ce-g)^2\}.
+\]
+This improves the single-summand bound $g^2+c^2e^2$. Aggregating the
+sharper expression by Jensen's inequality requires a concavity argument
+for the resulting function of the moments. Such an argument is not
+supplied here. Another possibility is to retain relative Fourier phases
+for several summands while bounding the remaining errors uniformly.
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

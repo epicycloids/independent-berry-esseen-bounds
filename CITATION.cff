@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: >-
+  Please cite this manuscript as a research draft, together with version
+  0.1.0.dev0. Independent mathematical review is outstanding.
+title: >-
+  An upper bound on the Berry–Esseen constant for independent summands
+version: 0.1.0.dev0
+type: software
+authors:
+  - family-names: Bell
+    given-names: Logan
+keywords:
+  - Berry–Esseen inequality
+  - independent random variables
+  - zero-bias transformation
+  - interval arithmetic
+  - computer-assisted proof
+license:
+  - CC-BY-4.0
+  - MIT

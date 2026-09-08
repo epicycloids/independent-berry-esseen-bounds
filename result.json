@@ -1,0 +1,43 @@
+{
+  "schema": "independent-be-result-v1",
+  "status": "proof-candidate",
+  "title": "An upper bound on the Berry–Esseen constant for independent summands",
+  "version": "0.1.0.dev0",
+  "independent_mathematical_review_completed": false,
+  "sharp_conjecture_resolved": false,
+  "upper_bound": "0.474999998",
+  "comparison_target": "0.475",
+  "lower_bound_expression": "(sqrt(10)+3)/(6*sqrt(2*pi))",
+  "cover_file": "certificates/cover.json",
+  "cover_sha256": "8dbba58331fefa3c47225913a7df66ee941383fc4e62006cd194a98bd77f1097",
+  "counts": {
+    "bands": 767,
+    "nodes": 5577029,
+    "accepted": 2750409,
+    "infeasible": 38489
+  },
+  "band_methods": {
+    "stability": 545,
+    "uniform": 215,
+    "variance": 7
+  },
+  "largest_recorded_upper": 0.47499999772796003,
+  "small_L_coefficient": "0.3413",
+  "small_L_source_limit": "0.01",
+  "small_L_upper_decimal": "0.471750509536",
+  "variance_upper_decimal": "0.540936541549",
+  "large_L_upper_decimal": "0.470379601347",
+  "kappa": "0.099162",
+  "selected_replay_band_indices": [
+    0,
+    305,
+    424
+  ],
+  "all_leaf_quadratures_replayed": false,
+  "recorded_runtime": {
+    "python": "3.12.10",
+    "numpy": "2.4.6",
+    "python-flint": "0.8.0",
+    "scipy": "1.15.3"
+  }
+}

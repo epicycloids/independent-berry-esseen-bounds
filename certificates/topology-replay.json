@@ -1,0 +1,50 @@
+{
+  "status": "replay passed",
+  "mode": "topology",
+  "counts": {
+    "bands": 767,
+    "nodes": 5577029,
+    "accepted": 2750409,
+    "infeasible": 38489
+  },
+  "bands": null,
+  "cover_sha256": "8dbba58331fefa3c47225913a7df66ee941383fc4e62006cd194a98bd77f1097",
+  "kernel_sha256": {
+    "interval_bounds.py": "37981189f622c0bfa57ca02e2c08d6fad52a68bd0111163c30a2ff621823f161",
+    "stable_bounds.py": "b6b13bf460fd8b38d5c9d26e3749e962d8208c7b7ed4a608e08cde2a91eb7abc",
+    "directional_bounds.py": "b32fdcb077ea8f02cd9daab36d4d2166f9003d14e39b6c69391fc30ca4416fa5",
+    "refined_integral.py": "705d6aa3adc27ce9f211ff44188038f56ac33855ec40bd192fc4c381247f81ab",
+    "even_bounds.py": "d3bb5fa23a47ec29e569b3f99def4fd3a8016e3c2fb8541307bc14ca55b61bd4",
+    "paired_bounds.py": "8d9d9fde113d76335f139731e4c805a915db94a3e0879602d240ac83f5f62c12",
+    "stable_cover.py": "b6d286c6fc74d69866b5f90257808df5ea3c7852641de5ece808584504935c08",
+    "batch_weights.py": "4a63d28575bfe4be6c02e65ea1deabfda3ab3f71af323dbe4b235aa8884561a2",
+    "gaussian_batch.py": "dcb14f612fe8f178c9e380912d99f5b9c90ddf3973cf80e60297d1de3672b0b3"
+  },
+  "wrapper_sha256": {
+    "replay.py": "8e39a2fa9d04e9696ea3d63b62c8938182c3b270f66610ab66656a431447288e",
+    "check_saved.py": "7d2fe6b1c8e7ed1d9a05a864c0a3b5ab3695f9661d459d76e94c4ba4d0aaf288",
+    "scalars.py": "b7958f897ca0880d5afc40169d0e563fb9554ec5b1821f171264b7b523faba3c"
+  },
+  "scalar_enclosures": {
+    "arb_precision_bits": 192,
+    "lower_bound": "[0.409732183702396342990568823497664596454094320281408387395 +/- 4.90e-58]",
+    "theta": "[3.99589567907788608431098465322810 +/- 8.95e-33]",
+    "kappa": "[0.099161913514771856066374557230715 +/- 4.60e-34]",
+    "cantelli_stationary_point": "[0.213105771517715835602313516904 +/- 4.97e-31]",
+    "variance_upper": "[0.540936541548673603981656815952 +/- 3.02e-31]",
+    "small_L_upper": "[0.471750509535757269978864463796754306837560720295790854791 +/- 4.94e-58]",
+    "large_L_upper": "[0.470379601346672735443267751546 +/- 2.83e-31]"
+  },
+  "runtime": {
+    "python": "3.12.10",
+    "numpy": "2.4.6",
+    "python-flint": "0.8.0",
+    "scipy": "1.15.3",
+    "kernel_arb_precision_bits": 100
+  },
+  "tree_geometry_replayed": true,
+  "accepted_leaf_quadrature_replayed": false,
+  "all_bands_numerically_replayed": false,
+  "independent_mathematical_review_completed": false,
+  "elapsed_seconds": 214.886827203
+}
