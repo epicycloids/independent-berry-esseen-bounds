@@ -5,6 +5,7 @@ message: >-
 title: >-
   An upper bound on the Berry–Esseen constant for independent summands
 version: 0.1.0.dev0
+repository-code: https://github.com/epicycloids/independent-berry-esseen-bounds
 type: software
 authors:
   - family-names: Bell
