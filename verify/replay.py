@@ -1,74 +1,99 @@
-"""Geometric or numerical replay with the preserved arithmetic kernel."""
+"""Recompute accepted-leaf integrals in one or three stored L intervals.
+
+Uses each record's evaluator, parameters and acceptance target. Large
+intervals can take substantial time. This command does not independently
+verify every Gaussian quadrature node or review the analytic inequalities."""
 import argparse
-from collections import Counter
-import hashlib
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
-import time
 
-import flint
-import numpy as np
-import scipy
-from check_saved import ROOT, load_inputs, validate_cover
-from scalars import scalar_bounds
+for variable in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+    os.environ[variable] = "1"
+
+from check_saved import ROOT, canonical, load_inputs, mixed_record, require
 
 
-def run(mode='topology', band_index=None):
-    began = time.monotonic()
+def install(kind):
+    if kind == "quadratic_maxwell_dual5_cutoff":
+        import quadratic_cover_engine as engine
+    elif kind == "quadratic_maxwell_dual5_cutoff_lazy_ceil20":
+        import cap_portfolio_engine as engine
+    elif kind.startswith("full_b_fast_maximum_fixed085_dual5_cutoff_v1"):
+        import full_b_maximum_cover_engine as engine
+    elif kind == "adaptive_b_fast_maximum_fixed085_dual5_cutoff_v1":
+        import adaptive_b_cover_engine as engine
+    else:
+        raise ValueError("Unrecognized evaluator family: " + kind)
+    engine.install()
+    return engine
+
+
+class MixedCallbacks:
+    """Use a separate evaluator for each of the two recorded acceptance targets."""
+    def __init__(self, record):
+        self.record = record
+        self.engine = install(record["evaluator"]["kind"])
+        self.factories = {}
+        self.calls = {"origin":0,"continuation":0}
+
+    def score(self, role, descriptor, lo, hi, box):
+        from flint import ctx
+        expected = self.record["origin_evaluator"] if role == "origin" else self.record["evaluator"]
+        require(canonical(descriptor) == canonical(expected), "Evaluator role/configuration changed")
+        require((lo, hi) == (self.record["Llo"], self.record["Lhi"]), "Evaluator domain changed")
+        with ctx.workprec(100):
+            if role not in self.factories:
+                choose = self.engine.stable_cover.weight_factory(hi, descriptor["N"], descriptor["kind"], descriptor["target"])
+                weight = choose(hi)
+                require((weight.T, weight.s) == (descriptor["T"], descriptor["s"]), "Smoothing parameters changed")
+                require(weight.rectangle_class.__name__ == "CachedMaximumVarianceRectangles" and
+                        weight.coupling is False, "Wrong adaptive evaluator")
+                self.factories[role] = choose
+            value = self.factories[role](box[-1]).box(lo, hi, *box)
+            self.calls[role] += 1
+            return value
+
+    def origin(self, descriptor, lo, hi, box):
+        return self.score("origin",descriptor,lo,hi,box)
+
+    def continuation(self, descriptor, lo, hi, box):
+        return self.score("continuation",descriptor,lo,hi,box)
+
+
+def replay_band(index):
+    from flint import ctx
     cover, result = load_inputs()
-    validate_cover(cover, result)
-    sys.path.insert(0, str(ROOT/'verify/kernel'))
-    from gaussian_batch import install_factory
-    from stable_cover import replay_band
-    install_factory()
-    if mode == 'topology':
-        indices = range(len(cover['bands']))
-        numerical = False
-    elif mode == 'selected':
-        indices = result['selected_replay_band_indices']
-        numerical = True
-    elif mode == 'band' and type(band_index) is int and 0 <= band_index < len(cover['bands']):
-        indices = [band_index]
-        numerical = True
-    else:
-        raise ValueError('Choose topology, selected, or band with a valid zero-based index')
-    counts = Counter({'bands': 0, 'nodes': 0, 'accepted': 0, 'infeasible': 0})
-    records = []
-    for index in indices:
-        band = cover['bands'][index]
-        checked = replay_band(band, numerical=numerical)
-        counts.update(checked)
-        counts['bands'] += 1
-        records.append({'band_index': index, 'Llo': band['Llo'], 'Lhi': band['Lhi'],
-                        'counts': checked, 'upper': band['upper'],
-                        'leaf_chain_sha256': band.get('leaf_chain_sha256')})
-    if mode == 'topology':
-        assert dict(counts) == result['counts']
-    enclosures = scalar_bounds(cover['domain']['lower'], cover['domain']['upper'])
-    wrapper = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
-               for p in [Path(__file__), ROOT/'verify/check_saved.py', ROOT/'verify/scalars.py']}
-    return {'status': 'replay passed', 'mode': mode, 'counts': dict(counts),
-        'bands': records if numerical else None,
-        'cover_sha256': result['cover_sha256'], 'kernel_sha256': cover['kernel_sha256'],
-        'wrapper_sha256': wrapper, 'scalar_enclosures': enclosures,
-        'runtime': {'python': sys.version.split()[0], 'numpy': np.__version__,
-                    'python-flint': flint.__version__, 'scipy': scipy.__version__,
-                    'kernel_arb_precision_bits': flint.ctx.prec},
-        'tree_geometry_replayed': True, 'accepted_leaf_quadrature_replayed': numerical,
-        'all_bands_numerically_replayed': False, 'independent_mathematical_review_completed': False,
-        'elapsed_seconds': time.monotonic()-began}
+    require(type(index) is int and 0 <= index < len(cover["bands"]), "Band index is outside the cover")
+    band = cover["bands"][index]
+    record = band["record"]
+    with ctx.workprec(100):
+        if band["type"] == "mixed":
+            callbacks = MixedCallbacks(record)
+            counts = mixed_record(record, numerical=True, callbacks=(callbacks.origin,callbacks.continuation))
+            roles = callbacks.calls
+        else:
+            import stable_cover
+            install(record["kind"])
+            counts = stable_cover.replay_band(record, numerical=True)
+            roles = None
+    return {"band_index":index, "accepted_leaf_quadrature_replayed":True, "counts":counts,
+            "source_separated_numerical_calls":roles, "global_proof":False,
+            "whole_union_numerically_replayed":False, "gaussian_node_audit_completed":False}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['topology','selected','band'], default='topology')
-    parser.add_argument('--band-index', type=int)
-    parser.add_argument('--output', type=Path)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--band-index",type=int,help="recompute accepted-leaf integrals for one stored L-interval index")
+    group.add_argument("--selected",action="store_true",help="recompute the three selected L intervals, serially")
     args = parser.parse_args()
-    output = json.dumps(run(args.mode, args.band_index), indent=2)+'\n'
-    if args.output:
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(output)
+    if args.selected:
+        _, result = load_inputs()
+        # Isolate evaluator factories and caches between bands.
+        for index in result["selected_replay_band_indices"]:
+            subprocess.run([sys.executable,str(Path(__file__).resolve()),"--band-index",str(index)],check=True)
     else:
-        print(output, end='')
+        print(json.dumps(replay_band(args.band_index),indent=2))

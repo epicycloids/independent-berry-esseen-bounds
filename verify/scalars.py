@@ -1,4 +1,4 @@
-"""Short Arb enclosures used at the analytic endpoints of the proof."""
+"""Arb bounds for the analytic estimates at small and large L."""
 from fractions import Fraction
 from flint import arb, ctx
 
@@ -51,9 +51,9 @@ def scalar_bounds(lower_endpoint, upper_endpoint):
         small = ce + rational('0.3413')*start.root(3)
         large = variance/end
         assert variance < rational('0.540936541549')
-        assert small < rational('0.471750509536')
-        assert large < rational('0.470379601347')
-        assert small < rational('0.474999998') and large < rational('0.474999998')
+        assert small < rational('0.447913037296')
+        assert large < rational('0.447055000001')
+        assert small < rational('0.454') and large < rational('0.454')
         return {'arb_precision_bits': ctx.prec, 'lower_bound': str(ce),
                 'theta': str(theta), 'kappa': str(kappa),
                 'cantelli_stationary_point': str(x), 'variance_upper': str(variance),

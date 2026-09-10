@@ -1,57 +1,42 @@
-"""Validate saved replay receipts and their exact computational scope."""
-import hashlib
+"""Check the saved numerical reevaluation of three intervals against the supplied cover."""
 import json
-from pathlib import Path
-
-from check_saved import ROOT, load_inputs, require
-from scalars import scalar_bounds
+from check_saved import ROOT, canonical, load_inputs, require, sha256
 
 
-def validate_receipt(receipt, mode, cover, result, root=ROOT):
-    require(receipt['status'] == 'replay passed' and receipt['mode'] == mode, 'Replay status mismatch')
-    require(receipt['cover_sha256'] == result['cover_sha256'], 'Replay input digest mismatch')
-    require(receipt['kernel_sha256'] == cover['kernel_sha256'], 'Replay arithmetic digest mismatch')
-    wrappers = {name: hashlib.sha256((root/'verify'/name).read_bytes()).hexdigest()
-                for name in ('replay.py', 'check_saved.py', 'scalars.py')}
-    require(receipt['wrapper_sha256'] == wrappers, 'Replay wrapper digest mismatch')
-    require(receipt['tree_geometry_replayed'] is True, 'Missing geometric replay')
-    require(receipt['accepted_leaf_quadrature_replayed'] is (mode == 'selected'), 'Replay scope mismatch')
-    require(receipt['all_bands_numerically_replayed'] is False, 'Unsupported full numerical replay claim')
-    require(receipt['independent_mathematical_review_completed'] is False, 'Unsupported independent review claim')
-    expected_runtime = dict(result['recorded_runtime'], kernel_arb_precision_bits=100)
-    require(receipt['runtime'] == expected_runtime, 'Replay runtime mismatch')
-    expected_scalars = scalar_bounds(cover['domain']['lower'], cover['domain']['upper'])
-    require(receipt['scalar_enclosures'] == expected_scalars, 'Replay scalar enclosures differ')
-    if mode == 'topology':
-        require(receipt['counts'] == result['counts'], 'Geometric replay counts mismatch')
-        require(receipt['bands'] is None, 'Unexpected numerical band records')
-    else:
-        indices = result['selected_replay_band_indices']
-        require([r['band_index'] for r in receipt['bands']] == indices, 'Numerical selection mismatch')
-        total = {'bands': len(indices), 'nodes': 0, 'accepted': 0, 'infeasible': 0}
-        for row, index in zip(receipt['bands'], indices):
-            band = cover['bands'][index]
-            require(band['method'] == 'stability', 'Selected band has no numerical chain')
-            require(all(row[k] == band[k] for k in ('Llo','Lhi','upper','leaf_chain_sha256')),
-                    'Numerical replay record mismatch')
-            counts = {k: band[k] for k in ('nodes','accepted','infeasible')}
-            require(row['counts'] == counts, 'Numerical replay counts mismatch')
-            for key, value in counts.items():
-                total[key] += value
-        require(receipt['counts'] == total, 'Numerical replay total mismatch')
-    return receipt['counts']
+def validate_selected(replay, cover, result):
+    require(replay["schema"] == "independent-be-selected-replay-v2", "Unsupported selected replay schema")
+    require(replay["cover_sha256"] == result["cover_sha256"], "Selected replay belongs to another cover")
+    require(replay["whole_union_numerically_replayed"] is False and
+            replay["gaussian_node_replay_claimed"] is False, "Unsupported full replay promotion")
+    rows = replay["bands"]
+    require(len(rows) == 3 and [r["band_index"] for r in rows] == result["selected_replay_band_indices"], "Wrong selected bands")
+    total_nodes = total_leaves = 0
+    require(len({row["band_index"] for row in rows}) == 3, "Duplicate selected band")
+    for row in rows:
+        band = cover["bands"][row["band_index"]]
+        require(band["type"] == "mixed" and row["band_sha256"] == sha256(canonical(band)), "Selected mathematical record differs")
+        record = band["record"]
+        require(row["recorded_numerical_replay_passed"] is True, "Failed selected replay")
+        for role in ("origin", "continuation"):
+            component = record[role]
+            require(row[role + "_nodes"] == component["nodes"], "Selected node counts differ")
+            require(row[role + "_leaf_chain_sha256"] == component["leaf_chain_sha256"], "Selected numerical chain differs")
+            require(row["numerical_calls"][role] == component["accepted"], "Selected numerical leaf counts differ")
+        total_nodes += row["origin_nodes"] + row["continuation_nodes"]
+        total_leaves += sum(row["numerical_calls"].values())
+    require(total_nodes == replay["total_nodes"] == 2689 and
+            total_leaves == replay["total_accepted_leaves"] == 1346, "Selected aggregate counts differ")
+    return {"recorded_selected_bands":3, "recorded_selected_nodes":total_nodes,
+        "recorded_selected_accepted_leaves":total_leaves,
+        "fresh_numerical_evaluation_performed_by_this_check":False,
+        "whole_union_numerically_replayed":False, "gaussian_node_replay_claimed":False}
 
 
 def check(root=ROOT):
     cover, result = load_inputs(root)
-    counts = {}
-    for mode in ('topology', 'selected'):
-        receipt = json.loads((root/f'certificates/{mode}-replay.json').read_text())
-        counts[mode] = validate_receipt(receipt, mode, cover, result, root)
-    return {'status': 'saved replay receipts match sources, inputs, and stated scope',
-            'counts': counts, 'quadrature_rerun_by_this_check': False,
-            'independent_mathematical_review_completed': False}
+    replay = json.loads((root / "certificates/selected-replay.json").read_text())
+    return validate_selected(replay, cover, result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(json.dumps(check(), indent=2))

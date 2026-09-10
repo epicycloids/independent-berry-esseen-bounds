@@ -1,55 +1,38 @@
-# The independent Berry–Esseen constant
+# The Berry–Esseen constant for independent summands
 
-**Research draft · 7 September 2026 · version 0.1.0.dev0**
+**Research draft · 10 September 2026 · version 0.2.0.dev0**
 
-Let $C_{\mathrm{ind}}$ be the smallest universal constant in the classical
-Berry–Esseen inequality for finite independent centered real arrays with
-positive total variance and finite third absolute moments. This draft
-presents a proof candidate for the upper bound
+This draft proposes the upper bound
 
 $$
 C_{\mathrm E}=\frac{\sqrt{10}+3}{6\sqrt{2\pi}}
 =0.40973218370239634299\ldots
-\le C_{\mathrm{ind}}<0.474999998<0.475,
+\le C_{\mathrm{ind}}<0.454
 $$
 
-where the lower bound is due to Esseen. The proposed upper bound combines
-analytic estimates with a completed interval calculation. **Independent
-mathematical review remains outstanding.** The conjecture
-$C_{\mathrm{ind}}=C_{\mathrm E}$ is unresolved.
+where $C_{\mathrm{ind}}$ is the Berry–Esseen constant for finite families of
+independent centered real random variables with finite third absolute
+moments. Esseen proved the lower bound. The argument for the upper bound
+combines analytic inequalities with an interval calculation. **Independent
+mathematical review remains outstanding, and the interval calculation has
+not been recomputed in full.** The conjecture
+$C_{\mathrm{ind}}=C_{\mathrm E}$ is open.
 
-## Reading
-
-The paper, [*An upper bound on the Berry–Esseen constant for independent
-summands*](paper/independent-berry-esseen.pdf), gives the argument and describes
-the computation. Its [LaTeX source](paper/main.tex) and
-[bibliography](paper/refs.bib) are included.
+Read the paper, [*An upper bound on the Berry–Esseen constant for independent
+summands*](paper/independent-berry-esseen.pdf), for the definitions and argument.
+Its [LaTeX source](paper/main.tex) and [bibliography](paper/refs.bib) are included.
 
 | Guide | Contents |
 | --- | --- |
-| [Overview](docs/overview.md) | Definitions and the main steps of the argument |
-| [Bounds and their scope](docs/bounds.md) | Published comparisons and the bounds on the three moment ranges |
-| [Remaining questions](docs/questions.md) | Sources of loss and possible refinements |
-| [Verification guide](verify/README.md) | Saved records, arithmetic assumptions, checks, and replay commands |
+| [Overview](docs/overview.md) | How the moment estimates lead to a uniform bound |
+| [Bounds](docs/bounds.md) | Normalization, comparison with a published bound, and estimates on three ranges |
+| [Verification](verify/README.md) | Certificate contents, completed checks, arithmetic assumptions, and commands |
 
-## Computation and replay
-
-The interval calculation covers the middle of the
-[three moment ranges](docs/bounds.md#the-three-moment-ranges). It divides
-that range into 767 closed intervals, called moment bands. The recorded
-partition has 5,577,029 nodes, 2,750,409 accepted leaves, and 38,489
-infeasible leaves. The largest recorded upper endpoint is
-0.47499999772796003. All accepted-leaf bounds were evaluated in the
-original completed calculation.
-
-The supplied replay records cover the full geometric partition and
-numerically recompute three bands containing 4,944 accepted leaves. The
-remaining accepted-leaf quadratures have not been replayed in full.
-
-[result.json](result.json) summarizes the status and values.
-[cover.json](certificates/cover.json) contains the completed bands
-and partition tree. The nine [arithmetic source files](verify/kernel/README.md)
-are preserved byte-for-byte and identified by SHA-256 digests.
+The interval calculation covers 1,683 closed intervals of the normalized
+third-moment sum. Its largest recorded upper bound is approximately
+0.45399999743026986. The complete partition has been checked, and three
+selected intervals have been numerically reevaluated.
+[result.json](result.json) gives the numerical summary and verification status.
 
 ## Check or build
 
@@ -57,17 +40,18 @@ Install [uv](https://docs.astral.sh/uv/) and, to build the PDF,
 [Tectonic](https://tectonic-typesetting.github.io/en-US/). From this directory:
 
 ```sh
-./verify.sh --no-latex   # saved records, scalar enclosures, and rejection tests
-./build.sh              # rebuild the paper into dist/
+./verify.sh --no-latex
+./build.sh
 ```
 
-`./verify.sh` without an option performs both steps. These commands do not
-dispatch cloud computation. The [verification guide](verify/README.md)
-documents optional local and Modal replay.
+The first command checks the stored partitions, scalar certificates and
+numerical records. The second rebuilds the paper into `dist/`.
+`./verify.sh` without an option performs both steps. See the
+[verification guide](verify/README.md) for the scope of each check.
 
 ## Citation and reuse
 
 Author: Logan Bell. Cite this as a research draft and include its version;
-[CITATION.cff](CITATION.cff) supplies the metadata. Explanatory text and the
-manuscript use CC BY 4.0; code, configuration, and certificate data use MIT.
-See [LICENSE](LICENSE).
+[CITATION.cff](CITATION.cff) supplies the metadata. The manuscript and
+explanatory text use CC BY 4.0; code, configuration, and certificate data
+use MIT. See [LICENSE](LICENSE).

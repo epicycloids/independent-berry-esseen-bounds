@@ -1,59 +1,55 @@
-# Bounds and their scope
+# Bounds and normalization
 
-All constants below use the classical normalization
+For a finite independent family of centered real random variables, write
 
 $$
-L=\frac{\sum_j\mathbb E|X_j|^3}{(\sum_j\mathbb E X_j^2)^{3/2}},
-\qquad
+V=\sum_j\mathbb E X_j^2>0,\qquad
+L=\frac{\sum_j\mathbb E|X_j|^3}{V^{3/2}},\qquad
 \Delta=\sup_x\left|\mathbb P\!\left(
-\frac{\sum_jX_j}{\sqrt{\sum_j\mathbb E X_j^2}}\le x\right)-\Phi(x)\right|.
+\frac{\sum_jX_j}{\sqrt V}\le x\right)-\Phi(x)\right|,
 $$
 
-Here $\Phi$ is the standard normal distribution function. The arrays are
-finite, independent, and centered, with positive total variance and finite
-third absolute moments.
+where $\Phi$ is the standard normal distribution function and every third
+absolute moment is finite. The constant $C_{\mathrm{ind}}$ is the supremum
+of $\Delta/L$ over these families.
 
-## Global comparison
+| Bound on $C_{\mathrm{ind}}$ | Status and source |
+| --- | --- |
+| $C_{\mathrm{ind}}\ge C_{\mathrm E}=(\sqrt{10}+3)/(6\sqrt{2\pi})=0.4097321837023963\ldots$ | [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946); see also [Shevtsova (2012), Section 1](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf) |
+| $C_{\mathrm{ind}}\le0.5583$ | Published upper bound, [Shevtsova (2013)](https://www.mathnet.ru/eng/ia252) |
+| $C_{\mathrm{ind}}<0.454$ | Upper bound proposed in this draft |
 
-| Setting | Bound | Status and source |
-| --- | --- | --- |
-| Unrestricted independent arrays | $C_{\mathrm{ind}}\ge C_{\mathrm E}=0.40973218370239634299\ldots$ | Esseen's lower bound; see [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946) and [Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf) |
-| Unrestricted independent arrays | $C_{\mathrm{ind}}\le0.5583$ | Published comparison from [Shevtsova (2013)](https://www.mathnet.ru/eng/ia252) |
-| Unrestricted independent arrays | $C_{\mathrm{ind}}<0.474999998$ | This edition's proof candidate; independent mathematical review outstanding |
-| Identically distributed independent variables | Upper bound 0.4690 | Published restricted-class comparison from [Shevtsova (2013)](https://www.mathnet.ru/eng/ia252) |
-| Binomial sums | Sharp constant $C_{\mathrm E}$ | [Schulz (2016)](https://d-nb.info/1197702695/34) |
+Independent mathematical review remains outstanding, and the interval
+calculation has not been recomputed in full. The conjecture
+$C_{\mathrm{ind}}=C_{\mathrm E}$ remains open.
 
-Here
-$C_{\mathrm E}=(\sqrt{10}+3)/(6\sqrt{2\pi})$.
-The table includes selected published comparisons.
+## Three ranges of $L$
 
-The candidate leaves a gap of approximately 0.0652678143 above the lower
-bound. The maximum of the finite upper enclosures below is strictly less
-than 0.474999998, giving the proposed bound below 0.475 for the supremum.
-
-## The three moment ranges
-
-Let $L_-$ and $L_+$ be the exact binary64 endpoints stored in
-[the certificate](../certificates/cover.json). Their printed decimal values
-are 0.006 and 1.15. The exact fractions are given in Section 7 of the
+The interval calculation uses endpoints $L_-\approx0.0014$ and
+$L_+\approx1.21$. Their exact rational values are stored in
+[the certificate](../certificates/cover.json) and given in the
 [paper](../paper/independent-berry-esseen.pdf).
 
-| Range | Technique | Upper bound for $\Delta/L$ |
+| Range | Estimate used | Upper bound for $\Delta/L$ |
 | --- | --- | --- |
-| $0<L\le L_-$ | Published bound $C_{\mathrm E}+0.3413L^{1/3}$ | Less than 0.471750509536 |
-| $L_-\le L\le L_+$ | Completed interval cover using the paper's combined estimates | At most the largest recorded endpoint, 0.47499999772796003 |
-| $L\ge L_+$ | Variance-only inequality $\Delta<0.540936541549$ | Less than 0.470379601347 |
+| $0<L\le L_-$ | $C_{\mathrm E}+0.3413L^{1/3}$ | Less than 0.447913037296 |
+| $L_-\le L\le L_+$ | Interval calculation of the paper's smoothing bounds | At most $U_*$, defined below |
+| $L\ge L_+$ | $\Delta<0.540936541549$ | Less than 0.447055000001 |
 
-The first formula is Corollary 4.18 of
+The estimate for $0<L\le L_-$ is Corollary 4.18 of
 [Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf),
-applicable for $L\le0.01$. The variance-only constant follows by maximizing
-$\Phi(x)-x^2/(1+x^2)$ for $x>0$, using Cantelli's inequality. The short
-[scalar checker](../verify/scalars.py) encloses both complements with Arb.
+which applies to independent summands when $L\le0.01$.
+The bound on $\Delta$ follows from Cantelli's inequality by maximizing
+$\Phi(x)-x^2/(1+x^2)$ over $x>0$.
 
-The middle range has 545 bands checked over boxes of moment parameters,
-215 bands accepted by a uniform bound, and seven by the variance-only
-bound.
+The calculation covers $[L_-,L_+]$ with 1,683 closed intervals. Its largest
+recorded upper bound for $\Delta/L$ is the exact rational number
 
-The [verification guide](../verify/README.md) gives the scope of the original
-calculation and subsequent replay. [Remaining questions](questions.md)
-discusses additional logarithmic terms and a tighter real-part bound.
+$$
+U_*=\frac{4089268438506339}{9007199254740992}<0.454.
+$$
+
+The bounds in the table hold uniformly on their stated ranges. Their
+maximum gives the proposed upper bound for $C_{\mathrm{ind}}$. See the
+[verification guide](../verify/README.md) for the completed checks and
+arithmetic assumptions.

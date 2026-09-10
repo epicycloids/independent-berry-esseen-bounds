@@ -1,106 +1,88 @@
-# A guide to the argument
+# How the bound is obtained
 
-Let a finite array of independent centered real variables have total
-variance one and finite third absolute moments. Write
+Let $X_1,\ldots,X_n$ be independent centered real random variables with
+total variance one and finite third absolute moments. Write
 
 $$
-S=\sum_jX_j,\qquad L=\sum_j\mathbb E|X_j|^3,\qquad
+S=\sum_jX_j,\qquad v_j=\mathbb E X_j^2,\qquad
+L=\sum_j\mathbb E|X_j|^3,\qquad
+\tau=\sum_jv_j^{3/2},\qquad
 \Delta=\sup_x|\mathbb P(S\le x)-\Phi(x)|.
 $$
 
 Here $\Phi$ is the standard normal distribution function.
-The constant under study is the supremum of the ratio $\Delta/L$ over all
-finite such arrays. Individual variables may have different laws and
-different variances. The conjecture is that the supremum equals Esseen's
-constant, approximately 0.40973218. This edition proposes an upper bound
-strictly below 0.475. Independent mathematical review remains outstanding.
 
-This guide follows the argument in
-[the paper](../paper/independent-berry-esseen.pdf).
+The conjecture asks whether $\Delta/L$ is always at most
+$C_{\mathrm E}=(\sqrt{10}+3)/(6\sqrt{2\pi})$. The
+[paper](../paper/independent-berry-esseen.pdf) proposes the upper bound
+$0.454$, using the following estimates and a finite interval calculation.
+Independent mathematical review and a full numerical reevaluation remain
+outstanding. The zero-bias and Fourier comparison follows
+[Tyurin (2009)](https://arxiv.org/abs/0912.0726v1).
 
-## Characteristic functions and zero-bias comparison
+## Moments and characteristic functions
 
-For a random variable $X$, write $f_X(t)=\mathbb E e^{itX}$ for its
-characteristic function. Independence gives
-$f_S(t)=\prod_j f_{X_j}(t)$. For $t\ge0$, Section 2 constructs bounds
-of the form
-$|f_{X_j}(t)|\le\sqrt{1-2q_j(t)}$, with $0\le q_j(t)<1/2$.
-The inequality $-\tfrac12\log(1-2q)\ge q+q^2$ then gives
+Write $f_X(t)=\mathbb E e^{itX}$. Independence gives
+$f_S(t)=\prod_j f_{X_j}(t)$. A moment inequality bounds the modulus of each factor by
+$\sqrt{1-2q_j(t)}$, where $0\le q_j(t)<1/2$. The paper bounds
+$-\tfrac12\sum_j\log(1-2q_j(t))$ from below using both $L$ and
+$\tau$, including the nonnegative third-moment excess
+$\sum_j(\mathbb E|X_j|^3-v_j^{3/2})=L-\tau$.
+The same argument bounds products with any one factor omitted.
 
-$$
-|f_S(t)|\le\exp\left(-\sum_jq_j(t)-\sum_jq_j(t)^2\right).
-$$
+Choose a summand of maximal variance, and denote its variance by $d$
+and third absolute moment by $b$. The remaining summands have total
+variance $1-d$, third-moment sum $L-b$, and variance-power sum
+$\tau-d^{3/2}$. The product estimate and zero-bias comparison use these
+parameters to bound the remaining summands separately.
 
-Moment inequalities bound the sums in the exponent from below. The same
-estimates bound products with one factor omitted.
+## Zero-bias comparison
 
-For a centered variable $X$ of variance $v>0$, its zero-bias law $X^*$ is
-defined by
+The zero-bias transformation was introduced by
+[Goldstein and Reinert (1997)](https://doi.org/10.1214/aoap/1043862419).
+For a centered variable $X$ of variance $v>0$, its zero-bias law $X^*$ satisfies
 
 $$
 v\mathbb E g'(X^*)=\mathbb E[Xg(X)]
 $$
 
-for absolutely continuous test functions for which the expectations exist.
-The proof bounds $f_S-f_{S^*}$ using the individual differences
-$f_{X_j}-f_{X_j^*}$ and the products with one factor omitted.
-Centered summands of variance zero can be omitted.
-
-## Third-moment excess
-
-For a centered variance-one variable $W$ with finite third absolute moment,
-set $Y=|W|$ and $\rho=\mathbb E|W|^3$. Then
-
-$$
-\mathbb E[(Y-1)^2(Y+1/2)]=\rho-1\ge0.
-$$
-
-Equality holds precisely when $W$ takes the values $-1$ and $1$ with
-equal probability. Its characteristic function is then $\cos x$, and
-that of its zero-bias law is $\operatorname{sinc}x=\sin(x)/x$, with
-value one at zero.
-
-Sections 3–4 bound the differences of $\operatorname{Re}f_W$ from cosine
-and $\operatorname{Re}f_{W^*}$ from sinc in terms of $\rho-1$. They obtain
-a one-sided bound for $\operatorname{Re}(f_W-f_{W^*})$ and a separate
-bound for $\operatorname{Im}(f_W-f_{W^*})$. Concavity combines the summand
-estimates with weights proportional to $(\mathbb E X_j^2)^{3/2}$.
-
-## A maximal-variance summand
-
-Let $d$ be the largest summand variance, $b$ its third absolute moment,
-and $\tau=\sum_j(\mathbb E X_j^2)^{3/2}$. Section 5 bounds that summand
-and the sum of the remaining summands separately, both in the
-characteristic-function product and in the zero-bias error. Necessary
-constraints on $(d,b,\tau)$ restrict the parameter domain while including
-every array under consideration.
-
-Since the sum has variance one, the zero-bias identity gives
-$f_S'(t)=-t f_{S^*}(t)$. Comparing this with the derivative of the Gaussian
-characteristic function gives, for $t\ge0$,
+for absolutely continuous test functions with finite expectations.
+For the normalized sum, $f_S'(t)=-t f_{S^*}(t)$. Hence
 
 $$
 f_S(t)-e^{-t^2/2}
 =e^{-t^2/2}\int_0^t u\bigl(f_S(u)-f_{S^*}(u)\bigr)e^{u^2/2}\,du.
 $$
 
-## Smoothing
+The difference $f_S-f_{S^*}$ is a sum of single-summand errors multiplied
+by products with one factor omitted. The paper bounds its real and
+imaginary parts using third-moment excess. A concave majorant combines
+these estimates across unequal summands by Jensen's inequality.
 
-Section 6 applies Prawitz's smoothing inequality to turn the
-characteristic-function bounds into a bound on $\Delta/L$. The integrals
-are split into frequency intervals and bounded over each interval.
+Some frequency intervals also use the real reference function
+$\prod_j\cos(t\sqrt{v_j})$. Bounds for its distance from $f_S$ retain
+part of the sign information that is lost when every Fourier term is
+replaced by its modulus. A differential inequality controls that distance;
+moment inequalities bound the reference function uniformly over each
+parameter box.
 
-## Interval calculation
+## Smoothing and the finite cover
 
-For each closed interval of $L$, the calculation in Section 7 subdivides
-a box of possible $(d,b,\tau)$ values. A box is accepted only when its
-computed upper bound for $\Delta/L$ is finite and below 0.475 throughout
-the box. It is discarded when the moment constraints prove it infeasible;
-otherwise, it is split into two closed boxes. The complete tree is
-retained. After subdivision, the recorded maxima are checked against the
-finer candidate bound 0.474999998. Published small-moment estimates and a
-variance-only inequality cover the two complementary ranges.
+Prawitz's smoothing inequality converts the Fourier estimates into a
+bound for the difference between the distribution functions. The calculation
+partitions the threshold variable $x$ into closed intervals, bounds the
+integrals on whole frequency intervals, and uses Cantelli's inequality
+outside a bounded range of $x$. On each threshold interval it takes the
+minimum of the bounds obtained from several choices of smoothing parameters.
 
-The [bounds note](bounds.md) gives the resulting numbers. The
-[verification guide](../verify/README.md) distinguishes checking saved
-records, reconstructing the partition, and recomputing numerical leaf bounds.
+For each closed interval of $L$, necessary moment inequalities restrict
+$(d,b,\tau)$ to a containing box. Subdivision continues until every box
+is either excluded by those inequalities or assigned a uniform upper bound
+strictly below $0.454$. Where $b$ is subdivided separately, the calculation
+retains a cover of its entire feasible interval.
+
+The completed records cover $0.0014\le L\le1.21$, interpreted at the exact
+stored binary64 endpoints. Analytic inequalities cover the two complementary
+ranges. Their bounds and the exact largest recorded upper bound appear in the
+[bounds note](bounds.md). The [verification guide](../verify/README.md)
+describes how the supplied evidence can be checked.

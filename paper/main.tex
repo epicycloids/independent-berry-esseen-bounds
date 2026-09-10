@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
 \usepackage[margin=1in]{geometry}
-\usepackage{booktabs,microtype,enumitem,xcolor,fancyhdr}
+\usepackage{array,booktabs,microtype,enumitem,xcolor,fancyhdr}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
@@ -34,7 +34,7 @@
 
 \title{An upper bound on the Berry--Esseen constant\\ for independent summands}
 \author{Logan Bell}
-\date{7 September 2026}
+\date{10 September 2026}
 
 \begin{document}
 \maketitle
@@ -43,21 +43,20 @@
 Let $\Delta$ be the Kolmogorov distance between a standardized sum of
 independent centered real random variables and the standard normal law,
 and let $L$ be the normalized sum of third absolute moments. We propose
-the uniform bound $\Delta<\CandidateUpper\,L$. The argument treats a
-summand of maximal variance separately and bounds the real and imaginary
-parts of the zero-bias error in terms of third-moment excess over
-symmetric two-point laws. A quadratic term in the logarithm strengthens
-the characteristic-function product bound. Prawitz's smoothing
-inequality then reduces the intermediate range of $L$ to a finite
-interval calculation; analytic estimates cover small and large $L$.
-The supplement contains the arithmetic implementation and complete
-partition records. Independent mathematical review remains outstanding.
+an upper bound of $\CandidateUpper$ for the supremum of $\Delta/L$.
+The argument combines moment bounds for characteristic functions,
+zero-bias comparison, and Prawitz smoothing. It retains the contribution
+of a summand of maximal variance and uses a real reference function to
+bound part of the Fourier integral. Analytic estimates cover small and
+large $L$; an interval calculation covers the intermediate range.
+The largest recorded upper endpoint is $\RecordedUpper\ldots$. The supplement
+contains the partition records and arithmetic sources. Independent
+mathematical review and a complete second numerical evaluation remain
+outstanding.
 
 \end{abstract}
 
-\section{The problem and the candidate bound}\label{sec:statement}
-
-
+\section{The problem and the proposed bound}\label{sec:statement}
 
 Let $X_1,\ldots,X_n$ be a finite independent family of centered real random
 variables. Assume
@@ -84,23 +83,21 @@ The conjectured equality $\Cind=\CE$ remains open.
 \begin{candidate}\label{thm:candidate}
 For the arrays in \eqref{eq:problem},
 \begin{equation}\label{eq:candidate}
-  \Delta<\CandidateUpper\,L<0.475\,L,
+  \Delta<\CandidateUpper\,L,
   \qquad \CE\le\Cind<\CandidateUpper.
 \end{equation}
 \end{candidate}
 
-The arithmetic assumptions and completed checks for this proposed bound
-are stated in Section~\ref{sec:certificate}. For comparison,
-\citet{Shevtsova2013} obtained the upper bounds $0.5583$ for independent
-summands and $0.4690$ for identically distributed summands.
-\citet{Schulz2016} proved the sharp constant $\CE$ for binomial laws.
+For comparison, \citet{Shevtsova2013} obtained the upper bound $0.5583$
+for general independent summands. Section~\ref{sec:certificate} states
+the arithmetic assumptions and completed checks for the proposed bound.
 
-The proof uses the zero-bias and Fourier framework of \citet{Tyurin2009}
-and the smoothing inequality recorded in \citet{Shevtsova2012}.
-Comparison with symmetric two-point sums also appears in the
-smooth-function results of \citet{MattnerShevtsova2019}. We derive below
-the estimates used here, including their aggregation across unequal
-variances.
+The argument refines the zero-bias and Fourier estimates of
+\citet{Tyurin2009} by retaining third-moment excess and logarithmic
+corrections to characteristic-function products. It uses Prawitz
+smoothing and comparison with a weighted symmetric two-point law.
+The estimates apply to unequal summand variances and use only the
+second and third absolute moments.
 
 \subsection{Normalization and moment parameters}
 Replace each $X_j$ by $X_j/\sqrt V$, reuse the notation $X_j$, and
@@ -132,15 +129,18 @@ $v_j\le a_R$. Every realizable tuple satisfies these constraints;
 maximizing over the possibly larger set they define gives an upper bound.
 
 Section~\ref{sec:products} bounds products of characteristic functions.
-Sections~\ref{sec:directional} and~\ref{sec:quadratic} estimate the
-zero-bias error of each summand and aggregate these errors.
+Sections~\ref{sec:directional}, \ref{sec:quadratic}, and
+\ref{sec:current-scalar} bound individual zero-bias errors and their sums.
 Section~\ref{sec:distinguished} combines the estimates while treating
-$X_1$ separately. Smoothing and the interval calculation occupy
-Sections~\ref{sec:smoothing} and~\ref{sec:certificate}.
+$X_1$ separately. Section~\ref{sec:current-reference} compares $f_S$
+with a cosine product. Sections~\ref{sec:smoothing} and
+\ref{sec:current-smoothing} apply Prawitz smoothing, and
+Section~\ref{sec:certificate} describes the interval calculation.
 
 \section{Bounds for characteristic-function products}\label{sec:products}
 
-For a random variable $X$, let $f_X(t)=\E e^{\ii tX}$. Since
+For a random variable $X$, let $f_X(t)=\E e^{\ii tX}$, and write
+$f_j=f_{X_j}$ for the summands. Since
 $f_X(-t)=\overline{f_X(t)}$, it suffices to bound its modulus for
 $t\ge0$. For a nonempty index set $J$, put
 \[
@@ -167,7 +167,8 @@ $t\ge0$, and $u=E_0t/V_0$, put
    0,&u>2\pi.
  \end{cases}
 \end{equation}
-The characteristic-function bounds in \citet[Lemma~1]{Tyurin2009} give,
+The characteristic-function inequalities of \citet{Prawitz1975}, as stated
+in \citet[Lemma~1]{Tyurin2009}, yield,
 with $v=\E X^2>0$ and $b=\E|X|^3\ge v^{3/2}$ in the second formula,
 \begin{align}
  \Big|\prod_j f_{X_j}(t)\Big|
@@ -204,8 +205,8 @@ with $h(\pi)=\pi^2-12<0$ and $h(2\pi)=4\pi^2>0$.
 Thus $h$ has exactly one zero in $(\pi,2\pi)$. For $x\ge2\pi$,
 $r(x)\le1/(4\pi)<3/32\le r(4)$. The zero is therefore the unique global maximizer of $r$.
 The scalar checker isolates it in $(3.99,4)$ and encloses
-$\kappa_*<0.099161913515<\kappa$ with Arb, a library for rigorous
-ball arithmetic.
+$\kappa_*<0.099161913515<\kappa$ with Arb, Johansson's library for
+rigorous ball arithmetic \citep{Johansson2017}.
 
 The cubic expression $V_0t^2/2-\kappa E_0t^3$ is a lower bound for
 \eqref{eq:tyurin-exponent} at every frequency. The numerical cosine
@@ -291,23 +292,179 @@ It is maximized on $[\ell,h]$ at
 When $A_0<0$, $Q=0$ and the exponent is increasing in $\tau_0$.
 At $t=0$ both product bounds equal one.
 
+\subsection{The full logarithmic correction}\label{sec:current-log}
+
+We now bound the terms beyond the linear term in
+$-\tfrac12\log(1-2q)$, using the same moment parameters.
+
+For a subarray of total variance $V$, third-moment sum $B$,
+$\tau_0=\sum_jv_j^{3/2}$, and individual variances at most $a$, write
+\[
+ k=\kappa t^3,\quad \epsilon_j=b_j-v_j^{3/2},\quad
+ r_j=v_jt^2/2-2kv_j^{3/2},\quad q_j=(r_j-k\epsilon_j)_+,
+ \quad H=Vt^2/2-k(B+\tau_0).
+\]
+The elementary characteristic-function inequality gives
+$|f_j(t)|\le\sqrt{1-2q_j}$ and
+$0\le q_j\le m(t,a)<1/2$.  Put
+\[
+ g(q)=-\tfrac12\log(1-2q)-q,\qquad 0\le q<1/2.
+\]
+For $\lambda\ge0$ and $0\le r<1/2$, define
+\begin{equation}\label{eq:current-infimum}
+ \varphi_\lambda(r)=\inf_{0\le q\le r}
+       \{g(q)+\lambda(r-q)\}
+ =\begin{cases}
+   g(r),&r\le q_\lambda,\\
+   \lambda r-c_\lambda,&r\ge q_\lambda,
+  \end{cases}
+ \quad
+ q_\lambda=\frac{\lambda}{2(1+\lambda)},\quad
+ c_\lambda=\frac{\lambda-\log(1+\lambda)}2.
+\end{equation}
+The formula follows by minimizing the convex function of $q$, whose
+derivative is $2q/(1-2q)-\lambda$.
+
+\begin{lemma}[A lower bound for the logarithmic correction]\label{lem:current-log-support}
+Let $A=1/(32\kappa^2)$ and $r(z)=Az^2(1-z)$.  Suppose
+$\alpha,\beta\ge0$ and $0<M\le1$ satisfy
+\begin{equation}\label{eq:current-support}
+ \varphi_\lambda(r(z))\ge z^2(\alpha z-\beta)
+ \qquad(0\le z\le M).
+\end{equation}
+If $4\kappa t\sqrt a\le M$, set
+\begin{align}
+ S_\lambda={}&\frac{Vt^2}{2}-(1+\lambda)kB
+           -16\kappa^2t^2\beta V
+           +\{64\kappa^3t^3\alpha+(\lambda-1)k\}\tau_0,
+             \label{eq:current-full-log}\\
+ P(v)={}&64\kappa^3t^3\alpha v^{3/2}-16\kappa^2t^2\beta v,
+ \qquad \delta=\max\{0,P(a)\}.
+             \label{eq:current-log-loss}
+\end{align}
+Then
+\[
+ \prod_j|f_j(t)|\le\min\{1,e^{-S_\lambda}\},\qquad
+ \prod_{j\ne i}|f_j(t)|
+       \le\min\{1,e^{-S_\lambda+m(t,a)+\delta}\}
+\]
+for every index $i$.
+\end{lemma}
+\begin{proof}
+The domain condition implies $r_j\ge0$.  Since
+$r_j-q_j\le k\epsilon_j$, the definition of $\varphi_\lambda$ gives
+\[
+ \sum_jg(q_j)\ge\sum_j\varphi_\lambda(r_j)
+                              -\lambda k(B-\tau_0).
+\]
+Apply \eqref{eq:current-support} at
+$z_j=4\kappa t\sqrt{v_j}$ and sum.  This yields
+\[
+ \sum_j\varphi_\lambda(r_j)
+ \ge64\kappa^3t^3\alpha\tau_0-16\kappa^2t^2\beta V.
+\]
+Together with $\sum_jq_j\ge H$, this bounds
+$\sum_j[q_j+g(q_j)]$ below by $S_\lambda$ and proves the full-product
+inequality.  For deletion, apply the same support directly to the remaining
+indices.  The lost support term is $P(v_i)$, at most
+$\max\{P(0),P(a)\}=\delta$ by convexity.  The linear sum loses at most
+$m(t,a)$. Replacing the remaining moment excess by $B-\tau_0$ can only
+decrease the exponent lower bound. This proves the second inequality.
+\end{proof}
+
+The next lemma reduces \eqref{eq:current-support} to an endpoint
+inequality.
+
+\begin{lemma}[An endpoint criterion for a tangent lower bound]\label{lem:current-log-tangent}
+Let $\psi(z)=g(r(z))/z^2$, with its continuous value at zero, and
+$D(z)=z^4\psi''(z)$.  Choose $0<u<2/3$ such that
+$r(u)\le q_\lambda$ and $D(u)\ge0$.  Set
+$\alpha=\psi'(u)$ and $\beta=u\psi'(u)-\psi(u)$.
+Then $\alpha,\beta\ge0$.  For $u\le M\le1$,
+\eqref{eq:current-support} follows from the single inequality
+\[
+ \varphi_\lambda(r(M))/M^2\ge\alpha M-\beta.
+\]
+\end{lemma}
+\begin{proof}
+Direct differentiation gives
+\[
+ D=g''(r)\{Az^2(2-3z)\}^2-6rg'(r)+6g(r),
+\]
+\[
+ D'(z)=\frac{4A^2z^3(2-3z)}{(1-2r)^3}\,B(z),\qquad
+ B(z)=1-6z+2Az^2(3-5z+3z^2).
+\]
+The inequality $\max r<1/2$ is equivalent to $A<27/8$.
+On $[0,2/3]$,
+\[
+ B'(z)=-6+6Az(2-5z+4z^2)<0,
+\]
+because
+\[
+ \frac8{27}-z(2-5z+4z^2)
+ =(2/3-z)(4z^2-7z/3+4/9)\ge0.
+\]
+The quadratic factor is positive.  Also $B(0)=1$ and
+$B(2/3)=-3+8A/9<0$.  Thus $D$ first increases and then decreases;
+$D(0)=0$ and $D(2/3)=6\{g(r)-rg'(r)\}<0$.  It has exactly one zero
+in $(0,2/3)$.  Hence $\psi$ is initially convex and subsequently
+concave there.  It is decreasing for $z\ge2/3$.
+
+On the capped branch,
+\[
+ \frac{\varphi_\lambda(r(z))}{z^2}
+ =\lambda A(1-z)-\frac{c_\lambda}{z^2},\qquad
+ \left(\frac{\varphi_\lambda(r(z))}{z^2}\right)''
+ =-\frac{6c_\lambda}{z^4}\le0.
+\]
+Function and derivative match at each branch transition.  Before $2/3$
+the derivative therefore first increases and then decreases; afterwards
+it is nonpositive. The difference between
+$\varphi_\lambda(r(z))/z^2$ and the tangent at $u$ decreases
+to zero, then increases, and finally decreases. The minimum on $[0,M]$
+is consequently at $u$ or $M$.  Initial convexity and $\psi(0)=\psi'(0)=0$
+give $\alpha,\beta\ge0$.
+\end{proof}
+
+The calculation uses tangent lower bounds with
+$\lambda\in\{3/4,1,3/2,2,3\}$. Arb checks the hypotheses and endpoint
+inequality of Lemma~\ref{lem:current-log-tangent} for each stored set
+of coefficients. A bound is used only on its stated domain.
+In a parameter box, the exponent is affine in $\tau_0$ and is minimized
+at an endpoint. The polynomial in \eqref{eq:current-support} also
+determines the deletion term $P(v)$ in \eqref{eq:current-log-loss}.
+When $\lambda<1$, the evaluation bounds the nonnegative quantities
+$B+\tau_0$ and $B-\tau_0$ in
+$-k(B+\tau_0)-\lambda k(B-\tau_0)$ before expanding.
+
+
+For the product comparisons below, write $\mathcal F_0$ and
+$\mathcal D_0$ for the minima of the elementary bounds
+\eqref{eq:corrected-products} and all applicable bounds of
+Lemma~\ref{lem:current-log-support}.  Each candidate is bounded over the
+entire parameter box before taking the minimum.  The empty product has
+$\mathcal F_0=\mathcal D_0=1$.
+
 \section{Real and imaginary zero-bias errors}\label{sec:directional}
 
+The zero-bias transformation was introduced by \citet{GoldsteinReinert1997}.
 For a centered variable of positive variance $v$, its zero-bias law is
 defined by
 \begin{equation}\label{eq:zero-bias}
  v\E g'(X^*)=\E[Xg(X)]
 \end{equation}
 for absolutely continuous test functions for which the expectations
-exist. The first Wasserstein distance between two laws is the infimum
+exist. For summands, write $f_j^*=f_{X_j^*}$.
+The first Wasserstein distance between two laws is the infimum
 of $\E|U-V|$ over couplings with those laws. By
 \citet[Theorem~3]{Tyurin2009}, the distance between $X$ and $X^*$
 is at most $\E|X|^3/(2v)$. Applying this bound to $e^{\ii tx}$ gives
 \begin{equation}\label{eq:classical-zero-bias}
  |f_X(t)-f_{X^*}(t)|\le |t|\frac{\E|X|^3}{2v}.
 \end{equation}
-To retain information lost by this bound, let $W$ have mean zero and
-variance one, and put $Y=|W|$, $\rho=\E Y^3$, and $e=\rho-1$.
+For bounds that also depend on the third-moment excess, let $W$ have
+mean zero and variance one, and put $Y=|W|$, $\rho=\E Y^3$, and $e=\rho-1$.
 Then $e\ge0$ and
 \begin{equation}\label{eq:moment-excess}
  \E[(Y-1)^2(Y+1/2)]=e.
@@ -356,23 +513,20 @@ $\rho/2-1/2=e/2$. Apply the Lipschitz bound for $y\mapsto\cos(xy)$.
 
 \begin{lemma}\label{lem:imaginary}
 For all real $x$,
-\begin{align}
- |\Im(f_W(x)-f_{W^*}(x))|
-   &\le (|x|/2+|x|^3/6)\sqrt{e(\rho+5/3)},\label{eq:imaginary-error}\\
- |\Im f_W(x)|&\le |x|^3\sqrt{e(\rho+5/3)}/6.\label{eq:imaginary-cf}
-\end{align}
+\begin{equation}\label{eq:imaginary-cf}
+ |\Im f_W(x)|\le |x|^3\sqrt{e(\rho+5/3)}/6.
+\end{equation}
 \end{lemma}
 \begin{proof}
 It suffices to take $x>0$. Define
-$A(y)=x\sinc(xy)+\cos(xy)/x$. The identity \eqref{eq:zero-bias}
-and centering give
+$A(y)=x\sinc(xy)$. Centering gives
 \[
- \Im(f_W(x)-f_{W^*}(x))=\E[W(A(Y)-A(1))].
+ \Im f_W(x)=\E[W(A(Y)-A(1))].
 \]
 Since $|\sinc'(z)|\le |z|/3$, we have
-$|A'(y)|\le x(1+x^2/3)y$ and hence
+$|A'(y)|\le x^3y/3$ and hence
 \[
- |A(y)-A(1)|\le (x/2+x^3/6)|y^2-1|.
+ |A(y)-A(1)|\le (x^3/6)|y^2-1|.
 \]
 Cauchy--Schwarz and \eqref{eq:moment-excess} give
 \[
@@ -387,11 +541,9 @@ The final inequality follows from
  \frac{y^2}{y+1/2}\le\frac{2+4y^2}{9}.
 \]
 The second inequality is equivalent to $(y-1)^2(4y+1)\ge0$.
-For \eqref{eq:imaginary-cf}, repeat the same argument with
-$A(y)=x\sinc(xy)$ and $|A'(y)|\le x^3y/3$.
 \end{proof}
 
-\section{A quadratic minorant and the aggregate error}\label{sec:quadratic}
+\section{A quadratic minorant for the real part}\label{sec:quadratic}
 
 \begin{lemma}\label{lem:supporting-quadratic}
 For $0<x\le2$, put
@@ -429,8 +581,7 @@ For $0\le x\le2$, let $g=\sinc x-\cos x\ge0$ and
 $c=x/2+x^3/6$. Lemmas~\ref{lem:peano} and
 \ref{lem:supporting-quadratic} give
 \begin{equation}\label{eq:real-interval}
- -g\le\Re(f_W-f_{W^*})\le-g+ce,
- \qquad |\Re(f_W-f_{W^*})|^2\le g^2+c^2e^2.
+ -g\le\Re(f_W-f_{W^*})\le-g+ce.
 \end{equation}
 The alternating series gives the increasing upper bound
 \begin{equation}\label{eq:alpha}
@@ -442,55 +593,351 @@ The alternating series gives the increasing upper bound
 \end{equation}
 The quotient at zero is defined by continuity. On $[0,2]$ the
 polynomial is at most $2x/3$. Put $q(x)=1+x^2/3$.
-Combining \eqref{eq:real-interval} with \eqref{eq:imaginary-error} and
-\eqref{eq:classical-zero-bias}, we obtain
-\begin{equation}\label{eq:directional-prefactor}
- |f_W(x)-f_{W^*}(x)|\le\frac{|x|}{2}
- \min\left\{\rho,
-   \sqrt{\alpha(|x|)^2+q(x)^2(\rho-1)(2\rho+2/3)}\right\}.
-\end{equation}
-For $x>2$ the square root is at least $\rho$, so the minimum simply
-uses \eqref{eq:classical-zero-bias}. Reflection and continuity handle
-negative $x$ and zero.
+\section{A quadratic bound in the third-moment excess}
+\label{sec:current-scalar}
 
-\begin{proposition}\label{prop:aggregation}
-For a nonempty subset of summands with moment sums $B,\tau_0$ and
-individual variances at most $a$,
+Let $W$ have mean zero, variance one and
+$\rho=\E|W|^3<\infty$.  Write $e=\rho-1$, $Y=|W|$, and
+$h(y)=(y-1)^2(y+1/2)$, so that $\E h(Y)=e$.
+
+\begin{lemma}[Quadratic imaginary-error estimate]\label{lem:current-odd}
+For $0<x\le2$,
+\begin{equation}\label{eq:current-odd}
+ |\Im(f_W(x)-f_{W^*}(x))|^2
+ \le e\left\{\frac23[x\cos x-2\sin x]^2+\frac{x^2e}{4}\right\}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Put
+\[
+ A_x(y)=x\sinc(xy)+\frac{\cos(xy)}x,
+ \qquad a_x=A_x'(1)=x\cos x-2\sin x,
+\]
+\[
+ b_x=A_x''(1)=(2-x^2)\sin x-3x\cos x,
+ \qquad
+ J_x(y)=\frac{y^2}{y+1/2}
+             \left(\frac{A_x(y)-A_x(1)}{y-1}\right)^2.
+\]
+Use continuous values at $y=1$.  Centering and the zero-bias identity give
+\[
+ \Im(f_W-f_{W^*})=\E[W\{A_x(Y)-A_x(1)\}],\qquad
+ |\Im(f_W-f_{W^*})|^2\le e\E J_x(Y).
+\]
+Moreover
+$J_x(1)=2a_x^2/3$ and $J_x'(1)=8a_x^2/9+2a_xb_x/3$.
+The scalar inequality established below is
+\begin{equation}\label{eq:current-J-majorant}
+ J_x(y)\le J_x(1)+\frac{J_x'(1)}2(y^2-1)+\frac{x^2}4h(y)
+ \qquad(y\ge0).
+\end{equation}
+Its expectation is at most $2a_x^2/3+x^2e/4$, proving
+\eqref{eq:current-odd}. All quantities are integrable:
+$|A_x'(y)|\le x(1+x^2/3)y$ gives
+$|A_x(y)-A_x(1)|\le(x/2+x^3/6)|y^2-1|$, which bounds $J_x(y)$
+by a constant times $y^2(y+1)^2/(y+1/2)$, which grows cubically.
+\end{proof}
+
+To verify \eqref{eq:current-J-majorant}, set $z=xy$, $q=1+x^2/3$,
+and
+\[
+ R(x,z)=\frac{\cos z+x^2\sinc z-\cos x-x^2\sinc x}{z^2-x^2},
+\]
+continued across $z=x$.  Multiplication of the difference in
+\eqref{eq:current-J-majorant} by $x(z+x/2)$ gives
+\[
+ \mathcal L(x,z)=x(z+x/2)\left\{J_x(1)
+       +\frac{J_x'(1)}{2x^2}(z^2-x^2)\right\}
+       +\frac{(z-x)^2(z+x/2)^2}{4}
+       -z^2(z+x)^2R(x,z)^2.
+\]
+It has a double zero at $z=x$.  Define
+\[
+ w_n(u)=\frac1{(2n)!}+\frac{u}{(2n+1)!},\qquad
+ S_n(x,z)=\sum_{j=0}^{n-1}x^{2j}z^{2(n-1-j)}.
+\]
+For $r=m+n$, the polynomial
+\[
+ Q_{mn}(x,z)=\frac{
+ z^2(z+x)^2S_mS_n
+ -\frac{4mn}{9}x^{2r-3}(z+x/2)
+        \{(5-3r)x^2+(3r+1)z^2\}}{(z-x)^2}
+\]
+is well defined by exact division.  Expansion and collection of terms give
+\begin{equation}\label{eq:current-odd-series}
+ \frac{\mathcal L(x,z)}{(z-x)^2}
+ =\frac{q^2x(x+4z)}{144}
+   -\frac{(q^2-1)(z+x/2)^2}{4}
+   +\sum_{r\ge3}(-1)^{r+1}
+       \sum_{m=1}^{r-1}w_m(x^2)w_{r-m}(x^2)Q_{m,r-m}(x,z).
+\end{equation}
+This identity also defines the removable diagonal.  Each $Q_{mn}$ is
+homogeneous of degree $2r-2$, has positive rational coefficients, and
+$Q_{mn}(1,1)\le8mnr^2$.  One way to check these assertions is to put
+$x=1$.  The polynomial numerator is
+\[
+ N(z)-M(z)=z^2(z+1)^2S_m(1,z)S_n(1,z)
+ -\frac{4mn}{9}(z+1/2)\{5-3r+(3r+1)z^2\}.
+\]
+The constant and linear coefficients of its quotient by $(z-1)^2$ are
+$2mn(3r-5)/9$ and four times that value.  Higher coefficients are
+positive sums of coefficients of $N$.  Also
+$Q_{mn}(1,1)=\{N''(1)-M''(1)\}/2\le8mnr^2$.
+
+Truncate \eqref{eq:current-odd-series} at $r=24$ and write its polynomial
+uniquely as
+\[
+ x^2F_1(x^2,z^2)+z^4F_0(z^2)+xzG(x^2,z^2),
+\]
+assigning positive even powers of $x$ to the first term.  On
+$(x^2,z^2)\in[0,4]\times[0,49]$, exact tensor Bernstein conversion
+gives minimum coefficients $1/144$ for $F_1$, greater than $1/200$
+for $F_0$, and $1/36$ for $G$. These inequalities follow from
+\eqref{eq:current-odd-series} by the accompanying rational checker;
+its scalar certificate records the exact minima.
+The conversion itself uses, after scaling to $[0,1]^2$,
+\[
+ b_{ij}=\sum_{p\le i,\,q\le j}a_{pq}
+       \frac{\binom ip}{\binom{d_1}p}
+       \frac{\binom jq}{\binom{d_2}q}.
+\]
+Bernstein basis functions are nonnegative and sum to one.
+
+To control the omitted series, use $w_n(x^2)\le7/[3(2n)!]$ and
+\[
+ \sum_{m=1}^{r-1}\frac{m(r-m)}{(2m)!(2r-2m)!}
+       =\frac{2^{2r-5}}{(2r-2)!}.
+\]
+The positive order-$r$ term at $(x,z)=(2,7)$ is at most
+\[
+ B_r=\frac{49}{1764}\frac{r^2 196^r}{(2r-2)!}.
+\]
+It equals $4F_{1,r}+2401F_{0,r}+14G_r$, so each component is at most
+$B_r/4$.  For $r\ge25$, $B_{r+1}/B_r<1/10$; each absolute component
+tail is therefore at most $5B_{25}/18<1/1250$.  The rational checker
+verifies that each minimum minus this tail exceeds $1/250$.
+Thus $\mathcal L/(z-x)^2\ge(x^2+z^4+xz)/250\ge0$ on the rectangle.
+
+For $z\ge7$, the elementary bound $|A_x(y)-A_x(1)|\le2(x+1/x)$ gives
+\[
+ \frac{J_x(y)}{(x^2/4)h(y)}
+ \le\frac{16(1+x^2)^2z^2}{(z-x)^4(z+x/2)^2}
+ \le\frac{400}{(z-2)^4}\le\frac{16}{25}<1.
+\]
+The two tangent terms in \eqref{eq:current-J-majorant} are nonnegative
+there.  Indeed $J_x(1)\ge0$, while $J_x'(1)>0$: writing
+$k_0=2\sinc x-\cos x$ and
+$\ell_0=(2-x^2)\sinc x-3\cos x$ gives
+$J_x'(1)=2x^2k_0(4k_0-3\ell_0)/9$; $k_0>0$, and alternating Taylor
+bounds give $4k_0-3\ell_0\ge257/105$ on $[0,2]$.
+This proves the remaining spatial tail and completes
+\eqref{eq:current-J-majorant}.
+
+\subsection{Aggregation by a concave majorant}
+For $0\le x\le2$, use $\alpha$ and $q$ defined above and put
+\[
+ p_1(x)=1+x^2/6-x^4/40+x^6/1008,
+ \qquad b_0(x)=\tfrac83p_1(x)^2.
+\]
+The alternating series gives
+$2\sinc x-\cos x\le p_1(x)$ and
+$2(\sinc x-\cos x)/x\le\alpha(x)$.
+The real-part interval and Lemma~\ref{lem:current-odd} consequently imply
+\begin{equation}\label{eq:current-two-branches}
+ \left|\frac{2(f_W-f_{W^*})}{x}\right|
+ \le\min\{1+e,\max(F_1(e),F_2(e))\},
+\end{equation}
+where
+\[
+ F_1(e)=\sqrt{\alpha^2+b_0e+e^2},\qquad
+ F_2(e)=\sqrt{b_0e+(1+q^2)e^2}.
+\]
+For the real part, use
+$\max\{\gamma^2,(qe-\gamma)^2\}\le\max\{\alpha^2,q^2e^2\}$
+when $0\le\gamma\le\alpha$.
+
+\begin{lemma}[The common-tangent envelope]\label{lem:current-concave}
+Let $a,b\ge0$, $0\le u<v$, and
+$F_1(e)=\sqrt{a^2+be+ue^2}$,
+$F_2(e)=\sqrt{be+ve^2}$ for $e\ge0$.
+Their least concave majorant is $F_2$ when $a=0$.  If $a>0$ and
+$b\le2a\sqrt v$, it is $H(e)=a+\sqrt v\,e$.
+Otherwise put
+\[
+ w=\sqrt{v-u},\quad s=u/w^2,\quad r=b/(aw),\quad
+ d_0=\sqrt{r^2-4s},\quad \eta=(d_0-2)/r,
+\]
+\[
+ c=\frac r{2\sqrt{d_0+s-1}},\quad
+ m=\frac{d_0+2s}{2\sqrt{d_0+s-1}},\quad
+ e_-=(a/w)\eta,\quad e_+=(a/w)/\eta.
+\]
+Then $d_0>2$, $0<\eta<1$, and
+\[
+ H(e)=\begin{cases}
+ F_1(e),&0\le e\le e_-,\\
+ ac+wm e,&e_-\le e\le e_+,\\
+ F_2(e),&e\ge e_+.
+ \end{cases}
+\]
+\end{lemma}
+\begin{proof}
+For $a>0$, rescale by $z=we/a$.  The squared branches become
+$1+rz+sz^2$ and $rz+(s+1)z^2$, crossing at $z=1$.
+When $r\le2\sqrt{s+1}$, the line $1+\sqrt{s+1}z$ majorizes both
+by squaring.  A concave majorant is at least one at zero and has limiting
+growth at least $\sqrt{s+1}z$; its chords to points tending to infinity
+force it above the same line.
+
+In the remaining case both branches are concave.  Direct algebra gives
+\[
+ (c+mz)^2-(1+rz+sz^2)=c^2(z-\eta)^2,
+\]
+\[
+ (c+mz)^2-(rz+(s+1)z^2)=(c^2-1)(z-1/\eta)^2,
+ \qquad c^2-1=\frac{(d_0-2)^2}{4(d_0+s-1)}>0.
+\]
+These identities prove global majorization and tangency.  The piecewise
+function is concave with matching slopes.  Every concave majorant must
+dominate the active branches and the chord between their contact points,
+so this one is least.  For $a=0$, $F_2\ge F_1$ and $F_2$ is concave.
+\end{proof}
+
+Apply the lemma with $a=\alpha$, $b=b_0$, $u=1$ and $v=1+q^2$,
+and put $\widehat H_x(e)=\min\{1+e,H_x(e)\}$. A minimum of concave functions
+is concave.  For a subarray with $v_i\le a$, Jensen's inequality with
+weights $v_i^{3/2}/\tau_0$ gives the prefactor
+\begin{equation}\label{eq:current-prefactor}
+ \sum_i v_i|f_i (t)-f_i^*(t)|\le\frac t2P_{\rm quad}(t;B,a,\tau_0),\qquad
+ P_{\rm quad}=\tau_0\widehat H_{t\sqrt a}\left(\frac{B-\tau_0}{\tau_0}\right).
+\end{equation}
+Use $P_{\rm quad}=B$ if $\tau_0=0$ or $t\sqrt a>2$.
+The coefficients increase on $[0,2]$, and taking a least concave
+majorant preserves their pointwise order.  Thus $P_{\rm quad}$ increases
+in $t,a,B$.  All slopes of $H_x$ exceed one and $\alpha(x)<1$.
+Before the cap $1+e$ is reached,
+$\widehat H_x-(1+e)\widehat H_x'\le0$; afterwards the ratio
+$\widehat H_x/(1+e)$ is constant.
+Hence this ratio is nondecreasing, and the expression in
+\eqref{eq:current-prefactor} decreases in $\tau_0$.
+These monotonicities give bounds on a parameter box by substitution
+of the appropriate endpoints.
+
+For an alternative interval evaluation, the calculation also uses
 \begin{equation}\label{eq:aggregate-error}
- \sum_j v_j|f_{X_j}(t)-f_{X_j^*}(t)|\le\frac t2
- P(t;B,a,\tau_0),\qquad t\ge0,
+ \sum_j v_j|f_j(t)-f_j^*(t)|\le\frac t2
+ P_{\rm dir}(t;B,a,\tau_0),\qquad t\ge0,
 \end{equation}
 where, with $x=t\sqrt a$,
 \begin{equation}\label{eq:P}
- P(t;B,a,\tau_0)=\min\left\{B,
+ P_{\rm dir}(t;B,a,\tau_0)=\min\left\{B,
   \sqrt{\alpha(x)^2\tau_0^2+q(x)^2(B-\tau_0)(2B+2\tau_0/3)}\right\}.
 \end{equation}
-The bound $P$ increases with $t,a,B$ and decreases with $\tau_0$.
-For the empty subset, set $P=0$.
-\end{proposition}
-\begin{proof}
-The square root in \eqref{eq:directional-prefactor} is increasing in
-$x$ and concave in $\rho\ge1$. In the variable $e=\rho-1$, its
-quadratic has discriminant $(64/9)q^4-8q^2\alpha^2>0$, since
-$\alpha\le2x/3$ and
-$q^2-4x^2/3=(1-x^2/3)^2\ge0$.
-The second derivative of the square root has the opposite sign to this
-discriminant; continuity handles a zero radicand at an endpoint.
-After scaling \eqref{eq:directional-prefactor} to variance $v_j$,
-each term has the factor $tv_j^{3/2}/2$ and moment ratio
-$\rho_j=b_j/v_j^{3/2}$. Replace $t\sqrt{v_j}$ by $t\sqrt a$ and
-apply Jensen's inequality with weights $v_j^{3/2}/\tau_0$; their
-weighted mean of $\rho_j$ is $B/\tau_0$. This gives the square root
-in \eqref{eq:P}. The classical bounds also give $tB/2$.
-
-The expression under the square root in \eqref{eq:P} is
+Indeed $P_{\rm quad}\le P_{\rm dir}$. For $0\le x\le2$, the function
 \[
- 2q^2B^2-\frac43q^2B\tau_0+
- (\alpha^2-2q^2/3)\tau_0^2.
+ R_x(e)=\sqrt{\alpha(x)^2+\tfrac83q(x)^2e+2q(x)^2e^2}
 \]
-Its nonconstant coefficients in $\tau_0$ are nonpositive. Its other
-monotonicities follow from the original nonnegative-factor expression.
-\end{proof}
+majorizes both branches in \eqref{eq:current-two-branches}, since
+$p_1\le q$ and $q\ge1$. It is concave in $e$: the quadratic's
+discriminant is $(64/9)q^4-8q^2\alpha^2>0$, because
+$\alpha^2\le4x^2/9\le q^2/3$. The least concave majorant therefore
+satisfies $H_x\le R_x$. Applying the cap $1+e$ proves the comparison.
+For $x>2$, both prefactors equal $B$.
+
+The bound $P_{\rm dir}$ increases with $t,a,B$ and decreases with $\tau_0$.
+For the latter assertion, expand the radicand as
+$2q^2B^2-\tfrac43q^2B\tau_0+(\alpha^2-2q^2/3)\tau_0^2$;
+its nonconstant coefficients in $\tau_0$ are nonpositive.
+Set $P_{\rm dir}=0$ for the empty subset. Although it is weaker
+pointwise, its separate interval evaluation can give a smaller upper
+endpoint, so the calculation retains both enclosures.
+
+\subsection{Affine bounds in the third absolute moment}\label{sec:current-affine}
+We also use affine bounds for
+\[
+ Z_W(x)=\frac{2(f_W(x)-f_{W^*}(x))}{x},\qquad
+ Z_W(0)=-\ii \E W^3.
+\]
+Put $\phi_2(z)=\int_0^1(1-u)e^{uz}\,du$ and
+\[
+ h_x(w)=-2w^2(x+\ii w)\phi_2(\ii xw),\qquad h_0(w)=-\ii w^3.
+\]
+This is entire in $x,w$.  The zero-bias representation and the moment
+identities give $\E h_x(W)=Z_W(x)$.
+
+Suppose that, throughout a closed frequency cell and for every real $w$,
+\begin{equation}\label{eq:current-disk-certificate}
+ |h_x(w)-\ii \beta w-\gamma(w^2-1)|
+       \le c_0+\delta+c_2|w|^2+\Lambda|w|^3.
+\end{equation}
+The moment identities annihilate the subtracted terms, so
+$|Z_W(x)|\le C+\Lambda\rho$, where $C=c_0+c_2+\delta$.
+For a common slope $\lambda\ge\Lambda>0$, replace this by
+$(C+\Lambda-\lambda)+\lambda\rho$, since $\rho\ge1$.
+Let $C_\lambda(X)$ be the maximum of the resulting intercepts over
+all frequency cells from zero to $X$. Summing the bound with slope
+$\lambda$ over the summands gives
+\begin{equation}\label{eq:current-affine-sum}
+ \sum_i v_i|f_i (t)-f_i^*(t)|
+ \le\frac t2\{C_\lambda(X)\tau_0+\lambda B\},
+ \qquad t\sqrt a\le X.
+\end{equation}
+Each slope gives a bound for the sum; we may then take their minimum.
+
+The table of modulus bounds covers $[0,2]$ in 128 closed cells of width
+$1/64$ at slopes $5/4,3/2,2,3,4$. Its certificates establish
+\eqref{eq:current-disk-certificate} on a compact rectangle by proving
+both $P\ge0$ and $P^2-|h_x-\ii \beta w-\gamma(w^2-1)|^2\ge0$,
+using outward interval and Taylor estimates.  All real $w$ are covered
+by an analytic tail. Here $P$ denotes the right-hand side of
+\eqref{eq:current-disk-certificate}. For example, if $\Lambda>1$ and $0\le x\le X$,
+$|\phi_2(\ii xy)|\le1/2$ gives
+\[
+ |h_x(y)|\le y^3+X^2y/2.
+\]
+For $y\ge R\ge1$, a lower tail polynomial for the difference in
+\eqref{eq:current-disk-certificate} is
+\[
+ (\Lambda-1)y^3+(c_2-|\gamma|)y^2
+      -(X^2/2+|\beta|)y+c_0+\delta+|\gamma|.
+\]
+Nonnegative exact coefficients after $y=R+z$ prove the entire tail.
+For a positive frequency cell $[x_0,x_1]$ and $0<\Lambda\le1$, use
+\[
+ G=\max\{|\gamma-2/x_0|,|\gamma-2/x_1|\},\quad B_0=|\beta+2|,
+\]
+\[
+ \Lambda y^3+(c_2-G)y^2-(4/x_0^2+B_0)y+c_0+\delta+G-2/x_0
+\]
+instead.  Define the equivalent trigonometric target
+\[
+ g_x(y)=\frac2x\left\{e^{\ii xy}+\frac{\ii y}{x}(e^{\ii xy}-1)\right\},
+ \qquad h_x(y)=g_x(y)-2\ii y-\frac2x(1-y^2).
+\]
+The bound $|g_x(y)|\le2/x_0+4y/x_0^2$ proves the claimed tail
+polynomial.
+
+A directional affine table, retained as an additional minimum, certifies
+real projections of the same target in 48 exact rational directions.
+Their convex hull contains the disk of radius $\eta=997/1000$.
+For each direction $\zeta$, a real-line polynomial majorizes
+$\Re(\zeta h_x(w))$; its expectation uses only $\E W=0$,
+$\E W^2=1$ and $\E|W|^3=\rho$.  Maximizing the intercepts over all
+directions yields the bound in \eqref{eq:current-affine-sum} divided
+by $\eta$.  The polygon inclusion is checked by exact supporting
+half-planes.  This factor belongs only to the directional table.
+For box evaluation, an affine intercept of either sign uses the endpoint
+of $\tau_0$ that maximizes it.
+
+
+In the following product estimates, $P(t;B,a,\tau_0)$ denotes the minimum
+of $P_{\rm dir}$, $P_{\rm quad}$ and the applicable bounds
+\eqref{eq:current-affine-sum}.  It satisfies
+\[
+ \sum_i v_i|f_i (t)-f_i^*(t)|\le \frac t2P(t;B,a,\tau_0).
+\]
+Only estimates valid on the complete argument interval may enter the
+minimum.  For the empty subset, $P=0$.
 
 \subsection{A characteristic-function bound using moment excess}
 Squaring the real-part estimate in Lemma~\ref{lem:peano} and adding
@@ -509,22 +956,23 @@ entire cosine argument interval, then apply these monotonicities.
 
 \section{A summand of maximal variance}\label{sec:distinguished}
 
-The independent-sum zero-bias identity, with total variance one, is
+The independent-sum replacement rule of
+\citet[Lemma~2.1(5)]{GoldsteinReinert1997}, with total variance one, gives
 \begin{equation}\label{eq:sum-zero-bias}
  f_{S^*}(t)=\sum_i v_i f_{X_i^*}(t)\prod_{j\ne i}f_{X_j}(t).
 \end{equation}
 For the remaining summands, use the product bound
 \[
  R(t)=\min\{e^{-\psi(t;w,B_R+\tau_R)},
-                  F_0(t;w,B_R,a_R,\tau_R)\}.
+                  \mathcal F_0(t;w,B_R,a_R,\tau_R)\}.
 \]
 If the remainder is empty, set $R(t)=D_R(t)=1$.
 Let $A(t)$ be the minimum of the single-summand bounds
 \eqref{eq:single-cf} and the square root of \eqref{eq:paired-cf} for
-$X_1$. Let $D_R(t)$ be the bound $D_0$ for the remaining summands,
+$X_1$. Let $D_R(t)$ be the bound $\mathcal D_0$ for the remaining summands,
 and $D_S(t)$ the corresponding bound for the whole sum. We also evaluate
 these bounds with $Q$ omitted and take the smaller interval upper bounds.
-Proposition~\ref{prop:aggregation} gives
+The defining inequality for $P$ gives
 
 \begin{equation}\label{eq:distinguished-error}
  \begin{split}
@@ -546,13 +994,10 @@ This formula also defines the endpoint value $\mathcal B(0)$.
 For the characteristic function itself, use
 \begin{equation}\label{eq:whole-cf}
  F_S(t)=\min\{e^{-\psi(t;1,L+\tau)},\ A(t)R(t),\
-                    F_0(t;1,L,d,\tau)\}.
+                    \mathcal F_0(t;1,L,d,\tau)\}.
 \end{equation}
 
-All terms use the same actual $\tau$; an interval evaluation allows its
-whole range in the parameter box. The calculation also bounds the last
-term of \eqref{eq:B} by separating the moment fraction
-$\lambda=b/L$ from two normalized errors. Put
+For another bound on the last term of \eqref{eq:B}, put $\lambda=b/L$ and
 \[
  U_1=\frac{P(t;b,d,d^{3/2})R(t)}b,\qquad
  U_R=\frac{P(t;B_R,a_R,\tau_R)A(t)D_R(t)}{B_R}.
@@ -572,7 +1017,8 @@ the numerator in \eqref{eq:B}, divided by a lower bound for $L$.
 When a denominator in the separate bounds for $U_i$ has lower endpoint
 zero, the bound $U_i\le1$ is used.
 
-Write $D(t)=f_S(t)-e^{-t^2/2}$. The zero-bias identity gives
+Following the comparison in \citet[Lemma~3]{Tyurin2009}, write
+$D(t)=f_S(t)-e^{-t^2/2}$. The zero-bias identity gives
 $f_S'(t)=-t f_{S^*}(t)$, and hence
 \[
  D'(t)+tD(t)=t(f_S(t)-f_{S^*}(t)),\qquad D(0)=0.
@@ -588,6 +1034,299 @@ Taking absolute values gives
        \int_0^t \frac{u^2}{2}\mathcal B(u)e^{u^2/2}\,du.
 \end{equation}
 
+\section{Comparison with a cosine product}\label{sec:current-reference}
+We also compare $f_S$ with the characteristic function of a sum of
+symmetric two-point variables having the same variances. This intermediate
+approximation is studied by \citet[Theorem~1.2 and Example~1.4]{MattnerShevtsova2019}.
+Here a differential identity bounds the error, and the real displacement
+from the Gaussian is retained in the smoothing integral.
+Set $g(t)=e^{-t^2/2}$ and write
+\[
+ C_v(t)=\prod_i\cos(t\sqrt{v_i}),\quad
+ k_v(t)=\sum_i\sqrt{v_i}\tan(t\sqrt{v_i}),\quad
+ r_i (t)=f_i'(t)+\sqrt{v_i}\tan(t\sqrt{v_i})f_i (t).
+\]
+For $t\sqrt d<\pi/2$, $C_v(t)>0$ and
+\begin{equation}\label{eq:current-reference-identity}
+ (f_S-C_v)'+k_v(f_S-C_v)
+       =\sum_i r_i\prod_{j\ne i}f_j,
+ \qquad f_S(0)-C_v(0)=0.
+\end{equation}
+The identity follows from the product rule.
+
+\subsection{The forcing term}
+For a standardized variable define
+\begin{equation}\label{eq:current-transformed-target}
+ T_x(w)=\frac2{x^2}\{(\ii w+\tan x)e^{\ii xw}
+               -\ii w\sec x-x(1-w^2)\},\qquad T_0(w)=\ii (w-w^3).
+\end{equation}
+Then
+\[
+ \E T_x(W)=2\{f_W'(x)+\tan(x)f_W(x)\}/x^2,
+ \qquad r_i (t)=\tfrac12t^2v_i^{3/2}\E T_{t\sqrt{v_i}}(W_i).
+\]
+The elementary estimate is
+\begin{equation}\label{eq:current-elementary-energy}
+ |\E T_x(W)|\le2p(x)\sqrt{(\rho-1)(\rho+5/3)},\qquad
+ p(x)=\frac{x\tan x+1-\sec x}{x^2},\quad p(0)=\tfrac12.
+\end{equation}
+To prove it, write $q_0(u)=f_W''(u)+f_W(u)
+=\E[(1-W^2)(e^{iuW}-1)]$.  The moment-excess Cauchy inequality gives
+$|q_0(u)|\le u\sqrt{(\rho-1)(\rho+5/3)}$.  The Wronskian identity
+\[
+ f_W'(x)\cos x+f_W(x)\sin x=\int_0^xq_0(u)\cos u\,du
+\]
+and positivity of $\cos u$ prove \eqref{eq:current-elementary-energy}.
+Also $p(x)=\int_0^1r\cos(rx)/\cos x\,dr$ is positive and increasing
+below $\pi/2$.
+
+The scalar inequality in Section~\ref{sec:current-energy-cert} gives
+\begin{equation}\label{eq:current-energy}
+ |\E T_x(W)|^2\le(\rho-1)
+     \{q(x)+\tfrac98(\rho-1)\},\qquad
+ q(x)=\frac83\frac{\sinc^4x}{\cos^2x},\quad0\le x\le1.
+\end{equation}
+Let $D_{\rm del}(t)$ bound every deleted product.  With
+$w_i=v_i^{3/2}$ and $e_i=b_i-w_i$, Cauchy--Schwarz gives
+\[
+ \sum_i w_i|\E T_{t\sqrt{v_i}}|
+ \le\sqrt{(L-\tau)\{q(t\sqrt d)\tau+\tfrac98(L-\tau)\}}
+\]
+when $t\sqrt d\le1$.  Multiplication by $t^2D_{\rm del}(t)/2$ yields a forcing
+bound for \eqref{eq:current-reference-identity}.  The elementary
+alternative is
+\[
+ t^2D_{\rm del}(t)p(t\sqrt d)\sqrt{(L-\tau)(L+5\tau/3)}.
+\]
+We can also retain the individual values of $q$ in this estimate.
+Set $a=d^{3/2}$, $f_t(w)=wq(tw^{1/3})$, $k=\lfloor\tau/a\rfloor$,
+$r=\tau-ka$, and $F_t(a,\tau)=kf_t(a)+f_t(r)$.
+The function $f_t$ is increasing and convex: indeed
+\[
+ q(x)=\frac83\left(\frac{\sec x-\cos x}{x^2}\right)^2
+\]
+has nonnegative even Taylor coefficients.  Positivity follows from
+$\tan'=1+\tan^2$ and $\sec'=\sec\tan$; additionally
+$\sec''=\sec+2\sec\tan^2$ implies that the coefficient of $x^{2n}$
+in $\sec x$ is at least $1/(2n)!$.  Hence
+$f_t(w)=\sum_{n\ge0}c_nt^{2n}w^{1+2n/3}$ with $c_n\ge0$.
+Pushing two weights in $(0,a)$ to their available endpoints cannot
+decrease their sum under a convex function.  Iteration gives
+\[
+ \sum_i w_iq(tw_i^{1/3})\le F_t(a,\tau).
+\]
+This gives the forcing bound
+\begin{equation}\label{eq:current-packed-source}
+ \frac{t^2D_{\rm del}(t)}2
+ \sqrt{(L-\tau)\{F_t(a,\tau)+\tfrac98(L-\tau)\}}.
+\end{equation}
+The maximizing weights need not satisfy the total-variance identity;
+maximizing over this larger set preserves an upper bound. We use the
+minimum of the three forcing bounds on their respective domains.
+For $1<t\sqrt d<\pi/2$, the same differential inequality uses the
+elementary bound and the preceding error bound as its initial value.
+
+\subsection{Bounds for the cosine product}
+\begin{lemma}\label{lem:current-maximum}
+Let $M=\sqrt d<1$ and $m=(\tau-M^3)/(1-M^2)$.
+For every increasing convex function $h$ on $[0,M]$,
+\[
+ \sum_i v_ih(\sqrt{v_i})\ge M^2h(M)+(1-M^2)h(m).
+\]
+In particular, below the cosine pole,
+\begin{align*}
+ C_v(t)&\le C_*(t):=\cos(tM)\cos(tm)^{(1-M^2)/m^2},\\
+ k_v(t)&\ge K_*(t):=M\tan(tM)+(1-M^2)\tan(tm)/m,\\
+ C_v(r)/C_v(l)&\le C_*(r)/C_*(l)\qquad(0\le l\le r).
+\end{align*}
+The formulas have Gaussian limits at $m=0$; $d=1$ is the exact singleton.
+\end{lemma}
+\begin{proof}
+Remove one attained largest-variance coordinate and apply weighted
+Jensen to the rest, whose total variance is $1-M^2$ and weighted mean
+of $\sqrt{v_i}$ is $m$.  Necessary moment inequalities give $0\le m\le M$.
+The three applications use respectively
+\[
+ -\log\cos(tx)/x^2,\quad \tan(tx)/x,\quad
+ [\log\cos(lx)-\log\cos(rx)]/x^2.
+\]
+Their continuous values at zero exist.  Nonnegative Taylor coefficients
+below the pole make each increasing and convex.  Applying Jensen to
+the frequency difference proves the ratio inequality directly.
+\end{proof}
+
+For box evaluation the lower corner must remain feasible.  Put
+\[
+ D_0=\max\{d_{lo},\tau_{lo}^2\},\quad M_0=\sqrt{D_0},\quad
+ \tau_0=\max\{\tau_{lo},M_0^3\},\quad
+ m_0=(\tau_0-M_0^3)/(1-D_0)
+\]
+when $D_0<1$.  If
+$F_h(M,\tau)=M^2h(M)+(1-M^2)h((\tau-M^3)/(1-M^2))$, differentiation
+on the feasible region gives
+\[
+ \partial_MF_h=2M\{h(M)-h(m)-(M-m)h'(m)\}
+                         +M^2\{h'(M)-h'(m)\}\ge0,
+ \qquad \partial_\tau F_h=h'(m)\ge0.
+\]
+Starting from $(M_0,\tau_0)$, increase $M$ along
+$\tau(M)=\max(\tau_0,M^3)$ and then increase $\tau$ at the final $M$.
+On the boundary $\tau=M^3$, the expression is
+$M^2h(M)+(1-M^2)h(0)$, also increasing.  Thus the lower corner supplies
+an upper bound for $C_v$, a lower bound for $k_v$, and an upper bound
+for $C_v(r)/C_v(l)$ throughout the parameter box.
+
+To bound $C_v-g$, let $J(z)=-\log\cos z-z^2/2$ and
+\[
+ A_*(t)=D_0\frac{J(tM_0)}{M_0^2}
+        +(1-D_0)\frac{J(tm_0)}{m_0^2},
+\]
+with zero correction when a denominator variable is zero.  On a cell
+$[l,r]$,
+\begin{equation}\label{eq:current-center-box}
+ g(l)\operatorname{expm1}\!\left[-\frac{\tau_{hi}}{d_{hi}^{3/2}}
+                       J(r\sqrt{d_{hi}})\right]
+ \le C_v(t)-g(t)\le g(r)\operatorname{expm1}[-A_*(l)]\le0.
+\end{equation}
+The lower bound follows from the chord upper bound for
+$-\log\cos(tx)/x^2$ on $[0,\sqrt d]$ with weights $v_i$.
+The upper bound follows from Lemma~\ref{lem:current-maximum}.
+Positive correction series are increasing in their arguments; factoring
+out $g$ proves \eqref{eq:current-center-box} without assuming that the
+offset itself is monotone in frequency.
+
+If $A_j$ bounds the modulus of the right-hand side of
+\eqref{eq:current-reference-identity} on $[l,r]$, $P_j$ bounds
+$|f_S(l)-C_v(l)|$, and $k_j$ is a lower bound for $k_v$ on the cell, put
+$h=r-l$ and $\Psi_j=(1-e^{-k_jh})/k_j$, with value $h$ at zero.
+Comparison with $z'=-k_jz+A_j$ gives
+\begin{equation}\label{eq:current-radius-recursion}
+ E_j=\max\{P_j,e^{-k_jh}P_j+A_j\Psi_j\},\qquad
+ P_{j+1}\le Q_jP_j+A_j\Psi_j,
+\end{equation}
+where $Q_j$ bounds $C_v(r)/C_v(l)$. Here $E_j$ bounds $|f_S-C_v|$
+throughout the cell, and $P_{j+1}$ bounds it at the right endpoint.
+The calculation takes the minimum of the applicable error bounds and
+uses \eqref{eq:ode-comparison} wherever the cosine comparison does
+not apply.
+
+\subsection{A scalar inequality for the reference error}\label{sec:current-energy-cert}
+To prove \eqref{eq:current-energy}, for $x>0$ set
+\[
+ a_x=\frac{2x-x\sec x-\sin x}{x^2},\quad
+ U_x(w)=T_x(w)-a_x(w^2-1),\quad
+ V_x(y)=\frac{x^2\cos x}{2}U_x(y).
+\]
+Writing $s=\sin x$, $c=\cos x$,
+$A=(x+sc)/2$, $B=s^2$ and $D=x^2+2xsc$, one has
+\[
+ V_x(y)=(\ii yc+s)e^{\ii xy}-\ii y+A(y^2-1).
+\]
+Set $q_v=2B^2/3$, $r_v=2BD/3-4B^2/9$,
+$\lambda_v=\lambda x^4c^2/4$, with $\lambda=9/8$.
+We verify the scalar inequality
+\begin{equation}\label{eq:current-energy-gap}
+ \mathcal D_x(y):=h(y)\{q_v+(r_v/2)(y^2-1)+\lambda_vh(y)\}
+                         -|V_x(y)|^2\ge0\qquad(y\ge0).
+\end{equation}
+The value and first three derivatives at $y=1$ vanish.  This exact cancellation
+is removed before interval evaluation.
+
+Define
+\[
+ E_n(\ii v)=\sum_{m\ge0}\frac{(\ii v)^m}{(m+n)!}
+       =\frac1{(n-1)!}\int_0^1(1-u)^{n-1}e^{\ii vu}\,du.
+\]
+With $z=y-1$, the regular quotient is
+\[
+ \frac{\mathcal D_x(y)}{(y-1)^4}
+ =\lambda_v(y+1/2)^2+r_v(y/2+5/4)-A^2
+                  -\Re\sum_{n=1}^4c_nE_n(\ii xz),
+\]
+where
+\begin{align*}
+ c_4&=-2x^4,&
+ c_3&=2x^4+2\ii x^3(1+c^2),\\
+ c_2&=x^2(4Asc+2c^2)-2\ii x^2\{A(1+2c^2)-sc\},&
+ c_1&=-2xAc^2-2\ii xAsc.
+\end{align*}
+These coefficients follow by expanding $|V_x|^2$ and subtracting its
+Taylor polynomial of degree three at $y=1$.
+The degree-$K$ Taylor polynomial for $E_n(\ii v)$ has error at most
+$\max|v|^{K+1}/(n+K+1)!$, by its integral representation.
+
+For cells touching $x=0$, remove the factor $x^4$ as well.  Put
+$S=\sinc x$, $u=\sinc(2x)=Sc$, $a=(1+u)/2$,
+\[
+ R=\tfrac23S^2(1+2u)-\tfrac49S^4,\qquad
+ K_0=-uS^2-4x^2[\Re E_3(2\ii x)]^2.
+\]
+Then the analytic quotient $\mathcal H=\mathcal D/[x^4(y-1)^4]$ is
+\begin{align}
+ \mathcal H(x,y)={}&\tfrac\lambda4c^2(y+1/2)^2+R(y/2+5/4)+K_0
+       -2au(z+2)\Re E_2(\ii xz)\notag\\
+ &-2\{ac^2z^2+[a(1+2c^2)-u]z+1\}\Re E_3(\ii xz)
+       +2\{c^2z^2+(1+c^2)z+1\}\Re E_4(\ii xz).
+       \label{eq:current-energy-zero}
+\end{align}
+For example,
+$\Re E_1(\ii v)=1-v^2\Re E_3(\ii v)$ and
+$\Im E_n(\ii v)=v\Re E_{n+1}(\ii v)$ for $n=1,2,3$ give this formula
+from the preceding quotient.  The remaining constant cancellation is
+\[
+ (uc^2-a^2)/x^2=-uS^2-(1-u)^2/(4x^2)
+              =-uS^2-4x^2[\Re E_3(2\ii x)]^2.
+\]
+At zero,
+\[
+ \mathcal H(0,y)=(4y+1)/144+(\lambda-1)(y+1/2)^2/4>0.
+\]
+
+The recorded scalar partitions cover $0\le x\le1/2$, $0\le y\le48$
+using \eqref{eq:current-energy-zero}, and $1/2\le x\le1$,
+$0\le y\le16$ using the positive-frequency quotient.  Every accepted
+rectangle has an outward nonnegative lower bound; all rectangle joins
+are exact.  There are analytic infinite tails.  On $0\le x\le1/2$,
+\[
+ |U_x(y)|\le P(y):=y^3+\tfrac{20}{21}y^2+\tfrac87y+\tfrac4{21}.
+\]
+For $x>0$ this follows by writing
+$V=(\ii yc+s)(e^{\ii xy}-1-\ii xy)+(A-xc)y^2+s-A+\ii y(c-1+xs)$,
+using $c\ge7/8$, $|e^{\ii v}-1-\ii v|\le v^2/2$,
+$0\le A-xc\le x^3/3$, $0\le s-A\le x^3/6$, and
+$0\le c-1+xs\le x^2/2$.  At zero it follows directly.
+For $y\ge1$, the unscaled gap is at least $\lambda h(y)^2-P(y)^2$.
+At $y=48+z$ its exact coefficients, in increasing order, are
+\[
+ \frac{51794446417}{288},\quad\frac{354649842}{7},\quad
+ \frac{28964396957}{7056},\quad\frac{181934075}{1176},\quad
+ \frac{43072585}{14112},\quad\frac{5161}{168},\quad\frac18.
+\]
+They are positive.  On $1/2\le x\le1$, use $A\le3/4$ and
+$x^4\cos^2x/4>1/100$ to obtain
+\[
+ \mathcal D_x(y)\ge\frac1{100}(y-1)^4(y+1/2)^2
+                            -(3y^2/4+2y+1)^2.
+\]
+At $y=16+z$ the coefficients are
+\[
+ \frac{1395225}{16},\quad41760,\quad\frac{60985}{8},\quad
+ \frac{14097}{20},\quad\frac{1773}{50},\quad\frac{93}{100},\quad\frac1{100},
+\]
+again positive.  These tails and the compact certificates prove
+\eqref{eq:current-energy-gap} for all $y\ge0$; parity supplies real $w$.
+
+Finally, divide the unscaled gap by $h$ at its continuous value at one.
+Weighted Cauchy--Schwarz gives
+\[
+ |\E U_x(W)|^2\le\E h(Y)\,\E\frac{|U_x(W)|^2}{h(Y)}
+ \le(\rho-1)\{q(x)+\lambda(\rho-1)\}.
+\]
+Since $\E U_x=\E T_x$, this proves \eqref{eq:current-energy} under
+the recorded scalar enclosure computations.  The quotient grows at
+most linearly at positive $x$ and cubically at $x=0$; the third absolute
+moment suffices.  If $\rho=1$, $|W|=1$ almost surely and the forcing is zero.
+
 \section{Smoothing and numerical integration}\label{sec:smoothing}
 
 For $0<u<1$, put
@@ -595,7 +1334,7 @@ For $0<u<1$, put
  K(u)=\frac{1-u}{2}+
  \frac{\ii}{2}\left((1-u)\cot(\pi u)+\frac1\pi\right).
 \]
-Prawitz's inequality, in the form stated by
+The smoothing inequality of \citet{Prawitz1972}, in the form stated by
 \citet[Lemma~4.1]{Shevtsova2012} and \citet[eq.~(46)]{Tyurin2009},
 gives for any $T>0$ and $0<s<1$
 \begin{equation}\label{eq:prawitz}
@@ -680,16 +1419,176 @@ use the smaller upper endpoint:
 also supplied by \citet[Lemma~4.1]{Shevtsova2012}. Its integral is
 expressible using the error function and elementary functions.
 
+\section{Smoothing at a fixed threshold}
+\label{sec:current-smoothing}
+Use $k_T(t)=K(t/T)/T$ and $g(t)=e^{-t^2/2}$.  With the convention
+$f_S(t)=\E e^{\ii tS}$, the signed inequality of \citet{Prawitz1972}
+gives
+\begin{equation}\label{eq:current-signed-prawitz}
+ \Prob\{S\le x\}\le\tfrac12+2\Re\int_0^Tk_T(t)e^{-\ii xt}f_S(t)\,dt.
+\end{equation}
+We use the formulation in \citet[eqs.~(2.2)--(2.6)]{Pinelis2013},
+which applies to the distribution function at atoms as well. Its filter
+satisfies $\ii M(u)/(2\pi u)=K(u)$ for $u>0$. The integral is the
+limit of its real part at zero.
+
+Define
+\[
+ \Gamma_{T,a}(x)=\tfrac12+2\Re\int_0^ak_T(t)e^{-\ii xt}g(t)\,dt-\Phi(x).
+\]
+On the grid $t_j=Tsj/N$, choose bounds
+\[
+ C_j\ge\frac2L\int_{t_j}^{t_{j+1}}
+          |k_T(t)|\,|f_S(t)-g(t)|\,dt
+\]
+uniformly on the parameter box. Such bounds follow from
+\eqref{eq:ode-comparison} and $|f_S-g|\le F_S+g$.
+Let $A_j$ bound $2\int_{t_j}^{t_{j+1}}|k_Tf_S|$
+and let $H$ bound this integral over $[Ts,T]$.
+Splitting \eqref{eq:current-signed-prawitz} at $t_k$ gives, for $1\le k\le N$,
+\begin{equation}\label{eq:current-cutoff}
+ \frac{\Prob\{S\le x\}-\Phi(x)}L
+ \le\sum_{j<k}C_j+\frac{\sum_{j\ge k}A_j+H+\Gamma_{T,t_k}(x)}L.
+\end{equation}
+The first cell always uses the discrepancy bound $C_0$.
+An upper bound for $\Gamma$ on $\R$ gives a bound uniform in $x$;
+we may take the minimum over any finite collection of cutoffs and
+smoothing parameters.
+
+The reference comparison gives an additional bound depending on a
+closed threshold interval $I$.  On a frequency cell $[l,r]$ let
+$[\alpha,\beta]$ enclose $\Re(k_T(t)e^{-\ii xt})$ for all $t$ in the
+cell and $x\in I$.  If $|f_S-C_v|\le E_j$ and
+$C_v-g\in[\ell_j,h_j]$, then
+\begin{equation}\label{eq:current-signed-cell}
+ 2\Re\int_l^rk_T(t)e^{-\ii xt}(f_S(t)-g(t))\,dt
+ \le J_{j,I}:=W_jE_j+2(r-l)
+ \max\{\ell_j\alpha,\ell_j\beta,h_j\alpha,h_j\beta\},
+\end{equation}
+where $W_j\ge2\int_l^r|k_T|$.
+For a box $L\in[L_{lo},L_{hi}]$, define
+\[
+ \mathcal N(z)=z/L_{lo}\quad(z\ge0),\qquad
+ \mathcal N(z)=z/L_{hi}\quad(z<0).
+\]
+It bounds division of the actual numerator by the actual $L$ and
+is increasing in $z$.  Hence an eligible cell uses
+$\min\{C_j,\mathcal N(J_{j,I})\}$; the first and all ineligible
+cells keep $C_j$.
+
+Let $c$ index the chosen smoothing parameters and their frequency grids,
+and let $\gamma_{c,k,I}$ be an upper bound for $\Gamma$ on $I$ at
+cutoff $k$. The resulting bound is
+\[
+ U_{c,k,I}=\sum_{j<k}\min\{C_{c,j},\mathcal N(J_{c,j,I})\}
+      +\mathcal N\left(\sum_{j\ge k}A_{c,j}+H_c+\gamma_{c,k,I}\right).
+\]
+The minimum in this formula means $C_{c,j}$ on the first cell and
+wherever the reference bound does not apply.
+For the finite partition of $[-X,X]$, the bound is
+\begin{equation}\label{eq:current-threshold-cover}
+ \max\left\{\max_I\min_{c,k}U_{c,k,I},\frac1{L_{lo}(1+X^2)}\right\}.
+\end{equation}
+Cantelli bounds both exterior tails by $1/(1+X^2)$.  Reflection gives
+the other Kolmogorov discrepancy: it preserves the moment box, real
+reference function and error bound. Its left-limit convention at atoms does
+not change the supremum against continuous $\Phi$.
+The central calculation uses $X=2$ and the 128 closed threshold
+cells of width $1/32$, and also takes the minimum with the bound
+uniform in $x$ obtained from \eqref{eq:current-cutoff}.
+
+A negative upper product in
+\eqref{eq:current-signed-cell} is multiplied by a lower bound for its
+positive width.  Negative upper numerators use $L_{hi}$, and signed
+prefix sums round each addition upward.  The nonnegative relative
+summation allowance cannot be applied to a negative sum.
+
+\subsection{Enclosing the Gaussian defect}
+Let $a=Ts$ and $h(u)=1/(\pi u)-\cot(\pi u)$, with $h(0)=0$.
+An exact signed expression is
+\[
+ \Gamma_{T,a}(x)=\int_0^s(1-u)e^{-T^2u^2/2}
+       \{\cos(xTu)-h(u)\sin(xTu)\}\,du
+ -\frac1\pi\int_s^\infty e^{-T^2u^2/2}\frac{\sin(xTu)}u\,du.
+\]
+The ordinary Gaussian coefficient follows by taking absolute values
+inside both integrals; retaining the common threshold improves it.
+
+The cotangent partial fractions give
+\[
+ p_m(u)=\sum_{j=0}^{m-1}\frac{2\zeta(2j+2)}\pi u^{2j+1},\qquad
+ 0\le h(u)-p_m(u)\le\frac{\pi u^{2m+1}}{3(1-s^2)}.
+\]
+Consequently $|\Gamma-\Gamma^{(m)}|\le\epsilon_m$, where
+\[
+ \epsilon_m=\frac{\pi s^{2m+2}}{3(1-s^2)(2m+2)},
+\]
+\[
+ \Gamma^{(m)}(x)=-\tfrac12\operatorname{erf}(x/\sqrt2)
+ +\int_0^ag(t)\left[\frac{1-t/T}{T}
+       \{\cos(xt)-p_m(t/T)\sin(xt)\}
+       +\frac{x}{\pi}\sinc(xt)\right]dt.
+\]
+The finite integrand is entire. Arb's implementation of the Petras
+integration method \citep{Johansson2018} supplies nodal integral enclosures;
+adding $\epsilon_m$ bounds the exact defect.  At zero,
+\[
+ \Gamma_{T,a}(0)=\frac{\sqrt{\pi/2}}T\operatorname{erf}(a/\sqrt2)
+                              -\frac{1-e^{-a^2/2}}{T^2}.
+\]
+
+For a global curvature bound put $H_s=\pi s/[3(1-s^2)]$.  Differentiating
+twice and using $\sqrt{1+h^2}\le1+H_s$ gives
+\[
+ |\Gamma''(x)|\le M_G:=(1+H_s)
+ \left\{\frac{\sqrt{\pi/2}}T\operatorname{erf}(a/\sqrt2)
+                       -s e^{-a^2/2}\right\}+\frac{e^{-a^2/2}}\pi.
+\]
+If upper endpoint values on $[u,v]$ are $G_u,G_v$, then
+\begin{equation}\label{eq:current-gaussian-chord}
+ \Gamma(x)\le\frac{(v-x)G_u+(x-u)G_v}{v-u}
+                       +\frac{M_G}{2}(x-u)(v-x).
+\end{equation}
+Indeed the right side minus $\Gamma$ is concave and nonnegative at
+both endpoints.  Restricting this expression to intersections with a
+requested threshold cell gives its $\gamma_{c,k,I}$.
+
+For the exterior thresholds, $Y>0$ gives
+\begin{align*}
+ \sup_{|x|\ge Y}\Gamma_{T,a}(x)\le{}&
+ \min\{1,16/(T^2Y^2)\}+\operatorname{erfc}(Y/(2\sqrt2))\\
+ &+\frac{\sqrt{\pi/2}}T\operatorname{erfc}(a/\sqrt2)
+                      +\frac{E_1(a^2/2)}{2\pi}.
+\end{align*}
+For a point mass at zero, let $\beta_T(y)$ be the signed Prawitz
+majorant minus the step function.  Away from zero,
+$0\le\beta_T(y)$ and
+$\beta_T(y)+\beta_T(-y)=\sinc^2(Ty/2)$.
+The full Gaussian defect is $\E\beta_T(x-Z)$ for a standard normal
+$Z$.  Split at $|Z|\le Y/2$ to obtain the first two terms.
+Changing the full Gaussian cutoff to $a$ costs at most the last two,
+using $2|K(u)|\le1+1/(\pi u)$ and extending the positive integrals
+to infinity.
+
+Finally the exact grid split $sk/N$ need not equal the binary64 split
+$\widehat s$ stored in a Gaussian record.  The uniform correction
+\[
+ |sk/N-\widehat s|\sup_{u\in I_s}2|K(u)|,
+\]
+where $I_s$ joins them, follows by bounding the intervening signed
+Gaussian integral and using $g\le1$.  This correction is added before
+the coefficient is used in the matching cutoff.  At the full cutoff,
+the analytic and Arb-integrated Gaussian coefficients may also
+be retained as valid upper bounds.
 \section{The interval calculation}\label{sec:certificate}
 
-The interval calculation covers $L\in[L_-,L_+]$, where
-$L_-\approx0.006$ and $L_+\approx1.15$ are the following exact dyadic
-rationals, represented by the stored binary64 endpoints:
-
+The finite calculation covers $L\in[L_-,L_+]$, where the exact endpoints are
 \begin{equation}\label{eq:exact-endpoints}
- L_-=\frac{3458764513820541}{576460752303423488},\qquad
- L_+=\frac{2589569785738035}{2251799813685248}.
+ L_-=\frac{6456360425798343}{4611686018427387904}\approx0.0014,
+ \qquad
+ L_+=\frac{1362338887279575}{1125899906842624}\approx1.21.
 \end{equation}
+These are the rational values of the stored binary64 numbers.
 
 \subsection{Small and large moments}
 For $0<L\le L_-$, Corollary~4.18 of \citet{Shevtsova2012} gives
@@ -697,8 +1596,8 @@ For $0<L\le L_-$, Corollary~4.18 of \citet{Shevtsova2012} gives
  \Delta/L\le\CE+0.3413L^{1/3}
       \le\CE+0.3413L_-^{1/3}<\SmallUpper.
 \end{equation}
-This corollary applies because $L_-<0.01$. The scalar checker
-recomputes the last enclosure.
+The corollary applies to general independent arrays and requires
+$L\le0.01$, which holds here.
 
 For every mean-zero variance-one law, Cantelli's inequality and
 reflection give
@@ -706,203 +1605,165 @@ reflection give
  \Delta\le\sup_{x>0}\left(\Phi(x)-\frac{x^2}{1+x^2}\right)
       <\VarianceUpper.
 \end{equation}
-For completeness, at $x\ge0$ the lower CDF bound follows from Cantelli,
-while the opposite difference is at most $1-\Phi(x)\le1/2$.
-Reflection handles $x<0$, including either one-sided convention at atoms.
-The displayed supremum exceeds $1/2$. Its stationary point is unique:
-the logarithmic derivative of
-$2x/((1+x^2)^2\phi(x))$ is
-$(x^2-1)^2/(x(1+x^2))\ge0$, and the ratio increases from zero to
-infinity. Arb isolation of the stationary point gives
+At $x\ge0$, Cantelli gives the lower CDF bound, while the opposite
+difference is at most $1-\Phi(x)\le1/2$. Reflection handles $x<0$,
+including one-sided limits at atoms. The displayed supremum exceeds
+$1/2$. Its stationary point is unique: the logarithmic derivative of
+$2x/((1+x^2)^2\phi(x))$ is $(x^2-1)^2/(x(1+x^2))\ge0$, and this
+ratio increases from zero to infinity. An Arb enclosure of the
+stationary value, divided by the exact $L_+$, gives
 \begin{equation}\label{eq:large-L}
  \Delta/L<\LargeUpper\qquad(L\ge L_+).
 \end{equation}
 
-\subsection{Subdivision of the parameter domain}
-For each closed interval $L\in[\ell,H]$, the calculation starts from
+\subsection{Covering all feasible moments}
+For a closed interval $L\in[\ell,H]$, a containing box is
 \[
  0\le d\le\min\{1,H^{2/3}\},\qquad
- 0\le b\le H,\qquad 0\le\tau\le\min\{1,H\},
+ 0\le b\le H,\qquad 0\le\tau\le\min\{1,H\}.
 \]
-with outward-rounded endpoints. The constraints in
-\eqref{eq:moment-domain} tighten this box. A box is accepted when its
-computed upper bound is finite and below $0.475$ throughout the box.
-It is discarded when the constraints prove it infeasible; otherwise,
-it is divided into two closed boxes whose union contains it. The stored
-tree records each split and terminal decision. The finer claimed
-constant $\CandidateUpper$ is checked against the recorded maxima
-after this subdivision is complete.
+The constraints in \eqref{eq:moment-domain} tighten this box, with
+outward rounding. Every remaining box is either accepted using a
+uniform upper bound, excluded by a necessary moment inequality, or
+divided into two closed children whose union contains its feasible
+part. A complete finite tree therefore bounds every array in its
+$L$ interval. Different $L$ intervals may overlap; exact rational
+endpoint comparisons check that their union has no gaps.
 
-For each box, the evaluator tries three pairs of smoothing parameters
-$T,s$ and takes the minimum of the resulting bounds. Each pair divides
-$[0,Ts]$ and $[Ts,T]$ into 512 equal frequency intervals.
-The pairs are chosen by the rules in
-\path{verify/kernel/refined_integral.py}, with scale and shift pairs
-$(1,0)$, $(1.02,-0.02)$, and $(1.04,-0.02)$ from
-\path{verify/kernel/batch_weights.py}. The upper endpoint of the
-box's $\tau$ interval selects an input to these rules through
-\path{verify/kernel/gaussian_batch.py}. The resulting binary64 values
-of $T,s$ are treated as exact dyadic parameters; each bound is evaluated
-over the actual moment box.
+Some trees divide all three moment coordinates. Others divide $(d,\tau)$
+and bound the entire feasible interval of $b$ inside each such box.
+For fixed actual $(L,d,\tau)$, this interval is
+\[
+ d^{3/2}\le b\le L-\tau+d^{3/2}.
+\]
+For a containing parameter box, outward endpoints give a containing
+$b$ interval. If $U(I)$ bounds a slice with $b\in I$, then
+$\max_{I\in\mathcal P}U(I)$ bounds any complete closed partition
+$\mathcal P$ of that interval. During refinement, a parent is replaced
+only after both children have bounds; each child can also use the
+parent's bound. Thus stopping refinement at any stage retains coverage.
+The records use complete equal subdivisions and adaptive subdivisions
+of depth at most six.
 
-Before subdivision, the calculation tries two bounds uniform over
-$(d,b,\tau)$. The first uses \eqref{eq:cantelli} in the looser form
-$\Delta/L\le0.54093655/\ell$. The second applies the smoothing
-integral with $d_U=H^{2/3}$ and $E_U=2H$, rounded upward, using
+Each smoothing calculation fixes $T>0$ and $0<s<1$. Its stored
+binary64 parameters are interpreted as exact dyadic rationals.
+The meshes divide $[0,Ts]$ and $[Ts,T]$ into $N$ intervals each, with
+$N\in\{512,1024,2048\}$ as specified in the record. The cutoffs in
+the first range are $Ts\,k/32$, $k=24,\ldots,32$.
+Parameter-dependent choices of $T,s$, and minima over several complete
+smoothing bounds, are permitted by the smoothing inequality. They
+impose no additional restriction on the moment domain.
+
+A whole $L$ interval may also be accepted without moment subdivision.
+The available bounds include \eqref{eq:cantelli} and the uniform
+smoothing estimates obtained from $\tau\le L\le H$ and $d\le H^{2/3}$.
+In particular, taking $E_U=2H$ and $d_U=\min(1,H^{2/3})$ gives
 \[
  \mathcal B_U(t)=\min\{1,e^{-t^2/2+\kappa E_Ut^3+m(t,d_U)}\},
  \qquad F_U(t)=e^{-\psi(t;1,E_U)}.
 \]
-These follow from $\tau\le L\le H$ and the product bounds of
-Section~\ref{sec:products}. If either proves the acceptance bound for
-the whole $L$ interval, the record has a single accepted node.
+These follow from the product bounds and the classical zero-bias error.
 
 \begin{center}
 \begin{tabular}{lr}
 \toprule
-Quantity & Value\\
+Quantity & Recorded value\\
 \midrule
 Closed $L$ intervals & \BandCount\\
 Partition nodes & \NodeCount\\
 Accepted leaves & \AcceptedCount\\
 Infeasible leaves & \InfeasibleCount\\
-Largest recorded upper endpoint & \RecordedUpper\\
+Largest upper bound for $\Delta/L$ & $\RecordedUpper\ldots$\\
 Upper bound for $L\le L_-$ & $<\SmallUpper$\\
 Upper bound for $L\ge L_+$ & $<\LargeUpper$\\
 \bottomrule
 \end{tabular}
 \end{center}
-Of the \BandCount{} intervals, 545 used the moment-parameter bounds, 215 used the
-uniform smoothing bound, and seven used the variance bound. Every
-accepted leaf has a finite upper endpoint. Together with the two
-complementary estimates, their maximum gives
-\[
- \Cind\le\max\{\RecordedUpper,\SmallUpper,\LargeUpper\}
- <\CandidateUpper.
-\]
+The counts include overlapping moment intervals. The largest finite
+upper endpoint, interpreted exactly, is
+\begin{equation}\label{eq:finite-maximum}
+ U_* = \frac{4089268438506339}{9007199254740992}<\frac{227}{500}.
+\end{equation}
+Both analytic complements are smaller than $U_*$. Provided that the
+recorded interval evaluations satisfy the bounds above, every array
+therefore has $\Delta/L\le U_*$. Taking the supremum gives the proposed
+uniform bound $\Cind\le U_*<\CandidateUpper$.
 
-\subsection{Completed computation and subsequent checks}
-The original calculation evaluated every accepted-leaf bound. The
-supplement records three kinds of subsequent checks:
-\begin{enumerate}[leftmargin=*,itemsep=3pt]
-\item \emph{Saved-record checking} checks file and source-code digests,
-tree syntax and counts, contiguous $L$ intervals, recorded upper
-endpoints, and the scalar enclosures in
-\eqref{eq:small-L}--\eqref{eq:large-L}. It does not recompute the
-quadrature at accepted leaves.
-\item \emph{Geometric replay} uses the archived implementation to
-reconstruct every box reduction and split, check every infeasibility
-decision, and verify coverage of all \BandCount{} intervals. It also
-checks the analytic complements.
-\item \emph{Numerical replay} additionally recomputes quadrature at
-accepted leaves. The recorded replay recomputed all 4,944 accepted
-leaves in three intervals, selected by lower endpoints nearest $0.006$,
-$0.25$, and $0.48$. The checksums of their ordered numerical results and
-their maxima matched the original records. Quadrature in the remaining
-intervals has not all been recomputed.
-\end{enumerate}
-The records contain these checksums and maxima; individual numerical
-values can be recovered by repeating the computation. Independent
-mathematical review remains outstanding.
+\subsection{Arithmetic and completed verification}\label{sec:arithmetic}
+The original computation evaluated every accepted-leaf bound. Subsequent
+checks reconstructed the complete moment partition, verified the exact
+union of the $L$ intervals, and checked stored Gaussian threshold
+partitions. The Gaussian checks covered 10,530 distinct records with
+299,796 threshold nodes and 289,266 intervals; shared records can occur
+in more than one moment calculation.
 
-\subsection{Arithmetic assumptions and reproduction}\label{sec:arithmetic}
-The transcendental constants are enclosed with 100-bit Arb arithmetic.
-The vector calculation assumes IEEE-754 binary64 elementary operations
-and square root, rounding to nearest, gradual underflow, and no unsafe
-fast-math transformations. Interval operations use \texttt{nextafter}
-to round endpoints outward. Nonnegative cumulative sums and dot products
-are multiplied by $1+4N2^{-53}$ and rounded upward, where $N=512$ is
-the number of frequency intervals in each range for each smoothing
-choice. The full factor is used for every prefix of a cumulative sum.
+A further numerical replay recomputed all 1,346 accepted leaves in three
+selected complete moment intervals, traversing 2,689 nodes. Each recorded
+sequence was replayed with its own evaluation rule and stopping threshold;
+its ordered numerical checksum and maximum agreed with the original.
+The remaining accepted leaves and the Gaussian quadrature nodes have not
+all received a second numerical evaluation. Independent mathematical
+review remains outstanding.
 
-For a nonnegative lower bound $p$ on an exponent, the negative
-exponential is bounded using
+The vector arithmetic assumes correctly rounded IEEE-754 binary64 basic
+operations and square root, gradual underflow, finite intermediate values,
+and no unsafe fast-math transformations. Endpoints are rounded outward
+with \texttt{nextafter}. For nonnegative sums the implementation uses an
+allowance depending on the mesh size, $1+4N2^{-53}$, including for every
+prefix of a cumulative sum. Signed sums use individually outward-rounded
+additions. Negative numerators use the upper endpoint of the positive
+normalizing interval, as described in the smoothing argument.
+
+For a nonnegative exponent lower bound $p$, the vector code uses
 \[
  P_{16}(x)=\sum_{j=0}^{16}\frac{x^j}{j!},\qquad
  e^{-p}\le P_{16}(p/64)^{-64}\quad(0\le p<25).
 \]
-The implementation evaluates this polynomial with downward rounding,
-takes the reciprocal upward, and performs six upward-rounded squarings.
-For $p\ge25$, it uses an upper enclosure of $e^{-25}$.
-The routine is \texttt{exp\_upper\_from\_nonnegative\_lower} in
-\path{verify/kernel/interval_bounds.py}.
+It evaluates $P_{16}$ downward, takes the reciprocal upward, and performs
+six upward-rounded squarings. At $p\ge25$ it uses an upper enclosure of
+$e^{-25}$. Scalar transcendental values, geometric reductions and reference
+bounds use Arb ball arithmetic, at the precisions recorded with their
+sources. Arb integration enclosures, including their analytic branch
+conditions and explicit remainder bounds, are part of the numerical
+assumptions. The scalar coefficient certificates and their domains are
+also required by the corresponding estimates.
 
-The Gaussian integral in \eqref{eq:gaussian-majorant} is evaluated by
-\texttt{gaussian\_G} in \path{verify/kernel/gaussian_batch.py}, using
-Arb's \texttt{acb.integral}. Its callback passes the integration
-routine's analyticity requirement to the square root through
-\texttt{sqrt(analytic=analytic)}. The returned ball must be finite and
-its imaginary part must contain zero. The validity of the integration
-also depends on Arb's integration contract and the callback's branch
-handling. The summation allowance, exponential bound, and integration
-procedure are included in the outstanding arithmetic audit.
+The supplement supplies the mathematical inputs and verification sources.
+\path{result.json} summarizes the candidate and the completed checks;
+\path{verify/README.md} describes their scope and reproduction commands.
+File hashes identify those inputs and sources.
 
-The nine arithmetic source files are identified by SHA-256 digests.
-The recorded numerical runtime is Python~3.12.10, NumPy~2.4.6,
-python-flint~0.8.0, and SciPy~1.15.3. The complete interval records are
-in \path{certificates/cover.json}; the proposed bound and scalar
-endpoints are summarized in \path{result.json}.
-The supplement's \path{verify/README.md} gives the commands for checking
-the saved records, reconstructing the partition, and recomputing
-selected numerical bounds.
-
-\section{Possible refinements}\label{sec:questions}
-
-Two relaxations remain in the estimates: the triangle inequality
-replaces the modulus of a sum of complex zero-bias errors by the sum of
-their moduli, and the moment constraints may admit unrealizable tuples.
-A finer parameter partition can reduce interval-enclosure error, but
-cannot recover the information lost in either relaxation.
-
-\subsection{Higher-order terms in the logarithm}
-The following higher-order bounds were not used in the completed
-calculation. With the notation of Lemma~\ref{lem:quadratic-charge},
-H\"older interpolation gives, for every integer $p\ge2$,
-\[
- \|(v_j)\|_{3/2}
- \le \|(v_j)\|_1^{(2p-3)/(3p-3)}\|(v_j)\|_p^{p/(3p-3)}.
-\]
-Since $\|(v_j)\|_{3/2}=\tau_0^{2/3}$ and $\|(v_j)\|_1=V_0$,
-\[
- \|(v_j)\|_p\ge\frac{\tau_0^{2-2/p}}{V_0^{2-3/p}}.
-\]
-
-If $A_0\ge0$, the same norm triangle inequality gives
-\begin{equation}\label{eq:higher-charge}
- \sum_jq_j^p\ge Q_p:=
- \left(\max\left\{0,A_0\frac{\tau_0^{2-2/p}}{V_0^{2-3/p}}
-                      -\kappa t^3(B-\tau_0)\right\}\right)^p.
-\end{equation}
-Take $Q_p=0$ otherwise. For $0\le q<1/2$,
-\[
- -\tfrac12\log(1-2q)=\sum_{p=1}^{\infty}\frac{2^{p-1}}p q^p.
-\]
-Truncating the series and using \eqref{eq:higher-charge} gives the
-full-product bound below. Omitting an index reduces each $p$th-power
-sum by at most $m^p$, which gives the second bound. For any integer
-$P\ge2$,
-\begin{equation}\label{eq:higher-products}
- \begin{split}
- \prod_j|f_{X_j}(t)|
-   &\le\exp\left\{-H-\sum_{p=2}^P\frac{2^{p-1}}p Q_p\right\},\\
- \prod_{j\ne i}|f_{X_j}(t)|
-   &\le\exp\left\{-H+m-\sum_{p=2}^P\frac{2^{p-1}}p
-                              \max(0,Q_p-m^p)\right\}.
- \end{split}
-\end{equation}
-Take the minimum of each displayed bound, one, and any other applicable
-product bound.
-
-\subsection{Aggregation and phase information}
-The real-part interval in \eqref{eq:real-interval} gives
-\[
- |\Re(f_W-f_{W^*})|^2\le\max\{g^2,(ce-g)^2\}.
-\]
-This improves the single-summand bound $g^2+c^2e^2$. Aggregating the
-sharper expression by Jensen's inequality requires a concavity argument
-for the resulting function of the moments. Such an argument is not
-supplied here. Another possibility is to retain relative Fourier phases
-for several summands while bounding the remaining errors uniformly.
+The scalar inputs are in \path{certificates/scalar/}. The following map
+identifies the records and the functions in
+\path{verify/check_scalar_certificates.py} that check them.
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{.29\linewidth}
+                >{\raggedright\arraybackslash}p{.39\linewidth}
+                >{\raggedright\arraybackslash}p{.23\linewidth}}
+\toprule
+Mathematical estimate & Certificate & Checking function\\
+\midrule
+Logarithmic lower bounds, Lemmas~\ref{lem:current-log-support}
+and~\ref{lem:current-log-tangent}
+& \path{direct-log.json} & \texttt{check\_direct\_log}\\[3pt]
+Quadratic imaginary-error bound, Lemma~\ref{lem:current-odd}
+& \path{odd-quadratic.json} & \texttt{check\_odd}\\[3pt]
+Affine bounds, \eqref{eq:current-disk-certificate}--\eqref{eq:current-affine-sum}
+& \path{affine-index.json}, \path{disk.zip}, \path{directional.zip}
+& \texttt{check\_affine}\\[3pt]
+Reference-error bound, \eqref{eq:current-energy-gap}
+& \path{energy.json} & \texttt{check\_energy}\\
+\bottomrule
+\end{tabular}
+\end{center}
+The supplied Gaussian interpolation records for
+\eqref{eq:current-gaussian-chord} are in
+\path{certificates/gaussian-partitions.json} and are checked by
+\path{verify/check_saved.py}. Arrays for the remaining moment intervals
+are regenerated during numerical reevaluation. The scalar guide,
+\path{certificates/scalar/README.md}, describes the record formats and
+separates checks of stored enclosures from their numerical reevaluation.
 
 \clearpage
 \bibliographystyle{plainnat}

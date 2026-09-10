@@ -1,87 +1,50 @@
 {
-  "status": "replay passed",
-  "mode": "selected",
-  "counts": {
-    "bands": 3,
-    "nodes": 10199,
-    "accepted": 4944,
-    "infeasible": 157
-  },
   "bands": [
     {
-      "band_index": 0,
-      "Llo": 0.006,
-      "Lhi": 0.00615,
-      "counts": {
-        "nodes": 13,
-        "accepted": 7,
-        "infeasible": 0
+      "band_index": 1583,
+      "band_sha256": "2a13a8d90a36bc1fe2980fb7763aa8c22c5e8fa8609cbad0ee5625da809a8bb1",
+      "continuation_leaf_chain_sha256": "84af6690831097e9b54e3bdfaa740be5a08aed58487231ab1191bb26546c2cfc",
+      "continuation_nodes": 158,
+      "numerical_calls": {
+        "continuation": 82,
+        "origin": 446
       },
-      "upper": 0.4648530989439728,
-      "leaf_chain_sha256": "b420c6ef027a1e007703fa49108efbd1e4b23f2a92e127372d71984fa476729f"
+      "origin_leaf_chain_sha256": "dfbad5a7022f68a5a62bb4e3d2e53597423b92140cf11da5711101d9a4444f04",
+      "origin_nodes": 897,
+      "recorded_numerical_replay_passed": true
     },
     {
-      "band_index": 305,
-      "Llo": 0.249,
-      "Lhi": 0.251,
-      "counts": {
-        "nodes": 35,
-        "accepted": 16,
-        "infeasible": 2
+      "band_index": 1626,
+      "band_sha256": "c46b44166c8dad3b0a28f36cfd94a8531e63d65ee030470b288818451e9aa9dc",
+      "continuation_leaf_chain_sha256": "930d31b9049d7c10c3c0f697c3ae7abaad807ea389a61715dca1da508da71293",
+      "continuation_nodes": 1184,
+      "numerical_calls": {
+        "continuation": 594,
+        "origin": 93
       },
-      "upper": 0.47492824143304296,
-      "leaf_chain_sha256": "3cf7141fbd2a33349a685d76e4956bad035a1988e66f59900b352376396f1ca9"
+      "origin_leaf_chain_sha256": "56f87222433095c5c0462668b55987499f76725e9f7b846b8e6c0f305aa2fd3a",
+      "origin_nodes": 189,
+      "recorded_numerical_replay_passed": true
     },
     {
-      "band_index": 424,
-      "Llo": 0.4800000000000001,
-      "Lhi": 0.4820000000000001,
-      "counts": {
-        "nodes": 10151,
-        "accepted": 4921,
-        "infeasible": 155
+      "band_index": 1682,
+      "band_sha256": "c78a83a3c1b1f57758b2bd101bffb3d6e9d0f81fc0761a1391a37a67cd84af04",
+      "continuation_leaf_chain_sha256": "ce86c073d6a85c7dd3a440206515f7aa73522c704a5cd1822eb25a426d31f3e9",
+      "continuation_nodes": 11,
+      "numerical_calls": {
+        "continuation": 7,
+        "origin": 124
       },
-      "upper": 0.4749995444732134,
-      "leaf_chain_sha256": "e005716e56f8a52db61c6e33f98907627fa9709a67cc9a1c40541da533133777"
+      "origin_leaf_chain_sha256": "e3e59e4f5e56719af7340b02446f0264e507caef8ca5032f6914f5c97718b446",
+      "origin_nodes": 250,
+      "recorded_numerical_replay_passed": true
     }
   ],
-  "cover_sha256": "8dbba58331fefa3c47225913a7df66ee941383fc4e62006cd194a98bd77f1097",
-  "kernel_sha256": {
-    "interval_bounds.py": "37981189f622c0bfa57ca02e2c08d6fad52a68bd0111163c30a2ff621823f161",
-    "stable_bounds.py": "b6b13bf460fd8b38d5c9d26e3749e962d8208c7b7ed4a608e08cde2a91eb7abc",
-    "directional_bounds.py": "b32fdcb077ea8f02cd9daab36d4d2166f9003d14e39b6c69391fc30ca4416fa5",
-    "refined_integral.py": "705d6aa3adc27ce9f211ff44188038f56ac33855ec40bd192fc4c381247f81ab",
-    "even_bounds.py": "d3bb5fa23a47ec29e569b3f99def4fd3a8016e3c2fb8541307bc14ca55b61bd4",
-    "paired_bounds.py": "8d9d9fde113d76335f139731e4c805a915db94a3e0879602d240ac83f5f62c12",
-    "stable_cover.py": "b6d286c6fc74d69866b5f90257808df5ea3c7852641de5ece808584504935c08",
-    "batch_weights.py": "4a63d28575bfe4be6c02e65ea1deabfda3ab3f71af323dbe4b235aa8884561a2",
-    "gaussian_batch.py": "dcb14f612fe8f178c9e380912d99f5b9c90ddf3973cf80e60297d1de3672b0b3"
-  },
-  "wrapper_sha256": {
-    "replay.py": "8e39a2fa9d04e9696ea3d63b62c8938182c3b270f66610ab66656a431447288e",
-    "check_saved.py": "7d2fe6b1c8e7ed1d9a05a864c0a3b5ab3695f9661d459d76e94c4ba4d0aaf288",
-    "scalars.py": "b7958f897ca0880d5afc40169d0e563fb9554ec5b1821f171264b7b523faba3c"
-  },
-  "scalar_enclosures": {
-    "arb_precision_bits": 192,
-    "lower_bound": "[0.409732183702396342990568823497664596454094320281408387395 +/- 4.90e-58]",
-    "theta": "[3.99589567907788608431098465322810 +/- 8.95e-33]",
-    "kappa": "[0.099161913514771856066374557230715 +/- 4.60e-34]",
-    "cantelli_stationary_point": "[0.213105771517715835602313516904 +/- 4.97e-31]",
-    "variance_upper": "[0.540936541548673603981656815952 +/- 3.02e-31]",
-    "small_L_upper": "[0.471750509535757269978864463796754306837560720295790854791 +/- 4.94e-58]",
-    "large_L_upper": "[0.470379601346672735443267751546 +/- 2.83e-31]"
-  },
-  "runtime": {
-    "python": "3.12.10",
-    "numpy": "2.4.6",
-    "python-flint": "0.8.0",
-    "scipy": "1.15.3",
-    "kernel_arb_precision_bits": 100
-  },
-  "tree_geometry_replayed": true,
-  "accepted_leaf_quadrature_replayed": true,
-  "all_bands_numerically_replayed": false,
-  "independent_mathematical_review_completed": false,
-  "elapsed_seconds": 98.845889677
+  "cover_sha256": "0c3ad2e051da6f8b142aff7ad69585c36718bf8e4bcbec8412ab7910ee9e4c92",
+  "gaussian_node_replay_claimed": false,
+  "schema": "independent-be-selected-replay-v2",
+  "scope": "Recorded complete numerical replay of these three mixed bands, with separate origin and continuation leaf chains",
+  "total_accepted_leaves": 1346,
+  "total_nodes": 2689,
+  "whole_union_numerically_replayed": false
 }

@@ -1,10 +1,9 @@
 cff-version: 1.2.0
 message: >-
-  Please cite this manuscript as a research draft, together with version
-  0.1.0.dev0. Independent mathematical review is outstanding.
+  Cite this research draft and its supplement with version 0.2.0.dev0.
 title: >-
   An upper bound on the Berry–Esseen constant for independent summands
-version: 0.1.0.dev0
+version: 0.2.0.dev0
 repository-code: https://github.com/epicycloids/independent-berry-esseen-bounds
 type: software
 authors:

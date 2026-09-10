@@ -1,89 +1,81 @@
-"""Focused rejection tests for the public certificate interface."""
-import base64
-import copy
-import hashlib
-from pathlib import Path
-import shutil
-import sys
-import tempfile
+"""Regression checks for certificate coverage and metadata."""
+from copy import deepcopy
+from fractions import Fraction
+import json
 import unittest
-import zlib
 
-from check_saved import ROOT, CertificateError, load_inputs, tree_counts, validate_cover
-
-
-def encoded(text):
-    raw = text.encode()
-    return base64.b64encode(zlib.compress(raw)).decode(), hashlib.sha256(raw).hexdigest()
+from check_saved import ROOT, CertificateError, canonical, load_inputs, mixed_record, validate_cover
 
 
 class SavedCertificateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.cover, cls.result = load_inputs()
+        cls.mixed = next(b["record"] for b in cls.cover["bands"] if b["type"] == "mixed")
 
-    def test_valid_saved_cover(self):
-        self.assertEqual(validate_cover(self.cover, self.result)['counts']['bands'], 767)
+    def test_candidate_target_is_exact(self):
+        upper = Fraction(self.result["largest_recorded_upper_fraction"])
+        self.assertLess(upper,Fraction("0.454"))
+        self.assertEqual(upper,Fraction(self.result["largest_recorded_upper"]))
 
-    def test_incomplete_tree(self):
-        with self.assertRaisesRegex(CertificateError, 'incomplete'):
-            tree_counts(*encoded('DA'))
+    def test_curated_source_identity_loaders(self):
+        import adaptive_b_cover_engine
+        import energy_reference
+        import energy_small_table
+        import maximum_variance_bounds
+        adaptive_b_cover_engine.install()
+        self.assertIs(energy_reference.reviewed_reference(),maximum_variance_bounds.reviewed_reference())
+        self.assertEqual(energy_small_table.worker().REMAINDER_SHA256,
+                         energy_small_table.REMAINDER_SHA256)
+        table = json.loads((ROOT/"verify/kernel/energy_table_complete.json").read_text())
+        self.assertEqual(table["source_sha256"],energy_reference.REVIEWED_SHA256)
+        self.assertEqual(energy_small_table._compiled_endpoint(table["small_frequency_prefix"]),Fraction(1,2))
 
-    def test_trailing_tree(self):
-        with self.assertRaisesRegex(CertificateError, 'trailing'):
-            tree_counts(*encoded('AA'))
+    def test_inflated_review_status_rejected(self):
+        result = dict(self.result,independent_mathematical_review_completed=True)
+        with self.assertRaises(CertificateError):validate_cover(self.cover,result)
 
-    def test_invalid_instruction(self):
-        with self.assertRaisesRegex(CertificateError, 'Unknown'):
-            tree_counts(*encoded('?'))
+    def test_unsupported_full_replay_rejected(self):
+        result = dict(self.result,all_leaf_quadratures_replayed=True)
+        with self.assertRaises(CertificateError):validate_cover(self.cover,result)
 
-    def test_tree_digest_changed(self):
-        tree, _ = encoded('A')
-        with self.assertRaisesRegex(CertificateError, 'digest'):
-            tree_counts(tree, '0'*64)
+    def test_promoted_global_proof_rejected(self):
+        result = dict(self.result,global_proof=True)
+        with self.assertRaises(CertificateError):validate_cover(self.cover,result)
 
-    def test_missing_band(self):
-        cover = dict(self.cover, bands=self.cover['bands'][1:])
-        with self.assertRaisesRegex(CertificateError, 'Gap'):
-            validate_cover(cover, self.result)
+    def test_old_target_cannot_be_relabelled(self):
+        record = deepcopy(self.mixed)
+        record["origin"]["target"] = "0.454"
+        with self.assertRaises(CertificateError):mixed_record(record)
 
-    def test_incomplete_band(self):
-        cover = dict(self.cover, bands=[dict(self.cover['bands'][0], complete=False), *self.cover['bands'][1:]])
-        with self.assertRaisesRegex(CertificateError, 'Incomplete'):
-            validate_cover(cover, self.result)
+    def test_frontier_must_be_original(self):
+        record = deepcopy(self.mixed)
+        record["origin"]["stack"].pop()
+        with self.assertRaises((CertificateError,ValueError)):mixed_record(record)
 
-    def test_unsupported_upper_bound(self):
-        cover = dict(self.cover, bands=[dict(self.cover['bands'][0], upper=.476), *self.cover['bands'][1:]])
-        with self.assertRaisesRegex(CertificateError, 'stated constant'):
-            validate_cover(cover, self.result)
+    def test_closed_root_cannot_shrink(self):
+        record = deepcopy(self.mixed)
+        record["root"][1] *= .99
+        with self.assertRaises(CertificateError):mixed_record(record)
 
-    def test_nonfinite_upper_bound(self):
-        cover = dict(self.cover, bands=[dict(self.cover['bands'][0], upper=float('nan')), *self.cover['bands'][1:]])
-        with self.assertRaisesRegex(CertificateError, 'Invalid upper'):
-            validate_cover(cover, self.result)
+    def test_empty_continuation_cannot_claim_completion(self):
+        import stable_cover
+        import hashlib
+        record = deepcopy(self.mixed)
+        record["continuation"].update(tree_zlib_base64=stable_cover.pack(""),tree_sha256=hashlib.sha256(b"").hexdigest(),nodes=0)
+        with self.assertRaises(CertificateError):mixed_record(record)
 
-    def test_changed_kernel(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root/'certificates').mkdir()
-            (root/'verify/kernel').mkdir(parents=True)
-            shutil.copyfile(ROOT/'result.json', root/'result.json')
-            shutil.copyfile(ROOT/'certificates/cover.json', root/'certificates/cover.json')
-            for name in self.cover['kernel_sha256']:
-                shutil.copyfile(ROOT/'verify/kernel'/name, root/'verify/kernel'/name)
-            with (root/'verify/kernel/interval_bounds.py').open('ab') as stream:
-                stream.write(b'\n# deliberate test mutation\n')
-            with self.assertRaisesRegex(CertificateError, 'Arithmetic source changed'):
-                load_inputs(root)
+    def test_mixed_topology_counts_replay(self):
+        counts = mixed_record(self.mixed)
+        self.assertEqual(counts,{k:self.mixed[k] for k in ("nodes","accepted","infeasible")})
 
-    def test_geometric_replay_rejects_changed_root(self):
-        sys.path.insert(0, str(ROOT/'verify/kernel'))
-        from stable_cover import replay_band
-        record = copy.deepcopy(self.cover['bands'][0])
-        record['root'][1] /= 2
-        with self.assertRaises(AssertionError):
-            replay_band(record, numerical=False)
+    def test_wrong_b_coverage_policy_rejected(self):
+        record = deepcopy(self.mixed)
+        record["evaluator"]["parameters"]["b_max_depth"] = 7
+        with self.assertRaises(CertificateError):mixed_record(record)
+
+    def test_numerical_mode_requires_both_roles(self):
+        with self.assertRaises(CertificateError):mixed_record(self.mixed,numerical=True)
 
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":unittest.main()
