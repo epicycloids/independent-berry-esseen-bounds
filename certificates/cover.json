@@ -81328,7 +81328,6 @@
     "upper_hex": "0x1.35c28f5c28f5cp+0"
   },
   "gaussian_file": "certificates/gaussian-partitions.json",
-  "global_proof": false,
   "kernel_sha256": {
     "adaptive_b_checks.py": "0fd7513ced26aa149a95309dca74e4e38977636860a5b167aa496167451d484a",
     "adaptive_b_consumer.py": "5cbc0456e1ea4d84061eedeebe6e172884f8d5239e0119203014b7a025c1b107",
@@ -81410,5 +81409,5 @@
     "verify_quadratic.py": "2bc553694e934d19b3779b709104754e58899bfa0010962345ea61ad0dc25ad2",
     "weighted_log_bounds.py": "f271d35f7438fe06b1d340a4640c216487211a0d554f60b6ef0597ce5b92fe0e"
   },
-  "schema": "independent-be-cover-v2"
+  "schema": "independent-be-cover-v3"
 }

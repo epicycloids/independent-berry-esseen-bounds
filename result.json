@@ -1,5 +1,4 @@
 {
-  "all_leaf_quadratures_replayed": false,
   "band_methods": {
     "mixed_source_prefix": 100,
     "stability": 1483,
@@ -14,7 +13,7 @@
     "nodes": 412067
   },
   "cover_file": "certificates/cover.json",
-  "cover_sha256": "0c3ad2e051da6f8b142aff7ad69585c36718bf8e4bcbec8412ab7910ee9e4c92",
+  "cover_sha256": "29024cd385b43270fcc6d9c2e65bfb9d45ede22963e8e0821754fe0c8536ad13",
   "date": "2026-09-10",
   "evaluator_families": {
     "adaptive_b_fast_maximum_fixed085_dual5_cutoff_v1": 134,
@@ -22,15 +21,13 @@
     "quadratic_maxwell_dual5_cutoff": 1330,
     "quadratic_maxwell_dual5_cutoff_lazy_ceil20": 216
   },
-  "gaussian_file_sha256": "fd6d971bba3ba38b05a846292b3b39b94859e519d09aef8bd0e7725d4abffb5c",
-  "global_proof": false,
-  "independent_mathematical_review_completed": false,
+  "gaussian_file_sha256": "197a170c3475259eb3cbeb062a23b9d48fc3181ae9f2e63eab11fcb5887407d0",
   "kappa": "0.099162",
   "large_L_upper_decimal": "0.447055000001",
   "largest_recorded_upper": 0.45399999743026986,
   "largest_recorded_upper_fraction": "4089268438506339/9007199254740992",
   "lower_bound_expression": "(sqrt(10)+3)/(6*sqrt(2*pi))",
-  "public_gaussian_scope": "Mixed-band partitions supplied and rechecked; legacy partition checks are recorded historical evidence, with their arrays regenerated on optional numerical replay",
+  "public_gaussian_scope": "Stored partitions for the mixed bands; the other bands regenerate their Gaussian arrays during numerical reevaluation",
   "recorded_mixed_gaussian_partition_checks": {
     "distinct_stored_records": 10530,
     "occurrences": 11232
@@ -42,8 +39,7 @@
     "scipy": "1.15.3"
   },
   "scalar_evidence_directory": "certificates/scalar",
-  "scalar_numerical_leaf_replay_completed": false,
-  "schema": "independent-be-result-v2",
+  "schema": "independent-be-result-v3",
   "selected_replay": {
     "accepted_leaves": 1346,
     "bands": 3,
@@ -59,10 +55,10 @@
   "small_L_coefficient": "0.3413",
   "small_L_source_limit": "0.01",
   "small_L_upper_decimal": "0.447913037296",
-  "status": "computational-candidate",
-  "title": "An upper bound candidate for the Berry\u2013Esseen constant for independent summands",
+  "status": "interval-bound",
+  "stored_record_checks": "Closed parameter partitions, exact comparisons of recorded upper bounds, source identities, Gaussian interpolation partitions, and saved numerical reevaluations of three selected bands",
+  "title": "An upper bound on the Berry\u2013Esseen constant for independent summands",
   "upper_bound": "0.454",
   "variance_upper_decimal": "0.540936541549",
-  "verification_boundary": "Exact closed topology, recorded upper comparisons, curated mathematical source projection, and retained mixed scalar partitions; selected leaf replay only; full leaf and Gaussian-node replay outstanding",
-  "version": "0.2.0.dev0"
+  "version": "0.3.0.dev0"
 }

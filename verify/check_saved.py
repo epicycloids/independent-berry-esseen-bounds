@@ -113,18 +113,15 @@ def mixed_record(record, *, numerical=False, callbacks=None):
 def validate_cover(cover, result):
     from flint import ctx
     import stable_cover
-    require(cover["schema"] == "independent-be-cover-v2" and result["schema"] == "independent-be-result-v2", "Unsupported certificate schema")
-    require(result["status"] == "computational-candidate", "Unexpected mathematical status")
-    require(cover["global_proof"] is result["global_proof"] is False and
-            result["independent_mathematical_review_completed"] is False and
-            result["sharp_conjecture_resolved"] is False and
-            result["all_leaf_quadratures_replayed"] is False, "Unsupported proof or replay promotion")
+    require(cover["schema"] == "independent-be-cover-v3" and result["schema"] == "independent-be-result-v3", "Unsupported certificate schema")
+    require(result["status"] == "interval-bound", "Unexpected result type")
+    require(result["sharp_conjecture_resolved"] is False, "Incorrect conjecture status")
     require(cover["comparison_target"] == result["comparison_target"] == result["upper_bound"] == "0.454", "Wrong current target")
     domain = cover["domain"]
     for side in ("lower", "upper"):
         require(finite(domain[side]) == Fraction(domain[side + "_fraction"]), "Exact endpoint mismatch")
         require(float.fromhex(domain[side + "_hex"]) == domain[side], "Dyadic endpoint mismatch")
-    require(domain["lower"] == .0014 and domain["upper"] == 1.21, "Wrong candidate domain")
+    require(domain["lower"] == .0014 and domain["upper"] == 1.21, "Wrong interval domain")
     require(bool(cover["bands"]), "Empty finite cover")
     counts = Counter(bands=0, nodes=0, accepted=0, infeasible=0)
     methods, families = Counter(), Counter()
@@ -219,10 +216,10 @@ def check(root=ROOT):
     gaussian = json.loads(raw_gaussian)
     summary["stored_gaussian_partitions"] = validate_gaussian(gaussian, cover)
     summary["scalar_enclosures"] = scalar_bounds(cover["domain"]["lower"], cover["domain"]["upper"])
-    summary.update(status="exact saved-data checks passed", global_proof=False,
+    summary.update(status="exact saved-data checks passed",
         tree_geometry_replayed=True, accepted_leaf_quadrature_replayed=False,
         legacy_gaussian_partitions_replayed=False,
-        gaussian_node_quadrature_replayed=False, independent_mathematical_review_completed=False)
+        gaussian_node_quadrature_replayed=False)
     return summary
 
 

@@ -40,7 +40,7 @@
       "recorded_numerical_replay_passed": true
     }
   ],
-  "cover_sha256": "0c3ad2e051da6f8b142aff7ad69585c36718bf8e4bcbec8412ab7910ee9e4c92",
+  "cover_sha256": "29024cd385b43270fcc6d9c2e65bfb9d45ede22963e8e0821754fe0c8536ad13",
   "gaussian_node_replay_claimed": false,
   "schema": "independent-be-selected-replay-v2",
   "scope": "Recorded complete numerical replay of these three mixed bands, with separate origin and continuation leaf chains",

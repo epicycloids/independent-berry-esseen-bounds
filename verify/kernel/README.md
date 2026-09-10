@@ -1,7 +1,8 @@
 # Interval evaluation code
 
-These modules contain the interval arithmetic and evaluators used for the
-moment cover, characteristic-function bounds and smoothing integrals.
+These modules contain the interval arithmetic and evaluators used to
+subdivide the feasible moment parameters and bound characteristic functions
+and smoothing integrals on each parameter box.
 The JSON files supply scalar coefficient tables. The
 [cover](../../certificates/cover.json) records the SHA-256 of each source
 and table file used by the calculation.

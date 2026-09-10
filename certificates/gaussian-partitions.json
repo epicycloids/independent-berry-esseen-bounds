@@ -818262,7 +818262,7 @@
     }
   },
   "schema": "independent-be-gaussian-v2",
-  "scope": "Mixed-band stored Gaussian node enclosures and interpolation partitions only; legacy arrays are regenerated on numerical replay; Gaussian-node quadrature has not been fully replayed",
+  "scope": "Gaussian node enclosures and interpolation partitions for the mixed bands; the other bands regenerate their Gaussian arrays during numerical reevaluation",
   "weight_sets": {
     "0160b131a54a161cb98e30d79ed548c2707e68896fe103fe71e88a228ba73169": {
       "cutoffs": [

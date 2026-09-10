@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def render(result):
     values = {
-        'CandidateUpper': result['upper_bound'],
+        'UpperBound': result['upper_bound'],
         'SmallUpper': result['small_L_upper_decimal'],
         'VarianceUpper': result['variance_upper_decimal'],
         'LargeUpper': result['large_L_upper_decimal'],

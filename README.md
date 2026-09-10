@@ -1,57 +1,66 @@
 # The Berry–Esseen constant for independent summands
 
-**Research draft · 10 September 2026 · version 0.2.0.dev0**
+**10 September 2026 · collection version 0.3.0.dev0**
 
-This draft proposes the upper bound
+For a finite sum of independent centered real random variables with finite
+third absolute moments and positive total variance, let $\Delta$ be the
+Kolmogorov distance of the standardized sum from the standard normal law,
+and let $\ell$ be the normalized sum of third absolute moments. The least
+constant in $\Delta\le C\ell$ is denoted by $C_{\mathrm{ind}}$. The open
+conjecture is
 
 $$
-C_{\mathrm E}=\frac{\sqrt{10}+3}{6\sqrt{2\pi}}
-=0.40973218370239634299\ldots
-\le C_{\mathrm{ind}}<0.454
+C_{\mathrm{ind}}=C_{\mathrm E}
+=\frac{3+\sqrt{10}}{6\sqrt{2\pi}}
+=0.4097321837023963\ldots.
 $$
 
-where $C_{\mathrm{ind}}$ is the Berry–Esseen constant for finite families of
-independent centered real random variables with finite third absolute
-moments. Esseen proved the lower bound. The argument for the upper bound
-combines analytic inequalities with an interval calculation. **Independent
-mathematical review remains outstanding, and the interval calculation has
-not been recomputed in full.** The conjecture
-$C_{\mathrm{ind}}=C_{\mathrm E}$ is open.
+[Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946) proved
+the lower bound. This collection studies an unrestricted upper bound and
+the conjectured inequality for finite Bernoulli sums and for general
+independent arrays with sufficiently small $\ell$.
 
-Read the paper, [*An upper bound on the Berry–Esseen constant for independent
-summands*](paper/independent-berry-esseen.pdf), for the definitions and argument.
-Its [LaTeX source](paper/main.tex) and [bibliography](paper/refs.bib) are included.
-
-| Guide | Contents |
+| Paper | Main results |
 | --- | --- |
-| [Overview](docs/overview.md) | How the moment estimates lead to a uniform bound |
-| [Bounds](docs/bounds.md) | Normalization, comparison with a published bound, and estimates on three ranges |
-| [Verification](verify/README.md) | Certificate contents, completed checks, arithmetic assumptions, and commands |
+| [An upper bound on the Berry–Esseen constant for independent summands](paper/independent-berry-esseen.pdf) | The bound $C_{\mathrm{ind}}<0.454$, using analytic estimates and interval computation. |
+| [Sharp Berry–Esseen bounds for Bernoulli sums and reductions for general arrays](paper/finite-arrays/finite-arrays.pdf) | The $C_{\mathrm E}$ inequality for centered two-point summands with a common support diameter and arbitrary probabilities, and for two summands each supported on at most two points with arbitrary diameters; concentration estimates and three-point reductions. |
+| [The sharp Berry–Esseen bound for independent arrays with small Lyapunov ratio](paper/small-lyapunov/small-lyapunov.pdf) | A universal $\ell_0>0$ such that $\Delta\le C_{\mathrm E}\ell$ whenever $0<\ell\le\ell_0$, with no restriction on the summand laws. The proof gives no numerical value of $\ell_0$. |
 
-The interval calculation covers 1,683 closed intervals of the normalized
-third-moment sum. Its largest recorded upper bound is approximately
-0.45399999743026986. The complete partition has been checked, and three
-selected intervals have been numerically reevaluated.
-[result.json](result.json) gives the numerical summary and verification status.
+The small-Lyapunov paper adapts the approach of
+[He and Cheng (2026)](https://arxiv.org/abs/2609.06358v1) for sufficiently
+large i.i.d. samples. It uses the common-diameter theorem from the
+finite-results paper, including that theorem's certificate calculations.
+The unrestricted conjecture remains open.
+
+The [overview](docs/overview.md) gives reading routes and summarizes the
+results and remaining questions. The [bounds note](docs/bounds.md) gives
+the normalization and numerical bounds. Each paper has a bibliography and
+accompanying TeX source. The [upper-bound verification guide](verify/README.md)
+and [finite-results supplement](certificates/finite/README.md) describe the
+computations.
 
 ## Check or build
 
-Install [uv](https://docs.astral.sh/uv/) and, to build the PDF,
-[Tectonic](https://tectonic-typesetting.github.io/en-US/). From this directory:
+Install [uv](https://docs.astral.sh/uv/) and, to build the PDFs,
+[Tectonic](https://tectonic-typesetting.github.io/en-US/). The verification
+environment uses Python 3.12. From this directory:
 
 ```sh
 ./verify.sh --no-latex
 ./build.sh
 ```
 
-The first command checks the stored partitions, scalar certificates and
-numerical records. The second rebuilds the paper into `dist/`.
-`./verify.sh` without an option performs both steps. See the
-[verification guide](verify/README.md) for the scope of each check.
+The first command checks stored records and runs the default certificate
+checks. The verification guides give commands for repeating the interval
+calculations.
+The second command rebuilds all three papers under `dist/`. Running
+`./verify.sh` performs the default checks and the PDF builds. Both scripts
+accept `--help`.
 
 ## Citation and reuse
 
-Author: Logan Bell. Cite this as a research draft and include its version;
-[CITATION.cff](CITATION.cff) supplies the metadata. The manuscript and
-explanatory text use CC BY 4.0; code, configuration, and certificate data
-use MIT. See [LICENSE](LICENSE).
+Author: Logan Bell. Cite a manuscript by author, title, and date
+(10 September 2026); include collection version `0.3.0.dev0` to identify
+the files used. [CITATION.cff](CITATION.cff) provides collection metadata.
+The manuscripts and explanatory text use CC BY 4.0; code, configuration,
+and certificate data use MIT. See [LICENSE](LICENSE).

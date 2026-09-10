@@ -1,9 +1,11 @@
 cff-version: 1.2.0
 message: >-
-  Cite this research draft and its supplement with version 0.2.0.dev0.
+  Cite an individual manuscript by Logan Bell, its title, and its date
+  (10 September 2026). Include collection version 0.3.0.dev0 to identify the
+  files used, or cite this collection using the metadata below.
 title: >-
-  An upper bound on the Berry–Esseen constant for independent summands
-version: 0.2.0.dev0
+  The Berry–Esseen constant for independent summands
+version: 0.3.0.dev0
 repository-code: https://github.com/epicycloids/independent-berry-esseen-bounds
 type: software
 authors:
@@ -15,6 +17,9 @@ keywords:
   - zero-bias transformation
   - interval arithmetic
   - computer-assisted proof
+  - Lyapunov ratio
+  - lattice distributions
+  - Bernoulli sums
 license:
   - CC-BY-4.0
   - MIT

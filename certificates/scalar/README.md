@@ -3,7 +3,7 @@
 These files record the coefficient bounds used in
 [the paper](../../paper/main.tex).
 
-From the archive root, run:
+From the repository root, run:
 
 ```sh
 uv run --frozen python verify/check_scalar_certificates.py
@@ -13,9 +13,8 @@ The default check regenerates the three exact polynomials and their
 Bernstein coefficient bounds, verifies every tangent lower bound for the
 logarithmic correction with Arb, checks all saved partitions and exact
 rational inequalities derived from their leaf bounds, verifies the analytic
-tails, and reconstructs the scalar tables used by the evaluator.
-**It uses the saved transcendental enclosures at the leaves without
-recomputing them.**
+tails, and reconstructs the scalar tables used by the evaluator. These
+checks use the saved transcendental enclosures at the leaves.
 
 To recompute the saved leaf bounds, run:
 
@@ -49,7 +48,11 @@ a time. For checks of the moment cover and smoothing calculations, see the
 
 The directional and disk certificates bound the same normalized zero-bias
 error, through real projections and the complex modulus, respectively. The
-energy certificates bound the forcing term in the differential equation
+25 stored directions include both real-axis directions. Reflecting the
+other 23 across the real axis gives the 48 directions used in the paper.
+Reflection of the spatial variable conjugates the normalized error and
+supplies the reflected bounds. The energy certificates bound the forcing
+term in the differential equation
 for comparison with the cosine product. At zero frequency, the checker uses
 the continuous quotient after removing the factors that vanish there.
 
@@ -65,8 +68,10 @@ present in a runtime table, denotes its exact binary64 value.
 
 Each affine ZIP entry retains its coefficients, correction, closed frequency
 interval, precision, tail radius, tail coefficients and complete binary
-partition. A split node is `[axis, cut, left_index, right_index]`, with axis
-zero for frequency and one for the spatial variable. A directional leaf is
+partition. A leaf is a final rectangle whose saved lower bounds are used
+without further subdivision. A split node is
+`[axis, cut, left_index, right_index]`, with axis zero for frequency and one
+for the spatial variable. A directional leaf is
 `[lower]`; a disk leaf is `[lower_P, lower_H]`. The root rectangle is the
 frequency interval times `[-R,R]` for a directional certificate, or `[0,R]`
 for a disk. Child rectangles are reconstructed from exact cuts. Both closed

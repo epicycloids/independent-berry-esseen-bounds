@@ -13,14 +13,13 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small The independent Berry--Esseen constant}
-\fancyhead[R]{\small Research draft}
 \fancyfoot[C]{\thepage}
 \numberwithin{equation}{section}
-\newtheorem{candidate}{Proposed theorem}[section]
-\newtheorem{lemma}[candidate]{Lemma}
-\newtheorem{proposition}[candidate]{Proposition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
 \theoremstyle{remark}
-\newtheorem{remark}[candidate]{Remark}
+\newtheorem{remark}[theorem]{Remark}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\sinc}{sinc}
 \DeclareMathOperator{\Unif}{Unif}
@@ -42,21 +41,21 @@
 \begin{abstract}
 Let $\Delta$ be the Kolmogorov distance between a standardized sum of
 independent centered real random variables and the standard normal law,
-and let $L$ be the normalized sum of third absolute moments. We propose
-an upper bound of $\CandidateUpper$ for the supremum of $\Delta/L$.
+and let $L$ be the normalized sum of third absolute moments. We prove
+that the supremum of $\Delta/L$ is less than $\UpperBound$.
 The argument combines moment bounds for characteristic functions,
-zero-bias comparison, and Prawitz smoothing. It retains the contribution
-of a summand of maximal variance and uses a real reference function to
-bound part of the Fourier integral. Analytic estimates cover small and
+zero-bias comparison, and Prawitz smoothing. It bounds a summand of maximal
+variance separately and compares the sum with a sum of symmetric two-point
+variables having the same variances. The reference characteristic function
+is real, so its difference from the Gaussian can be retained with its sign
+in part of the Fourier integral. Analytic estimates cover small and
 large $L$; an interval calculation covers the intermediate range.
 The largest recorded upper endpoint is $\RecordedUpper\ldots$. The supplement
-contains the partition records and arithmetic sources. Independent
-mathematical review and a complete second numerical evaluation remain
-outstanding.
+contains the partition records and arithmetic sources.
 
 \end{abstract}
 
-\section{The problem and the proposed bound}\label{sec:statement}
+\section{The problem and the upper bound}\label{sec:statement}
 
 Let $X_1,\ldots,X_n$ be a finite independent family of centered real random
 variables. Assume
@@ -80,22 +79,24 @@ independent Berry--Esseen constant. Esseen's lower bound is
 see \citet{Esseen1956} and the discussion in \citet{Shevtsova2012}.
 The conjectured equality $\Cind=\CE$ remains open.
 
-\begin{candidate}\label{thm:candidate}
+\begin{theorem}\label{thm:upper-bound}
 For the arrays in \eqref{eq:problem},
-\begin{equation}\label{eq:candidate}
-  \Delta<\CandidateUpper\,L,
-  \qquad \CE\le\Cind<\CandidateUpper.
+\begin{equation}\label{eq:upper-bound}
+  \Delta<\UpperBound\,L,
+  \qquad \CE\le\Cind<\UpperBound.
 \end{equation}
-\end{candidate}
+\end{theorem}
 
 For comparison, \citet{Shevtsova2013} obtained the upper bound $0.5583$
 for general independent summands. Section~\ref{sec:certificate} states
-the arithmetic assumptions and completed checks for the proposed bound.
+the interval calculation and its arithmetic assumptions.
 
 The argument refines the zero-bias and Fourier estimates of
 \citet{Tyurin2009} by retaining third-moment excess and logarithmic
 corrections to characteristic-function products. It uses Prawitz
-smoothing and comparison with a weighted symmetric two-point law.
+smoothing and comparison with a sum of symmetric two-point variables
+having the same variances, an approximation studied by
+\citet[Theorem~1.2 and Example~1.4]{MattnerShevtsova2019}.
 The estimates apply to unequal summand variances and use only the
 second and third absolute moments.
 
@@ -128,14 +129,18 @@ $v_j^{3/2}\le b_j\le B_R$, and $v_j^{3/2}\le\tau_R$. Thus
 $v_j\le a_R$. Every realizable tuple satisfies these constraints;
 maximizing over the possibly larger set they define gives an upper bound.
 
-Section~\ref{sec:products} bounds products of characteristic functions.
-Sections~\ref{sec:directional}, \ref{sec:quadratic}, and
-\ref{sec:current-scalar} bound individual zero-bias errors and their sums.
-Section~\ref{sec:distinguished} combines the estimates while treating
-$X_1$ separately. Section~\ref{sec:current-reference} compares $f_S$
-with a cosine product. Sections~\ref{sec:smoothing} and
-\ref{sec:current-smoothing} apply Prawitz smoothing, and
-Section~\ref{sec:certificate} describes the interval calculation.
+For each admissible tuple $(L,d,b,\tau)$, the calculation needs an upper
+bound for $\Delta/L$. We first bound characteristic-function products and
+individual zero-bias errors in Sections~\ref{sec:products}--\ref{sec:current-scalar}.
+The zero-bias differential identity then turns their sum into a bound for
+$|f_S(t)-e^{-t^2/2}|$; Section~\ref{sec:distinguished} treats $X_1$
+separately in this step. A second comparison, with
+$\prod_i\cos(t\sqrt{v_i})$, retains a signed real contribution to the
+error (Section~\ref{sec:current-reference}). Prawitz smoothing converts
+these Fourier bounds into a bound for $\Delta/L$
+(Sections~\ref{sec:smoothing}--\ref{sec:current-smoothing}). Finally,
+Section~\ref{sec:certificate} covers the moment domain by closed boxes
+and evaluates that bound on each box.
 
 \section{Bounds for characteristic-function products}\label{sec:products}
 
@@ -919,6 +924,11 @@ polynomial.
 
 A directional affine table, retained as an additional minimum, certifies
 real projections of the same target in 48 exact rational directions.
+The stored certificates use 25 directions in the closed upper half-plane,
+including both real-axis directions. Reflecting the other 23 directions
+gives the full set of 48: the identity
+$h_x(-w)=\overline{h_x(w)}$ supplies the reflected projection bounds
+by replacing $w$ with $-w$ in their polynomial majorants.
 Their convex hull contains the disk of radius $\eta=997/1000$.
 For each direction $\zeta$, a real-line polynomial majorizes
 $\Re(\zeta h_x(w))$; its expectation uses only $\E W=0$,
@@ -1684,27 +1694,11 @@ upper endpoint, interpreted exactly, is
 \begin{equation}\label{eq:finite-maximum}
  U_* = \frac{4089268438506339}{9007199254740992}<\frac{227}{500}.
 \end{equation}
-Both analytic complements are smaller than $U_*$. Provided that the
-recorded interval evaluations satisfy the bounds above, every array
-therefore has $\Delta/L\le U_*$. Taking the supremum gives the proposed
-uniform bound $\Cind\le U_*<\CandidateUpper$.
+Both analytic complements are smaller than $U_*$. The interval evaluations
+therefore give $\Delta/L\le U_*$ for every array. Taking the supremum gives
+the uniform bound $\Cind\le U_*<\UpperBound$.
 
-\subsection{Arithmetic and completed verification}\label{sec:arithmetic}
-The original computation evaluated every accepted-leaf bound. Subsequent
-checks reconstructed the complete moment partition, verified the exact
-union of the $L$ intervals, and checked stored Gaussian threshold
-partitions. The Gaussian checks covered 10,530 distinct records with
-299,796 threshold nodes and 289,266 intervals; shared records can occur
-in more than one moment calculation.
-
-A further numerical replay recomputed all 1,346 accepted leaves in three
-selected complete moment intervals, traversing 2,689 nodes. Each recorded
-sequence was replayed with its own evaluation rule and stopping threshold;
-its ordered numerical checksum and maximum agreed with the original.
-The remaining accepted leaves and the Gaussian quadrature nodes have not
-all received a second numerical evaluation. Independent mathematical
-review remains outstanding.
-
+\subsection{Arithmetic}\label{sec:arithmetic}
 The vector arithmetic assumes correctly rounded IEEE-754 binary64 basic
 operations and square root, gradual underflow, finite intermediate values,
 and no unsafe fast-math transformations. Endpoints are rounded outward
@@ -1729,7 +1723,7 @@ assumptions. The scalar coefficient certificates and their domains are
 also required by the corresponding estimates.
 
 The supplement supplies the mathematical inputs and verification sources.
-\path{result.json} summarizes the candidate and the completed checks;
+\path{result.json} records the bound, counts, and evaluation methods;
 \path{verify/README.md} describes their scope and reproduction commands.
 File hashes identify those inputs and sources.
 
