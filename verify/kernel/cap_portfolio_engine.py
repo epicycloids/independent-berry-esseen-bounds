@@ -10,7 +10,7 @@ from interval_bounds import al, au
 from signed_gaussian import verify_partition
 import stable_cover
 KIND = 'quadratic_maxwell_dual5_cutoff_lazy_ceil20'
-PRODUCT = original.PRODUCT + '; original smoothing portfolio first, then exact-ceiling twentieth moment cap with outward rounded cap'
+PRODUCT = original.PRODUCT + '; quadratic smoothing portfolio first, then a cap rounded upward to a multiple of Lhi/20'
 INSTALLED = False
 
 def ceiling_bucket(hi, tauhi):
@@ -83,14 +83,3 @@ def install():
         return choose
     stable_cover.weight_factory = factory
     INSTALLED = True
-
-def run_section(start, end, step, target, N, pending=None):
-    install()
-    original.CERTIFICATES.clear()
-    original.CUTOFF_RECORDS.clear()
-    result = stable_cover.run_section(start, end, step, target, N, pending, KIND)
-    result['product_variant'] = PRODUCT
-    result['gaussian_certificates'] = dict(original.CERTIFICATES)
-    result['cutoff_records'] = dict(original.CUTOFF_RECORDS)
-    result['smoothing_cap_policy'] = dict(original_kind=original.KIND, original_first=True, ceiling_denominator=20, bucket_arithmetic='exact rational ceiling of the binary64 tauhi/Lhi ratio', cap_arithmetic='Arb upper endpoint converted outward to binary64', selection_scope='free smoothing parameters; no extra moment restriction')
-    return result

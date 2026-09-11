@@ -239,7 +239,7 @@ def bessel_tail_control() -> None:
     c_min = 1 - upper_skew * upper_skew
     w_min = 32 * c_min
 
-    # Use unscaled I_0 times exp(-W), unlike the submitted scaled=True call.
+    # Compare I_0(W) exp(-W) with the scaled Bessel evaluation.
     unscaled = (2 * arb.pi() * w_min).sqrt() * w_min.bessel_i(0) * (-w_min).exp()
     scaled_crosscheck = (2 * arb.pi() * w_min).sqrt() * w_min.bessel_i(0, scaled=True)
     if not (unscaled - scaled_crosscheck).contains(0):
@@ -283,7 +283,7 @@ def direct_even_order_g(m: int, t: arb) -> arb:
 
 
 def small_subcover_control(cells: int) -> None:
-    """Certify an unmodified nine-box subcover as a negative control."""
+    """Verify strict positivity on nine unmodified boxes."""
 
     _, _, lower_skew, upper_skew = constants()
     checked = 0

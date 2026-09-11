@@ -7,8 +7,8 @@ import importlib.util
 import math
 from pathlib import Path
 from flint import arb, ctx
-WORKER_SHA256 = 'a443958f2ba1b8b34ea6306de53e6994a88180b0a676f398b9225b98d56e8d57'
-REMAINDER_SHA256 = 'cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f'
+WORKER_SHA256 = '43b265e75e63be5d154d4a41897ee1bde670cd9fa1568838e513f2cc084115f6'
+REMAINDER_SHA256 = 'f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46'
 FAMILY = 'small_frequency_normalized_gap_uniform_tail_v1'
 COMPILED_FAMILY = 'replayed_small_frequency_prefix_v1'
 PRICE = Fraction(9, 8)
@@ -25,7 +25,7 @@ def worker():
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
     if hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest() != WORKER_SHA256:
-        raise AssertionError('The small-frequency worker is not the frozen author source')
+        raise AssertionError('The small-frequency worker differs from the recorded source')
     if module.REMAINDER_SHA256 != REMAINDER_SHA256:
         raise AssertionError('Unexpected exponential-remainder source')
     module.remainders()
@@ -100,7 +100,7 @@ def compile_small_cover(cover, *, endpoint=Fraction(1, 2), precision_bits=128):
         q_right = worker().q_upper(endpoint)
     finally:
         ctx.prec = previous
-    return dict(status='AUTHOR compiled small-frequency prefix; all rectangles replayed', compiled_family=COMPILED_FAMILY, verified=True, verification='all_rectangles_replayed', left='0', right=str(endpoint), price=str(PRICE), lambda_upper=float(PRICE), q_formula='(8/3)*sinc(x)^4/cos(x)^2', q_right_upper=q_right, verified_scalar_records=len(proofs), verified_rectangles=sum((p['rectangles'] for p in proofs)), precision_bits=max((p['precision_bits'] for p in proofs)), source_sha256=WORKER_SHA256, remainder_source_sha256=REMAINDER_SHA256, replay_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), scope='Scalar prefix only; no reference consumer, smoothing bound, or moment cover')
+    return dict(status='small-frequency bounds with all rectangles verified', compiled_family=COMPILED_FAMILY, verified=True, verification='all_rectangles_replayed', left='0', right=str(endpoint), price=str(PRICE), lambda_upper=float(PRICE), q_formula='(8/3)*sinc(x)^4/cos(x)^2', q_right_upper=q_right, verified_scalar_records=len(proofs), verified_rectangles=sum((p['rectangles'] for p in proofs)), precision_bits=max((p['precision_bits'] for p in proofs)), source_sha256=WORKER_SHA256, remainder_source_sha256=REMAINDER_SHA256, replay_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), scope='Scalar energy-sum bounds on the small-frequency interval')
 
 def _compiled_endpoint(compiled):
     if compiled.get('compiled_family') != COMPILED_FAMILY or compiled.get('verified') is not True or compiled.get('verification') != 'all_rectangles_replayed' or (compiled.get('source_sha256') != WORKER_SHA256) or (compiled.get('remainder_source_sha256') != REMAINDER_SHA256) or (Fraction(compiled['left']) != 0) or (Fraction(compiled['price']) != PRICE):
@@ -134,13 +134,13 @@ def small_prefix_pair(argument, compiled, *, precision_bits=128):
 
 def replace_small_prefix(old_table, compiled, *, precision_bits=128):
     if _compiled_endpoint(compiled) != Fraction(1, 2):
-        raise ValueError('Replacing the old floor requires the entire [0,1/2] prefix')
+        raise ValueError('The replacement requires the entire [0,1/2] prefix')
     if old_table.get('source_sha256') != REMAINDER_SHA256:
         raise ValueError('Unexpected upper-frequency table source')
     result = deepcopy(old_table)
     rows = result['rows']
     if not rows or Fraction(rows[0]['left']) != 0 or Fraction(rows[0]['right']) != Fraction(1, 2):
-        raise ValueError('The old table must begin with its [0,1/2] prefix row')
+        raise ValueError('The supplied table must begin with its [0,1/2] prefix row')
     end = Fraction(1, 2)
     for row in rows[1:]:
         left, right = map(Fraction, (row['left'], row['right']))
@@ -158,5 +158,5 @@ def replace_small_prefix(old_table, compiled, *, precision_bits=128):
         Q, price = (max(Q, row['Q_upper']), max(price, row['lambda_upper']))
         row['prefix_Q_upper'], row['prefix_lambda_upper'] = (Q, price)
     result['small_frequency_prefix'] = deepcopy(compiled)
-    result['status'] = 'AUTHOR energy table with replayed small-frequency prefix replacement'
+    result['status'] = 'energy table with verified small-frequency bounds'
     return result

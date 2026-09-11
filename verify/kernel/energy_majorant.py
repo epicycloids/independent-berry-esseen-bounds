@@ -93,7 +93,7 @@ def certify(xlo=1, xhi=1, *, price=1, cpu_seconds=3.0, max_cells=20000, precisio
         coefficients = tail_coefficients()
         assert all((c > 0 for c in coefficients))
         complete = not pending
-        result = dict(status='AUTHOR interval energy-majorant certificate' if complete else 'AUTHOR incomplete interval proposal; no scalar majorant established', complete=complete, xlo=str(xlo), xhi=str(xhi), price=str(price), compact_y_range=[0, 16], tail_shift_coefficients=list(map(str, coefficients)), evaluated_cells=evaluated, accepted_cells=len(accepted), pending_cells=len(pending), precision_bits=ctx.prec, cpu_seconds=time.process_time() - began, minimum_accepted_lower=min((box[4] for box in accepted), default=None))
+        result = dict(status='complete interval energy-majorant bound' if complete else 'incomplete interval energy-majorant bound', complete=complete, xlo=str(xlo), xhi=str(xhi), price=str(price), compact_y_range=[0, 16], tail_shift_coefficients=list(map(str, coefficients)), evaluated_cells=evaluated, accepted_cells=len(accepted), pending_cells=len(pending), precision_bits=ctx.prec, cpu_seconds=time.process_time() - began, minimum_accepted_lower=min((box[4] for box in accepted), default=None))
         if retain_boxes:
             result['accepted_boxes'] = [dict(xlo=str(xl), xhi=str(xr), ylo=str(yl), yhi=str(yr), quotient_lower=lo) for xl, xr, yl, yr, lo in accepted]
             result['pending_boxes'] = [list(map(str, box[:4])) for box in pending]

@@ -7,8 +7,9 @@ usage() {
 Usage: ./verify.sh [--no-latex]
        ./verify.sh --help
 
-Check file hashes, stored upper-bound records, and the default scalar and
-finite certificate checks. The default also builds all PDFs under dist/.
+Check file hashes, stored upper-bound records, the default scalar and finite
+certificates, and the extremizer paper's exact rational Gaussian certificate.
+The default also builds all PDFs under dist/.
 
   --no-latex    Run the checks without building PDFs.
   -h, --help    Show this help and exit without checking or building.
@@ -40,6 +41,7 @@ uv run --frozen python verify/check_replays.py
 uv run --frozen python verify/check_scalar_certificates.py
 uv run --frozen python verify/paper_values.py
 uv run --frozen python verify/finite/check.py
+uv run --frozen python paper/extremizers/gaussian_window_certificate.py
 if [ "$BUILD" = yes ]; then
     ./build.sh
 fi

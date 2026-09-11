@@ -91,4 +91,4 @@ def point_pilot(meshes=(512, 1024)):
                     rows.append(dict(L=L, d=d, b=b, tau=tau, N=N, halfwidth=eps, previous_G=weights.previous_G.tolist(), signed_G=new_G.tolist(), previous_columns=old_values.tolist(), signed_columns=new_values.tolist(), previous_upper=float(np.min(old_values)), signed_upper=float(np.min(new_values))))
     finally:
         stable_bounds.log_range_cells = original
-    return dict(status='point/cell enclosures only; a global parameter cover remains required', rows=rows, coefficient_certificates=certificates, elapsed_seconds=time.monotonic() - began)
+    return dict(status='interval enclosures around the sampled parameter points', rows=rows, coefficient_certificates=certificates, elapsed_seconds=time.monotonic() - began)

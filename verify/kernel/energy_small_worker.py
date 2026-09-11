@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 import time
 from flint import arb, ctx
-REMAINDER_SHA256 = 'cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f'
+REMAINDER_SHA256 = 'f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46'
 PRICE = Fraction(9, 8)
 TAIL_START = 48
 
@@ -102,7 +102,7 @@ def certify(xlo=0, xhi=Fraction(1, 128), *, cpu_seconds=15.0, max_cells=400000, 
         pending.extend(queue)
         coefficients = tail_coefficients()
         assert all((v > 0 for v in coefficients))
-        result = dict(status='AUTHOR small-frequency energy certificate' if not pending else 'AUTHOR incomplete small-frequency proposal; requested cell not proved', certificate_family='small_frequency_normalized_gap_uniform_tail_v1', complete=not pending, xlo=str(xlo), xhi=str(xhi), price=str(PRICE), compact_y_range=[0, TAIL_START], tail_shift_coefficients=list(map(str, coefficients)), evaluated_cells=evaluated, accepted_cells=len(accepted), pending_cells=len(pending), minimum_accepted_lower=min((row[4] for row in accepted), default=None), q_right_upper=q_upper(xhi), precision_bits=ctx.prec, cpu_seconds=time.process_time() - began, source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), remainder_source_sha256=REMAINDER_SHA256, dispatch_performed=False)
+        result = dict(status='complete small-frequency energy bound' if not pending else 'incomplete small-frequency energy bound', certificate_family='small_frequency_normalized_gap_uniform_tail_v1', complete=not pending, xlo=str(xlo), xhi=str(xhi), price=str(PRICE), compact_y_range=[0, TAIL_START], tail_shift_coefficients=list(map(str, coefficients)), evaluated_cells=evaluated, accepted_cells=len(accepted), pending_cells=len(pending), minimum_accepted_lower=min((row[4] for row in accepted), default=None), q_right_upper=q_upper(xhi), precision_bits=ctx.prec, cpu_seconds=time.process_time() - began, source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), remainder_source_sha256=REMAINDER_SHA256, dispatch_performed=False)
         if retain_boxes:
             result['accepted_boxes'] = [dict(xlo=str(a), xhi=str(b), ylo=str(l), yhi=str(r), normalized_gap_lower=v) for a, b, l, r, v in accepted]
             result['pending_boxes'] = [list(map(str, row[:4])) for row in pending]
@@ -124,7 +124,7 @@ def run_cells(indices, denominator=128, *, cpu_seconds=110.0, per_cell_seconds=1
         result = certify(Fraction(i, denominator), Fraction(i + 1, denominator), cpu_seconds=min(per_cell_seconds, remaining), max_cells=max_cells_per_cell, retain_boxes=retain_boxes, precision_bits=precision_bits)
         result.update(index=i, denominator=denominator)
         rows.append(result)
-    return dict(status='AUTHOR bounded small-frequency worker; no integrated bound', rows=rows, requested_indices=list(indices), attempted_cells=len(rows), completed_cells=sum((row['complete'] for row in rows)), unattempted_indices=list(indices[len(rows):]), cpu_seconds=time.process_time() - began, dispatch_performed=False)
+    return dict(status='small-frequency interval calculations', rows=rows, requested_indices=list(indices), attempted_cells=len(rows), completed_cells=sum((row['complete'] for row in rows)), unattempted_indices=list(indices[len(rows):]), cpu_seconds=time.process_time() - began, dispatch_performed=False)
 
 def quick_checks():
     previous = ctx.prec

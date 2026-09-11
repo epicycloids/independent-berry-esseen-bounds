@@ -589,7 +589,7 @@
       "right": "1"
     }
   ],
-  "scope": "Scalar sum only; no reference consumer, smoothing bound, or moment cover",
+  "scope": "Scalar energy-sum bounds over the frequency range",
   "small_frequency_prefix": {
     "compiled_family": "replayed_small_frequency_prefix_v1",
     "lambda_upper": 1.125,
@@ -598,16 +598,16 @@
     "price": "9/8",
     "q_formula": "(8/3)*sinc(x)^4/cos(x)^2",
     "q_right_upper": 2.9268293693267076,
-    "remainder_source_sha256": "cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f",
-    "replay_source_sha256": "ba4d429dd7fda3a6ade56b7998a255236f03790e8bf0aee06c9e4f64ebd4e8d9",
+    "remainder_source_sha256": "f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46",
+    "replay_source_sha256": "15408f64195a06af44de66116361128f5039e9717fd78bfd10d8d9c60a5406cf",
     "right": "1/2",
-    "scope": "Scalar prefix only; no reference consumer, smoothing bound, or moment cover",
-    "source_sha256": "a443958f2ba1b8b34ea6306de53e6994a88180b0a676f398b9225b98d56e8d57",
+    "scope": "Scalar energy-sum bounds on the small-frequency interval",
+    "source_sha256": "43b265e75e63be5d154d4a41897ee1bde670cd9fa1568838e513f2cc084115f6",
     "verification": "all_rectangles_replayed",
     "verified": true,
     "verified_rectangles": 25175,
     "verified_scalar_records": 64
   },
-  "source_sha256": "cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f",
+  "source_sha256": "f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46",
   "verified_scalar_records": 64
 }

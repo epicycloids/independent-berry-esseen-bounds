@@ -13,12 +13,12 @@ ODD_SOURCE = HERE.parent / 'odd_refinement' / 'odd_bounds.py'
 if not ODD_SOURCE.is_file():
     ODD_SOURCE = HERE / 'odd_prefactor.py'
 if not ODD_SOURCE.is_file():
-    raise ImportError('Require the Round 27 odd input locally or as remote odd_prefactor.py.')
+    raise ImportError('The odd-prefactor module is missing.')
 _odd_spec = importlib.util.spec_from_file_location('_round27_concave_odd_input', ODD_SOURCE)
 _odd_input = importlib.util.module_from_spec(_odd_spec)
 _odd_spec.loader.exec_module(_odd_input)
 if not hasattr(_odd_input, 'exact_prefactor'):
-    raise ImportError('The supplied odd_bounds.py is not the Round 27 odd-refinement input.')
+    raise ImportError('The supplied odd-prefactor module lacks exact_prefactor.')
 odd_cells = _odd_input.odd_cells
 old_exact_prefactor = _odd_input.exact_prefactor
 

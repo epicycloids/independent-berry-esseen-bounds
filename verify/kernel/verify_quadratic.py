@@ -39,6 +39,6 @@ def quick_checks():
                 new = exact_prefactor(x, 1 + arb(e), 1, 1)
                 assert float(new) <= float(old) + 2e-13
                 rows.append(dict(x=x, excess=e, previous=float(old), quadratic=float(new), improvement=float(old - new)))
-        return dict(all_passed=True, general_coefficient_comparisons=general_checks, outward_whole_cell_comparisons=count, strict_array_entries=strict, scalar_rows=rows, elapsed_seconds=time.monotonic() - began, status='implementation diagnostics conditional on the stronger scalar theorem')
+        return dict(all_passed=True, general_coefficient_comparisons=general_checks, outward_whole_cell_comparisons=count, strict_array_entries=strict, scalar_rows=rows, elapsed_seconds=time.monotonic() - began, status='fixed comparisons of quadratic-prefactor coefficients and interval bounds')
     finally:
         ctx.prec = old_precision

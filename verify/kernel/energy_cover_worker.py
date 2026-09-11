@@ -5,7 +5,7 @@ import importlib
 import importlib.util
 from pathlib import Path
 import time
-REVIEWED_SHA256 = 'cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f'
+REVIEWED_SHA256 = 'f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46'
 
 @lru_cache(maxsize=1)
 def reviewed():
@@ -39,7 +39,7 @@ def run_cell(index, denominator=128, *, price=Fraction(9, 8), cpu_seconds=15.0, 
         raise ValueError('Invalid grid cell, price, or CPU budget')
     module = reviewed()
     result = module.certify(Fraction(index, denominator), Fraction(index + 1, denominator), price=price, cpu_seconds=cpu_seconds, max_cells=int(max_cells), retain_boxes=retain_boxes, precision_bits=int(precision_bits))
-    result.update(index=index, denominator=denominator, source_sha256=REVIEWED_SHA256, scalar_target='T_x from farfield_phase/PROOF.md (11)', saved_partition=bool(retain_boxes), dispatch_performed=False)
+    result.update(index=index, denominator=denominator, source_sha256=REVIEWED_SHA256, scalar_target='Energy-majorant gap defined by energy_majorant.gap_quotient', saved_partition=bool(retain_boxes), dispatch_performed=False)
     return result
 
 def run_cells(indices, denominator=128, *, price=Fraction(9, 8), cpu_seconds=110.0, per_cell_seconds=15.0, max_cells_per_cell=400000, retain_boxes=True, precision_bits=128):
@@ -51,4 +51,4 @@ def run_cells(indices, denominator=128, *, price=Fraction(9, 8), cpu_seconds=110
         if remaining <= 0:
             break
         rows.append(run_cell(index, denominator, price=price, cpu_seconds=min(per_cell_seconds, remaining), max_cells=max_cells_per_cell, retain_boxes=retain_boxes, precision_bits=precision_bits))
-    return dict(status='AUTHOR bounded energy frequency-cell worker; no array or endpoint claim', rows=rows, requested_indices=list(indices), attempted_cells=len(rows), completed_cells=sum((row['complete'] for row in rows)), unattempted_indices=list(indices[len(rows):]), denominator=int(denominator), price=str(Fraction(price)), cpu_seconds=time.process_time() - began, source_sha256=REVIEWED_SHA256, dispatch_performed=False)
+    return dict(status='energy frequency-cell calculations', rows=rows, requested_indices=list(indices), attempted_cells=len(rows), completed_cells=sum((row['complete'] for row in rows)), unattempted_indices=list(indices[len(rows):]), denominator=int(denominator), price=str(Fraction(price)), cpu_seconds=time.process_time() - began, source_sha256=REVIEWED_SHA256, dispatch_performed=False)

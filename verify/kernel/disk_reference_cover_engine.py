@@ -8,7 +8,7 @@ from signed_gaussian import verify_partition
 import stable_bounds
 import stable_cover
 KIND = 'direct_disk_signed_reference_dual5_cutoff'
-PRODUCT = 'direct whole-log dual prices .75,1,1.5,2,3 with original baseline; complete direct centered disk table and previous scalar/quadratic fallbacks; signed reference rectangles on [-2,2] and Cantelli outside; signed Gaussian fixed-cutoff portfolio'
+PRODUCT = 'direct whole-log dual prices .75,1,1.5,2,3 with original baseline; complete direct centered disk table and scalar and quadratic fallbacks; signed reference rectangles on [-2,2] and Cantelli outside; signed Gaussian fixed-cutoff portfolio'
 INSTALLED = False
 CERTIFICATES = {}
 CUTOFF_RECORDS = {}
@@ -84,13 +84,3 @@ def install():
         return choose
     stable_cover.weight_factory = factory
     INSTALLED = True
-
-def run_section(start, end, step, target, N, pending=None):
-    install()
-    CERTIFICATES.clear()
-    CUTOFF_RECORDS.clear()
-    result = stable_cover.run_section(start, end, step, target, N, pending, KIND)
-    result['product_variant'] = PRODUCT
-    result['gaussian_certificates'] = dict(CERTIFICATES)
-    result['cutoff_records'] = dict(CUTOFF_RECORDS)
-    return result

@@ -1,6 +1,6 @@
 [project]
 name = "independent-berry-esseen-bounds"
-version = "0.3.0.dev0"
+version = "0.4.0"
 description = "Research manuscripts and verification supplements for the independent Berry-Esseen constant"
 requires-python = ">=3.12,<3.13"
 dependencies = ["numpy==2.4.6", "python-flint==0.8.0", "scipy==1.15.3", "sympy==1.14.0"]

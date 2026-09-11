@@ -1,0 +1,1395 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,enumitem,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+urlcolor=blue!45!black,pdftitle={Extremizers for the independent Berry-Esseen inequality},pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Law}{Law}
+\DeclareMathOperator{\Bern}{Bern}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\sinc}{sinc}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\ind}{\mathbf1}
+\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\ci}{C_{\mathrm{ind}}}
+\newcommand{\phz}{\phi(0)}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\TV}{\mathrm{TV}}
+\title{Extremizers for the independent Berry--Esseen inequality}
+\author{Logan Bell}
+\date{11 September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Suppose the optimal Berry--Esseen constant for arbitrary independent
+summands exceeds Esseen's constant. We prove that the supremum is attained
+in a class of countable independent convolutions with an infinitely
+divisible remainder, keeping the sum of third absolute moments as part of
+the representation. A maximizing representation can be chosen with
+three-point summands. Its Gaussian and L\'evy components vanish, and the
+supports of its independent summands shrink to zero. If infinitely many
+summands are nonconstant, their sum is nonatomic. We also prove a rank
+condition on the finite support configurations that can complete to a
+maximizing threshold. This condition excludes representations by infinitely
+many separated finite blocks, without restrictions on their probabilities
+or cardinalities. The proofs use exact variations of the original laws;
+CDF discontinuities are retained throughout. The sharp inequality for
+all independent arrays remains open.
+\end{abstract}
+
+\section{Statements and notation}\label{sec:statements}
+For a centered random variable $S$ of variance one, set
+\[
+ \Delta(S)=\sup_{x\in\R}|\Pp(S\le x)-\Phi(x)|.
+\]
+The standard normal density and distribution function are denoted by
+$\phi$ and $\Phi$. Define
+\[
+ \ci=\sup\frac{\Delta(\sum_{i=1}^nX_i)}
+                        {\sum_{i=1}^n\E|X_i|^3},
+ \qquad
+ \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},
+\]
+where the supremum is over finite independent centered arrays with total
+variance one and finite third absolute moments. The classical
+Berry--Esseen theorem gives $\ci<\infty$, and Esseen's two-point
+asymptotics give $\ci\ge\ce$ \cite{Esseen1956,Shevtsova2013}.
+
+We use the small-Lyapunov theorem proved in the companion manuscript
+\cite[Theorem~1.1]{BellSmall2026}: there is $\ell_0>0$ such that
+\begin{equation}\label{eq:small-input}
+ \sum_i\E|X_i|^3\le\ell_0
+ \quad\Longrightarrow\quad
+ \Delta(\textstyle\sum_iX_i)\le\ce\sum_i\E|X_i|^3.
+\end{equation}
+Its threshold is not numerical. That theorem adapts the uniform smoothing,
+contamination and local comparison methods of He and Cheng
+\cite{HeCheng2026} to nonidentically distributed arrays. Its finite input
+is the common-diameter Bernoulli theorem of \cite{BellFinite2026}.
+The present paper concerns the remaining extremal problem at positive
+Lyapunov ratio.
+
+\begin{definition}\label{def:representation}
+An admissible representation consists of independent centered variables
+$X_1,X_2,\ldots$, an independent centered infinitely divisible variable
+$Y$, and a finite number
+\begin{align}
+ S&=\sum_{i\ge1}X_i+Y,\notag\\
+ \log\E e^{itY}
+   &=-\frac{at^2}{2}
+     +\int_{\R\setminus\{0\}}(e^{ity}-1-ity)\,\nu(dy),
+                                                        \label{eq:LK}\\
+ \sum_i\Var(X_i)+a+\int y^2\nu(dy)&=1,\qquad
+ \beta=\sum_i\E|X_i|^3+\int|y|^3\nu(dy)<\infty.         \label{eq:profile-moments}
+\end{align}
+Here $a\ge0$, the series converges in $L^2$, and $\nu$ is a L\'evy
+measure with finite second moment. The number $\beta$ is the additive
+third-moment quantity of the representation. A representation is
+maximizing if $\beta>0$ and $\Delta(S)=\ci\beta$.
+\end{definition}
+
+The Gaussian term contributes zero to $\beta$. Indeed a Gaussian variable
+of variance $a$ can be approximated by sums whose variance is $a$ and
+whose third-moment sums tend to zero. Thus $\beta$ is not the third
+absolute moment of $S$, and it is not determined by the law of $S$ alone.
+The approximation statement for the whole representation is proved in
+Section~\ref{sec:compactness}.
+
+\begin{theorem}\label{thm:structure}
+If $\ci>\ce$, there is a maximizing admissible representation whose
+variables $X_i$ have at most three support points. Every maximizing
+representation with this support property satisfies
+\begin{equation}\label{eq:main-structure}
+ a=0,\qquad \nu=0,\qquad
+ \max\{|u|:u\in\supp X_i\}\longrightarrow0.
+\end{equation}
+If infinitely many $X_i$ are nonconstant, then the law of $S$ is
+nonatomic and
+\[
+ \sum_i\bigl(1-\max_u\Pp(X_i=u)\bigr)=\infty.
+\]
+\end{theorem}
+
+Reflection, if needed, gives a threshold $z$ at which
+\begin{equation}\label{eq:max-data}
+ F(z)-\Phi(z)=D=C\beta>0,
+ \qquad C=\ci,\qquad A=\frac{3D+z\phi(z)}2,
+ \qquad F(x)=\Pp(S\le x).
+\end{equation}
+All CDFs in this paper are closed CDFs. A left limit is written explicitly.
+The function $F-\Phi$ is upper semicontinuous and tends to zero at both
+ends of the line, so a positive supremum on this branch is attained.
+The continuous normal CDF allows reflection to interchange the positive
+branch with the branch $\Phi(x)-\Pp(S<x)$.
+
+There is also a restriction on support configurations. For a finite set
+$I$ of indices, put $T_I=S-\sum_{i\in I}X_i$ and
+\begin{equation}\label{eq:completion}
+ \mathcal A_I=
+ \left\{(x_i)_{i\in I}\in\prod_{i\in I}\supp X_i:
+       z-\sum_{i\in I}x_i\in\supp T_I\right\}.
+\end{equation}
+The support on the right is the closed support of the actual independent
+remainder. This definition does not condition on the event $S=z$.
+
+\begin{theorem}\label{thm:rank}
+Fix a maximizing representation as in Theorem~\ref{thm:structure} and a
+threshold satisfying \eqref{eq:max-data}. There is $k_0$ such that, for
+every finite $I\subset\{k_0,k_0+1,\ldots\}$, the following holds:
+if functions $f_i:\supp X_i\to\R$ satisfy
+\[
+             \sum_{i\in I}f_i(x_i)=c
+             \quad\text{for all }(x_i)\in\mathcal A_I,
+\]
+then every $f_i$ is constant. Equivalently, choose one state $u_i^0\in\supp X_i$ for each $i$.
+The indicator vectors
+$\bigl(\ind_{\{x_i=u\}}\bigr)_{i\in I,\,u\in\supp X_i\setminus\{u_i^0\}}$
+associated with $\mathcal A_I$ have full affine dimension
+$\sum_{i\in I}(|\supp X_i|-1)$.
+\end{theorem}
+
+\begin{corollary}\label{cor:separated}
+Such a representation cannot consist of a finite-support independent
+prefix followed by infinitely many nonconstant finite blocks of
+finite-support summands for which
+\[
+ H_k=\sum_{i\text{ in block }k}\diam(\supp X_i),\qquad
+ \delta_k=\min_{u\ne v\in\supp(\sum_{i\text{ in block }k}X_i)}|u-v|
+\]
+satisfy
+\begin{equation}\label{eq:separation}
+              \sum_k H_k<\infty,
+              \qquad \delta_k\ge\sum_{l>k}H_l.
+\end{equation}
+There are no restrictions on the block sizes, their positive atom masses,
+or the overlap of the prefix translates.
+\end{corollary}
+
+Theorem~\ref{thm:structure} leaves both finite representations and
+nonatomic infinite convolutions with shrinking supports. Such infinite
+convolutions need not have a density. Theorem~\ref{thm:rank} is automatic
+when every relevant remainder has support $\R$; it therefore does not
+supply the missing regularity assertion.
+
+The compactification uses the classical accompanying Poisson-law method
+and L\'evy--Khintchine representation \cite{Levy1937};
+Section~\ref{sec:compactness} proves the needed moment bounds.
+Coordinate contamination follows He and Cheng
+\cite[Section~4]{HeCheng2026}; the independent-coordinate derivatives,
+L\'evy-intensity variations and contact propagation are derived below.
+The Gaussian estimates use the zero-bias transformation of Goldstein and
+Reinert \cite{GoldsteinReinert1997}, the transport estimate independently
+obtained by Goldstein and Tyurin \cite{Goldstein2010,Tyurin2009}, and the
+compound-Poisson Berry--Esseen bound of Korolev and Shevtsova
+\cite{KorolevShevtsova2012}. The atom argument uses Sperner's theorem
+\cite{Sperner1928}. These inputs are stated where they enter the proofs.
+
+\section{Compactification and attainment}\label{sec:compactness}
+
+\begin{lemma}\label{lem:threepoint}
+For every $c>0$, a finite independent variance-one array satisfying
+$\Delta(\sum_iX_i)>c\sum_i\E|X_i|^3$ can be replaced by one with the
+same number and variances of summands, each having at most three support
+points, for which the same strict inequality holds.
+\end{lemma}
+\begin{proof}
+Choose the positive closed-CDF branch by reflection. At its fixed threshold,
+with all other summands held fixed, maximize
+\[
+       \int\{G_i(z-u)-c|u|^3\}\,P(du)
+       \quad\text{subject to }\int u\,dP=0,\quad\int u^2\,dP=v_i.
+\]
+For $v_i=0$ the law is fixed. Otherwise the objective is upper
+semicontinuous and bounded above by $1-c|u|^3$. A maximizing sequence
+has bounded third moments, so a weak limit preserves its first two
+moments and attains the supremum. The maximizing set is compact and is
+a face of the convex moment set. It has an extreme point. Such a point
+has at most three atoms: four disjoint positive-mass sets would give a
+linear dependence among their mass, first-moment and second-moment
+vectors, and hence two distinct feasible bounded-density perturbations
+with the original law as their average. This is the elementary
+three-constraint case of the moment-set principle in
+\citet{Winkler1988}; the coercive argument is also given in
+\citet{BellFinite2026}. Replacing coordinates successively preserves the
+strict positive excess at coefficient $c$.
+\end{proof}
+
+\begin{lemma}\label{lem:compactness}
+Let finite independent centered arrays have total variance one and
+third-moment sums $\beta_n\le M$. After passage to a subsequence, their
+sums converge weakly to an admissible representation with
+\[
+                      \beta\le\liminf_n\beta_n.
+\]
+If the original summands have at most three atoms, so do the limiting
+independent variables $X_i$.
+\end{lemma}
+\begin{proof}
+First take a subsequence along which $\beta_n$ tends to its liminf.
+Order each row by decreasing variance, padding it with zero variables.
+Then $v_{n,k}\le1/k$. The laws are tight, and
+\[
+ \E[X_{n,k}^2;|X_{n,k}|>L]\le M/L
+\]
+makes their squares uniformly integrable. A diagonal subsequence gives
+$X_{n,k}\Rightarrow X_k$, convergence of means and variances, and
+convergence of the numbers $\E|X_{n,k}|^3$ to numbers $b_k$.
+Writing $v_k=\E X_k^2$ and $r_k=\E|X_k|^3$, we have
+\[
+ \sum_kv_k\le1,\qquad r_k\le b_k,
+ \qquad\sum_kb_k\le\lim_n\beta_n.
+\]
+The independent series $\sum_kX_k$ exists in $L^2$.
+
+Choose $K_n\to\infty$ sufficiently slowly that the first $K_n$ laws
+approximate their limits on each fixed prefix and
+$\sum_{k\le K_n}|v_{n,k}-v_k|\to0$. The corresponding prefix sums
+converge weakly to $\sum_kX_k$: after fixing a finite prefix, the
+variance of what remains in the growing prefix is at most
+$\sum_{k>K}v_k+o(1)$. Define the quadratic measures of the remaining row by
+\[
+ \Lambda_n(E)=\sum_{k>K_n}\E[X_{n,k}^2\ind_{\{X_{n,k}\in E\}}].
+\]
+Their masses tend to $v_0=1-\sum_kv_k$ and their tails are bounded by
+$M/L$ outside $[-L,L]$. Take $\Lambda_n\Rightarrow\Lambda$; its mass
+is $v_0$.
+
+For a centered variable of variance $v$, its characteristic function
+$f$ satisfies $|f(t)-1|\le vt^2/2$. If $\Re w\le0$, then
+$|e^w-1-w|\le|w|^2/2$. Telescoping products therefore gives
+\begin{equation}\label{eq:poissonization}
+ \left|\prod_jf_j(t)-\exp\Bigl\{\sum_j(f_j(t)-1)\Bigr\}\right|
+                  \le\frac{t^4}{8}\sum_jv_j^2.
+\end{equation}
+For the remaining row the right side tends to zero, since its largest
+variance is at most $1/(K_n+1)$. Its accompanying Poisson exponent is
+\[
+ \int q_t(y)\,\Lambda_n(dy),\qquad
+ q_t(y)=\frac{e^{ity}-1-ity}{y^2},\quad q_t(0)=-t^2/2.
+\]
+The function $q_t$ is bounded and continuous. Hence these exponents
+converge to the integral against $\Lambda$. Set
+$a=\Lambda(\{0\})$ and $\nu(dy)=y^{-2}\Lambda(dy)$ off zero. This
+gives \eqref{eq:LK}, with variance $v_0$. Independence of the original
+prefix and tail proves the claimed representation and preserves total
+variance.
+
+For each fixed $K$ and all sufficiently large $n$,
+\[
+ \int|y|\,\Lambda_n(dy)
+       \le\beta_n-\sum_{k\le K}\E|X_{n,k}|^3.
+\]
+Lower semicontinuity and then $K\to\infty$ give
+$\int|y|^3\nu(dy)\le\lim\beta_n-\sum_kb_k$.
+Together with $r_k\le b_k$ this proves the third-moment inequality.
+No uniform integrability of cubic moments was assumed. Finally, a weak
+limit of three-atom laws cannot charge four disjoint open sets.
+\end{proof}
+
+\begin{lemma}\label{lem:realization}
+Every admissible representation is a weak limit of finite centered
+independent arrays with variance exactly one and third-moment sums tending
+to its number $\beta$. Consequently
+\begin{equation}\label{eq:extended-bound}
+                         \Delta(S)\le\ci\beta.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Keep finitely many $X_i$. Truncate $\nu$ away from zero and infinity,
+and approximate it by a finite atomic measure with convergent second
+and third absolute integrals. A small contraction can make its variance
+no larger than the available variance. Replace each atom
+$\lambda\delta_y$ by $N$ independent variables $y(B-\lambda/N)$,
+where $B\sim\Bern(\lambda/N)$. Their total variance and third-moment
+sum are
+\[
+ \lambda y^2(1-\lambda/N),\qquad
+ \lambda|y|^3(1-\lambda/N)
+       \{(\lambda/N)^2+(1-\lambda/N)^2\}.
+\]
+They converge to the corresponding compensated Poisson law and its
+second and third jump integrals. Fill the remaining variance by $N$
+independent symmetric two-point variables. If that variance is $b$, their
+third-moment sum is $b^{3/2}/\sqrt N$. Sending the truncation and
+approximation indices to their limits gives the required Gaussian
+variance and discards a tail of $\sum_iX_i$ whose variance tends to zero.
+Every finite array has variance one.
+
+If $P_n\Rightarrow P$ and $H$ is a continuous CDF, then
+$\|F_{P_n}-H\|_\infty\to\|F_P-H\|_\infty$.
+To verify this assertion, sandwich CDF values between a finite grid of
+continuity points of $F_P$ on which the oscillation of $H$ is arbitrarily
+small, and control both tails. Values immediately before and after jumps
+are recovered by continuity points and the continuity of $H$.
+Applying this to $H=\Phi$ proves \eqref{eq:extended-bound}.
+\end{proof}
+
+\begin{proposition}\label{prop:attainment}
+If $\ci>\ce$, a maximizing representation with three-point independent
+variables exists.
+\end{proposition}
+\begin{proof}
+Take coefficients $c_n\uparrow\ci$ with $c_n>\ce$ and finite arrays
+whose ratios exceed $c_n$. Lemma~\ref{lem:threepoint} supplies three-point
+arrays with the same property. Their third-moment sums satisfy
+$\ell_0<\beta_n<1/c_n$ by \eqref{eq:small-input} and $\Delta\le1$.
+Take $\beta_n\to r>0$ and apply Lemma~\ref{lem:compactness}. Weak
+continuity of distance to the normal gives $\Delta(S)=\ci r>0$.
+The limiting representation satisfies
+\[
+          \ci r=\Delta(S)\le\ci\beta\le\ci r.
+\]
+Thus $\beta=r$ and it is maximizing. This equality rules out loss of the
+additive third-moment quantity in the compactification.
+\end{proof}
+
+\section{Variations and contact identities}\label{sec:variation}
+Fix a maximizing representation with $C=\ci>\ce$ and
+\eqref{eq:max-data}. For an admissible perturbation of raw independent
+laws, let $m$ be the total mean, $B$ the total central variance, $R_*$
+the sum of the recentered third absolute moments plus the L\'evy third
+integral, and $F_*$ the raw sum CDF. At a raw threshold $w$, put
+\begin{equation}\label{eq:objective}
+       J=B^{3/2}\left\{F_*(w)-\Phi\left(\frac{w-m}{\sqrt B}\right)\right\}
+                    -C R_*.
+\end{equation}
+By Lemma~\ref{lem:realization}, $J\le0$ whenever the perturbation is
+admissible, and $J=0$ at the original representation and $w=z$.
+Finite probability variations make $F_*(z)$ a multiaffine polynomial,
+including at atoms. Since $|x|^3$ is $C^2$, their central third moments
+are twice differentiable. A two-sided probability parameter consequently
+has zero first derivative, and the Hessian is negative semidefinite on
+its admissible tangent cone when all first derivatives vanish.
+
+\begin{lemma}\label{lem:contacts}
+Let $G_i$ be the CDF of $S-X_i$, and put
+$v_i=\E X_i^2$, $b_i=\E|X_i|^3$, $M_i=\E[X_i|X_i|]$. Then
+\begin{align}
+ G_i(z-u)-F(z)+\phi(z)u+A(u^2-v_i)
+   -C\{|u|^3-b_i-3M_i u\}&\le0,                    \label{eq:coord-contact}\\
+ Q(y):=F(z-y)-F(z)+\phi(z)y+Ay^2-C|y|^3&\le0.       \label{eq:Q}
+\end{align}
+Equality holds in \eqref{eq:coord-contact} at every support point of
+$X_i$, and $Q(y)=0$ at every nonzero point of $\supp\nu$.
+All supports $\supp X_i$ lie in one bounded interval, and all nonzero
+zeros of $Q$ lie in one bounded interval.
+\end{lemma}
+\begin{proof}
+Replace the raw law of $X_i$ by $(1-t)\Law(X_i)+t\delta_u$.
+The derivatives of mean, variance and third absolute central moment are
+$u$, $u^2-v_i$ and $|u|^3-b_i-3M_i u$. Differentiating
+\eqref{eq:objective} gives \eqref{eq:coord-contact}. Its integral under
+$\Law(X_i)$ is zero. Upper semicontinuity then extends equality from
+almost every point to the entire support. This is the coordinatewise
+contamination argument of \citet[Section~4]{HeCheng2026}.
+
+Append a compensated Poisson variable $y(N_t-t)$ and use the centered
+threshold $z-ty$. Its raw CDF is exactly $\E F(z-yN_t)$; variance and
+third-moment quantity increase by $ty^2$ and $t|y|^3$. Its right
+first derivative is $Q(y)$, proving \eqref{eq:Q}. For a finite signed
+measure $\eta=f\nu$, with bounded $f$ supported away from zero, both
+signs of small changes in $\nu$ are admissible. Their derivatives are
+$\int Q\,d\eta$. Thus $Q=0$ almost everywhere for $\nu$, and upper
+semicontinuity gives equality on its nonzero support.
+
+In \eqref{eq:coord-contact}, use $v_i\le1$, $|M_i|\le1$ and
+$Cb_i\le C\beta=D$. Its right side at a support point is bounded
+above by a fixed cubic polynomial in $|u|$ with leading coefficient
+$-C$. The same reasoning applies to \eqref{eq:Q}. Both zero sets are
+therefore bounded uniformly in $i$.
+\end{proof}
+
+For later calculations, consider a mass transfer between two states
+$u,v$ of one centered variable. Write $d=u-v$, $b=u^2-v^2$, and let
+$g=G_i(z-u)-G_i(z-v)$. The third-moment derivatives are
+\begin{align}
+ r'&=|u|^3-|v|^3-3d\E[X_i|X_i|],\notag\\
+ r''&=-6d(u|u|-v|v|)+6d^2\E|X_i|.                  \label{eq:transfer-moments}
+\end{align}
+Stationarity says $g+\phi d+Ab-Cr'=0$. Hereafter $\phi$ without an
+argument in an algebraic formula means $\phi(z)$. Put
+\[
+ B_0=\frac{3D+(3z+z^3)\phi}{4},\qquad
+ E_0=(1+z^2/2)\phi.
+\]
+For two transfers in distinct coordinates the Hessian entries of
+\eqref{eq:objective} are
+\begin{align}
+ H_{ii}&=3b_i g_i+B_0b_i^2+2E_0b_i d_i-3Dd_i^2-Cr_i'',\label{eq:prob-hessian}\\
+ H_{ij}&=g_{ij}+\tfrac32(b_i g_j+b_j g_i)+B_0b_i b_j
+      +E_0(b_i d_j+b_j d_i)+z\phi d_i d_j,\quad i\ne j.\notag
+\end{align}
+Here $g_{ij}$ is the exact raw double CDF difference. These identities
+follow by differentiating $B^{3/2}\Phi((z-m)/\sqrt B)$ at $(B,m)=(1,0)$;
+its second derivatives are
+\[
+ N_{mm}=-z\phi,\quad N_{mB}=-(1+z^2/2)\phi,\quad
+ N_{BB}=\tfrac34\Phi(z)-\tfrac14(3z+z^3)\phi.
+\]
+The second variance derivative in one transfer is $-2d_i^2$, whereas
+mixed moment derivatives in different coordinates vanish. This accounts
+for the diagonal term $-3Dd_i^2$ in \eqref{eq:prob-hessian}.
+
+\begin{lemma}\label{lem:atoms-modal}
+If the full sum has an atom of mass $m>0$ and each $X_i$ has at most
+three support points, then, with $q_i=\max_u\Pp(X_i=u)$,
+\[
+                         \sum_i(1-q_i)<\infty.
+\]
+\end{lemma}
+\begin{proof}
+Represent each $X_i$ as an activated fair two-point law. If $q_i\ge1/2$,
+activate with probability $\rho_i=2(1-q_i)$ and use the modal
+state with the remaining probability. On activation choose fairly between the modal state and an
+independent conditional nonmodal state. If three masses $p_1,p_2,p_3$
+are all below $1/2$, mix the three fair pairs, assigning weight $1-2p_k$
+to the pair that excludes state $k$. Thus in all cases
+$\rho_i=\min\{1,2(1-q_i)\}\ge\tfrac32(1-q_i)$.
+
+Condition on activations and chosen endpoints, orienting the fair bits
+with positive increments. Every fixed-sum fiber is an antichain.
+Sperner's theorem \cite{Sperner1928} bounds its conditional probability
+by $2^{-N}\binom{N}{\lfloor N/2\rfloor}\le\sqrt{2/(N+1)}$ when
+$N$ bits are active. For a finite prefix with $\mu=\sum_i\rho_i>0$,
+Cauchy--Schwarz and the generating function of $N$ yield
+\[
+ \sup_x\Pp(\textstyle\sum_iX_i=x)^2
+ \le2\E\frac1{N+1}
+ =2\int_0^1\prod_i(1-\rho_i+\rho_i t)\,dt
+ \le\frac{2(1-e^{-\mu})}{\mu}.
+\]
+Convolution cannot increase the largest atom. The left side is at least
+$m^2$ for every prefix, so $\mu$ stays bounded, proving the assertion.
+This is a direct finite-alphabet concentration argument within the
+classical theory of infinite convolutions \cite{JessenWintner1935}.
+\end{proof}
+
+\section{Eliminating jumps and nonshrinking supports}\label{sec:propagation}
+
+\subsection{Pair contacts for the L\'evy measure}
+
+\begin{lemma}\label{lem:levy-pairs}
+For nonzero same-sign points $x,y\in\supp\nu$, one has $Q(x+y)=0$.
+The measure $\nu$ is supported on at most two positive and two negative
+points.
+\end{lemma}
+\begin{proof}
+Choose a probability law $H$ dominated by a finite multiple of $\nu$
+and supported in a compact interval on one side of zero. Write
+$m=\E H$, $v=\E H^2$, $r=\E|H|^3$, and $k=m^2/v$. Remove a
+compensated Poisson component of intensity $p-kp^2$ with jump law $H$,
+and insert the single centered variable $B_pH-pm$. This is admissible
+for all sufficiently small $p>0$ and preserves variance. Its third
+absolute moment is
+\[
+      pr-3p^2|m|v+4p^3|m|^3-2p^4|m|^3.
+\]
+At the centered threshold $z-kp^2m$, the raw CDF is
+\[
+       [(I+pU_H)e^{-(p-kp^2)U_H}F](z),\qquad
+       U_H f(w)=\E f(w-H)-f(w).
+\]
+The bounded-operator expansion is valid in uniform norm. Its second-order
+term is $(kU_H-\tfrac12U_H^2)F$. Combining it with the normal and
+third-moment terms, the coefficient of $p^2$ in the excess is
+\[
+                 (k+1)\E Q(H)-\tfrac12\E Q(H+H'),
+\]
+where $H'$ is independent. The cubic cancellation uses
+$\E|H+H'|^3=2r+6|m|v$. The first expectation vanishes by
+Lemma~\ref{lem:contacts}; the second is nonpositive. Maximality forces
+it to be zero. Upper semicontinuity extends this identity to all
+same-sign support pairs, by choosing $H$ on neighborhoods of any two
+specified support points. The case $x=y$ is included.
+
+For the support count, perturb the L\'evy measure by a finite signed
+measure $\eta=f\nu$ with bounded $f$ supported away from zero. Define
+$d_\eta=\int y\,d\eta$, $v_\eta=\int y^2\,d\eta$, and
+$r_\eta=\int|y|^3\,d\eta$. The centered threshold $z-d_\eta$ gives
+\begin{equation}\label{eq:intensity-objective}
+ (1+v_\eta)^{3/2}
+ \left\{[e^{U_\eta}F](z)
+       -\Phi\left(\frac{z-d_\eta}{\sqrt{1+v_\eta}}\right)\right\}
+        -C(\beta+r_\eta)\le0,
+\end{equation}
+where $U_\eta f(w)=\int[f(w-y)-f(w)]\,\eta(dy)$.
+Both signs are allowed near zero. Negative perturbations are interpreted
+by removing the corresponding finite Poisson component; the bounded
+operator identity remains exact. Thus its Hessian is negative
+semidefinite on these signed directions.
+
+Write $U_xf(w)=f(w-x)-f(w)$. Let $L=(15D+\phi'''(z))/4$, and, for $\sigma\in\{-1,1\}$, define
+\begin{equation}\label{eq:kernel}
+ \mathcal K_\sigma(u,v)=uv\left\{-3D+
+       \left(3C+\frac{\sigma\phi''(z)}2\right)(u+v)
+       -Luv+\frac{3C}{2}uv(u+v)\right\},\quad u,v>0.
+\end{equation}
+At same-sign contact points $x=\sigma u$, $y=\sigma v$ whose sum is
+also a contact, the intensity Hessian equals $\mathcal K_\sigma(u,v)$.
+For verification before substituting contacts, its kernel is
+\begin{align*}
+ U_xU_yF(z)&+\tfrac32[x^2U_yF(z)+y^2U_xF(z)]
+      +B_0x^2y^2\notag\\[-1ex]
+ &+E_0(x^2y+xy^2)+z\phi xy.
+\end{align*}
+Substitute $U_xF(z)=-\phi x-Ax^2+C|x|^3$ and
+$U_xU_yF(z)=-2Axy+3Cxy(|x|+|y|)$ to obtain
+\eqref{eq:kernel}. Its moment coefficient matrix in the basis
+$(u,u^2,u^3)$ is
+\begin{equation}\label{eq:moment-matrix}
+ M_\sigma=
+ \begin{pmatrix}
+ -3D&3C+\sigma\phi''(z)/2&0\\
+ 3C+\sigma\phi''(z)/2&-L&3C/2\\
+ 0&3C/2&0
+ \end{pmatrix}.
+\end{equation}
+It is not negative semidefinite: its value at $(0,t,1)$ is
+$-Lt^2+3Ct>0$ for small $t>0$.
+
+If three distinct support magnitudes $u_1,u_2,u_3$ existed on one
+side, restrict $\nu$ to three disjoint small compact neighborhoods and
+normalize each restriction to a probability measure. Arbitrary signed
+combinations are locally admissible intensity directions. Their Hessian
+is congruent to $M_\sigma$ through the columns of first, second and
+third moments of these restrictions. As the neighborhoods shrink, these
+columns tend to $(u_j,u_j^2,u_j^3)$, an invertible Vandermonde matrix.
+For sufficiently small neighborhoods the Hessian cannot be negative
+semidefinite. This contradiction proves the support count. Finite second
+moment then makes $\nu$ a finite measure.
+\end{proof}
+
+\subsection{Contacts from limiting support values}
+
+\begin{lemma}\label{lem:limit-double}
+Suppose $i_n$ are distinct and $u_n\in\supp X_{i_n}$ satisfies
+$u_n\to x\ne0$. Then $Q(x)=Q(2x)=0$. The probability transfer can be
+taken from a state $v_n\to0$ to $u_n$, with gap $d_n=u_n-v_n\to x$.
+If the full CDF has a jump and $d_n>x$ along a subsequence, it has no
+jump at $z-x$ or $z-2x$.
+\end{lemma}
+\begin{proof}
+The variances of distinct coordinates tend to zero. If $F$ is continuous,
+choose a support state $v_n$ with $|v_n|\le\sqrt{v_{i_n}}$. Deleting
+one or two selected coordinates changes the sum by a variable tending
+to zero in $L^2$. The deleted CDFs therefore converge uniformly to $F$.
+The derivatives in \eqref{eq:transfer-moments} satisfy
+\[
+ d_n\to x,\quad b_n=u_n^2-v_n^2\to x^2,
+ \quad r_n'\to|x|^3,\quad r_n''\to-6|x|^3.
+\]
+First stationarity gives $Q(x)=0$. In
+\eqref{eq:prob-hessian}, the limit of the off-diagonal entry minus
+that of the diagonal entry is
+\[
+ F(z-2x)-2F(z-x)+F(z)+2Ax^2-6C|x|^3=Q(2x).
+\]
+The two-coordinate contrast $(1,-1)$ gives $-2Q(2x)\le0$.
+Together with $Q\le0$, this proves the assertion.
+
+If the full law has an atom, Lemma~\ref{lem:atoms-modal} gives modal
+probabilities $q_n\to1$. Take $v_n$ to be a modal state; then
+$q_nv_n^2\le v_{i_n}$, so $v_n\to0$. Put
+$H_n(w)=\Pp(S-X_{i_n}+v_n\le w)$. Since the original law contains
+this branch with probability $q_n$,
+\[
+                    \|H_n-F\|_\infty\le1-q_n.
+\]
+The analogous double-deletion bound is $(1-q_n)+(1-q_m)$.
+Pass to a subsequence on which the gaps equal $x$, lie above $x$,
+or lie below $x$. Each shifted CDF then has a definite side limit.
+Let $Q_1^*,Q_2^*$ denote the corresponding versions of $Q(x),Q(2x)$,
+using these side limits. Stationarity gives $Q_1^*=0$; the same Hessian
+contrast gives $Q_2^*\ge0$, while $Q\le0$ gives $Q_2^*\le0$.
+Closed CDF values dominate their left limits, so $Q(x),Q(2x)\ge0$.
+Both are zero. When the arguments approach from the left, the two side
+limits must equal the closed values; this proves the last assertion.
+\end{proof}
+
+\subsection{Comparisons with fixed added summands}
+Fix a sign $\sigma$ and a nonzero limit $x=\sigma u$ as in
+Lemma~\ref{lem:limit-double}. Its probability transfers are two-sided
+at each finite index. Appending a fresh raw variable
+$(1-t)\delta_0+t\delta_y$, $t\ge0$, has first derivative $Q(y)$
+in \eqref{eq:objective}. The gap $y$ below is always fixed, rather than
+set equal to a varying support value. Thus when $Q(y)=0$, its first
+derivative is exactly zero for every selected index.
+
+\begin{lemma}\label{lem:closed-copy}
+For $y=\sigma v$ with $Q(y)=0$, the limiting mixed Hessian between the
+old transfer tending to $x$ and a fresh variable at $y$ equals
+\[
+                     \mathcal K_\sigma(u,v)+Q(x+y).
+\]
+The old diagonal and its mixed entry with a fresh variable at $x$ both
+equal $\mathcal K_\sigma(u,u)$ in the limit.
+The same conclusions hold if the old direction instead varies the
+positive intensity of an existing L\'evy atom at $x$.
+\end{lemma}
+\begin{proof}
+The limiting derivatives of an old probability transfer are
+\[
+ m'=x,\quad B'=x^2,\quad B''=-2x^2,\quad
+ R_*'=|x|^3,\quad R_*''=-6|x|^3.
+\]
+They coincide with the derivatives for the fresh variable at $x$.
+Stationarity and \eqref{eq:prob-hessian} give the common limiting
+diagonal $\mathcal K_\sigma(u,u)$. Their mixed CDF double shift is
+closed: in the continuous case this follows from uniform deletion
+convergence; in the atomic case its argument approaches $z-2x$ from
+the right, or Lemma~\ref{lem:limit-double} removes the left-limit jump.
+Since $Q(x)=Q(2x)=0$, its mixed entry is the same diagonal.
+
+Append also a fresh variable at the fixed contact $y$. Pass to a
+subsequence of the bounded Hessian entries. Write $B_{xy}$ for the
+old--fresh-$y$ entry and $N_{xy}$ for the fresh-$x$--fresh-$y$ entry.
+The latter uses the exact closed value $F(z-x-y)$ and, by the same
+substitution as in \eqref{eq:kernel}, equals
+$\mathcal K_\sigma(u,v)+Q(x+y)$. The old single-shift limit is fixed
+by stationarity; the fresh single shift is closed. Upper semicontinuity
+of the double shift, together with the uniform deletion or modal-branch
+comparison in the preceding lemma, therefore gives $N_{xy}-B_{xy}\ge0$.
+
+The vector $w=(-1,1,0)$ has zero limiting quadratic value and is feasible:
+it decreases an old probability and increases its fresh copy. For every
+$t\ge0$, $w+t(0,0,1)$ is also a feasible tangent direction. The Hessian
+inequality gives
+\[
+                   2t(N_{xy}-B_{xy})+t^2H_{yy}\le0.
+\]
+Letting $t\downarrow0$ proves the reverse inequality. This identifies
+the closed mixed entry. All first derivatives were exactly zero before
+taking the limit, so no approximation of a first-order contact is used
+to infer a second-order inequality.
+
+For an existing L\'evy atom, vary its intensity in both directions. Its
+CDF and moment derivatives are already at fixed closed shifts. Relative
+to the fresh Bernoulli diagonal its second derivative differs by
+\[
+             U_x^2F(z)+2Ax^2-6C|x|^3=Q(2x)-2Q(x)=0,
+\]
+using Lemma~\ref{lem:levy-pairs}. This proves the same formulas.
+\end{proof}
+
+\begin{proposition}\label{prop:shrink}
+Every maximizing representation with three-point independent variables
+has $\nu=0$ and $\max\{|u|:u\in\supp X_i\}\to0$.
+\end{proposition}
+\begin{proof}
+Let $x=\sigma u$ be either a nonzero limiting support value or a point
+of $\supp\nu$. In the latter case it is an atom of positive intensity
+by Lemma~\ref{lem:levy-pairs}. Let $y=\sigma v$ be any same-sign global
+contact. For fixed $\eps>0$, append the one raw three-point law
+\[
+        (1-(1+\eps)t)\delta_0+t\delta_x+\eps t\delta_y,
+                      \qquad t\ge0.
+\]
+Its first derivative is $Q(x)+\eps Q(y)=0$. If
+$m_1=x+\eps y$, $v_1=x^2+\eps y^2$, and
+$s_1=x|x|+\eps y|y|$, its moment derivatives are
+\[
+ m'=m_1,\quad B'=v_1,\quad B''=-2m_1^2,
+ \quad R_*'=|x|^3+\eps|y|^3,\quad R_*''=-6m_1s_1.
+\]
+The raw CDF is affine in $t$. Its Hessian diagonal is consequently
+\[
+ \mathcal K_\sigma(u,u)+2\eps\mathcal K_\sigma(u,v)
+                              +\eps^2\mathcal K_\sigma(v,v).
+\]
+By Lemma~\ref{lem:closed-copy}, its mixed entry with the old direction
+is $\mathcal K_\sigma(u,u)+
+\eps[\mathcal K_\sigma(u,v)+Q(x+y)]$.
+Evaluate the two-parameter limiting Hessian on $(-1,1)$, decreasing
+the old direction and increasing the new activation. It gives
+\[
+                  -2\eps Q(x+y)+\eps^2\mathcal K_\sigma(v,v)\le0.
+\]
+First take the old-coordinate limit with $\eps$ fixed, and only then
+let $\eps\downarrow0$. Thus $Q(x+y)\ge0$, and hence $Q(x+y)=0$.
+The admissible neighborhoods of the old probabilities need not have a
+uniform radius.
+
+Starting with $Q(x)=0$, this conclusion propagates to $Q(nx)=0$ for
+every positive integer $n$, always using the same old direction and a
+fixed contact at the next step. This contradicts the bounded contact
+set in Lemma~\ref{lem:contacts}. No such $x$ exists. The finite L\'evy
+measure must therefore be zero. The uniformly bounded independent
+supports cannot have a nonzero accumulation along distinct indices, so
+their radii tend to zero.
+\end{proof}
+
+\section{Excluding a Gaussian component}\label{sec:gaussian}
+By Proposition~\ref{prop:shrink}, it is enough to consider
+\[
+ S=W+G_a,\qquad W=\sum_iX_i,\qquad
+ \Var(W)=1-a,\quad\beta=\sum_i\E|X_i|^3,
+\]
+where $G_a\sim N(0,a)$ is independent. Suppose $a>0$. The law has a
+smooth density $f$. Threshold and Gaussian-variance stationarity give
+\begin{equation}\label{eq:gauss-stationarity}
+ f(z)=\phi(z),\qquad f'(z)=-3D-z\phi(z),\qquad |f''(z)|\le6C.
+\end{equation}
+The second identity follows from the heat equation and the derivatives of
+\eqref{eq:objective}. Both signs of a small variance change are allowed.
+The last inequality follows by expanding $Q$ at zero on its two sides.
+
+\subsection{A smoothing bound from zero bias}
+For a centered variable $T$ of variance $v>0$, its zero-biased law $T^*$
+is characterized by $\E[Tg(T)]=v\E g'(T^*)$.
+Goldstein and Reinert \cite{GoldsteinReinert1997} introduced this
+transformation and the independent-sum replacement construction.
+Goldstein \cite[Lemma~1.1]{Goldstein2010} and Tyurin
+\cite[Theorem~3 and Corollary~1]{Tyurin2009} give
+\begin{equation}\label{eq:zero-bias}
+                  W_1(W,W^*)\le\frac{\beta}{2(1-a)},
+\end{equation}
+where $W_1$ is Wasserstein distance with cost $|x-y|$. For countably many
+summands the statements below follow by finite approximation retaining
+the fixed Gaussian variance.
+
+\begin{lemma}\label{lem:gauss-large}
+For every such independent sum,
+\[
+ \Delta(W+G_a)\le K(a)\beta,\qquad
+ K(a)=\frac{\phz}{2}\int_0^1
+            \frac{s^2}{[1-(1-a)s^2]^{3/2}}\,ds.
+\]
+The function $K$ is decreasing, and $K(1/10)<\ce$. Hence a maximizing
+representation has $a<1/10$.
+\end{lemma}
+\begin{proof}
+For $h(u)=\Phi((z-u)/\sqrt a)$ and $v=1-a$, the solution of
+$vg'(u)-ug(u)=h(u)-\E h(\sqrt v Z)$ has the
+Ornstein--Uhlenbeck representation
+\[
+              g(u)=-\int_0^1\E h'(su+\sqrt{v(1-s^2)}Z)\,ds.
+\]
+Differentiating twice and convolving Gaussian derivatives gives
+$\|g''\|_\infty\le\phz\int_0^1s^2(1-vs^2)^{-3/2}\,ds$.
+The zero-bias identity and \eqref{eq:zero-bias} bound the expectation
+difference by $\beta\|g''\|_\infty/2$.
+The integral decreases with $a$, and direct integration gives
+\[
+ K(a)=\frac{\phz}{2}
+ \left\{\frac1{(1-a)\sqrt a}
+       -\frac{\arcsin\sqrt{1-a}}{(1-a)^{3/2}}\right\}.
+\]
+At $a=1/10$ this is
+$(5\sqrt{10}/27)\phz(3-\arctan3)$.
+To check the strict comparison without decimal rounding, use
+$\pi>157/50$, $\sqrt{10}<19/6$ and
+\[
+ \arctan3=\pi/2-\arctan(1/3)
+ >\frac{157}{100}-\left(\frac13-\frac1{81}+\frac1{1215}\right)
+ >\frac{237}{190}
+ >\frac{21}{10}-\frac{27}{10\sqrt{10}}.
+\]
+This is equivalent to $K(1/10)<\ce$.
+\end{proof}
+
+\subsection{A lattice comparison}
+
+\begin{lemma}\label{lem:lattice-gauss}
+At a maximizing representation with $a>0$,
+\begin{equation}\label{eq:lattice-curvature}
+             \phi(z)\le a\left(C-\frac{f''(z)^2}{36C}\right).
+\end{equation}
+\end{lemma}
+\begin{proof}
+We first approximate $W+G_a$ by a lattice convolution plus a Gaussian,
+with error smaller than its lattice spacing. Order the $X_i$ by decreasing
+variance and set
+\[
+ v^{(K)}=\sum_{i>K}v_i,\qquad H_K=\sum_{i>K}v_i^2.
+\]
+Then $KH_K\le v^{(K)}\to0$. If the series is infinite, choose
+$h_K=\sqrt{H_K/K}$, so $H_K=o(h_K)$ and $Kh_K\to0$.
+For finitely many nonzero summands take $h_K=K^{-2}$ beyond them.
+
+Replace the tail after $K$ by its accompanying compensated Poisson law
+with measure $\mu_K=\sum_{i>K}\Law(X_i)|_{\R\setminus\{0\}}$.
+Variance and additive third moment are unchanged. By
+\eqref{eq:poissonization}, after convolution with $G_a$ the uniform
+CDF error is at most
+\[
+       \frac{H_K}{8\pi}\int_0^\infty t^3e^{-at^2/2}\,dt
+                       =\frac{H_K}{4\pi a^2}=o(h_K).
+\]
+Extra powers of $t$ give the corresponding density-derivative estimates.
+
+Round each of the first $K$ summands to its neighboring points on
+$h_K\Z$, independently and with its conditional mean unchanged.
+Writing the rounding error as $\delta$, we have
+$\E(\delta\mid X)=0$, $|\delta|\le h_K$ and
+$\E(\delta^2\mid X)\le h_K^2/4$. Subtract its total added variance
+from the Gaussian component. Gaussian Taylor estimates bound the CDF
+change by $O_a(Kh_K^2)=o(h_K)$ and likewise control fixed density
+derivatives. The third-moment change is at most
+\[
+             3h_K^2\sum_{i\le K}\E|X_i|+Kh_K^3=o(h_K),
+\]
+since the sum of first absolute moments is at most $\sqrt K$.
+
+Replace the jumps of $\mu_K$ smaller than $h_K$ in magnitude by their
+Gaussian variance, and round all larger jumps without changing their
+conditional means. Subtract their added variance from the Gaussian part.
+For a large jump $y$, with rounding variance $e_h(y)$, the compensated
+exponent error is bounded by
+\[
+ \left|\E e^{it(y+\delta)}-e^{ity}+\tfrac12t^2e_h(y)\right|
+       \le |t|^3\left(\tfrac12h^2|y|+\tfrac16h^3\right).
+\]
+For a small jump it is at most $|t|^3|y|^3/6$. Integration against
+$\mu_K$ gives exponent error $O(|t|^3h_Kv^{(K)})$ and third-moment
+change $O(h_Kv^{(K)})=o(h_K)$. The Gaussian variance changes by
+$o(1)$ and remains at least $a/2$. Factoring a common smaller Gaussian
+factor, the bound $|e^u-e^v|\le|u-v|$ for $\Re u,\Re v\le0$
+justifies the CDF and derivative comparisons by Fourier inversion.
+
+We have obtained variance-one representations $T_j+G_{a_j}$, where
+$T_j$ lies on a translate of $h_j\Z$, $a_j\to a$, and
+\begin{equation}\label{eq:lattice-approx}
+ \beta_j=\beta+o(h_j),\quad
+ \|F_{T_j+G_{a_j}}-F\|_\infty=o(h_j),\quad
+ f_j^{(k)}\to f^{(k)}\text{ uniformly},\quad k=0,1,2.
+\end{equation}
+The rounded jump measure has finite intensity, because the pre-rounded
+jumps have magnitude at least $h_j$ and finite second integral. Its
+centering is well-defined. All approximations are admissible representations.
+
+Fix $p\in(0,1)$. Choose integers $n_j$ and $p_j\to p$ so that
+$n_jh_j^2p_j(1-p_j)=a_j$; rounding $a_j/[h_j^2p(1-p)]$ to a nearby
+integer and solving for $p_j$ does this, with the upper integer used
+when $p=1/2$. Put $u_j=1-2p_j$ and
+$B_j=h_j(\Bin(n_j,p_j)-n_jp_j)$. The lattice Edgeworth expansion at
+closed endpoints is
+\begin{equation}\label{eq:binomial-expansion}
+ \Pp(B_j\le x)=\Phi_{a_j}(x)+\frac{h_j}{2}\phi_{a_j}(x)
+              -\frac{a_jh_ju_j}{6}\phi_{a_j}''(x)+o(h_j),
+\end{equation}
+uniformly in those endpoints. Here $\Phi_b,\phi_b$ denote the centered
+normal CDF and density of variance $b$. This is the binomial case of the
+classical lattice expansion of Esseen; the closed-endpoint convention is
+recorded, for example, in \citet[equation~(3)]{DinevMattner2013}.
+For the uniformity with $p_j\to p$, Stirling's formula gives, with
+$\sigma_j=\sqrt{n_jp_j(1-p_j)}$ and
+$t_k=(k-n_jp_j)/\sigma_j$,
+\[
+ \Pp(\Bin(n_j,p_j)=k)=\frac{\phi(t_k)}{\sigma_j}
+ \left[1+\frac{u_j(t_k^3-3t_k)}{6\sigma_j}
+       +O\left(\frac{1+|t_k|^6}{n_j}\right)\right]
+\]
+uniformly for $|t_k|\le\sqrt{B\log n_j}$ and $p_j$ in a fixed
+compact subinterval. Chernoff bounds control the omitted tails by
+$o(n_j^{-1/2})$ when $B$ is sufficiently large. Summation of the remainder
+is $O((\log n_j)^3/n_j)$, and right-endpoint Euler--Maclaurin summation
+adds $\phi(t_k)/(2\sigma_j)$. Integration of the cubic Hermite term
+is $(1-t_k^2)\phi(t_k)$, proving \eqref{eq:binomial-expansion}.
+
+Choose $z_j$ on the full lattice of $T_j+B_j$ with $|z_j-z|\le h_j/2$.
+Conditional on every value of $T_j$, the endpoint $z_j-T_j$ is a closed
+binomial endpoint, so \eqref{eq:binomial-expansion} gives
+\[
+ F_{T_j+B_j}(z_j)=F_{T_j+G_{a_j}}(z_j)
+         +\frac{h_j}{2}f_j(z_j)
+         -\frac{a_jh_ju_j}{6}f_j''(z_j)+o(h_j).
+\]
+Threshold stationarity and \eqref{eq:lattice-approx} make its base
+excess $D+o(h_j)$. The actual third-moment sum of the binomial carrier is
+$a_jh_j(1+u_j^2)/2$. Maximality therefore implies, for $u=1-2p$,
+\[
+                    \phi(z)-\frac{au}{3}f''(z)-Ca(1+u^2)\le0.
+\]
+The inequality extends to $u\in[-1,1]$ by continuity. Optimize at
+$u=-f''(z)/(6C)$, which lies in this interval by
+\eqref{eq:gauss-stationarity}, to obtain
+\eqref{eq:lattice-curvature}.
+\end{proof}
+
+Gaussian convolution gives the semiconvexity inequality
+$f'(z)^2\le f(z)f''(z)+f(z)^2/a$ by Cauchy--Schwarz on its Gaussian
+mixture formula. Set $c=\phi(z)/(aC)$. Lemma~\ref{lem:lattice-gauss}
+gives $0<c\le1$ and $|f''(z)|\le6C\sqrt{1-c}$. Hence
+\[
+       (3D+z\phi(z))^2
+       \le aC^2\{c^2+6c\sqrt{1-c}\}\le\frac{45}{16}aC^2.
+\]
+The last maximum is at $c=3/4$. Moreover,
+$|z|\phi(z)\le\sqrt{2\phz/e}\sqrt{\phi(z)}$.
+Since $C>2/5$, $\phz<2/5$ and $e>27/10$, it follows that
+\[
+ \beta\le\left(\frac{\sqrt5}{4}
+        +\frac{\sqrt{2\phz/e}}{3\sqrt C}\right)\sqrt a
+                   <\frac{17}{20}\sqrt a.
+\]
+For the final rational comparison one may use
+$\sqrt5/4<14/25$ and $\sqrt{20/27}/3<29/100$.
+Together with Lemma~\ref{lem:gauss-large}, this confines a possible
+Gaussian component to
+\begin{equation}\label{eq:gauss-window}
+         0<\beta<\frac{269}{1000},\qquad
+         \frac{400}{289}\beta^2<a<\frac1{10}.
+\end{equation}
+
+\subsection{Fourier exclusion of the remaining window}
+Korolev and Shevtsova \cite[Section~3.3, Theorem~2]{KorolevShevtsova2012}
+prove that a centered compound-Poisson variable of variance $v>0$ and
+third absolute jump integral $r$ satisfies
+\begin{equation}\label{eq:cp-bound}
+                       d_K(Y,N(0,v))\le0.3051\,r/v^{3/2}.
+\end{equation}
+Their jump law is assumed to have positive variance. A vanishing symmetric
+perturbation of a constant jump law removes this restriction. The same
+bound holds for every finite-variance infinitely divisible law with third
+jump integral $r$: truncate its L\'evy measure and replace the omitted
+variance and Gaussian part by symmetric jumps of size $\eta$. These
+add at most $v\eta$ to the third jump integral. Pass to the limit using
+weak continuity of distance to the continuous normal CDF.
+
+\begin{lemma}\label{lem:gauss-window-exclusion}
+A variance-one independent sum satisfying \eqref{eq:gauss-window} has
+$\Delta(S)<(2/5)\beta$.
+\end{lemma}
+\begin{proof}
+The elementary inequality
+\begin{equation}\label{eq:cosine}
+                   \cos x\le1-x^2/2+|x|^3/10
+\end{equation}
+holds on the real line. For $0\le x\le12/5$ use the fourth-degree
+cosine upper Taylor bound, and for $x\ge5$ its right side is at least
+one. On $12/5\le x\le5$, the inequality
+$\cos x\le-1+(x-\pi)^2/2$ reduces the claim to positivity of
+$P(x)=2-x^2+\pi x-\pi^2/2+x^3/10$. With $u=x-4$,
+\[
+ P(x)=P(4)+(\pi-16/5)u+u^2(1/5+u/10).
+\]
+For $-8/5\le u\le0$ this is at least $P(4)$, and for $0\le u\le1$
+it is at least $P(4)-(5/4)(\pi-16/5)^2$. Both are positive from
+$157/50<\pi<22/7$. Evenness proves \eqref{eq:cosine}.
+
+For independent centered copies $X,X'$, the pointwise inequality
+\[
+ |x-y|^3\le2(|x|^3+|y|^3)-2xy(|x|+|y|)
+\]
+gives $\E|X-X'|^3\le4\E|X|^3$. Thus a coordinate characteristic
+function $h_i$ obeys
+\begin{equation}\label{eq:cf-modulus}
+ |h_i(t)|\le\exp\{-v_it^2/2+b_i|t|^3/5\},
+          \qquad b_i=\E|X_i|^3.
+\end{equation}
+Write $h$ for the full characteristic function. On omitting coordinate
+$i$, \eqref{eq:cf-modulus} and the exact Gaussian factor give
+\[
+ e^{-at^2/2}\prod_{j\ne i}|h_j(t)|
+       \le e^{25/54-t^2/2+\beta t^3/5},\qquad t\ge0.
+\]
+Indeed $b_i\ge v_i^{3/2}$ and
+$\max_{u\ge0}(u^2/2-u^3/5)=25/54$.
+The single-coordinate form of \eqref{eq:zero-bias} gives
+$|h_i(t)-h_i^*(t)|\le b_it/(2v_i)$. Selecting the replaced coordinate
+with its variance probability in the zero-bias identity yields
+\[
+ |h'(t)+th(t)|\le\frac\beta2t^2
+                    e^{25/54-t^2/2+\beta t^3/5}.
+\]
+Multiply by $e^{t^2/2}$ and integrate from zero. Then
+\begin{equation}\label{eq:cf-difference}
+ |h(t)-e^{-t^2/2}|
+ \le\frac56 e^{25/54-t^2/2}(e^{\beta t^3/5}-1)
+ \le\frac\beta6e^{25/54}t^3e^{-t^2/2+\beta t^3/5}.
+\end{equation}
+These calculations first apply to a finite sum. Finite approximations
+retaining $a$ and converging in variance and third-moment sum justify
+both inequalities for the countable sum.
+
+Set $c=19/10$ and $T=c/\beta>7$. On $[0,6]$ use
+$\beta\le269/1000$, and on $[6,T]$ use $\beta t\le c$. It follows that
+\begin{equation}\label{eq:low-integral}
+ \frac1{\pi\beta}\int_0^T\frac{|h(t)-e^{-t^2/2}|}{t}\,dt
+       \le\frac{e^{25/54}}{6\pi}(I+J),
+\end{equation}
+where
+\[
+ I=\int_0^6t^2e^{-t^2/2+(269/5000)t^3}\,dt,
+ \qquad J=\int_6^\infty t^2e^{-3t^2/25}\,dt.
+\]
+
+For the high frequencies, $|h_W(t)|$ is bounded by the nonnegative
+characteristic function of a symmetric infinitely divisible variable
+$\Pi$ with L\'evy measure $\frac12\sum_i\Law(X_i-X_i')$ off zero.
+This follows from $|h_i|\le\exp[-(1-|h_i|^2)/2]$.
+Its variance is $V=1-a$ and its third jump integral is at most $2\beta$.
+By \eqref{eq:cp-bound},
+$\Delta(\Pi,N(0,V))\le0.6102\beta/V^{3/2}$.
+Integration by parts against a Gaussian density of variance $a/2$ gives
+\begin{align*}
+ f_{\Pi+G_{a/2}}(0)
+ &\le\frac{\phz}{\sqrt{V+a/2}}
+      +\frac{0.6102\beta}{V^{3/2}}
+                          \frac{\sqrt{2/\pi}}{\sqrt{a/2}}\\
+ &<\frac{\phz}{\sqrt{0.95}}
+      +\frac{0.6102}{0.9^{3/2}}\frac{17}{20}\frac2{\sqrt\pi}
+       <\frac{11}{10}.
+\end{align*}
+The first inequality uses the total variation of the Gaussian density;
+the second uses \eqref{eq:gauss-window}. The nonnegative characteristic
+function of $\Pi$ and exact density inversion now give
+\[
+ \frac1\pi\int_T^\infty\frac{e^{-at^2/2}|h_W(t)|}{t}\,dt
+ \le\frac{e^{-aT^2/4}}{T} f_{\Pi+G_{a/2}}(0).
+\]
+Consequently its ratio to $\beta$ is less than
+$(11/19)e^{-361/289}<1/6$. The corresponding normal tail is at most
+\[
+ \frac1{\pi\beta}\int_T^\infty\frac{e^{-t^2/2}}t\,dt
+ \le\frac{\beta}{\pi c^2}e^{-c^2/(2\beta^2)}<10^{-9}.
+\]
+
+Appendix~\ref{app:rational} supplies the complete rational checks
+\[
+ I<23/10,\quad J<3/8,\quad e^{25/54}/(6\pi)<17/200,
+\]
+and the two scalar high-frequency comparisons just used. Exact CDF
+inversion is applicable because the sum has Gaussian variance $a>0$.
+Combining its two frequency ranges proves
+\[
+ \frac{\Delta(S)}\beta
+ <\frac{17}{200}\left(\frac{23}{10}+\frac38\right)
+       +\frac16+10^{-9}
+ =\frac{1182125003}{3000000000}<\frac25.
+\]
+\end{proof}
+
+Equations \eqref{eq:gauss-window} and
+Lemma~\ref{lem:gauss-window-exclusion} contradict $C>\ce>2/5$.
+This proves $a=0$ in Theorem~\ref{thm:structure}.
+
+\section{An infinite maximizing sum is nonatomic}\label{sec:nonatomic}
+We now have $S=\sum_iX_i$, with uniformly bounded supports whose radii
+tend to zero. Suppose this full law has an atom. We prove that only
+finitely many variables can be nonconstant.
+
+Choose a modal state $c_i$ of probability $q_i$, and set $p_i=1-q_i$.
+Lemma~\ref{lem:atoms-modal} gives $\sum_i p_i<\infty$. Centering gives
+\[
+ |c_i|\le\sqrt{v_i p_i/q_i},\qquad
+ \sum_i|c_i|\le\sqrt{\sum_i v_i}\sqrt{\sum_i p_i/q_i}<\infty,
+\]
+since $q_i\ge1/3$. Write $X_i=c_i+Y_i$. With probability one only
+finitely many $Y_i$ are nonzero, and every finite configuration of
+positive-probability states is an atom of the full law, because
+$\prod_iq_i>0$.
+
+Two compactness observations retain the endpoint conventions needed
+below. For fixed $M$, the set of sums using at most $M$ nonzero $Y_i$
+is compact. In a sequence of such sums, each of its at most $M$ selected
+indices can be made either constant or divergent; divergent indices
+contribute zero in the limit. Every limit is another finite configuration.
+If all the selected nonzero values are positive, then, for each $b>0$,
+these sums avoid an interval $[b-\eta,b)$ for some $\eta>0$.
+Otherwise a sequence approaching $b$ from below has fixed terms whose
+sum is $b$ and escaping positive terms, so it is eventually at least
+$b$, a contradiction.
+
+If the maximizing threshold $z$ is itself an atom of mass $m>0$, all
+sufficiently late gaps from the mode to another state are negative.
+Indeed, for a positive gap $d_i=u_i-c_i\to0$, the modal-branch CDF
+$H_i(w)=\Pp(S-X_i+c_i\le w)$ satisfies
+$\|H_i-F\|_\infty\le p_i\to0$. Hence
+\[
+ H_i(z-d_i)-H_i(z)\longrightarrow-m.
+\]
+The stationarity equation \eqref{eq:transfer-moments} instead makes
+this difference tend to zero, since both states and their gap tend to
+zero. This excludes such a sequence.
+
+Fix $K$ so that $q_j\ge3/4$ for $j\ge K$, and select a nonmodal
+state of an arbitrarily late nonconstant coordinate $i\ge K$. Set
+$d_i=u_i-c_i$ and $S_i^0=S-X_i+c_i$. Its exact mass-transfer derivative is
+\begin{equation}\label{eq:pivotal}
+ g_i=-\operatorname{sgn}(d_i)\Pp(E_i),\qquad
+ E_i=\begin{cases}
+       \{z-d_i<S_i^0\le z\},&d_i>0,\\
+       \{z<S_i^0\le z-d_i\},&d_i<0.
+      \end{cases}
+\end{equation}
+Let $N_i$ count the nonmodal outcomes among $j\ge K$, $j\ne i$.
+For every fixed integer $M$,
+\begin{equation}\label{eq:large-count}
+                  E_i\subset\{N_i>M\}
+                  \quad\text{for all sufficiently late }i.
+\end{equation}
+If $z$ is not an atom, it has positive distance from the compact set of
+all configurations with at most $M+K$ nonmodal states. The intervals in
+\eqref{eq:pivotal} shrink to $z$, proving \eqref{eq:large-count}.
+If $z$ is an atom, take $K$ beyond the positive-gap exclusion. Conditional
+on any of the finitely many early prefix values, write
+$S_i^0=b-\sum_{j\ge K,j\ne i}Z_j$ with $Z_j\ge0$. Its pivotal interval
+is exactly
+\[
+       \sum_{j\ge K,j\ne i}Z_j\in[b-z-|d_i|,b-z).
+\]
+For $b-z\le0$ it is empty; otherwise the one-sided compactness
+observation proves \eqref{eq:large-count}. The right endpoint is
+excluded, as required.
+
+Vary every nonmodal probability for $j\ge K$, $j\ne i$, by the factor
+$1+t$, taking the compensating mass from the mode. Both signs of
+$|t|<1/2$ are admissible. The original product-law score is
+\[
+ L_i=\sum_{j\ge K,j\ne i}\ell_j,
+ \qquad \ell_j=\begin{cases}1,&Y_j\ne0,\\-p_j/q_j,&Y_j=0.
+ \end{cases}
+ \qquad L_i\ge N_i-\Lambda,
+ \quad\Lambda=\sum_{j\ge K}p_j/q_j<\infty.
+\]
+This infinite product variation is twice differentiable for every bounded
+observable. Its density is
+\[
+       (1+t)^{N_i}\prod_{Y_j=0}(1-tp_j/q_j).
+\]
+The product and its first two derivatives are dominated, uniformly in
+$i$, by a constant times a polynomial in $N_i$ times $(3/2)^{N_i}$.
+These bounds are integrable because
+$\E b^{N_i}\le\exp((b-1)\sum_{j\ge K}p_j)$ for every $b\ge1$.
+Differentiating \eqref{eq:pivotal} in this direction gives the exact
+mixed raw-CDF derivative
+\[
+ g_{i,t}=-\operatorname{sgn}(d_i)\E[\ind_{E_i}L_i].
+\]
+By \eqref{eq:large-count}, $\E[L_i\mid E_i]\to\infty$ whenever
+these events have positive probability.
+
+Let $h_i=\max\{|x|:x\in\supp X_i\}\to0$.
+The mass-transfer stationarity equation and
+\[
+ |u_i^2-c_i^2|\le2h_i|d_i|,
+ \qquad |r_i'|\le6h_i^2|d_i|
+\]
+give
+\begin{equation}\label{eq:pivotal-size}
+          g_i/d_i\to-\phi(z),\qquad
+          \Pp(E_i)/|d_i|\to\phi(z)>0.
+\end{equation}
+It follows that $|g_{i,t}|/|d_i|\to\infty$.
+
+On the other hand, form \eqref{eq:objective} with two parameters: the
+selected mass transfer $s$ in coordinate $i$ and the collective variation
+$t$ just defined. Uniformly in late $i$, its Hessian satisfies
+\begin{equation}\label{eq:atomic-H}
+       |J_{ss}|\le K_1d_i^2,\qquad
+       |J_{st}-g_{i,t}|\le K_2|d_i|,\qquad
+       |J_{tt}|\le K_3.
+\end{equation}
+To check these bounds, the selected derivatives are
+$m_s=d_i$, $B_s=u_i^2-c_i^2$, $B_{ss}=-2d_i^2$,
+$F_{ss}=0$, $F_s=O(|d_i|)$ and $|R_{ss}|\le18h_id_i^2$ by
+\eqref{eq:transfer-moments}. All collective moment derivatives through
+order two are bounded by summability of $p_j$ and the common support
+bound. The raw CDF derivatives are uniformly bounded by the product
+estimate above. Mixed moment derivatives vanish because the two
+parameters affect disjoint coordinates. The normal normalization is
+smooth near $(B,m)=(1,0)$, proving \eqref{eq:atomic-H}.
+Both parameters are two-sided, so negative semidefiniteness gives
+$|J_{st}|^2\le K_1K_3d_i^2$. This contradicts the divergent mixed CDF
+ratio. Therefore an infinite maximizing sum is nonatomic.
+
+Conversely, if $\sum_i(1-q_i)<\infty$, the same modal-drift argument
+and Borel--Cantelli show that the series is a countable discrete law.
+This proves the modal-deficit assertion and completes the proof of
+Theorem~\ref{thm:structure}.
+
+\section{Support motions and the completion rank}\label{sec:rank}
+We prove Theorem~\ref{thm:rank} directly at the maximizing
+representation. Suppose, to the contrary, that finite sets of
+arbitrarily late coordinates admit nonconstant state functions with
+constant sum on their completion sets. Subtract their individual means,
+absorbing the sum into the constant $c$. Write
+\[
+ \E f_i(X_i)=0,\quad w_i=\E f_i(X_i)^2,
+ \quad W=\sum_{i\in I}w_i>0,
+ \quad V=\sum_{i\in I}v_i,
+ \quad h=\max_{i\in I}\max|\supp X_i|.
+\]
+Along the supposed sequence, $h+V\to0$.
+
+Move each raw state $x_i$ to $x_i+t f_i(x_i)$ and move the raw threshold
+to $z+tc$. Every completion pattern has the same residual threshold as
+before. For each other pattern the residual threshold lies outside the
+closed support of $T_I$, in an open interval where its CDF is constant.
+There are finitely many patterns, so one two-sided interval of sufficiently
+small $t$ works for all of them. Distinct coordinate states remain distinct
+after reducing the interval if necessary. Thus the raw CDF is exactly
+unchanged, also when a completion is an atom or the endpoint of a gap.
+This reasoning permits noncompact remainder support.
+
+Choose $j$ maximizing $w_j/v_j$ among the nonconstant functions, and put
+\[
+ \begin{gathered}
+ X=X_j,\quad f=f_j(X_j),\quad v=v_j,\quad w=w_j,\\
+ m=\E Xf,\quad a_1=\E X^2f,\quad b_1=\E Xf^2,\quad
+ M=\sum_{i\in I}\E[X_if_i(X_i)].
+ \end{gathered}
+\]
+Then
+\begin{equation}\label{eq:rank-selection}
+                         v/w\le V/W.
+\end{equation}
+Tilt the original law of coordinate $j$ to $(1+sf)\,d\Law(X)$, and
+apply the support motion. Both signs of $s$ are admissible because its
+support is finite. Its moved mean is $sm+stw$. The centered threshold
+$x$ and total variance $B$ have derivatives
+\begin{align}
+ x_s=-m,\quad x_t=c,\quad x_{st}=-w,&\qquad
+ B_s=a_1,\quad B_{ss}=-2m^2,\notag\\
+ B_t=2M,\quad B_{tt}=2W,&\qquad B_{st}=2b_1.           \label{eq:rank-moments}
+\end{align}
+The exact raw CDF satisfies $F_{ss}=F_t=F_{st}=F_{tt}=0$.
+Cauchy--Schwarz gives
+\[
+ |m|\le\sqrt{vw},\quad |a_1|\le h\sqrt{vw},\quad
+ |b_1|\le hw,\quad |M|\le\sqrt{VW}.
+\]
+
+For clarity, the separately recentered third moments have the following
+derivatives; all expectations involving $X,f$ concern the selected
+coordinate:
+\begin{align}
+ R_t&=3\sum_{i\in I}\E[X_i|X_i|f_i],&
+ R_{tt}&=6\sum_{i\in I}\E[|X_i|f_i^2],\notag\\
+ R_s&=\E[|X|^3f]-3m\E[X|X|],&
+ R_{ss}&=6m^2\E|X|-6m\E[X|X|f],\notag\\
+ R_{st}&=3\E[X|X|f^2]-3w\E[X|X|]
+                         -6m\E[|X|f].              \label{eq:rank-cubic}
+\end{align}
+It follows that
+\begin{align*}
+ |R_t|&\le3h\sqrt{VW},& |R_{tt}|&\le6hW,\\
+ |R_s|&\le4h^2\sqrt{vw},& |R_{ss}|&\le12hvw,
+ & |R_{st}|&\le12h^2w.
+\end{align*}
+These bounds use $\E X^4\le h^2v$ and do not require a lower bound
+on any state probability.
+
+First stationarity in \eqref{eq:objective} gives
+\[
+       \phi c=2AM-CR_t,\qquad
+       F_s=-\phi m-Aa_1+CR_s.
+\]
+Thus $|c|\le K\sqrt{VW}$ and $|F_s|\le K\sqrt{vw}$.
+Using \eqref{eq:rank-moments}--\eqref{eq:rank-cubic} in its Hessian
+now gives
+\[
+ |J_{ss}|\le K_1vw,\qquad |J_{tt}|\le K_2W,\qquad
+ J_{st}=\phi w+O((h+V)w).
+\]
+Indeed the term $-\phi x_{st}$ is $\phi w$, direct variance and
+third-moment terms are $O(hw)$, and products of first derivatives are
+$O(\sqrt{VWvw})=O(Vw)$ by \eqref{eq:rank-selection}.
+All constants depend only on the fixed maximizing representation and
+threshold. Negative semidefiniteness would imply, for sufficiently late
+sets,
+\[
+              \phi^2w^2/4\le K_1K_2vwW\le K_1K_2Vw^2,
+\]
+contradicting $V\to0$. This proves Theorem~\ref{thm:rank}.
+
+\begin{proof}[Proof of Corollary~\ref{cor:separated}]
+Fix a late cut and absorb all earlier blocks into the finite prefix;
+let it have $N$ distinct sum values. Select $M>2N$ consecutive remaining
+blocks. The unchanged infinite future has support in an interval of
+positive width $W=\sum_{l\text{ after these blocks}}H_l$.
+Distinct vectors of selected block-sum values have total sums at least
+$W$ apart: at their first differing block $k$, their difference in
+absolute value is at least
+\[
+       \delta_k-\sum_{l>k,\ l\text{ selected}}H_l\ge W.
+\]
+For each prefix atom, at most two such vectors put the maximizing
+threshold inside the translated closed future interval. Thus at most
+$2N$ selected block vectors can complete through the actual remainder
+support, including endpoints.
+
+There are $M+1$ unknowns $a_1,\ldots,a_M,c$ and at most $2N$
+homogeneous equations $\sum_k a_k u_k=c$ on these vectors. A solution
+exists with some $a_k\ne0$. Apply Theorem~\ref{thm:rank} to the
+individual functions $f_i(x)=a_kx$ for coordinates in block $k$.
+At least one is nonconstant because each block is nonconstant.
+Their sum is constant on every completion pattern, a contradiction for
+a sufficiently late cut. The total variance and largest coordinate
+radius of the selected finite family tend to zero, independent of $M$.
+\end{proof}
+
+\appendix
+\section{Rational checks for the Gaussian Fourier bound}\label{app:rational}
+The finite calculation in Lemma~\ref{lem:gauss-window-exclusion} uses
+only rational arithmetic. For $x\ge0$ define
+\[
+ E_n(x)=\sum_{k=0}^n\frac{x^k}{k!},\qquad
+ U_n(x)=E_n(x)+\frac{x^{n+1}}{(n+1)!}
+                         \frac1{1-x/(n+2)}\quad(0\le x<n+2).
+\]
+Then $E_n(x)\le e^x\le U_n(x)$, by the positive exponential series
+and a geometric bound on its remaining terms.
+The exponent $-t^2/2+(269/5000)t^3$ is decreasing on $[0,6]$.
+With $d=3/100$, $l_j=jd$, $r_j=(j+1)d$, the exact upper sum
+\begin{equation}\label{eq:finite-sum}
+ \sum_{j=0}^{199}
+ \frac{d\,r_j^2}{E_{40}(l_j^2/2-(269/5000)l_j^3)}<\frac{23}{10}
+\end{equation}
+therefore bounds $I$. Integration by parts and the normal Mills bound
+give
+\[
+          J\le\frac{6025}{216}e^{-108/25}
+             \le\frac{6025}{216E_{40}(108/25)}<\frac38.
+\]
+The remaining rational comparisons are
+\begin{align*}
+ \frac{U_{24}(25/54)}{6(157/50)}&<\frac{17}{200},&
+ \frac{11}{19E_{40}(361/289)}&<\frac16,\\
+ \frac{25}{61}+
+ \frac{(3051/5000)(17/20)2}
+      {(443/250)(9/10)(237/250)}&<\frac{11}{10}.&&
+\end{align*}
+The last expression bounds the Gaussian-convolution density because
+\[
+ (61/25)^2<(19/10)(157/50),\quad
+ (443/250)^2<157/50,\quad (237/250)^2<9/10.
+\]
+The normal tail bound follows from $T>7$, $\beta<3/10$, $\pi>3$,
+$c>1$, $e>5/2$, and $(5/2)^{24}>10^8$.
+All these are finite rational inequalities, including
+\eqref{eq:finite-sum}; the executable companion
+\texttt{gaussian\_window\_certificate.py} evaluates them using Python's
+standard-library rational type and asserts each comparison. It contains
+no floating-point quadrature or external numerical library. Its final
+exact comparison is
+\[
+          \frac{1182125003}{3000000000}<\frac25.
+\]
+The classical numerical constant $0.3051$ in
+\eqref{eq:cp-bound} is an external theorem of Korolev and Shevtsova;
+this finite check verifies the additional comparisons used here.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

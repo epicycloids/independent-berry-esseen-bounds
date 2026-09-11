@@ -8,7 +8,7 @@ from full_b_consumer import FullBMaximumMixin, check_helper_source
 from full_b_cover import KIND, KINDS, COUPLING, full_b_cover_band, SPLIT_AXES, B_POLICY
 import stable_bounds
 import stable_cover
-PRODUCT = 'full feasible attained-coordinate third-moment interval at every D/tau node; closed b-partition score portfolio with maximum over every complete partition; complete centered disk prefactor and unchanged zero-bias fallback; prepared packed-energy source and attained-maximum Jensen signed reference; fixed smoothing cap .85*Lhi and signed Gaussian cutoff portfolio; closed D/tau split tree with no B splits, priorities (1,2)'
+PRODUCT = 'full feasible attained-coordinate third-moment interval at every D/tau node; minimum of the maximum slice bounds over complete b partitions; complete centered disk prefactor and zero-bias fallback; prepared packed-energy source and attained-maximum Jensen signed reference; fixed smoothing cap .85*Lhi and signed Gaussian cutoff portfolio; closed D/tau split tree with no B splits, priorities (1,2)'
 INSTALLED = False
 CERTIFICATES = {}
 CUTOFF_RECORDS = {}
@@ -27,12 +27,12 @@ class FullBMaximumWeights(FullBMaximumMixin, FastMaximumVarianceWeights):
         super().__init__(*args, **kwargs)
 
 def product(kind):
-    return PRODUCT + ('; optional finite-root joint CF after the entire cheap portfolio' if COUPLING[kind] else '; inherited CF and signed reference only; coupling disabled')
+    return PRODUCT + ('; optional finite-root joint CF after the entire cheap portfolio' if COUPLING[kind] else '; characteristic-function and signed-reference bounds; coupling disabled')
 
 @lru_cache(maxsize=1)
 def validation():
     from full_b_cover_checks import run as structural_checks
-    return dict(inherited=inherited_validation(), coupled_cf_helper_sha256=check_helper_source(), full_b_structure=structural_checks(), numerical_contract='frozen reviewed whole-frequency/whole-moment CF helper; prepared packed-energy/maximum reference score inherited unchanged')
+    return dict(inherited=inherited_validation(), coupled_cf_helper_sha256=check_helper_source(), full_b_structure=structural_checks(), numerical_contract='characteristic-function bounds over frequency and moment intervals; prepared packed-energy and attained-maximum reference bounds')
 
 def install():
     global INSTALLED
@@ -66,13 +66,3 @@ def install():
         return choose
     stable_cover.weight_factory = factory
     INSTALLED = True
-
-def run_section(start, end, step, target, N, pending=None, kind=KIND):
-    if kind not in KINDS:
-        raise ValueError('Unknown full-b source kind')
-    install()
-    CERTIFICATES.clear()
-    CUTOFF_RECORDS.clear()
-    result = stable_cover.run_section(start, end, step, target, N, pending, kind)
-    result.update(product_variant=product(kind), gaussian_certificates=dict(CERTIFICATES), cutoff_records=dict(CUTOFF_RECORDS), split_axes=SPLIT_AXES, b_policy=B_POLICY, b_partitions=list(KINDS[kind]), coupling=COUPLING[kind], threshold_grid='inherited default 1/32 on [-2,2]')
-    return result

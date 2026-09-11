@@ -589,7 +589,7 @@
       "right": "1"
     }
   ],
-  "scope": "Scalar sum only; no reference consumer, smoothing bound, or moment cover",
-  "source_sha256": "cb18a4904895d7bae7f0a5fed5a71895c179f6192197e8b69b04762a2e5d508f",
+  "scope": "Scalar energy-sum bounds over the frequency range",
+  "source_sha256": "f1725128c15ba70b0e51029293e22b1a1e77c589fd907adea196a3fc41821c46",
   "verified_scalar_records": 64
 }

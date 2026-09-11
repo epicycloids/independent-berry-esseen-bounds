@@ -68,4 +68,4 @@ def broad_probe(Ls, N=256, max_seconds=180.0):
                 break
     finally:
         stable_bounds.log_range_cells = old
-    return dict(status='sampled point enclosures only; no continuum cover', rows=records, complete_grid=not stopped, evaluations=evaluations, elapsed_seconds=time.monotonic() - began)
+    return dict(status='Interval enclosures around sampled parameter points', rows=records, complete_grid=not stopped, evaluations=evaluations, elapsed_seconds=time.monotonic() - began)

@@ -1,0 +1,5985 @@
+\section{Contact calculations}\label{app:contacts}
+Throughout this appendix, suppose that two nondegenerate independent laws
+attain the maximum ratio $C=C_2\ge49/120$. The companion upper bound gives
+$C<227/500$. Each law has at most three support points, and at least one
+is a genuine triple: three distinct points with positive masses.
+Initially normalize the total variance to one. Write $F$ for the selected
+closed event probability, $D=F-\Phi(z)$, and $R$ for the sum of the two
+third absolute moments. Strict Lyapunov convexity gives $R>1/\sqrt2$.
+A representation of the threshold is a pair of support points whose sum
+is $z$. The row-count notation for the event is defined in
+Proposition~\ref{prop:finite-contact-exclusion}.
+
+That proposition disposes of the zero-event, largest-point, and
+negative-mixed-derivative cases. The remaining arguments are indexed
+below. Transposition interchanges the two marginal laws. The certificate
+identifiers refer to domains in
+\path{certificates/finite/current-results.json}; the partitions and
+formulas are checked as described in Section~\ref{sec:verification}.
+
+{\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{.19\linewidth}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.45\linewidth}}
+\toprule
+Marginals and event & Representations & Argument or certificate \\
+\midrule
+\endhead
+Triple/pair $211$ & Unique &
+Section~\ref{contact:one-triple-bernoulli-contacts} \\
+Triple/pair $220$ & Unique middle/high &
+Section~\ref{contact:one-triple-bernoulli-rectangle} \\
+Triple/pair $221$ & Unique middle/high &
+Section~\ref{contact:one-triple-bernoulli-upper-shape} \\
+Triple/pair $210$ & Unique middle/low &
+Section~\ref{contact:one-triple-bernoulli-middle-210} \\
+Triple/pair $210$ & Unique low/high &
+Section~\ref{contact:low-210-algebraic-reduction}; \texttt{low210} \\
+Triple/pair $110$ & Unique &
+Section~\ref{contact:lower-110-contact-reduction}; \texttt{lower110} \\
+Triple/pair $211$ & Two &
+Section~\ref{contact:one-triple-bernoulli-collision-211} \\
+Triple/pair $221$ & Two, upper-gap collision &
+Section~\ref{contact:collision-221-contact-reduction}; \texttt{collision221} \\
+Triple/pair $210$ & Two, lower-gap collision &
+Sections~\ref{contact:collision-210-contact-reduction}--\ref{contact:collision-210-raw-law-replay}; \texttt{collision210} \\
+Two triples $220$ & Unique &
+Sections~\ref{contact:two-triple-rectangle-exclusion}--\ref{contact:two-triple-rectangle-exclusion-continued} \\
+Two triples $221,320$ & Unique &
+Section~\ref{contact:two-triple-asymmetric-exclusion} \\
+Two triples $321$ & Unique middle/middle &
+Section~\ref{contact:two-triple-triangle-exclusion} \\
+Two triples $322,331$ & Two &
+Section~\ref{contact:two-triple-collision-322-exclusion} \\
+Two triples $321$ & Three &
+Sections~\ref{contact:three-owner-321-contact-reduction}--\ref{contact:three-owner-321-scalar-closure}; \texttt{three\_owner321} \\
+Two triples $321$ & Two adjacent &
+Sections~\ref{contact:two-owner-321-contact-reduction}--\ref{contact:adjacent-owner-321-scalar-reduction}; \texttt{adjacent\_owner321} and its completion \\
+Two triples $321$ & Two endpoints &
+Sections~\ref{contact:two-owner-321-contact-reduction}, \ref{contact:endpoint-owner-321-scalar-reduction}; \texttt{endpoint\_owner321} \\
+Two triples $221,320$ & Two &
+Sections~\ref{contact:two-triple-collision-221-reduction}--\ref{contact:positive-parameter}; \texttt{tt221\_negative}, \texttt{tt221\_positive} \\
+\bottomrule
+\end{longtable}
+}
+
+\paragraph{Changes of scale}
+The discrepancy $D$ and ratio $C$ are unchanged by a common positive
+rescaling. In any raw scale, let $V$ be the total variance, $R_0$ the
+sum of the centered third absolute moments, and $o$ the centered
+threshold. Then
+\[
+ z=\frac{o}{\sqrt V},\qquad R_{\rm normalized}=\frac{R_0}{V^{3/2}},
+ \qquad C=\frac{DV^{3/2}}{R_0}.
+\]
+Two choices of raw scale are used:
+\begin{center}\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{.20\linewidth}>{\raggedright\arraybackslash}p{.69\linewidth}}
+\toprule
+Scale & Definition and conversion\\
+\midrule
+Contact scale &
+Divide the variance-one supports by
+$K=R_{\rm normalized}+z\phi(z)/(3C)$.
+Then $V=K^{-2}$ and $\tau=CK^3=C/V^{3/2}$.
+After division by $\tau$, the cubic majorant has quadratic coefficient
+$-3/2$.\\[4pt]
+Unit-span scale &
+Translate the supports to start at zero and divide by the chosen
+outer support span. Center these raw laws when computing $V,R_0,o$.
+Setting a support span to one does not set the contact parameter to one.\\
+\bottomrule
+\end{tabular}
+\end{center}
+Each family states its scale. In particular the three-representation
+calculations use the unit-span scale, while the collided $221$ systems
+use the contact scale.
+
+\subsection{Variance derivatives at a triple}\label{contact:three-point-variance-curvature}
+The total variance is one in this calculation.
+
+Let $x_1<x_2<x_3$ be the support of a genuine triple. Its second divided
+difference, normalized by $[x_1,x_2,x_3]x^2=1$, satisfies
+\begin{equation}\label{eq:contact-curvature}
+ [x_1,x_2,x_3]|x|^3\le\frac{15D+\phi'''(z)}{12C}.
+\end{equation}
+Indeed, take a nonzero signed measure $\eta$ on these points with zero
+mass and first moment. Put $v=\int x^2\,d\eta$ and
+$r=\int|x|^3\,d\eta$. The Vandermonde determinant gives $v\ne0$, and
+$r/v=[x_1,x_2,x_3]|x|^3$. Both signs of $t$ are allowed in $P+t\eta$.
+The total variance becomes $V(t)=1+tv$, the sum of third absolute moments becomes $R+tr$,
+and the event probability becomes $g(t)=F+tg'$. Maximality gives
+\[
+ J(t)=V(t)^{3/2}\{g(t)-\Phi(z/\sqrt{V(t)})\}-C(R+tr)\le0,
+ \qquad J(0)=0.
+\]
+With $A=(3D+z\phi(z))/2$, differentiation gives
+\[
+ g'+Av-Cr=0,\qquad
+ J''(0)=v^2\left\{3C\frac rv-\frac{15D+\phi'''(z)}4\right\}\le0.
+\]
+This proves \eqref{eq:contact-curvature}.
+
+For any three real knots of diameter $h$,
+\begin{equation}\label{eq:contact-dd-diameter}
+ [x_1,x_2,x_3]|x|^3\ge h/2.
+\end{equation}
+On one side of zero the divided difference is the sum of the absolute
+values. Otherwise scale $h$ to one and reflect to write the knots as
+$-a,c,1-a$, where $0<a<1$ and $0\le c\le1-a$. The divided difference
+$q$ obeys
+\[
+ q=1+c-2a+\frac{2a^3}{a+c},\qquad
+ (a+c)(q-1/2)=2a(a-1/2)^2+c(c+1/2-a).
+\]
+The right side is nonnegative for $a\le1/2$. For $a>1/2$, put
+$d=a-1/2$ and rewrite it as $(c-d/2)^2+(2a-1/4)d^2\ge0$.
+Equality requires the symmetric knots $(-h/2,0,h/2)$.
+\subsection{A joint curvature and diameter bound}\label{contact:joint-curvature-diameter}
+For every centered variance-one law,
+\begin{equation}\label{eq:joint-normal-bound}
+ 15\{F(z)-\Phi(z)\}+\phi'''(z)<79/10.
+\end{equation}
+For $z\ge0$ use $F(z)\le1$. On $[0,\sqrt3]$ the derivative of
+$15(1-\Phi(z))+\phi'''(z)$ is
+$(z^4-6z^2-12)\phi(z)<0$; its value at zero is $15/2$. Beyond $\sqrt3$
+the third derivative is nonpositive, giving the same upper bound.
+
+For $z=-x<0$, Cantelli gives
+$D\le d(x)=(1+x^2)^{-1}-(1-\Phi(x))$.
+The ratio $2x/\{(1+x^2)^2\phi(x)\}$ increases, since its logarithmic
+derivative is $(x^2-1)^2/\{x(1+x^2)\}$. At $x=1/2$ the ratio exceeds
+one; moreover $1-\Phi(1/2)>3/10$. Hence $d$ decreases on $[1/2,\infty)$
+and $d(1/2)<1/2$. On $[1/2,\sqrt3]$, $\phi'''(-x)\le0$, so the
+quantity in \eqref{eq:joint-normal-bound} is less than $15/2$.
+For $x\ge\sqrt3$, $d(x)<1/4$ and Fourier inversion gives
+$\|\phi'''\|_\infty\le2/\pi<2/3$, yielding $53/12$.
+
+It remains to consider $0\le x\le1/2$. The bounds
+$1-\Phi(x)\ge1/2-\phi(0)x$,
+$\phi(x)\ge\phi(0)(1-x^2/2)$, and $\phi(0)<2/5$ give the upper bound
+\[
+ U(x)=\frac{15}{1+x^2}-\frac{15}2+\frac{24}5x+x^3-\frac{x^5}5.
+\]
+Here
+\[
+ 10(1+x^2)\{79/10-U(x)\}
+ =4-48x+154x^2-58x^3-8x^5+2x^7=:p(x).
+\]
+On each interval $[i/64,(i+1)/64]$, $0\le i<32$, expand
+$p((i+t)/64)$ in the degree-seven Bernstein basis. Direct rational
+conversion gives a positive coefficient minimum
+$11964025693/3848290697216$. For completeness this assertion means the
+following finite rational identity and comparison: if
+$p(x)=\sum_{j=0}^7a_jx^j$, compute
+\[
+ c_{i,k}=\sum_{j=k}^7 a_j\binom jk\frac{i^{j-k}}{64^j},\qquad
+ b_{i,l}=\sum_{k=0}^l c_{i,k}\frac{\binom lk}{\binom7k}
+ \quad(0\le i<32,\ 0\le l\le7).
+\]
+The minimum of these 256 fractions is the stated number.
+The nonnegative Bernstein basis functions sum to one, proving positivity.
+
+Combining \eqref{eq:contact-curvature}--\eqref{eq:joint-normal-bound}
+with $C\ge49/120$ shows that every normalized triple diameter is less
+than $158/49$. In raw coordinates of total variance $V$ and triple
+diameter $A_i$ this is
+\begin{equation}\label{eq:raw-triple-diameter}
+ 24964V>2401A_i^2.
+\end{equation}
+If the two raw spans equal one, it follows that
+\[
+ V>2401/24964,
+ \qquad R\ge V^{3/2}/\sqrt2>\frac{49^3}{158^3\sqrt2}>1/48.
+\]
+The last strict comparison follows on squaring from
+$49^6\,48^2>2\,158^6$.
+\subsection{Threshold and density bounds}\label{contact:fixed-c2-threshold-collar}
+
+
+For every centered variance-one law with positive closed-CDF discrepancy
+
+\[
+ D=F(z)-\Phi(z)\ge d_0:=49/(120\sqrt2),
+\]
+
+one necessarily has
+
+\[
+ \boxed{-5/4<z<3/5,\qquad \phi(z)>9/50.}
+\tag{C.3.1}\label{contact:fixed-c2-threshold-collar-1}
+\]
+
+This scalar lemma does not assume stationarity or a finite support. Its
+application to a violating fixed-$C_2$ maximum uses only the already proved
+$R_{\mathrm{normalized}}\ge 1/\sqrt{2}$ and $C\ge49/120$. It does not supply a uniform
+threshold bound for arbitrary numbers of summands, whose normalized
+additive third absolute moment sum can be arbitrarily small.
+
+\paragraph{The negative threshold}
+
+For $z=-s<0$, Cantelli's inequality, including the closed event, gives
+
+\[
+ D\le g(s):={1\over1+s^2}-\Phi(-s).
+\]
+
+The ratio
+
+\[
+ H(s)={2s\over(1+s^2)^2\phi(s)}
+\]
+
+satisfies
+
+\[
+ {d\over ds}\log H(s)={(s^2-1)^2\over s(1+s^2)}\ge0.
+\]
+
+Also $2s/(1+s^2)^2=640/1681>1/4$ at $s=5/4$, while
+$\phi(5/4)<\phi(1)<1/4$. The last inequality follows from $2 \pi e>16$, using
+$\pi>3$ and $e>8/3$. Thus $H(s)>1$ and $g'(s)<0$ for every $s\ge 5/4$.
+
+Taylor's formula with the signed remainder gives, for $u\ge 0$,
+$\exp(-u)\le 1-u+u^2/2-u^3/6+u^4/24$. At $s=5/4$, let
+
+\[
+ I=s-s^3/6+s^5/40-s^7/336+s^9/3456.
+\]
+
+Integrating the polynomial and using $\phi(0)<2/5$ gives
+
+\[
+ \Phi(-s)>1/2-(2/5)I,
+\]
+\[
+ g(5/4)<16/41-1/2+(2/5)I
+ ={37147949759\over130006646784}=:B_-.
+\]
+
+Both $B_-$ and $d_0$ are positive, and the exact comparison is
+
+\[
+ d_0^2-B_-^2
+ ={727351123347544172903\over422543205200493438566400}>0.
+\]
+
+Consequently $D\ge d_0$ excludes every $z\le -5/4$.
+
+\paragraph{The positive threshold}
+
+The classical $\pi<22/7$ implies $\phi(0)>79/200$, because
+
+\[
+ 7/44-(79/200)^2=1349/440000>0.
+\]
+
+For $x\ge 0$, $\exp(-x^2/2)\ge 1-x^2/2$. Hence at $s=3/5$,
+
+\[
+ 1-\Phi(s)<1/2-(79/200)(s-s^3/6)=13861/50000=:B_+.
+\]
+
+The exact difference $d_0^2-B_+^2=146635361/22500000000$ is positive.
+Since $F(z)\le 1$, all $z\ge 3/5$ have $D\le 1-\Phi(3/5)<d_0$.
+
+\paragraph{A density bound and the raw contact slope}
+
+By \eqref{contact:fixed-c2-threshold-collar-1}, $|z|<5/4$, so $\phi(z)>\phi(5/4)$. Put $x=25/32$. The degree-five
+Taylor polynomial is a lower bound for $\exp(-x)$ for all $x\ge 0$, giving
+
+\[
+ \phi(5/4)>{79\over200}\sum_{j=0}^{5}{(-25/32)^j\over j!}
+ ={29108943797\over161061273600}>9/50.
+\]
+
+The final exact slack is $117914549/161061273600>0$.
+
+The raw contact normalizations used in the contact systems have
+$G>1/2$, $\sqrt{V}<2$, and $\sigma \sqrt{V}=G \phi(z)$. Therefore
+
+\[
+ \boxed{\sigma>9/200.}
+\tag{C.3.2}\label{contact:fixed-c2-threshold-collar-2}
+\]
+\subsection{The raw contact scale}\label{contact:fixed-c2-contact-scale-collar}
+Here supports are divided by $K$, and $V,R,o$ denote their raw total variance, sum of third absolute moments, and centered threshold.
+
+
+
+The collided triple/pair $210$ and two-triple $221$ contact charts satisfy
+
+\[
+ C=V^{3/2}/G,\quad D=R/G,\quad z=o/\sqrt V,
+ \quad\sigma\sqrt V=G\phi(z),
+ \quad3(V-R)=\sigma o.
+\]
+
+Consequently
+
+\[
+ \boxed{C/\sqrt V=D+z\phi(z)/3.}
+\tag{C.4.1}\label{contact:fixed-c2-contact-scale-collar-1}
+\]
+
+The threshold result
+Section~\ref{contact:fixed-c2-threshold-collar} gives
+$-5/4<z<3/5$. On $0\le z<3/5$, $z \phi(z)$ increases, and
+$\phi(3/5)<1/3$ as verified below. For negative $z$, the product is negative.
+Thus in all these contact charts $z \phi(z)<1/5$. Combining \eqref{contact:fixed-c2-contact-scale-collar-1} with
+$D<11/20$ and $C\ge49/120$ proves
+
+\[
+ {1\over\sqrt V}<{{11\over20}+{1\over15}\over49/120}
+ ={74\over49},\qquad
+ \boxed{V>2401/5476.}
+\tag{C.4.2}\label{contact:fixed-c2-contact-scale-collar-2}
+\]
+
+If the actual representation satisfies $o\le 0$, then $z\le 0$ and the stronger bound is
+
+\[
+ {1\over\sqrt V}<{11/20\over49/120}={66\over49},\qquad
+ \boxed{V>2401/4356.}
+\tag{C.4.3}\label{contact:fixed-c2-contact-scale-collar-3}
+\]
+
+The entire negative $210$ chart has $o=c-ph<0$, so \eqref{contact:fixed-c2-contact-scale-collar-3} holds on that whole
+candidate class. In another chart it can be used when the enclosing interval proves $o\le 0$ for every surviving candidate. It cannot
+be applied to a box that still permits both signs without an additional
+valid case split.
+
+These scale formulas are specific to the chart normalization fixing the
+quadratic coefficient of the cubic contact potential. They are not asserted
+for the unit-span three-representation $321$ chart, which uses a different raw scale.
+
+For the elementary density endpoint, the classical Archimedean lower bound
+$\pi>223/71$ gives $\phi(0)<399/1000$, because
+
+\[
+ (399/1000)^2-71/446=1823/223000000>0.
+\]
+
+The degree-four Taylor upper bound for $\exp(-x)$ at $x=9/50$ now gives
+
+\[
+ \phi(3/5)<{399\over1000}\sum_{j=0}^4{(-9/50)^j\over j!}
+ ={16663671213\over50000000000}<1/3.
+\]
+\subsection{One triple: contact identities and threshold shapes}\label{contact:one-triple-bernoulli-contacts}
+In this subsection the support coordinates have total variance one; factors of $K$ are retained explicitly.
+
+
+
+\paragraph{Derivative identities for the Bernoulli law}
+
+Write the Bernoulli support as $-u,v$, with $u,v>0$, and set
+
+\[
+ h_B=u+v,\qquad K_B=\frac{u^2+v^2}{u+v}.
+\]
+
+Its variance is $uv$, its third absolute moment is $uv K_B$, and
+its signed second moment is $M_B=uv(v-u)/(u+v)$. Its dual derivative is
+
+\[
+ f_B'(x)=3C\{x|x|-Kx-M_B\}-\phi(z).
+\tag{C.5.1}\label{contact:one-triple-bernoulli-contacts-1}
+\]
+
+The nonselected point is a smooth minimum. Applying \eqref{contact:one-triple-bernoulli-contacts-1} there gives
+
+\[
+ \begin{array}{c|c|c}
+ \text{Bernoulli representation}&\text{exact identity}&\text{consequence}\\ \hline
+ -u&\phi(z)=3Cv(K_B-K)&K_B>K,\quad 2v>K\\
+ v&\phi(z)=3Cu(K-K_B)&K_B<K,\quad 2u>K.
+ \end{array}
+\tag{C.5.2}\label{contact:one-triple-bernoulli-contacts-2}
+\]
+
+The second derivative gives the last inequalities. Equality would be
+a stationary inflection rather than a local minimum. Also
+
+\[
+ K_B\geq\frac{h_B}{2},\qquad K_B<h_B.
+\tag{C.5.3}\label{contact:one-triple-bernoulli-contacts-3}
+\]
+
+\paragraph{Exhaustive grid and three elementary eliminations}
+
+List the number of included Bernoulli support points in each successive
+triple row. The ten possible downsets are
+
+\[
+ 000,100,110,111,200,210,211,220,221,222.
+\]
+
+A unique selected representation must be a maximal included cell. A genuine
+triple cannot have its largest support point as the selected representation, by the two smooth-minimum
+argument in the proof of Proposition~\ref{prop:finite-contact-exclusion}. This excludes $111$ and $222$; $000$ has
+negative signed discrepancy.
+
+Shapes $100$ and $200$ have a selected lowest triple point, while both
+nonselected triple points have deletion-CDF value zero. They are thus
+two equal zero minima. The cubic identity gives them as $-K,K$, with
+
+\[
+ f_T(x)=C|x|^3-\frac32 CKx^2+\frac12 CK^3.
+\]
+
+The selected triple point is $-a$, with $a>K$, and let its mass be $l$.
+All event probability comes from that triple point, so
+
+\[
+ F=l f_T(-a)=Cl(a-K)^2(a+K/2)<Cl a^3\leq CR.
+\]
+
+This contradicts $F-\Phi(z)=CR>0$. Shape $200$ need not be the full
+sum's lower endpoint, so this slightly extends the endpoint argument.
+
+For shape $211$, the only possible representation is triple-low/Bernoulli-high.
+The two nonselected triple points have the same deletion level, hence
+are the symmetric smooth minima $-K,K$. Write the selected triple point
+as $-a$, with $a>K$. The included triple-high/Bernoulli-low cell is
+strictly below the representation, giving
+
+\[
+ K-u<-a+v,\qquad h_B>a+K>2K.
+\]
+
+But \eqref{contact:one-triple-bernoulli-contacts-2}--\eqref{contact:one-triple-bernoulli-contacts-3}, for a high Bernoulli representation, require
+$h_B/2\le K_B<K$. This is a contradiction. Thus $211$ is also excluded.
+
+Exactly five representation-specific configurations remain: $110$ with the
+middle/low representation, the two representations of $210$, and $220$ or $221$ with
+the middle/high representation.
+
+\paragraph{Exact data for the five remaining configurations}
+
+When the selected representation uses the middle triple point, write the physical triple support as $-a,c,b$.
+Its two nonselected minima satisfy
+
+\[
+ \frac{K}{2}<a<K<b,\qquad a^2+b^2=K(a+b).
+\tag{C.5.4}\label{contact:one-triple-bernoulli-contacts-4}
+\]
+
+Let its masses be $l,m,r$, put $q_B=v/(u+v)$, and let
+$u_T=a+c$, $v_T=b-c$. The actual deletion levels and strict geometry are:
+
+\begin{center}\small
+\begin{tabular}{llll}\toprule
+Shape and representation & Triple levels & Bernoulli levels & Gap condition\\\midrule
+$110$, middle/low & $(q_B,q_B,0)$ & $(l+m,0)$ & $h_B>u_T$\\
+$210$, middle/low & $(1,q_B,0)$ & $(l+m,l)$ & $h_B<u_T$\\
+$220$, middle/high & $(1,1,0)$ & $(l+m,l+m)$ & $h_B<v_T$\\
+$221$, middle/high & $(1,1,q_B)$ & $(1,l+m)$ & $h_B>v_T$\\
+\bottomrule\end{tabular}\end{center}
+
+In the middle/low $210$ case, \eqref{contact:one-triple-bernoulli-contacts-2}--\eqref{contact:one-triple-bernoulli-contacts-3} give
+
+\[
+ a+c>h_B>K_B>K,\qquad c>K-a>0.
+\tag{C.5.5}\label{contact:one-triple-bernoulli-contacts-5}
+\]
+
+For the low/high representation of $210$, instead write the triple support as
+$-t,-a,b$, where $t>a$ and its two nonselected minima $-a,b$ satisfy
+\eqref{contact:one-triple-bernoulli-contacts-4}. Its deletion levels are $(1,q_B,0)$, the Bernoulli deletion levels
+are $(l+m,l)$, and its exact strict geometry is
+
+\[
+ t-a<h_B<t+b,\qquad K_B<K.
+\tag{C.5.6}\label{contact:one-triple-bernoulli-contacts-6}
+\]
+
+Every table entry follows directly from the indicated threshold cell;
+none replaces the actual convolution probabilities by free parameters.
+
+\subsection{Two triples: symmetry of a unique-representation rectangle}\label{contact:two-triple-rectangle-exclusion}
+
+
+\paragraph{Common shape coordinates}
+
+Use the full-law cubic dual from
+Lemma~\ref{lem:full-law-contacts}, and normalize the total variance to one. Put
+
+\[
+ K=\frac{2A}{3C}=R+\frac{z\phi(z)}{3C}>0.
+\]
+
+For coordinate $i$, write its support as $K(-a_i,c_i,b_i)$, where
+$-a_i,b_i$ are the two nonselected smooth minima and $c_i$ is the selected
+middle point. These are dimensionless support coordinates. The minimum
+equations and the strictly decreasing contact levels give
+
+\[
+ \frac12<a_i<1<b_i,
+ \qquad a_i^2+b_i^2=a_i+b_i,
+ \qquad b_i=\frac{1+\sqrt{1+4a_i-4a_i^2}}2.
+\tag{C.6.1}\label{contact:two-triple-rectangle-exclusion-1}
+\]
+
+Set
+
+\[
+ h_i=a_i+b_i,\quad u_i=a_i+c_i,\quad v_i=b_i-c_i,
+\]
+
+\[
+ D(a)=\frac12(b-a)(a^2+4ab+b^2),\qquad
+ H(a,c)=3\{a(1-a)+c-c|c|\}.
+\tag{C.6.2}\label{contact:two-triple-rectangle-exclusion-2}
+\]
+
+Thus $C K^3 D(a_i)$ is the difference of the two minimum contact
+levels, and $C K^2 H(a_i,c_i)$ is the negative slope at the representation.
+Let $m_i$ be the middle mass and $q_i$ the combined mass of the first
+two support points. The unique threshold representation and centering imply
+
+\[
+ \sigma=\frac{\phi(z)}{C K^2}>0,\qquad
+ m_i=\frac\sigma{H(a_i,c_i)},\qquad
+ q_i=\frac{b_i}{h_i}+\frac{\sigma u_i}{h_iH(a_i,c_i)}.
+\tag{C.6.3}\label{contact:two-triple-rectangle-exclusion-3}
+\]
+
+For shape $220$, the dual equals $q_j$ at the first and middle support
+points of coordinate $i$, and equals zero at its last support point.
+Consequently
+
+\[
+ f_i(c_iK)=f_i(-a_iK),\qquad
+ q_j=C K^3D(a_i).
+\tag{C.6.4}\label{contact:two-triple-rectangle-exclusion-4}
+\]
+
+In particular,
+
+\[
+ q_1D(a_1)=q_2D(a_2).
+\tag{C.6.5}\label{contact:two-triple-rectangle-exclusion-5}
+\]
+
+\paragraph{The contact equations force identical laws}
+
+For each $a$ in $(1/2,1)$, equation $f(c)=f(-a)$ selects one middle
+point on the descending part of the cubic between its local maximum and
+its positive minimum. Its normalized location is a strictly increasing
+function of $a$.
+
+For $1/2<a\le 3/4$, factorization on the negative half-line gives
+
+\[
+ c=2a-3/2,\qquad H=(a+c)^2.
+\tag{C.6.6}\label{contact:two-triple-rectangle-exclusion-6}
+\]
+
+For $3/4\le a<1$, the middle point is nonnegative and satisfies $c<a$.
+Indeed, the linear coefficient of the dual is negative, so
+$f(Ka)-f(-Ka)=-6CK^3a^2(1-a)<0$, whereas $f$ decreases
+strictly along this positive part of the descending branch. Set
+$k=c/a$, so $0\le k<1$. The equal-height equation is exactly
+
+\[
+ a=\frac{3(1+k)^2}{2(k^3+3k+2)},\qquad c=ka.
+\tag{C.6.7}\label{contact:two-triple-rectangle-exclusion-7}
+\]
+
+Its derivative is
+
+\[
+ a'(k)=\frac{3(1+k)(1-k)(k^2+4k+1)}{2(k^3+3k+2)^2}>0
+ \quad(0\leq k<1).
+\tag{C.6.8}\label{contact:two-triple-rectangle-exclusion-8}
+\]
+
+We claim that, for every fixed $\sigma>0$, the expression in \eqref{contact:two-triple-rectangle-exclusion-3} obeys
+
+\[
+ a\longmapsto q(a)D(a)
+ =D(a)\frac b{a+b}
+  +\sigma\frac{D(a)(a+c)}{(a+b)H(a,c)}
+ \quad\text{strictly decreasing on }(1/2,1).
+\tag{C.6.9}\label{contact:two-triple-rectangle-exclusion-9}
+\]
+
+First, direct differentiation using \eqref{contact:two-triple-rectangle-exclusion-1} gives
+$D'(a)=-3(2a-1)(a+b)<0$. Also $b$ decreases with $a$, so
+$b/(a+b)$ strictly decreases. Hence the first term in \eqref{contact:two-triple-rectangle-exclusion-9} strictly
+decreases. For the second term, put
+
+\[
+ T(a)=\frac{D(a)(a+c)}{(a+b)H(a,c)}.
+\]
+
+On the nonpositive branch, \eqref{contact:two-triple-rectangle-exclusion-6} gives $T=D/[(a+b)(a+c)]$.
+Here $D$ decreases, while $a+b$ and $a+c$ increase, so $T$ decreases.
+
+On the positive branch, the cubic factors at its positive minimum:
+
+\[
+ D(a)=(b-c)^2(c+2b-3/2),\qquad
+ H(a,c)=3(b-c)(b+c-1).
+\]
+
+Thus the exact function to check is
+
+\[
+ T(k)=\frac{(b-c)(a+c)(c+2b-3/2)}
+                  {3(a+b)(b+c-1)},
+\tag{C.6.10}\label{contact:two-triple-rectangle-exclusion-10}
+\]
+
+with \eqref{contact:two-triple-rectangle-exclusion-1}, \eqref{contact:two-triple-rectangle-exclusion-7}. The denominator stays positive through $k=1$, so \eqref{contact:two-triple-rectangle-exclusion-10}
+and its derivative extend continuously to the closed interval $[0,1]$.
+The fixed certificate \texttt{rectangle}, checked by the rules in
+Section~\ref{sec:verification}, proves
+
+\[
+ \boxed{\quad T'(k)<-1/4\quad\text{for every }0\leq k\leq1.\quad}
+\tag{C.6.11}\label{contact:two-triple-rectangle-exclusion-11}
+\]
+
+The two formulas for $T$ agree at $a=3/4$, so \eqref{contact:two-triple-rectangle-exclusion-9} follows. Equation
+\eqref{contact:two-triple-rectangle-exclusion-5} now gives $a_1=a_2$. Equations \eqref{contact:two-triple-rectangle-exclusion-1}, \eqref{contact:two-triple-rectangle-exclusion-6}--\eqref{contact:two-triple-rectangle-exclusion-8}, and \eqref{contact:two-triple-rectangle-exclusion-3} then give
+identical supports, middle masses, and outer masses for the two
+coordinates. In particular $c_1=c_2=c$.
+\subsection{Two triples: nonpositive rectangle representations}\label{contact:two-triple-nonpositive-rectangle}
+Here $-a,c,b$ are the support points in the variance-one scale, with $K$ retained explicitly.
+
+
+
+\paragraph{The equal-height contacts}
+
+Write the discrepancy as $D=C R$, the selected threshold as $z$, and set
+
+\[
+ K=\frac{2A}{3C}=R+\frac{z\phi(z)}{3C}.
+\]
+
+For each coordinate, write its two nonselected smooth minima as $-a,b$
+and its selected middle atom as $c$, of mass $m$. The cubic dual has
+derivative
+
+\[
+ f'(u)=3C u|u|-3CKu-L.
+\]
+
+The two minimum equations imply
+
+\[
+ a^2+b^2=K(a+b),\qquad L=3Ca(K-a).
+\tag{C.7.1}\label{contact:two-triple-nonpositive-rectangle-1}
+\]
+
+The decreasing deletion CDF has strictly larger value at $-a$ than at
+$b$ in shape $220$. The minimum-height difference is
+
+\[
+ f(-a)-f(b)=\frac{C}{2}(b-a)(a^2+4ab+b^2)>0.
+\]
+
+Thus $b>a$. The strict local-minimum conditions and \eqref{contact:two-triple-nonpositive-rectangle-1} consequently give
+
+\[
+ K/2<a<K<b,\qquad
+ b=\frac{K+\sqrt{K^2+4Ka-4a^2}}2.
+\tag{C.7.2}\label{contact:two-triple-nonpositive-rectangle-2}
+\]
+
+In this rectangle, the deletion CDF has the same value at $-a$ and $c$,
+so $f(c)=f(-a)$. Suppose $c\le 0$. On the negative half-line, direct
+factorization gives
+
+\[
+ f(c)-f(-a)=C(c+a)^2(2a-3K/2-c).
+\]
+
+Since the support points are distinct, this yields
+
+\[
+ c=2a-3K/2,\qquad K/2<a\leq3K/4,
+ \qquad -f'(c)=C(a+c)^2.
+\tag{C.7.3}\label{contact:two-triple-nonpositive-rectangle-3}
+\]
+
+The unique-representation support derivative is $m f'(c)=-\phi(z)$. Therefore
+
+\[
+ m=\frac{\phi(z)}{C(a+c)^2}.
+\tag{C.7.4}\label{contact:two-triple-nonpositive-rectangle-4}
+\]
+
+The use of \eqref{contact:two-triple-nonpositive-rectangle-4} is exactly where uniqueness of the selected representation
+is needed. The proof does not extend \eqref{contact:two-triple-nonpositive-rectangle-4} to a collision.
+
+\paragraph{A variance loss forced by the selected mass}
+
+For a centered law on $-a,c,b$ with middle mass $m$, its variance is
+
+\[
+ v=ab-m(a+c)(b-c)
+   =ab-\frac{\phi(z)}C\frac{b-c}{a+c}.
+\tag{C.7.5}\label{contact:two-triple-nonpositive-rectangle-5}
+\]
+
+This follows by solving the two remaining masses, or by averaging
+the identity $x^2+(a-b)x-ab=0$ at the two outer support points.
+
+On $K/2<a\le 3K/4$, the function $ab$ in \eqref{contact:two-triple-nonpositive-rectangle-2} increases with $a$. Its
+maximum is
+
+\[
+ \frac{3(2+\sqrt7)}{16}K^2<\frac78K^2.
+\]
+
+Indeed, after division by $K$, the derivative of $x b(x)$ is positive
+for $1/2\le x\le 3/4$, while $\sqrt{7}<8/3$ proves the displayed bound.
+Also $b>9K/8$, since the minimum of $b$ in this range is
+$(2+\sqrt{7})K/4$ and $\sqrt{7}>5/2$. Equation \eqref{contact:two-triple-nonpositive-rectangle-3} gives
+$a+c\le 3K/4$, so
+
+\[
+ \frac{b-c}{a+c}>\frac32.
+\]
+
+Consequently every such coordinate satisfies
+
+\[
+ \boxed{\quad v<\frac78K^2-\frac32\frac{\phi(z)}C.\quad}
+\tag{C.7.6}\label{contact:two-triple-nonpositive-rectangle-6}
+\]
+
+If both selected middle points are nonpositive, their sum is $z=-t$
+with $0\le t<K$, by \eqref{contact:two-triple-nonpositive-rectangle-3}. Adding \eqref{contact:two-triple-nonpositive-rectangle-6} over the two coordinates gives
+
+\[
+ 1<\frac74K^2-3\frac{\phi(t)}C.
+\tag{C.7.7}\label{contact:two-triple-nonpositive-rectangle-7}
+\]
+
+\paragraph{The right side is always less than one}
+
+The proved global upper bound gives $C<1/2$, and $C\ge49/120>2/5$.
+The public variance-only discrepancy bound, with
+$\kappa=271/500$, gives $CR<\kappa$. Hence
+
+\[
+ K<\frac{\kappa-t\phi(t)/3}{C}.
+\tag{C.7.8}\label{contact:two-triple-nonpositive-rectangle-8}
+\]
+
+First, \eqref{contact:two-triple-nonpositive-rectangle-8} and $t<K$ imply $t<\kappa/(2/5)<7/5$ and
+
+\[
+ t\{2/5+\phi(t)/3\}<\kappa.
+\]
+
+The left side increases on $[0,7/5]$: its derivative is
+$2/5+(1-t^2)\phi(t)/3>2/5-(24/25)(2/5)/3>0$.
+At $t=6/5$ it exceeds
+
+\[
+ \frac65\left(\frac25+\frac{19}{300}\right)
+ =\frac{139}{250}>\frac{271}{500},
+\]
+
+using $\phi(6/5)>19/100$. Thus $t<6/5$.
+
+Put $B(t)=\kappa-t \phi(t)/3$. Since
+$\sup_{t\ge 0}t \phi(t)=\phi(1)<1/4$, we have $B(t)>9/20$.
+For $2/5\le C\le 1/2$, the derivative in $C$ of
+
+\[
+ \frac{7B(t)^2}{4C^2}-\frac{3\phi(t)}C
+\]
+
+has the sign of $3C \phi(t)-(7/2)B(t)^2$, which is negative because
+$\phi(t)<2/5$, $C\le 1/2$, and $B(t)>9/20$. Equations \eqref{contact:two-triple-nonpositive-rectangle-7}--\eqref{contact:two-triple-nonpositive-rectangle-8}
+therefore imply $1<U(t)$, where
+
+\[
+ U(t)=\frac{7B(t)^2}{4(2/5)^2}-\frac{3\phi(t)}{2/5},
+ \qquad 0\leq t\leq6/5.
+\]
+
+This scalar function has no interior maximum. In fact, with $c_0=2/5$,
+
+\[
+ \frac{U'(t)}{\phi(t)}
+ =\frac{7B(t)(t^2-1)}{6c_0^2}+\frac{3t}{c_0},
+\]
+
+whose derivative is
+
+\[
+ \frac7{6c_0^2}
+ \left\{\frac{(t^2-1)^2\phi(t)}3+2tB(t)\right\}
+ +\frac3{c_0}>0.
+\]
+
+Thus $U'$ changes sign at most once, from negative to positive. At the
+two endpoints, the elementary bounds $\phi(0)>39/100$ and
+$\phi(6/5)>19/100$ give
+
+\[
+ U(0)<\frac{46087}{160000},\qquad
+ U(6/5)<\frac{152023}{160000}<1.
+\]
+
+For the second comparison, the expression defining $U$ is decreasing in
+$\phi(t)$ at fixed $t$, so replacing $\phi(6/5)$ by $19/100$ gives an
+upper bound. This contradicts $1<U(t)$ and completes the exclusion.
+
+The numerical-looking Gaussian comparisons above require no floating
+point arithmetic. For example $\pi<22/7$ gives $\phi(0)>199/500$.
+At $x=18/25$, the Taylor bound
+
+\[
+ e^x\leq1+x+x^2/2+x^3/6+
+              \frac{x^4}{24(1-x/5)}<25/12
+\]
+
+gives $\phi(6/5)>(199/500)(12/25)>19/100$.
+Also $\pi e>8$ gives $\phi(1)<1/4$, and $\pi>25/8$ gives
+$\phi(0)<2/5$.
+\subsection{Two triples: positive rectangle representations}\label{contact:two-triple-rectangle-exclusion-continued}
+Return to the contact-scale coordinates $(-a,c,b)$ of Section~\ref{contact:two-triple-rectangle-exclusion}.
+
+
+
+\paragraph{Positive representations}
+
+Suppose $c>0$ in the identical normalized laws obtained above. Omit the
+coordinate index. The rectangle condition is
+
+\[
+ b-a>2c,\qquad\text{equivalently }v=b-c>u=a+c.
+\tag{C.8.12}\label{contact:two-triple-rectangle-exclusion-12}
+\]
+
+The inequality is strict because a collision between a corner sum and
+the selected middle-middle sum would give a second representation of the threshold.
+
+Each coordinate has variance $1/2$. Writing its middle mass as $m$,
+centering and the exact variance formula give
+
+\[
+ \frac12=K^2(ab-muv),\qquad q=\frac{b+mu}{h}.
+\]
+
+Eliminating $m$ yields
+
+\[
+ q=1+\frac{ac}{hv}-\frac1{2hvK^2}.
+\tag{C.8.13}\label{contact:two-triple-rectangle-exclusion-13}
+\]
+
+By \eqref{contact:two-triple-rectangle-exclusion-1}, $h\le 2$, $ab\le 1$, and $b<(1+\sqrt{2})/2<5/4$.
+Also $v<b$, while \eqref{contact:two-triple-rectangle-exclusion-12} gives $hv>2u^2$. Therefore
+
+\[
+ hv<5/2,\qquad
+ \frac{ac}{hv}<\frac{ac}{2(a+c)^2}\leq\frac18,
+\]
+
+and \eqref{contact:two-triple-rectangle-exclusion-13} implies
+
+\[
+ q<Q(K):=\frac98-\frac1{5K^2},\qquad K\geq1/\sqrt2.
+\tag{C.8.14}\label{contact:two-triple-rectangle-exclusion-14}
+\]
+
+The selected threshold is $z=2Kc>0$, and the event probability is $q^2$.
+Since $C R=C K-z \phi(z)/3$, its ratio identity would require
+
+\[
+ 0=q^2-\Phi(z)-CK+z\phi(z)/3
+   <q^2-\frac12-\frac25K.
+\tag{C.8.15}\label{contact:two-triple-rectangle-exclusion-15}
+\]
+
+Here $C\ge49/120>2/5$, and $\Phi(z)\ge 1/2+z \phi(z)$ for $z\ge 0$.
+For $K\ge 5/4$, the right side of \eqref{contact:two-triple-rectangle-exclusion-15} is at most
+$1/2-(2/5)K\le 0$, since $q\le 1$, giving a contradiction.
+
+For $1/\sqrt{2}\le K\le 5/4$, define
+
+\[
+ G(K)=Q(K)^2-1/2-(2/5)K.
+\]
+
+Its second derivative is
+
+\[
+ G''(K)=\frac4{5K^4}\left(\frac1{K^2}-\frac{27}8\right)<0.
+\]
+
+Also $G'(5/4)=654/78125>0$. Thus $G$ increases throughout this
+interval and
+
+\[
+ G(K)\leq G(5/4)=\left(\frac{997}{1000}\right)^2-1
+ =-\frac{5991}{10^6}<0.
+\]
+
+Equations \eqref{contact:two-triple-rectangle-exclusion-14}--\eqref{contact:two-triple-rectangle-exclusion-15} again give a contradiction. This excludes positive
+representations of the $220$ event; the only numerical input is \eqref{contact:two-triple-rectangle-exclusion-11}.
+\subsection{One triple: the rectangle}\label{contact:one-triple-bernoulli-rectangle}
+
+
+\paragraph{Normalized contacts and exact variance}
+
+Normalize total variance to one, and use the dimensionless supports
+
+\[
+ T:\quad K(-a,c,b),\qquad B:\quad K(-d,e),
+ \qquad K=R+\frac{z\phi(z)}{3C}.
+\]
+
+The representation is the middle triple point and the high Bernoulli point, so
+$z=K(c+e)$. The nonselected triple points are smooth minima with
+deletion levels $1,0$; the representation has level $1$. Consequently
+
+\[
+ \frac12<a<1<b,\quad a^2+b^2=a+b,\quad
+ f_T(Kc)=f_T(-Ka),\quad -\frac12<c<1.
+\tag{C.9.1}\label{contact:one-triple-bernoulli-rectangle-1}
+\]
+
+Both Bernoulli deletion levels are the same, namely $q=\Pp(T\le Kc)$.
+Its low point is a smooth minimum, and its high point has negative
+derivative. The selected Bernoulli point identity gives
+
+\[
+ d>\frac12,\quad \frac{d^2+e^2}{d+e}<1.
+\]
+
+Set $k=e/d>0$. Factoring the equal-height equation first, without yet
+restricting $k$, gives
+
+\[
+ d=d(k)=\frac{3(1+k)^2}{2(k^3+3k+2)},\qquad e=kd(k),
+ \qquad k>0.
+\tag{C.9.2}\label{contact:one-triple-bernoulli-rectangle-2}
+\]
+
+Substitution into the strict Bernoulli representation inequality then gives
+
+\[
+ 1-\frac{d^2+e^2}{d+e}
+ =\frac{(1-k)(k^2+4k+1)}{2(k^3+3k+2)}>0.
+\]
+
+Hence $k<1$. Differentiating \eqref{contact:one-triple-bernoulli-rectangle-2} on $(0,1)$ shows $d'(k)>0$, while
+$d(0)=3/4$ and $d(1)=1$. Consequently $3/4<d<1$ and $0<e<d$.
+
+This is the same directly factored equation as in
+Section~\ref{contact:two-triple-rectangle-exclusion},
+with the same factorization.
+
+Let $m,r$ be the triple's middle and high masses. Centering gives
+
+\[
+ r=\frac{a-m(a+c)}{a+b}>0,
+ \qquad \operatorname{Var}(T)
+   =K^2\{ac+r(a+b)(b-c)\}.
+\]
+
+Writing $h=a+b$, exact total variance is therefore
+
+\[
+ \boxed{\quad 1=K^2\{ac+de+r h(b-c)\}.\quad}
+\tag{C.9.3}\label{contact:one-triple-bernoulli-rectangle-3}
+\]
+
+The full event is simply $T\le Kc$, so $F=1-r$.
+
+\paragraph{The selected standardized threshold is positive}
+
+If $c>0$ this is immediate. Suppose $c\le 0$. The triple equal-height
+factorization yields
+
+\[
+ \frac12<a\leq\frac34,\qquad c=2a-\frac32,
+ \qquad H_T=-f_T'(Kc)/(CK^2)=(a+c)^2.
+\]
+
+Put $\sigma=\phi(z)/(CK^2)$. The unique-representation derivative identity is
+$m H_T=\sigma$. Since the high mass in \eqref{contact:one-triple-bernoulli-rectangle-3} is positive,
+
+\[
+ \sigma<a(a+c)\leq\frac9{16}.
+\tag{C.9.4}\label{contact:one-triple-bernoulli-rectangle-4}
+\]
+
+For the Bernoulli law, its smooth low-point derivative instead gives
+
+\[
+ \sigma=3d\left(1-\frac{d^2+e^2}{d+e}\right)
+ =\frac{9(1+k)^2(1-k)(k^2+4k+1)}
+        {4(k^3+3k+2)^2}.
+\tag{C.9.5}\label{contact:one-triple-bernoulli-rectangle-5}
+\]
+
+We claim that \eqref{contact:one-triple-bernoulli-rectangle-4}--\eqref{contact:one-triple-bernoulli-rectangle-5} imply $e>1/2$. The functions $d(k)$ and
+$e(k)=kd(k)$ strictly increase on $(0,1)$, by differentiating \eqref{contact:one-triple-bernoulli-rectangle-2}, and
+
+\[
+ e(11/20)=\frac{10571}{20354}>\frac12.
+\]
+
+If $e\le 1/2$, then $0<k<11/20$. The difference between the numerator
+in \eqref{contact:one-triple-bernoulli-rectangle-5} and the value $9/16$ has the sign of
+
+\[
+ k B(k),\qquad B(k)=8+7k-20k^2-26k^3-4k^4-k^5.
+\]
+
+The polynomial $B$ is strictly concave on $[0,11/20]$, because
+$B''=-40-156k-48k^2-20k^3<0$, and its two endpoint values are
+
+\[
+ B(0)=8,\qquad B(11/20)=\frac{3385269}{3200000}>0.
+\]
+
+Thus $\sigma>9/16$, contradicting \eqref{contact:one-triple-bernoulli-rectangle-4}. Hence $e>1/2$. Since
+$c>-1/2$, we have proved in both sign cases that
+
+\[
+ \boxed{\quad z=K(c+e)>0.\quad}
+\tag{C.9.6}\label{contact:one-triple-bernoulli-rectangle-6}
+\]
+
+\paragraph{Elementary uniform bounds}
+
+For every centered coordinate, its third absolute moment is at least
+its variance to the power $3/2$. With two coordinates and total variance
+one, this gives $R\ge 1/\sqrt{2}>7/10$. Also $C\ge49/120$, so
+$C^2>1/6$ and $CR>343/1200$. Since $F\le 1$,
+
+\[
+ \Phi(z)<\frac{857}{1200}.
+\]
+
+The elementary bounds $\phi(0)>39/100$ and $\exp(-x)\ge 1-x$ give
+
+\[
+ \Phi(3/5)>
+ \frac12+\frac{39}{100}\left\{\frac35-
+                         \frac{(3/5)^3}{6}\right\}
+ =\frac{17999}{25000}>\frac{857}{1200}.
+\]
+
+Consequently $0<z<3/5$. We will also use
+
+\[
+ \phi(z)>\phi(3/5)>\frac{33}{100}.
+\tag{C.9.7}\label{contact:one-triple-bernoulli-rectangle-7}
+\]
+
+For a rational verification of the last bound, $\pi<22/7$ implies
+$\phi(0)>199/500$; the cubic alternating exponential lower bound gives
+
+\[
+ e^{-9/50}>1-\frac9{50}+\frac{(9/50)^2}{2}
+                    -\frac{(9/50)^3}{6}
+ =\frac{208807}{250000}.
+\]
+
+Their product is $41552593/125000000>33/100$.
+
+Set $N(z)=\Phi(z)-z \phi(z)/3$. The ratio identity is
+
+\[
+ 1-r=N(z)+CK,
+\]
+
+and the decreasing positive Gaussian density gives
+$N(z)\ge 1/2+(2/3)z \phi(z)$. Thus
+
+\[
+ K<\frac1{2C}<\frac54,
+ \qquad r<\frac12-CK-\frac23z\phi(z).
+\tag{C.9.8}\label{contact:one-triple-bernoulli-rectangle-8}
+\]
+
+\paragraph{Variance contradiction}
+
+We need only the following support estimates:
+
+\[
+ ac+de<c+e+\frac14,\qquad h(b-c)<3.
+\tag{C.9.9}\label{contact:one-triple-bernoulli-rectangle-9}
+\]
+
+For the first, $d<1$ and $e>0$ give $de<e$. If $c>0$, also
+$ac<c$; if $c\le 0$, then
+$ac=c+(1-a)|c|<c+1/4$, by \eqref{contact:one-triple-bernoulli-rectangle-1}.
+
+For the second, when $c>0$ we have $a>3/4$, and
+
+\[
+ h(b-c)<hb\leq\frac{17+7\sqrt7}{16}<\frac94<3.
+\]
+
+Here $(hb)'=h(3-4a)/(2b-1)\le 0$, so the bound is its value at $a=3/4$.
+When $c\le 0$, substitute $c=2a-3/2$. Direct differentiation gives
+
+\[
+ \{h(b-c)\}'=
+ \frac{2(a^2-b^2-6ab+3b)}{2b-1}<0
+ \qquad(1/2<a\le3/4),
+\]
+
+because $a^2<b^2$ and $6ab\ge 3b$. Its upper endpoint at $a=1/2$ is
+$(1+\sqrt{2}/2)^2=3/2+\sqrt{2}<3$. This proves \eqref{contact:one-triple-bernoulli-rectangle-9}.
+
+Insert \eqref{contact:one-triple-bernoulli-rectangle-8}--\eqref{contact:one-triple-bernoulli-rectangle-9} into the exact variance \eqref{contact:one-triple-bernoulli-rectangle-3}:
+
+\[
+ \begin{aligned}
+ 1
+ &<Kz+\frac{K^2}{4}+3K^2r\\
+ &<\frac{K^2}{4}+3K^2(1/2-CK)
+       +zK\{1-2K\phi(z)\}.
+ \end{aligned}
+\tag{C.9.10}\label{contact:one-triple-bernoulli-rectangle-10}
+\]
+
+Each term has an elementary upper bound. Equations \eqref{contact:one-triple-bernoulli-rectangle-7}--\eqref{contact:one-triple-bernoulli-rectangle-8} give
+
+\[
+ \frac{K^2}{4}<\frac{25}{64},\qquad
+ 3K^2(1/2-CK)\leq\frac1{18C^2}<\frac13.
+\]
+
+For the last term in \eqref{contact:one-triple-bernoulli-rectangle-10}, if its brace is nonpositive the term is
+already nonpositive. Otherwise, using $z<3/5$ and $\phi(z)>33/100$,
+
+\[
+ zK\{1-2K\phi(z)\}
+ <\frac35\max_{x\geq0}\left(x-\frac{33}{50}x^2\right)
+ =\frac5{22}.
+\]
+
+Therefore \eqref{contact:one-triple-bernoulli-rectangle-10} yields the impossible strict inequality
+
+\[
+ \boxed{\quad 1<\frac{25}{64}+\frac13+\frac5{22}
+           =\frac{2009}{2112}<1.\quad}
+\]
+
+This completes the exclusion of all unique-representation $220$ configurations.
+\subsection{One triple: the upper shape}\label{contact:one-triple-bernoulli-upper-shape}
+
+We exclude a maximizing pair with a unique middle/high representation
+and event $221$. Use the contact scale:
+
+
+\[
+ T:\quad K(-a,c,b),\qquad B:\quad K(-d,e),\qquad
+ K=R+\frac{z\phi(z)}{3C}.
+\]
+
+The selected representation is middle/high, with $z=K(c+e)$. Let $r$ be the
+triple's high mass, let $p=d/(d+e)$ be the Bernoulli high mass, and put
+$\varepsilon=rp$. The actual event probability is
+
+\[
+ F=1-rp=1-\varepsilon.
+\tag{C.10.1}\label{contact:one-triple-bernoulli-upper-shape-1}
+\]
+
+\paragraph{Contact signs force a positive threshold}
+
+The triple deletion levels are $(1,1,1-p)$, so the two nonselected
+smooth minima and the selected middle point satisfy
+
+\[
+ \frac12<a<1<b,\quad a^2+b^2=a+b,\quad
+ f_T(Kc)=f_T(-Ka),\quad -\frac12<c<1.
+\tag{C.10.2}\label{contact:one-triple-bernoulli-upper-shape-2}
+\]
+
+The Bernoulli low point is a smooth minimum, and its high representation has
+negative derivative. The representation identity gives
+
+\[
+ d>\frac12,\qquad \frac{d^2+e^2}{d+e}<1.
+\tag{C.10.3}\label{contact:one-triple-bernoulli-upper-shape-3}
+\]
+
+We also need $d<1$, which does not follow from \eqref{contact:one-triple-bernoulli-upper-shape-3} alone. The actual
+Bernoulli deletion levels are $1,1-r$. Set $t=e/d>0$ and
+$P(t)=t^3+3t+2$. Subtracting the two contact heights, using the smooth
+derivative equation at $-Kd$, gives exactly
+
+\[
+ -r=f_B(Ke)-f_B(-Kd)
+   =CK^3 d^2 P(t)
+      \left\{d-\frac{3(1+t)^2}{2P(t)}\right\}<0.
+\tag{C.10.4}\label{contact:one-triple-bernoulli-upper-shape-4}
+\]
+
+Since
+
+\[
+ 2P(t)-3(1+t)^2=(t-1)^2(2t+1)\geq0,
+\]
+
+equation \eqref{contact:one-triple-bernoulli-upper-shape-4} gives $d<1$. The strict grid geometry for $221$ is
+$d+e>b-c$. Consequently
+
+\[
+ c+e>b-d>0,\qquad z>0.
+\tag{C.10.5}\label{contact:one-triple-bernoulli-upper-shape-5}
+\]
+
+Moreover \eqref{contact:one-triple-bernoulli-upper-shape-3} and $d>1/2$ imply
+
+\[
+ \frac{1+t^2}{1+t}<2,
+ \qquad 0<t<1+\sqrt2<\frac{17}{7}.
+\tag{C.10.6}\label{contact:one-triple-bernoulli-upper-shape-6}
+\]
+
+\paragraph{Universal scalar bounds and exact variance}
+
+The elementary Gaussian comparisons in
+Section~\ref{contact:one-triple-bernoulli-rectangle},
+apply here. They only use $F\le 1$, $R\ge 1/\sqrt{2}$,
+$C\ge49/120$, and $z>0$, all valid here. Thus
+
+\[
+ 0<z<\frac35,
+ \qquad \phi(z)>\frac{33}{100},
+ \qquad C^2>\frac16.
+\tag{C.10.7}\label{contact:one-triple-bernoulli-upper-shape-7}
+\]
+
+Writing $N(z)=\Phi(z)-z \phi(z)/3$, the ratio identity \eqref{contact:one-triple-bernoulli-upper-shape-1} is
+
+\[
+ 1-\varepsilon=N(z)+CK.
+\]
+
+Since $N(z)\ge 1/2+(2/3)z \phi(z)$,
+
+\[
+ \varepsilon<\frac12-CK-\frac23z\phi(z).
+\tag{C.10.8}\label{contact:one-triple-bernoulli-upper-shape-8}
+\]
+
+Centering gives the exact variance formula
+
+\[
+ 1=K^2\{ac+de+r(a+b)(b-c)\}.
+\tag{C.10.9}\label{contact:one-triple-bernoulli-upper-shape-9}
+\]
+
+The equal-height triple contact in \eqref{contact:one-triple-bernoulli-upper-shape-2} gives the support estimate
+$(a+b)(b-c)<3$, proved separately on the two sign branches in
+Section~\ref{contact:one-triple-bernoulli-rectangle}. Also
+
+\[
+ ac+de<c+e+\delta,
+ \qquad \delta=\frac14-(1-d)e.
+\tag{C.10.10}\label{contact:one-triple-bernoulli-upper-shape-10}
+\]
+
+Indeed, $(a-1)c<1/4$: it is negative for positive $c$, and is less
+than $1/4$ when $-1/2<c\le 0$ and $1/2<a<1$. Let
+
+\[
+ L=3(1+t),\qquad p=\frac1{1+t}.
+\]
+
+Then \eqref{contact:one-triple-bernoulli-upper-shape-1}, \eqref{contact:one-triple-bernoulli-upper-shape-9}--\eqref{contact:one-triple-bernoulli-upper-shape-10} imply
+
+\[
+ 1<Kz+\delta K^2+L K^2\varepsilon.
+\tag{C.10.11}\label{contact:one-triple-bernoulli-upper-shape-11}
+\]
+
+\paragraph{A sharper intercept when the high Bernoulli mass is small}
+
+For $0<t\le 1$, simply use $\delta<1/4$. For $1\le t<17/7$, the slope
+condition \eqref{contact:one-triple-bernoulli-upper-shape-3} gives
+
+\[
+ \frac12<d<d_*:=\frac{1+t}{1+t^2}\leq1.
+\]
+
+The function $d(1-d)$ decreases on $(1/2,1)$. Hence
+
+\[
+ (1-d)e=t d(1-d)
+ >t d_*(1-d_*)
+ =\frac{t^2(t^2-1)}{(1+t^2)^2}
+ \geq\frac5{12}(t-1).
+\tag{C.10.12}\label{contact:one-triple-bernoulli-upper-shape-12}
+\]
+
+The last inequality is a direct polynomial comparison. After dividing
+by $t-1$ when $t>1$, its numerator is
+
+\[
+ P_0(t)=-5t^4+12t^3+2t^2-5.
+\]
+
+Its derivative $4t(-5t^2+9t+1)$ changes sign at most once on the
+positive axis, from positive to negative. Thus its minimum on $[1,17/7]$
+is at an endpoint, and
+
+\[
+ P_0(1)=4,\qquad P_0(17/7)=\frac{11404}{2401}>0.
+\]
+
+The assertion also holds at $t=1$ directly. We have proved
+
+\[
+ \delta<\bar\delta(t):=
+ \begin{cases}
+  1/4,&0<t\leq1,\\
+  2/3-5t/12,&1\leq t<17/7.
+ \end{cases}
+\tag{C.10.13}\label{contact:one-triple-bernoulli-upper-shape-13}
+\]
+
+\paragraph{Maximization of a cubic variance bound}
+
+Insert \eqref{contact:one-triple-bernoulli-upper-shape-8}, \eqref{contact:one-triple-bernoulli-upper-shape-13} into \eqref{contact:one-triple-bernoulli-upper-shape-11}, and put
+$A=\bar\delta(t)+L/2>0$. We obtain
+
+\[
+ 1<A K^2-LCK^3
+      +zK\left\{1-\frac23 L K\phi(z)\right\}.
+\tag{C.10.14}\label{contact:one-triple-bernoulli-upper-shape-14}
+\]
+
+The first two terms have the exact maximum
+
+\[
+ \max_{K\geq0}(A K^2-LCK^3)
+  =\frac{4A^3}{27L^2C^2}
+  <\frac{8A^3}{9L^2},
+\tag{C.10.15}\label{contact:one-triple-bernoulli-upper-shape-15}
+\]
+
+using \eqref{contact:one-triple-bernoulli-upper-shape-7}. For the remaining term, a nonpositive brace gives a
+nonpositive contribution. When the brace is positive, \eqref{contact:one-triple-bernoulli-upper-shape-7} gives
+
+\[
+ zK\left\{1-\frac23L K\phi(z)\right\}
+ <\frac35\max_{x\geq0}
+        \left(x-\frac{11}{50}Lx^2\right)
+ =\frac{15}{22L}.
+\tag{C.10.16}\label{contact:one-triple-bernoulli-upper-shape-16}
+\]
+
+It remains to check the two explicit upper functions in
+\eqref{contact:one-triple-bernoulli-upper-shape-15}--\eqref{contact:one-triple-bernoulli-upper-shape-16}. Write $x=1+t$.
+
+For $0<t\le 1$, we have $1<x\le 2$, $L=3x$, and $A=(6x+1)/4$.
+The bound equals
+
+\[
+ H_0(x)=\frac{(6x+1)^3}{648x^2}+\frac5{22x}
+ =\frac{x}{3}+\frac16+\frac{101}{396x}+\frac1{648x^2}.
+\]
+
+This function is strictly convex. Its maximum on $[1,2]$ is at an
+endpoint, with the larger value at $x=2$:
+
+\[
+ H_0(x)\leq H_0(2)=\frac{27407}{28512}<1.
+\tag{C.10.17}\label{contact:one-triple-bernoulli-upper-shape-17}
+\]
+
+For $1\le t<17/7$, we have $2\le x<24/7$ and
+$A=(13/12)(x+1)$. The bound is
+
+\[
+ H_1(x)=\frac{2197}{17496}\frac{(x+1)^3}{x^2}
+                  +\frac5{22x}.
+\]
+
+Put $c_0=2197/17496$. Then
+
+\[
+ H_1(x)=c_0 x+3c_0+\frac{3c_0+5/22}{x}+\frac{c_0}{x^2},
+\]
+
+again strictly convex. Its two endpoint values are
+
+\[
+ H_1(2)=\frac{27407}{28512}<1,
+ \qquad H_1(24/7)=\frac{771397337}{775982592}<1.
+\tag{C.10.18}\label{contact:one-triple-bernoulli-upper-shape-18}
+\]
+
+The second endpoint is larger, and its positive deficit is
+$4585255/775982592$. Convexity bounds the whole interval by those
+endpoints. Equations \eqref{contact:one-triple-bernoulli-upper-shape-14}--\eqref{contact:one-triple-bernoulli-upper-shape-18} force $1<1$, a contradiction. This
+excludes every unique-representation $221$ configuration .
+\subsection{One triple: the middle representation of the triangular event}\label{contact:one-triple-bernoulli-middle-210}
+
+
+Consider shape $210$ with the middle-triple/low-Bernoulli representation.
+
+Normalize total variance to one and write the dimensionless supports as
+
+\[
+ T:\quad K(-a,c,b),\qquad B:\quad K(-d,e),\qquad
+ K=R+\frac{z\phi(z)}{3C}>0.
+\]
+
+Let the triple masses be $l,m,r$, all positive. The selected threshold
+is $z=K(c-d)$. The actual deletion levels are
+
+\[
+ T:\quad (1,q_B,0),\qquad
+ B:\quad (l+m,l),\qquad q_B=\frac{e}{d+e}.
+\tag{C.11.1}\label{contact:one-triple-bernoulli-middle-210-1}
+\]
+
+The strict representation geometry is
+
+\[
+ d+e<a+c.
+\tag{C.11.2}\label{contact:one-triple-bernoulli-middle-210-2}
+\]
+
+\paragraph{The positive Bernoulli minimum must be at least K}
+
+The nonselected Bernoulli point $Ke$ is a smooth minimum, so $e>1/2$.
+Suppose $e<1$. Its cubic dual then also has a smooth negative minimum
+at $-K \alpha$, where
+
+\[
+ \alpha=\frac{1+\sqrt{1+4e-4e^2}}2>1,
+ \qquad \alpha^2+e^2=\alpha+e.
+\]
+
+The difference of the minimum heights is exactly
+
+\[
+ f_B(-K\alpha)-f_B(Ke)
+ =\frac{CK^3}{2}(e-\alpha)
+                     (\alpha^2+4\alpha e+e^2)<0.
+\tag{C.11.3}\label{contact:one-triple-bernoulli-middle-210-3}
+\]
+
+But $f_B(Ke)=l$ by \eqref{contact:one-triple-bernoulli-middle-210-1}. The deletion threshold at the new negative
+minimum is
+
+\[
+ z+K\alpha=K(c-d+\alpha)>K(-a+e+\alpha)>-Ka,
+\]
+
+using \eqref{contact:one-triple-bernoulli-middle-210-2}. Its deletion CDF is therefore at least $l$. Equation \eqref{contact:one-triple-bernoulli-middle-210-3}
+contradicts the global cubic majorant at this point. Hence
+
+\[
+ \boxed{\quad e\geq1.\quad}
+\tag{C.11.4}\label{contact:one-triple-bernoulli-middle-210-4}
+\]
+
+The nonselected triple minima have levels $1,0$, so
+
+\[
+ \frac12<a<1<b,\qquad a^2+b^2=a+b.
+\tag{C.11.5}\label{contact:one-triple-bernoulli-middle-210-5}
+\]
+
+Equations \eqref{contact:one-triple-bernoulli-middle-210-2}, \eqref{contact:one-triple-bernoulli-middle-210-4}--\eqref{contact:one-triple-bernoulli-middle-210-5} give
+
+\[
+ c-d>e-a>0,\qquad z>0,
+\]
+
+and in particular $c>0$.
+
+\paragraph{Contact height bounds the negative triple minimum}
+
+Define the dimensionless minimum-height gap
+
+\[
+ D(a)=\frac12(b-a)(a^2+4ab+b^2),\qquad
+ b=\frac{1+\sqrt{1+4a-4a^2}}2.
+\]
+
+The levels $1,0$ in \eqref{contact:one-triple-bernoulli-middle-210-1} give the exact identity
+
+\[
+ CK^3 D(a)=1.
+\tag{C.11.6}\label{contact:one-triple-bernoulli-middle-210-6}
+\]
+
+The scalar comparisons in Section~\ref{contact:one-triple-bernoulli-rectangle} give
+
+\[
+ 0<z<\frac35,\qquad \phi(z)>\frac{33}{100},\qquad
+ C^2>\frac16,
+\tag{C.11.7}\label{contact:one-triple-bernoulli-middle-210-7}
+\]
+
+because $R\ge 1/\sqrt{2}$, $F\le 1$, and $C\ge49/120$. Also
+$F=N(z)+CK$, where $N(z)=\Phi(z)-z \phi(z)/3>1/2$; hence $CK<1/2$.
+Together with \eqref{contact:one-triple-bernoulli-middle-210-6},
+
+\[
+ 1=CK^3D(a)<\frac{D(a)}{8C^2},\qquad D(a)>8C^2>\frac43.
+\tag{C.11.8}\label{contact:one-triple-bernoulli-middle-210-8}
+\]
+
+Direct differentiation gives
+
+\[
+ D'(a)=-3(2a-1)(a+b)<0.
+\]
+
+At $a=2/3$, its value is
+
+\[
+ D(2/3)=\frac{71+17\sqrt{17}}{108}
+ <\frac{191}{144}<\frac43,
+\]
+
+using $\sqrt{17}<17/4$. Therefore \eqref{contact:one-triple-bernoulli-middle-210-8} forces
+
+\[
+ \boxed{\quad a<\frac23.\quad}
+\tag{C.11.9}\label{contact:one-triple-bernoulli-middle-210-9}
+\]
+
+\paragraph{The selected triple gap is bounded away from one}
+
+\[
+ D(a)<D(1/2)=\frac34+\frac{\sqrt2}{2}<\frac32.
+\]
+
+Equation \eqref{contact:one-triple-bernoulli-middle-210-6} consequently gives
+
+\[
+ K^3>\frac{1000}{681}>\left(\frac{25}{22}\right)^3.
+\tag{C.11.10}\label{contact:one-triple-bernoulli-middle-210-10}
+\]
+
+The second strict difference is the positive rational
+$7375/7251288$. Put $\sigma=\phi(z)/(CK^2)$. From \eqref{contact:one-triple-bernoulli-middle-210-6}--\eqref{contact:one-triple-bernoulli-middle-210-8}, \eqref{contact:one-triple-bernoulli-middle-210-10},
+
+\[
+ \sigma=\phi(z)D(a)K
+ >\frac{33}{100}\frac43\frac{25}{22}=\frac12.
+\tag{C.11.11}\label{contact:one-triple-bernoulli-middle-210-11}
+\]
+
+The Bernoulli low-representation identity is
+
+\[
+ \sigma=3e\left\{\frac{d^2+e^2}{d+e}-1\right\}>0.
+\]
+
+Let $u=a+c$. Since the Bernoulli third-moment slope is strictly smaller
+than its support diameter, and \eqref{contact:one-triple-bernoulli-middle-210-2} gives $d+e<u$,
+
+\[
+ \sigma<3u(u-1).
+\]
+
+Combining this with \eqref{contact:one-triple-bernoulli-middle-210-11}, and noting $3(8/7)(1/7)=24/49<1/2$,
+we obtain
+
+\[
+ \boxed{\quad u>\frac87.\quad}
+\tag{C.11.12}\label{contact:one-triple-bernoulli-middle-210-12}
+\]
+
+\paragraph{The actual variance Hessian gives the opposite bound}
+
+Let $\gamma=[-Ka,Kc,Kb]|x|^3$ be the third-moment slope in the centered
+triple's variance direction. Because $c>0$, its normalized value is
+
+\[
+ g(a,u):=\frac\gamma K
+   =b+u-2a+\frac{2a^3}{(a+b)u}.
+\tag{C.11.13}\label{contact:one-triple-bernoulli-middle-210-13}
+\]
+
+On $1/2<a\le 2/3$, $u\ge 8/7$, this function increases with $u$ and
+decreases with $a$. For the first derivative,
+
+\[
+ g_u=1-\frac{2a^3}{(a+b)u^2}>0,
+\]
+
+since $a+b>2a$ and $u>a$. For the second, write $h=a+b$.
+Here $b'<0$, $h'>0$, and
+
+\[
+ g_a=b'-2+\frac2u\left(\frac{3a^2}{h}
+                          -\frac{a^3h'}{h^2}\right)
+ <-2+\frac{6a^2}{uh}
+ <-2+\frac{14}{9}<0,
+\]
+
+using $a\le 2/3$, $h>3/2$, $u\ge 8/7$. Equations \eqref{contact:one-triple-bernoulli-middle-210-9}, \eqref{contact:one-triple-bernoulli-middle-210-12} therefore imply
+
+\[
+ \frac\gamma K>g(2/3,8/7)
+   =\frac{499+35\sqrt{17}}{504}
+   >\frac{71}{56}>\frac54.
+\tag{C.11.14}\label{contact:one-triple-bernoulli-middle-210-14}
+\]
+
+The strict lower bound uses only $\sqrt{17}>4$.
+
+On the other hand, both signs of the centered triple variance direction
+are admissible, because all three masses are positive. The actual
+second-order condition derived in
+Section~\ref{contact:three-point-variance-curvature}
+is
+
+\[
+ 3C\gamma-\frac{15CR+\phi'''(z)}4\leq0.
+\]
+
+Use $R=K-z \phi(z)/(3C)$ and
+$\phi'''(z)=(3z-z^3)\phi(z)$ to rewrite it as
+
+\[
+ 12C\gamma\leq15CK-z(z^2+2)\phi(z)<15CK,
+\]
+
+because $z>0$. Thus $\gamma/K<5/4$, contradicting \eqref{contact:one-triple-bernoulli-middle-210-14}.
+This excludes the middle/low $210$ representation .
+\subsection{One triple: the low representation of the triangular event}\label{contact:low-210-algebraic-reduction}
+
+
+For the low-triple/high-Bernoulli representation of $210$, divide support coordinates by
+$K=R+z \phi(z)/(3C)>0$.
+
+\paragraph{Exact contact reduction}
+
+Write
+
+\[
+ T:\quad -(a+w),-a,b,\qquad B:\quad -d,e,
+ \qquad w>0,
+\]
+
+with triple masses $\ell,m,r$. The triple's two nonselected minima have
+levels $q,0$, while its selected lowest point has level $1$.
+The Bernoulli masses at $-d,e$ are $q,p$, respectively, and its deletion
+levels are $\ell+m,\ell$. The representation geometry is
+
+\[
+ w<d+e<a+b+w.
+\tag{C.12.1}\label{contact:low-210-algebraic-reduction-1}
+\]
+
+The smooth triple minima give
+
+\[
+ \frac12<a<1<b,\quad a^2+b^2=a+b,
+ \quad b=\frac{1+\sqrt{1+4a-4a^2}}2.
+\]
+
+Put
+
+\[
+ h=a+b,\quad
+ D=\frac12(b-a)(a^2+4ab+b^2),\quad
+ P=w^2(3a-3/2+w),\quad \tau=CK^3.
+\]
+
+The minimum-height gap is $q=\tau D$. Factoring the negative cubic at
+its smooth minimum gives the other level gap as
+$p=\tau P$. Therefore
+
+\[
+ \boxed{\quad \tau=\frac1{D+P},\qquad
+ p=\frac P{D+P},\qquad q=\frac D{D+P}.\quad}
+\tag{C.12.2}\label{contact:low-210-algebraic-reduction-2}
+\]
+
+The Bernoulli negative smooth minimum has $d>1/2$. Its high-representation
+derivative gives $k_B=(d^2+e^2)/(d+e)<1$. The strict level difference
+$f_B(e)-f_B(-d)=-m<0$ also gives $d<1$, by the exact factorization
+in Section~\ref{contact:one-triple-bernoulli-upper-shape}.
+
+Thus, after choosing $a,w,d$, every quantity is determined. Write
+
+\[
+ x=d/p=d+e,\quad e=qx,\quad r_B=p^2+q^2,\quad k_B=r_B x,
+\]
+
+\[
+ \ell=\frac{d(1-k_B)}{w(2a-1+w)},\quad
+ m=\frac{b-\ell(h+w)}h,\quad r=1-\ell-m.
+\tag{C.12.3}\label{contact:low-210-algebraic-reduction-3}
+\]
+
+The first formula follows by equating the two unique-representation slope
+identities:
+
+\[
+ \sigma=3\ell w(2a-1+w)=3d(1-k_B),
+ \qquad \sigma=\frac{\phi(z)}{CK^2}.
+\]
+
+The other two formulas in \eqref{contact:low-210-algebraic-reduction-3} are centering and total mass.
+
+It remains to impose the exact Bernoulli height difference. Put
+
+\[
+ M=q^3+3p^2q+2p^3.
+\]
+
+Using its smooth derivative at $-d$, the difference is
+
+\[
+ \boxed{\quad m=\tau x^2(3/2-Mx).\quad}
+\tag{C.12.4}\label{contact:low-210-algebraic-reduction-4}
+\]
+
+For fixed $a,w$, this is a cubic equation in $x$. In particular the
+CDF levels and coordinate probabilities have not been replaced by
+independent optimization parameters.
+
+\paragraph{Variance and two necessary ratio inequalities}
+
+The dimensionless variances are
+
+\[
+ V_T=ab+\ell w(h+w),\qquad V_B=pq x^2,\qquad V_0=V_T+V_B.
+\]
+
+Total variance one gives $K=V_0^{-1/2}$, hence
+
+\[
+ C=\tau V_0^{3/2},\qquad
+ \boxed{\quad \tau^2V_0^3<(227/500)^2.\quad}
+\tag{C.12.5}\label{contact:low-210-algebraic-reduction-5}
+\]
+
+The dimensionless Bernoulli third absolute moment is
+$R_B=pq x^3(p^2+q^2)$. The triple dual has constant term
+$\tau B_0$, where $B_0=b^2(2b-3/2)$, since it vanishes at its positive
+smooth minimum $b$. Averaging that dual over the centered triple and
+using $F-CR=\Phi(z)>0$ gives the further necessary inequality
+
+\[
+ \boxed{\quad B_0-\frac32 V_T-R_B>0.\quad}
+\tag{C.12.6}\label{contact:low-210-algebraic-reduction-6}
+\]
+
+\paragraph{Proof of the compact closed domain}
+
+Since $V_T>ab$ and $R_B>0$, equation \eqref{contact:low-210-algebraic-reduction-6} implies
+
+\[
+ 0<B_0-\frac32ab=\frac{b}{2}(b^2-3a^2).
+\]
+
+If $a\ge 3/4$, then $b<5/4$ gives
+$b^2<25/16<27/16\le 3a^2$, a contradiction. Thus $a<3/4$.
+The strictly decreasing height function satisfies
+
+\[
+ 1<D(3/4)<D(a)<D(1/2)<3/2.
+\]
+
+Here $D(3/4)=(17+7\sqrt{7})/32>1$, and
+$D(1/2)=3/4+\sqrt{2}/2<3/2$.
+
+The inequalities $d>1/2$ and $k_B<1$ give
+$e/d<1+\sqrt{2}<3$, hence $q<3/4$. Equation \eqref{contact:low-210-algebraic-reduction-2} implies
+$P>D/3>1/3$. If $w\le 1/2$, then
+$P=w^2(3a-3/2+w)\le (1/4)(3/4+1/2)=5/16$, a contradiction.
+Thus $w>1/2$.
+
+Conversely, \eqref{contact:low-210-algebraic-reduction-1} and $d=px<1$ give $pw<1$, or $(w-1)P<D$.
+If $w\ge 3/2$, then $P>w^3$ and
+$(w-1)P\ge (1/2)(27/8)=27/16>3/2>D$, again a contradiction.
+Thus $w<3/2$.
+
+Every candidate therefore lies in the interior of the single closed box
+
+\[
+ \boxed{\quad (a,w,d)\in[1/2,3/4]\times[1/2,3/2]\times[1/2,1].\quad}
+\tag{C.12.7}\label{contact:low-210-algebraic-reduction-7}
+\]
+
+Keeping all its faces makes the computational cover larger than needed.
+The fixed certificate \texttt{low210} proves that no point of
+\eqref{contact:low-210-algebraic-reduction-7} satisfies all the necessary
+contact, probability, variance, and ratio conditions above. Thus this
+representation cannot occur at a maximizing pair. The enclosure and
+partition rules are given in Section~\ref{sec:verification}.
+\subsection{One triple: the lower event}\label{contact:lower-110-contact-reduction}
+
+
+For shape $110$, the unique selected representation is the triple's middle point and the Bernoulli's low point.
+
+\paragraph{Two equal-height charts}
+
+Divide all support points by
+$K=R+z \phi(z)/(3C)>0$, and write
+
+\[
+ T:\quad -a,c,b,\qquad B:\quad -d,e.
+\]
+
+The triple's deletion levels are $(q,q,0)$, where $q=e/(d+e)$.
+Thus its nonselected minima and selected point satisfy
+
+\[
+ \frac12<a<1<b,\quad a^2+b^2=a+b,\quad f_T(c)=f_T(-a).
+\]
+
+Both possible representation signs have exact closed parameter charts $0\le k\le 1$:
+
+\[
+ \begin{array}{c|c|c}
+ \text{chart}&a&c\\ \hline
+ \text{negative}&1/2+k/4&2a-3/2\\
+ \text{positive}&3(1+k)^2/[2(k^3+3k+2)]&ka.
+ \end{array}
+\tag{C.13.1}\label{contact:lower-110-contact-reduction-1}
+\]
+
+The two charts share the $c=0$ boundary and cover the entire genuine
+equal-height representation range. Their other faces include limiting contacts
+that need not be genuine triples. Keep all faces in the certificate.
+
+Put
+
+\[
+ b=\frac{1+\sqrt{1+4a-4a^2}}2,\quad h=a+b,\quad
+ u=a+c,\quad v=b-c,
+\]
+
+\[
+ D=\frac12(b-a)(a^2+4ab+b^2),\quad
+ H=3\{a(1-a)+c-c|c|\}.
+\]
+
+On the negative chart the stable exact formula is $H=u^2$. On the
+positive chart it is $H=3[a(1-a)+c(1-c)]$. In either case $0<H\le 3/2$
+at a genuine contact.
+
+\paragraph{The middle mass replaces the singular derivative quotient}
+
+Let the triple middle mass be the independent parameter $m$, with
+$0<m<1$. Its other masses and its representation derivative parameter are
+
+\[
+ \ell=\frac{b-mv}{h},\qquad r=\frac{a-mu}{h},
+ \qquad \sigma=mH=\frac{\phi(z)}{CK^2}>0.
+\tag{C.13.2}\label{contact:lower-110-contact-reduction-2}
+\]
+
+The Bernoulli's nonselected positive point is a smooth minimum at height
+zero. Its entire cubic dual majorizes a nonnegative CDF. If $1/2<e<1$,
+the second smooth minimum is at the negative point
+
+\[
+ -\alpha=-\frac{1+\sqrt{1+4e-4e^2}}2,\qquad \alpha>1,
+\]
+
+and its height is strictly below the positive minimum's height zero.
+This is impossible for the global majorant. Hence $e\ge 1$.
+
+The low Bernoulli representation identity is
+
+\[
+ \sigma=3e\left\{\frac{d^2+e^2}{d+e}-1\right\}.
+\tag{C.13.3}\label{contact:lower-110-contact-reduction-3}
+\]
+
+Since $\sigma<3/2$ and $e\ge 1$, its third-moment slope is less than $3/2$,
+so its diameter is less than three. Consequently $d<2$ and
+
+\[
+ 0<t:=d/e<2.
+\]
+
+Set $f=(t^2+1)/(t+1)$. Solving the positive quadratic root in \eqref{contact:lower-110-contact-reduction-3}
+determines the Bernoulli support and probabilities without dividing by $H$:
+
+\[
+ \boxed{\quad e=\frac{1+\sqrt{1+(4/3)f\sigma}}{2f},\quad
+ d=te,\quad q=\frac1{1+t},\quad k_B=ef.\quad}
+\tag{C.13.4}\label{contact:lower-110-contact-reduction-4}
+\]
+
+Every actual candidate therefore lies in one of the two closed cubes
+
+\[
+ \boxed{\quad (k,m,t)\in[0,1]\times[0,1]\times[0,2].\quad}
+\tag{C.13.5}\label{contact:lower-110-contact-reduction-5}
+\]
+
+The use of $m$ as a parameter avoids artificial singularities where the
+representation derivative $H$ vanishes on a chart face.
+
+\paragraph{Exact height, ratio, and normal-density equations}
+
+The strict $110$ representation geometry is $d+e>u$. The minimum-level difference
+gives
+
+\[
+ \tau:=CK^3=q/D.
+\]
+
+For the Bernoulli dual, whose positive smooth minimum has height zero,
+the low-representation contact value is the dimensionless cubic
+
+\[
+ L=e^3(t^3+3t+2)-\frac32e^2(1+t)^2.
+\]
+
+Its deletion-CDF value is $\ell+m=1-r$. Thus the exact remaining height
+equation, cleared of its positive denominator, is
+
+\[
+ \boxed{\quad (1-r)D-qL=0.\quad}
+\tag{C.13.6}\label{contact:lower-110-contact-reduction-6}
+\]
+
+The dimensionless variances and Bernoulli third absolute moment are
+
+\[
+ V_T=ab-muv,\quad V_B=de,\quad V_0=V_T+V_B,\quad R_B=de\,k_B.
+\]
+
+Total variance one gives $K=V_0^{-1/2}$, $z=(c-d)/\sqrt{V_0}$, and
+
+\[
+ C=\frac{qV_0^{3/2}}D.
+\]
+
+The established upper and lower ratio bounds require
+
+\[
+ \boxed{\quad (49/120)^2D^2\le q^2V_0^3<(227/500)^2D^2.\quad}
+\tag{C.13.7}\label{contact:lower-110-contact-reduction-7}
+\]
+
+As in the low/high $210$ reduction, averaging the triple cubic and using
+$F-CR=\Phi(z)>0$ supplies the strict necessary inequality
+
+\[
+ \boxed{\quad b^2(2b-3/2)-\frac32V_T-R_B>0.\quad}
+\tag{C.13.8}\label{contact:lower-110-contact-reduction-8}
+\]
+
+Finally the definition of $\sigma$ in \eqref{contact:lower-110-contact-reduction-2} is essential: pure algebraic
+contacts alone can have ratios below $227/500$. Its exact squared form is
+
+\[
+ \boxed{\quad
+ \sigma^2 q^2 V_0
+ -\frac{D^2}{2\pi}\exp\!\left(-\frac{(c-d)^2}{V_0}\right)=0.
+ \quad}
+\tag{C.13.9}\label{contact:lower-110-contact-reduction-9}
+\]
+
+Squaring is harmless as a necessary condition. It only enlarges the
+candidate set, while all actual quantities are positive. Equation \eqref{contact:lower-110-contact-reduction-9}
+is evaluated only on boxes with a strictly positive variance enclosure.
+Other necessary constraints remain available on wider boxes.
+The fixed certificate \texttt{lower110} proves that neither closed
+chart in \eqref{contact:lower-110-contact-reduction-5} contains a point
+satisfying all these necessary conditions, including the ratio floor
+$C=49/120$. Section~\ref{sec:verification} gives the enclosure and
+partition rules. This excludes the unique $110$ representation.
+\subsection{One triple: collision across the full span}\label{contact:one-triple-bernoulli-collision-211}
+
+
+The collided $211$ event has its two maximal cells at the selected threshold.
+
+Normalize total variance to one. Write $R$ for the sum of third absolute moments,
+$z$ for the threshold, $\phi_0=\phi(0)$, and
+
+\[
+ K=R+\frac{z\phi(z)}{3C}>0.
+\tag{C.14.1}\label{contact:one-triple-bernoulli-collision-211-1}
+\]
+
+The global cubic dual is the one in
+Lemma~\ref{lem:full-law-contacts}.
+It majorizes the decreasing deletion CDF, touches it at every support
+point, and has nonpositive derivative at every contact. At a nonselected
+support point its contact is a smooth local minimum. The two threshold representations use the actual marginal masses.
+
+\paragraph{Collision geometry and the sole smooth triple contact}
+
+The selected fiber of the collided $211$ event is exactly
+$(triple-low, Bernoulli-high)$ and $(triple-high, Bernoulli-low)$.
+The Bernoulli diameter therefore equals the triple's total diameter.
+In units of $K$, write the supports as
+
+\[
+ T/K:\quad -t,-a,b,\qquad B/K:\quad -d,e,
+ \qquad t>a,\quad b,d,e>0.
+\]
+
+Set
+
+\[
+ h=t+b=d+e,\qquad u=t-a>0,\qquad
+ p=\frac d h,\quad q=\frac e h,\qquad \tau=CK^3.
+\tag{C.14.2}\label{contact:one-triple-bernoulli-collision-211-2}
+\]
+
+The Bernoulli probabilities at its low and high atoms are respectively
+$q,p$. The triple deletion levels are exactly $(1,q,q)$.
+
+The middle triple atom is nonselected and is therefore a smooth minimum.
+It must be negative. If it were a positive minimum, the cubic dual would
+have positive derivative at the still larger triple contact; zero cannot
+be a local minimum because its quadratic coefficient is $-3CK/2<0$.
+The negative minimum can thus be written $-Ka$, with $a>1/2$.
+
+After dividing its dual values by $\tau$ and subtracting a constant, the
+triple dual is
+
+\[
+ g(x)=|x|^3-\frac32x^2-3a(1-a)x.
+\tag{C.14.3}\label{contact:one-triple-bernoulli-collision-211-3}
+\]
+
+The equality of the two contact levels at $-a,b$ gives $g(b)=g(-a)$.
+Put $k=b/a>0$ and $P_0=k^3+3k+2$. Direct factorization gives
+
+\[
+ a=\frac{3(1+k)^2}{2P_0}.
+\tag{C.14.4}\label{contact:one-triple-bernoulli-collision-211-4}
+\]
+
+Moreover,
+
+\[
+ \frac{g'(b)}3
+ =a\{a(1+k^2)-(1+k)\}
+ =\frac{a(1+k)(k-1)(k^2+4k+1)}{2P_0}.
+\]
+
+The contact derivative is nonpositive, so $0<k\le 1$. The identities
+
+\[
+ 2P_0-3(1+k)^2=(k-1)^2(2k+1),
+\]
+
+\[
+ a-\frac34=\frac{3k(1+2k-k^2)}{4P_0}>0
+\]
+
+therefore prove
+
+\[
+ \boxed{\qquad \frac34<a\leq1,\qquad 0<b\leq1.\qquad}
+\tag{C.14.5}\label{contact:one-triple-bernoulli-collision-211-5}
+\]
+
+The boundary $a=b=1$ is retained. A selected contact may have zero
+derivative at a collision, so it cannot be discarded as a smooth-representation
+contradiction.
+
+The remaining triple contact level difference is $1-q=p$. Factoring the
+negative cubic at its minimum gives
+
+\[
+ \boxed{\quad p=\tau u^2(t+2a-3/2).\quad}
+\tag{C.14.6}\label{contact:one-triple-bernoulli-collision-211-6}
+\]
+
+Every factor is positive, including $t+2a-3/2>t$ by \eqref{contact:one-triple-bernoulli-collision-211-5}.
+
+\paragraph{Combine the first and second variance derivatives}
+
+Let $\eta$ be the centered signed three-point direction whose variance
+derivative is one, as in
+Proposition~\ref{prop:finite-contact-exclusion},
+The support and threshold stay fixed when the triple law is
+changed to $P_T+s \eta$; both signs of sufficiently small $s$ are admissible.
+Since the support stays fixed, the collided closed event presents no
+differentiability issue.
+
+Let $\gamma=\int |x|^3 \eta(dx)$ and let $L$ be the corresponding CDF
+derivative. The levels $(1,q,q)$ and physical gaps $Ku,K(a+b)$ give
+
+\[
+ \boxed{\quad L=\frac{p}{K^2u h}>0.\quad}
+\tag{C.14.7}\label{contact:one-triple-bernoulli-collision-211-7}
+\]
+
+Along this direction the signed excess at price $C$ is exactly
+
+\[
+ J(s)=F+sL-\Phi\!\left(\frac z{\sqrt{1+s}}\right)
+       -C(R+s\gamma)(1+s)^{-3/2}.
+\]
+
+At the ratio maximum, $J'(0)=0$ and $J''(0)\le 0$. Differentiation gives
+
+\[
+ C\gamma=L+\frac32CR+\frac12z\phi(z),
+\]
+
+\[
+ 3C\gamma-\frac{15CR+\phi'''(z)}4\leq0.
+\]
+
+Using $\phi'''(z)=(3z-z^3)\phi(z)$ and eliminating $\gamma$ yields the exact
+necessary condition
+
+\[
+ \boxed{\quad 12L+3CR+(z^3+3z)\phi(z)\leq0.\quad}
+\tag{C.14.8}\label{contact:one-triple-bernoulli-collision-211-8}
+\]
+
+In particular $z=-s<0$, since $L,C,R$ are positive. Equation \eqref{contact:one-triple-bernoulli-collision-211-1} now
+reads $CR=CK+s \phi(s)/3$, so \eqref{contact:one-triple-bernoulli-collision-211-8} becomes
+
+\[
+ 12L+3CK\leq s(s^2+2)\phi(s)\leq2s\phi_0.
+\tag{C.14.9}\label{contact:one-triple-bernoulli-collision-211-9}
+\]
+
+The last inequality is elementary: the derivative of
+$(s^2+2)\phi(s)$ is $-s^3 \phi(s)$, so that function decreases on
+$[0,\infty)$ from $2\phi_0$.
+
+\paragraph{Geometry makes the positive CDF derivative too large}
+
+The threshold is the high-triple/low-Bernoulli sum, hence
+
+\[
+ s=K(d-b)<Kt.
+\tag{C.14.10}\label{contact:one-triple-bernoulli-collision-211-10}
+\]
+
+Here $d<h=t+b$ because the Bernoulli law is nondegenerate. Since $L>0$,
+\eqref{contact:one-triple-bernoulli-collision-211-9} gives $3CK<2s \phi_0$. Combining this with \eqref{contact:one-triple-bernoulli-collision-211-10} and
+$C\ge49/120>\phi_0$ gives
+
+\[
+ \boxed{\quad t>\frac sK>\frac{3C}{2\phi_0}>\frac32.\quad}
+\tag{C.14.11}\label{contact:one-triple-bernoulli-collision-211-11}
+\]
+
+Substitute the exact probability identity \eqref{contact:one-triple-bernoulli-collision-211-6} into \eqref{contact:one-triple-bernoulli-collision-211-7}. Equations
+\eqref{contact:one-triple-bernoulli-collision-211-5}, \eqref{contact:one-triple-bernoulli-collision-211-10}, and \eqref{contact:one-triple-bernoulli-collision-211-11} imply
+
+\[
+ \begin{aligned}
+ L
+ &=CK\,\frac{(t-a)(t+2a-3/2)}{t+b}\\
+ &>CK\,\frac{t(t-1)}{t+1}\\
+ &>Cs\,\frac{t-1}{t+1}\\
+ &>\frac{Cs}{5}.
+ \end{aligned}
+\tag{C.14.12}\label{contact:one-triple-bernoulli-collision-211-12}
+\]
+
+The first strict comparison uses $a\le 1$, $b\le 1$, and $2a-3/2>0$;
+the final one uses $t>3/2$. Inserting \eqref{contact:one-triple-bernoulli-collision-211-12} into \eqref{contact:one-triple-bernoulli-collision-211-9} yields
+
+\[
+ \frac{12Cs}{5}<2s\phi_0,
+ \qquad\text{hence}\qquad C<\frac56\phi_0.
+\]
+
+The identity \eqref{contact:one-triple-bernoulli-collision-211-8} is also a general necessary condition for any genuine
+triple at a full-law ratio maximum, with its actual unit-variance CDF
+derivative $L$. In particular $L\ge 0$ forces a negative selected threshold.
+Its successful use here depends on the exact collided $211$ geometry and
+the actual Bernoulli probability in \eqref{contact:one-triple-bernoulli-collision-211-6}--\eqref{contact:one-triple-bernoulli-collision-211-7}.
+\subsection{One triple: collision across the upper gap}\label{contact:collision-221-contact-reduction}
+
+
+Normalize variance to one and write
+
+\[
+ K=R+z\phi(z)/(3C)>0,\qquad \tau=CK^3,\qquad
+ \sigma=\phi(z)/(CK^2)>0.
+\]
+
+All following support variables are divided by $K$.
+
+\paragraph{The exact compact support and probability charts}
+
+The selected fiber is $(triple-middle, Bernoulli-high)$ and
+$(triple-high, Bernoulli-low)$. Write
+
+\[
+ T:\ -a,c,b,\qquad B:\ -d,e,
+ \qquad a,b,d,e>0,\quad -a<c<b.
+\]
+
+The collision forces
+
+\[
+ h=b-c=d+e,\qquad p=d/h,\quad q=e/h,
+\tag{C.15.1}\label{contact:collision-221-contact-reduction-1}
+\]
+
+where $q,p$ are the low and high Bernoulli probabilities. The triple
+deletion levels are $(1,1,q)$; its low point is the sole nonselected
+contact and is a smooth negative minimum. Thus $a>1/2$ and, up to a
+constant, the divided triple dual is
+
+\[
+ g(x)=|x|^3-\frac32x^2-3a(1-a)x.
+\tag{C.15.2}\label{contact:collision-221-contact-reduction-2}
+\]
+
+The middle contact satisfies $g(c)=g(-a)$ and $g'(c)\le0$.
+The two equal-height charts in Section~\ref{contact:lower-110-contact-reduction} apply:
+
+\[
+ \begin{array}{c|c|c}
+ &a&c\\ \hline
+ \text{negative},\ 0\leq k\leq1 &1/2+k/4 &(k-1)/2\\
+ \text{positive},\ 0\leq k\leq1
+   &3(1+k)^2/[2(k^3+3k+2)] &ka.
+ \end{array}
+\tag{C.15.3}\label{contact:collision-221-contact-reduction-3}
+\]
+
+At a genuine configuration $a<1$: the common endpoint $a=c=1$ would
+put the still larger contact $b$ to the right of the positive minimum.
+The highest triple contact has $g'(b)\le 0$, so
+
+\[
+ 0<b\leq B(a):=\frac{1+\sqrt{1+4a(1-a)}}2.
+\]
+
+Use $b=w B(a)$, $0\le w\le 1$, retaining the unnecessary $b\le c$ region
+and rejecting it by the strict gap condition $h>0$.
+
+Let the triple middle mass $m$ be an independent parameter. Its low and
+high masses, and the useful contact derivatives, are
+
+\[
+ A=a+b,\quad u=a+c,\qquad
+ \ell=\frac{b-mh}{A},\qquad r=\frac{a-mu}{A},
+\tag{C.15.4}\label{contact:collision-221-contact-reduction-4}
+\]
+
+\[
+ H_c=-g'(c)=3\{a(1-a)+c-c|c|\},\qquad
+ H_b=-g'(b)=3\{a(1-a)+b-b^2\}\geq0.
+\]
+
+On the negative chart use the exact identity $H_c=u^2$. Averaging the
+dual derivative gives
+
+\[
+ \boxed{\quad \sigma=mH_c+rH_b.\quad}
+\tag{C.15.5}\label{contact:collision-221-contact-reduction-5}
+\]
+
+Thus every candidate lies in one of the two full closed four-cubes
+
+\[
+ \boxed{\quad (k,w,p,m)\in[0,1]^4.\quad}
+\tag{C.15.6}\label{contact:collision-221-contact-reduction-6}
+\]
+
+The denominator $A$ is bounded below by $1/2$ throughout these cubes,
+including extraneous boundary points. No small-gap or probability
+division is needed in this parameterization.
+
+\paragraph{Actual contact and collision-preserving support equations}
+
+Put
+
+\[
+ U=g(-a)-g(b)
+   =a^2(3/2-2a)-b^3+\frac32b^2+3a(1-a)b.
+\]
+
+The triple contact levels give
+
+\[
+ \boxed{\quad p=\tau U,\qquad U>0.\quad}
+\tag{C.15.7}\label{contact:collision-221-contact-reduction-7}
+\]
+
+For the Bernoulli law, set $k_B=h(p^2+q^2)$. Its divided derivative at
+the high support point is
+
+\[
+ f'_B(Ke)/(CK^2)=3e(k_B-1)-\sigma.
+\]
+
+\[
+ m f'_T(Kc)=p f'_B(Ke).
+\]
+
+Substitute \eqref{contact:collision-221-contact-reduction-5} and the displayed derivative. The exact necessary
+collision equation is
+
+\[
+ \boxed{\quad q mH_c-p rH_b-3pq h(1-k_B)=0.\quad}
+\tag{C.15.8}\label{contact:collision-221-contact-reduction-8}
+\]
+
+This support motion preserves the collision and uses the actual marginal masses.
+
+The Bernoulli deletion levels are $(1,\ell+m)=(1,1-r)$. Its signed second
+moment is $M_B=de(e-d)/h$, and its divided derivative everywhere is
+$3[x|x|-x-M_B]-\sigma$. Integrating between $-d,e$ gives its exact value
+difference
+
+\[
+ f_B(Ke)-f_B(-Kd)
+ =\tau\{J-\sigma h\}=-r,
+\]
+
+\[
+ J=(e-d)\{(e-d)^2-3h/2\}.
+\]
+
+Using \eqref{contact:collision-221-contact-reduction-7} clears the denominator:
+
+\[
+ \boxed{\quad p(J-\sigma h)+rU=0.\quad}
+\tag{C.15.9}\label{contact:collision-221-contact-reduction-9}
+\]
+
+\paragraph{Variance, normal comparisons, and exact bounds}
+
+Use the following dimensionless moments:
+
+\[
+ V_T=ab-muh,\qquad V_B=de,\qquad V_0=V_T+V_B,
+\]
+
+\[
+ R_T=\ell a^3+m|c|^3+r b^3,\qquad R_B=de\,k_B,
+ \qquad R_0=R_T+R_B.
+\]
+
+Normalization and \eqref{contact:collision-221-contact-reduction-7} give
+
+\[
+ K=V_0^{-1/2},\qquad z=\frac{o}{\sqrt{V_0}},\quad o=c+e,
+ \qquad C=\frac{pV_0^{3/2}}U.
+\tag{C.15.10}\label{contact:collision-221-contact-reduction-10}
+\]
+
+The definition of $K$ and \eqref{contact:collision-221-contact-reduction-5} imply the further necessary polynomial
+identity
+
+\[
+ \boxed{\quad 3(V_0-R_0)-\sigma o=0.\quad}
+\tag{C.15.11}\label{contact:collision-221-contact-reduction-11}
+\]
+
+The bounds $1/2<K<8/5$ in \eqref{eq:contact-basic-collars}
+also give the strict necessary bound
+
+\[
+ \boxed{\quad 25/64<V_0<4.\quad}
+\tag{C.15.11a}\label{contact:collision-221-contact-reduction-11a}
+\]
+
+This holds before any contact division and removes zero-variance limits.
+
+The strict ratio interval gives
+
+\[
+ (49/120)^2U^2\le p^2V_0^3<(227/500)^2U^2.
+\tag{C.15.12}\label{contact:collision-221-contact-reduction-12}
+\]
+
+These denominator-cleared tests are available even when a box's variance
+enclosure crosses zero. On boxes with a strictly positive variance
+enclosure, also impose the unsquared density and actual CDF equations
+
+\[
+ \boxed{\quad \sigma p\sqrt{V_0}-U\phi(z)=0,\quad}
+\tag{C.15.13}\label{contact:collision-221-contact-reduction-13}
+\]
+
+\[
+ \boxed{\quad (1-pr)U-pR_0-U\Phi(z)=0.\quad}
+\tag{C.15.14}\label{contact:collision-221-contact-reduction-14}
+\]
+
+The true event probability is $F=1-pr$. A simple necessary CDF positivity
+test without transcendental evaluation follows by averaging the triple
+dual, which equals one at $-a$:
+
+\[
+ \boxed{\quad U-p\{a^2(3/2-2a)+(3/2)V_T+R_B\}>0.\quad}
+\tag{C.15.15}\label{contact:collision-221-contact-reduction-15}
+\]
+
+At the maximizing pair, each marginal variance lies strictly between
+$13/200$ and $187/200$ of the total variance, by
+\eqref{eq:contact-variance-collar}. Hence
+
+\[
+ \boxed{\quad V_T>\frac{13}{200}V_0,
+                 \qquad V_B>\frac{13}{200}V_0.\quad}
+\tag{C.15.16}\label{contact:collision-221-contact-reduction-16}
+\]
+
+Finally, the triple's actual unit-variance CDF derivative is
+$L=-p/(K^2 hA)$. The first/second variance identity \eqref{contact:one-triple-bernoulli-collision-211-8} of
+Section~\ref{contact:one-triple-bernoulli-collision-211}
+applies without changing the closed event. Substitute \eqref{contact:collision-221-contact-reduction-10}, \eqref{contact:collision-221-contact-reduction-13}, and
+multiply by the positive quantity $U h A V_0/p$. The necessary
+second-order condition becomes the polynomial inequality
+
+\[
+ \boxed{\quad
+ -12V_0^2U+3R_0hAV_0+\sigma hAo(o^2+3V_0)\leq0.
+ \quad}
+\tag{C.15.17}\label{contact:collision-221-contact-reduction-17}
+\]
+The fixed certificate \texttt{collision221} proves that the two closed
+support charts above contain no point satisfying their contact equations,
+probability conditions, and necessary inequalities. Its strict-floor
+checks include $C=49/120$, as described in Section~\ref{sec:verification}.
+Thus a collision across the upper gap cannot occur at a maximizing pair.
+
+\subsection{One triple: collision across the lower gap}\label{contact:collision-210-contact-reduction}
+
+Use the contact scale: the support coordinates below are divided by $K$.
+
+
+\[
+ K=R+z\phi(z)/(3C),\quad \tau=CK^3,
+ \quad \sigma=\phi(z)/(CK^2).
+\]
+
+The bounds in \eqref{eq:contact-basic-collars} give
+
+\[
+ \boxed{\quad 1/2<K<8/5,\qquad 1/20<\tau<2.\quad}
+\tag{C.16.1}\label{contact:collision-210-contact-reduction-1}
+\]
+
+The lower bound for $\tau$ uses $C>2/5$; the upper bound uses
+$C<227/500$ and $(227/500)(8/5)^3<2$.
+
+\paragraph{Compact support charts from the zero minimum}
+
+Divide all support points by $K$ and write
+
+\[
+ T:\ -t,c,b,\qquad B:\ -d,e,
+ \quad t,b,d,e>0,\quad -t<c<b.
+\]
+
+The selected fiber is $(triple-low, Bernoulli-high)$ and
+$(triple-middle, Bernoulli-low)$, so
+
+\[
+ h=t+c=d+e,\qquad p=d/h,\quad q=e/h.
+\tag{C.16.2}\label{contact:collision-210-contact-reduction-2}
+\]
+
+The low/high Bernoulli probabilities are $q,p$; the triple deletion
+levels are $(1,q,0)$. Its high contact is nonselected and is a smooth
+positive minimum of height zero. The whole dual is nonnegative, so
+$b\ge 1$. Indeed a positive minimum with $1/2<b<1$ has a strictly lower
+negative local minimum, contradicting the nonnegative global majorant.
+
+The triple dual divided by $\tau$ is exactly
+
+\[
+ g_b(x)=|x|^3-\frac32x^2-3b(b-1)x+B_0,
+ \qquad B_0=b^2(2b-3/2).
+\tag{C.16.3}\label{contact:collision-210-contact-reduction-3}
+\]
+
+It vanishes at $b$. Put
+
+\[
+ G=g_b(-t)=t^3-\frac32t^2+3b(b-1)t+B_0,
+ \qquad G_c=g_b(c).
+\]
+
+The contact values give
+
+\[
+ \boxed{\quad \tau=1/G,\quad q=G_c/G,\quad p=1-q,
+                  \quad 1/2<G<20.\quad}
+\tag{C.16.4}\label{contact:collision-210-contact-reduction-4}
+\]
+
+The height bounds in \eqref{contact:collision-210-contact-reduction-4} follow from \eqref{contact:collision-210-contact-reduction-1}. They also bound the supports
+without using any infinite-profile radius theorem. If $b\ge 5/2$, then
+$g_b(-t)$ increases for $t\ge 0$, since its derivative is
+$3[(t-1/2)^2+b(b-1)-1/4]>0$. Hence
+$G\ge B_0\ge 175/8>20$, impossible. Since $b\ge 1$,
+
+\[
+ G\geq t^3-\frac32t^2+\frac12.
+\]
+
+For $t\ge 7/2$, the right side is increasing and is at least 25,
+also impossible. Thus
+
+\[
+ 1\leq b<5/2,\qquad 0<t<7/2.
+\tag{C.16.5}\label{contact:collision-210-contact-reduction-5}
+\]
+
+Use independent parameters $(s_b,s_t,w,m) \in [0,1]^4$ and maps
+
+\[
+ b=1+\frac32s_b,\qquad t=\frac72s_t,
+\]
+
+\[
+ c=-t(1-w)\quad\text{on the negative chart},\qquad
+ c=wb\quad\text{on the positive chart}.
+\tag{C.16.6}\label{contact:collision-210-contact-reduction-6}
+\]
+
+Here $m$ is the triple middle mass. Both closed cubes are retained,
+including all extra boundary points and the shared $c=0$ face.
+
+Let $A=t+b$, $v=b-c$. Centering determines
+
+\[
+ \ell=\frac{b-mv}{A},\qquad r=\frac{t-mh}{A}.
+\tag{C.16.7}\label{contact:collision-210-contact-reduction-7}
+\]
+
+The denominator $A\ge 1$ throughout the whole parameter domain.
+
+\paragraph{Exact collision and Bernoulli contact equations}
+
+Define the nonnegative selected-contact slopes
+
+\[
+ H_\ell=3\{t^2-t+b(b-1)\},\qquad
+ H_m=3\{b(b-1)+c-c|c|\}.
+\]
+
+Averaging the triple dual derivative gives
+
+\[
+ \boxed{\quad \sigma=\ell H_\ell+mH_m>0.\quad}
+\tag{C.16.8}\label{contact:collision-210-contact-reduction-8}
+\]
+
+Set $d=ph$, $e=qh$, and $k_B=h(p^2+q^2)$. Move the raw low triple
+point and the raw high Bernoulli point by opposite amounts, holding
+all other raw support points and all probabilities fixed. Both selected
+raw sums and the closed event stay fixed. Recenter the same two
+marginals and move the threshold by their total mean shift. The
+two-sided ratio derivative gives
+
+\[
+ \ell f'_T(-Kt)=p f'_B(Ke).
+\]
+
+Using the Bernoulli derivative
+$f'_B(Ke)/(CK^2)=3e(k_B-1)-\sigma$ and \eqref{contact:collision-210-contact-reduction-8}, this is
+
+\[
+ \boxed{\quad q\ell H_\ell-pmH_m-3pq h(1-k_B)=0.\quad}
+\tag{C.16.9}\label{contact:collision-210-contact-reduction-9}
+\]
+
+The Bernoulli deletion levels are $(\ell+m,\ell)$. Integrating its divided
+derivative, as in the collided $221$ reduction, gives
+
+\[
+ \tau\{J-\sigma h\}=-m,\qquad
+ J=(e-d)\{(e-d)^2-3h/2\}.
+\]
+
+Since $\tau=1/G$, its denominator-cleared contact equation is
+
+\[
+ \boxed{\quad J-\sigma h+mG=0.\quad}
+\tag{C.16.10}\label{contact:collision-210-contact-reduction-10}
+\]
+
+\paragraph{Normalization, actual CDF, and second-order constraints}
+
+Write the dimensionless variance and sum of third absolute moments as
+
+\[
+ V_T=tb-mhv,\quad V_B=de,\quad V_0=V_T+V_B,
+\]
+
+\[
+ R_T=\ell t^3+m|c|^3+r b^3,\quad R_B=de\,k_B,
+ \quad R_0=R_T+R_B.
+\]
+
+Then
+
+\[
+ K=V_0^{-1/2},\qquad C=V_0^{3/2}/G,\qquad
+ o=c-d,\qquad z=o/\sqrt{V_0}.
+\]
+
+The definition of $K$ gives the necessary polynomial identity
+
+\[
+ \boxed{\quad 3(V_0-R_0)-\sigma o=0.\quad}
+\tag{C.16.11}\label{contact:collision-210-contact-reduction-11}
+\]
+
+The compact bounds and ratio interval imply
+
+\[
+ 25/64<V_0<4,\qquad
+ (49/120)^2G^2\le V_0^3<(227/500)^2G^2.
+\tag{C.16.12}\label{contact:collision-210-contact-reduction-12}
+\]
+
+At the maximizing pair, each marginal variance lies strictly between
+$13/200$ and $187/200$ of the total variance, by
+\eqref{eq:contact-variance-collar}. Hence
+
+\[
+ V_T>\frac{13}{200}V_0,\qquad
+ V_B>\frac{13}{200}V_0.
+\tag{C.16.13}\label{contact:collision-210-contact-reduction-13}
+\]
+
+The actual event probability is $F=\ell+mq$. The density and CDF equations
+are
+
+\[
+ \boxed{\quad \sigma\sqrt{V_0}-G\phi(z)=0,\quad}
+\tag{C.16.14}\label{contact:collision-210-contact-reduction-14}
+\]
+
+\[
+ \boxed{\quad G\{\ell+mq-\Phi(z)\}-R_0=0.\quad}
+\tag{C.16.15}\label{contact:collision-210-contact-reduction-15}
+\]
+
+Averaging the zero-minimum triple dual \eqref{contact:collision-210-contact-reduction-3} also supplies the necessary
+positivity test
+
+\[
+ \boxed{\quad B_0-\frac32V_T-R_B>0.\quad}
+\tag{C.16.16}\label{contact:collision-210-contact-reduction-16}
+\]
+
+For the triple's centered unit-variance direction, the actual CDF
+derivative at the fixed closed event is
+
+\[
+ L=\frac{(pA-h)V_0}{Ahv}.
+\]
+
+Combine its first and second variance derivatives and use \eqref{contact:collision-210-contact-reduction-14}. After
+multiplication by the positive factor $G A h v V_0$, the necessary
+second-order condition is
+
+\[
+ \boxed{\quad
+ 12(pA-h)GV_0^2+3R_0AhvV_0
+       +\sigma Ahv\,o(o^2+3V_0)\leq0.
+ \quad}
+\tag{C.16.17}\label{contact:collision-210-contact-reduction-17}
+\]
+
+All probabilities in these formulas are the actual marginal probabilities;
+they have not been relaxed to independent deletion-CDF parameters.
+\subsection{Lower-gap collision: elimination of the middle mass}\label{contact:collision-210-mass-elimination}
+Continue with the supports divided by $K$ in Section~\ref{contact:collision-210-contact-reduction}.
+
+
+
+\paragraph{A positive affine coefficient}
+
+Retain the previous notation
+
+\[
+ A=t+b,\quad h=t+c,\quad v=b-c,\quad
+ \ell=(b-mv)/A,\quad r=(t-mh)/A,
+\]
+
+with $H_t,H_m\ge 0$, $\sigma=\ell H_t+m H_m>0$, and Bernoulli probabilities
+$q,p>0$. The collision support equation is
+
+\[
+ q\ell H_t-pmH_m-3pq h\{1-h(p^2+q^2)\}=0.
+\]
+
+Substitution of $\ell$ makes it affine in $m$, and gives exactly
+
+\[
+ \boxed{
+ m=\frac{q b H_t-3A p q h\{1-h(p^2+q^2)\}}
+           {qvH_t+A pH_m}.}
+\tag{C.17.1}\label{contact:collision-210-mass-elimination-1}
+\]
+
+The denominator $L=qvH_t+A pH_m$ is strictly positive: every coefficient
+is positive, both slopes are nonnegative, and $\sigma>0$ excludes their
+simultaneous vanishing. Thus there is no additional zero-denominator
+collision case to retain.
+
+Let $N=G_c$, $P=G-G_c$, $W=P^2+N^2$, so $q=N/G$, $p=P/G$. Define
+
+\[
+ \Delta=G^3(NvH_t+A PH_m)=G^4 L,
+\]
+\[
+ M=N bH_tG^3-3A PN hG^2+3A PN h^2W.
+\tag{C.17.2}\label{contact:collision-210-mass-elimination-2}
+\]
+
+Then $m=M/\Delta$. The four natural mass conditions become polynomial:
+
+\[
+ M>0,\quad\Delta-M>0,\quad
+ b\Delta-vM>0,\quad t\Delta-hM>0.
+\tag{C.17.3}\label{contact:collision-210-mass-elimination-3}
+\]
+
+\paragraph{A uniform positive denominator bound}
+
+The canonical mixture-width theorem applies to this triple and its
+Bernoulli partner without an optimality assumption. Consequently every
+violating candidate in this system must satisfy
+
+\[
+ \min\{bh,tv\}>V/3>25/192.
+\tag{C.17.4}\label{contact:collision-210-mass-elimination-4}
+\]
+
+The Bernoulli variance bound gives
+
+\[
+ pq h^2>\frac{13}{200}V>\frac{13}{512}.
+\]
+
+As $h<A=t+b<6$, this yields
+$p,q>pq>13/18432$. Moreover $A\ge 1$.
+
+There is also a uniform selected-slope bound. With normalized variance
+one, $D=C R_{\mathrm{normalized}}>49/(120 \sqrt{2})>1/5$. Cantelli's inequality gives
+$|z|<2$: for $z\le -2$, the actual CDF is at most $1/5$; for $z\ge 2$, the
+normal upper tail is at most $1/5$. Either would contradict $D>1/5$.
+The elementary estimates $\pi<22/7$ and $e<11/4$ imply
+
+\[
+ 2\pi e^4<\frac{44}{7}\left(\frac{11}{4}\right)^4<400,
+ \qquad\phi(2)>1/20.
+\]
+
+Therefore the actual density equation, $\sigma \sqrt{V}=G \phi(z)$, and
+$G>1/2$, $\sqrt{V}<2$ give $\sigma>1/80$.
+Since $\ell,m<1$, one has $H_t+H_m\ge \sigma$, and hence
+
+\[
+ L>\frac{13}{18432}\frac{25}{672}\frac1{80}.
+\]
+
+Multiplication by $G^4>1/16$ proves the explicit bound
+
+\[
+ \boxed{\Delta>\frac{65}{3170893824}>\frac1{50000000}.}
+\tag{C.17.5}\label{contact:collision-210-mass-elimination-5}
+\]
+
+The final comparison has exact numerator slack
+$65\,50000000-3170893824=79106176$. Thus the eliminated mass is a smooth
+rational function on an open neighborhood of every candidate in the
+compact support charts. In interval arithmetic, \eqref{contact:collision-210-mass-elimination-5} is only a necessary
+test; division is permitted only if the direct enclosure of $\Delta$ is
+positive on the whole current box.
+
+\paragraph{The two three-parameter support charts}
+
+Delete the independent mass variable from the two charts. For
+$(s_b,s_t,w) \in [0,1]^3$, set
+
+\[
+ b=1+3s_b/2,\qquad t=7s_t/2,
+\]
+
+and take $c=-t(1-w)$ on the negative chart or $c=wb$ on the positive chart.
+Compute $m$ by \eqref{contact:collision-210-mass-elimination-1} or \eqref{contact:collision-210-mass-elimination-2} and retain all genuine-support, probability,
+height, slope, ratio, variance, width and global-dual constraints. Every
+original candidate has a preimage in one of these two closed three-cubes;
+the shared $c=0$ face remains covered. Conversely, any candidate satisfying
+the retained tests and four remaining equations satisfies the eliminated
+support equation identically. This statement only identifies necessary
+systems; it does not assert that every solution is a maximizing law.
+
+\paragraph{Four explicit equations without an independent mass variable}
+
+The following formulas permit denominator-free evaluation before any
+normal function. Define
+
+\[
+ L_*=b\Delta-vM,\quad H_*=t\Delta-hM,
+ \quad S_*=L_*H_t+A MH_m,
+ \quad O=cN-tP,
+\]
+\[
+ V_*=(tb\Delta-Mhv)G^2+\Delta PN h^2,
+\]
+\[
+ R_*=(L_*t^3+A M|c|^3+H_*b^3)G^4
+                 +A\Delta PN h^3W,
+\quad F_*=GL_*+A MN.
+\]
+
+Then the actual quantities are
+
+\[
+ V=\frac{V_*}{\Delta G^2},\quad
+ R=\frac{R_*}{A\Delta G^4},\quad
+ \sigma=\frac{S_*}{A\Delta},\quad
+ F=\frac{F_*}{A\Delta G},\quad
+ z=O\sqrt{\Delta/V_*}.
+\tag{C.17.6}\label{contact:collision-210-mass-elimination-6}
+\]
+
+The retained Bernoulli height, scale, squared density and CDF equations
+are, respectively,
+
+\[
+ A\Delta h(N-P)\{h^2(N-P)^2-3hG^2/2\}
+                  -S_*hG^3+A MG^4=0,
+\]
+\[
+ 3(AG^2V_*-R_*)-S_*OG^3=0,
+\]
+\[
+ S_*^2V_*-A^2\Delta^3G^4\phi(z)^2=0,
+\]
+\[
+ G^4\{F_*-A\Delta G\Phi(z)\}-R_*=0.
+\tag{C.17.7}\label{contact:collision-210-mass-elimination-7}
+\]
+
+Each clearing factor is positive at every candidate. In particular the
+two equations preceding the normal functions are exact polynomial
+equations in the three support parameters on either sign chart. No
+resultant or Groebner calculation is needed for this dimension reduction.
+
+The ratio test is
+$(49/120)^2 \Delta^3 G^8\le V_*^3<(227/500)^2 \Delta^3 G^8$.
+The added width tests are
+$3bh \Delta G^2>V_*$ and $3tv \Delta G^2>V_*$.
+\subsection{Lower-gap collision: direct necessary equations}\label{contact:collision-210-raw-law-replay}
+Use the contact scale of Section~\ref{contact:collision-210-contact-reduction}.
+
+
+
+\paragraph{Independent law coordinates}
+
+Write the centered triple supports $(-t,c,b)$, set $A=t+b$, $h=t+c$,
+$v=b-c$, and use its variance $W=V_T$ as the mass coordinate. Exact
+centering gives
+
+\[
+ \ell={W+bc\over Ah},\qquad m={tb-W\over hv},
+ \qquad r={W-tc\over Av}. \tag{C.18.1}\label{contact:collision-210-raw-law-replay-1}
+\]
+
+These formulas are intersected with normalization, the direct second
+moment, and the usual middle-mass expression $W=tb-mhv$.
+For the Bernoulli, low/high probabilities are $q,p$, supports are
+$(-d,e)$, and $d=ph$, $e=qh$. Its third absolute moment is evaluated as
+
+\[
+ V_B=de,\qquad R_B=V_B\left(h-{2V_B\over h}\right),
+ \qquad h/2\le h-2V_B/h\le h. \tag{C.18.2}\label{contact:collision-210-raw-law-replay-2}
+\]
+
+\[
+ R_*={tb(t^2+b^2)\over A},\qquad M_*={tb(b-t)\over A},
+\]
+
+the exact moments are
+
+\[
+ R_T=R_*+\gamma(W-tb),\qquad
+ \E[T|T|]=M_*+\eta(W-tb). \tag{C.18.3}\label{contact:collision-210-raw-law-replay-3}
+\]
+
+The direct three-term sum of third absolute moments is also intersected. The bounds
+$A/2\le \gamma\le 2A$ and $-1\le \eta\le 1$ are the established divided-
+difference bounds. All adjacent and outer gap divisions are performed
+separately with their positive candidate bounds; a product enclosure that
+straddles zero is never inverted.
+
+\paragraph{Dual contacts and support pairings}
+
+The triple majorant is evaluated using the factorization
+
+\[
+ g_b(x)=(x-b)^2(x+2b-3/2)+2(-x)_+^3. \tag{C.18.4}\label{contact:collision-210-raw-law-replay-4}
+\]
+
+Thus $G=g_b(-t)$, $q=g_b(c)/G$, and $p=1-q$. A differently arranged
+expanded value of $G$ is also intersected. The high minimum gives
+
+\[
+ \sigma=3\{b(b-1)-\E[T|T|]\}=\ell H_t+mH_m,
+\]
+
+where $H_t=3(t^2-t+b(b-1))$ and
+$H_m=3(b(b-1)+c-c|c|)$ are nonnegative. Put
+
+\[
+ Q=3pq h\{1-h(p^2+q^2)\}.
+\]
+
+The two collision-preserving derivative pairings are evaluated as
+
+\[
+ \ell H_t=p\sigma+Q,\qquad mH_m=q\sigma-Q. \tag{C.18.5}\label{contact:collision-210-raw-law-replay-5}
+\]
+
+The Bernoulli height equation is
+
+\[
+ mG=\sigma h-(e-d)\{(e-d)^2-3h/2\}. \tag{C.18.6}\label{contact:collision-210-raw-law-replay-6}
+\]
+
+\paragraph{Normalization and inverse identities}
+
+The independently stored values satisfy the contact equations
+
+\[
+ C=V^{3/2}/G,\quad D=R/G=F-\Phi(z),\quad
+ \sigma\sqrt V=G\phi(z),\quad 3(V-R)=\sigma o,
+ \quad o=c-d=e-t=z\sqrt V. \tag{C.18.7}\label{contact:collision-210-raw-law-replay-7}
+\]
+
+They are evaluated both forward and backward, including
+$V=(CG)^{2/3}$, $\sqrt{V}=G \phi/\sigma$, and the exact inverse density
+
+\[
+ z^2=-\log(2\pi\phi(z)^2). \tag{C.18.8}\label{contact:collision-210-raw-law-replay-8}
+\]
+
+Equation \eqref{contact:collision-210-raw-law-replay-8} has a known negative square-root branch on the negative chart. On the positive chart a branch is used only when the
+current candidate interval has proved its sign; otherwise its symmetric
+hull is retained. A nonnegative interval for $z^2$ is intersected before
+taking a square root. The CDF is evaluated through the error function.
+
+The following bounds hold at every candidate:
+$49/120\le C\le 227/500$, $49/(120 \sqrt{2})\le D\le 11/20$,
+$-5/4\le z\le 3/5$, $\phi\ge 9/50$,
+$V\ge 2401/5476$ (or $2401/4356$ on the negative chart), and $V\le 4$.
+It also uses the established coordinate variance fraction bounds
+$13V/200\le V_i\le 187V/200$ and H\"older third-moment bounds. References are
+Section~\ref{contact:fixed-c2-threshold-collar},
+Section~\ref{contact:fixed-c2-contact-scale-collar}, and
+Section~\ref{contact:collision-210-mass-elimination}.
+Strict bounds are relaxed to closed bounds for enclosure.
+
+The canonical mixture-width inequalities $3bh>V$, $3tv>V$ are also used
+backward to obtain necessary bounds on each positive factor. The elementary
+Bernoulli bound $h\ge 2 \sqrt{V_B}$ is included. Initial gap and probability
+floors are exactly the proved floors: $h\ge \sqrt{13/128}$,
+$v\ge 25/672$, $p,q\ge 13/18432$, and $t\ge 13/1280$.
+The fixed certificate \texttt{collision210} proves that no point of
+either closed support chart satisfies the necessary conditions in
+Sections~\ref{contact:collision-210-contact-reduction}--\ref{contact:collision-210-raw-law-replay}.
+The enclosure and partition rules are given in Section~\ref{sec:verification}.
+This excludes the lower-gap collision.
+
+\subsection{Two triples: asymmetric events with a unique representation}\label{contact:two-triple-asymmetric-exclusion}
+
+
+
+Normalize total variance to one and use the dimensionless coordinates of
+Section~\ref{contact:two-triple-rectangle-exclusion}. Thus the two coordinate supports are $K(-a_i,c_i,b_i)$, with
+
+\[
+ \frac12<a_i<1<b_i,\qquad a_i^2+b_i^2=a_i+b_i,
+ \qquad h_i=a_i+b_i,
+\]
+
+and the two nonselected minima have height difference
+
+\[
+ C K^3D(a_i),\qquad
+ D(a)=\frac12(b-a)(a^2+4ab+b^2).
+\]
+
+The decreasing deletion CDF gives these same strict inequalities for
+$a_i,b_i$ in $221$ and $320$, because the two nonselected contact levels
+are distinct. Along the curve $a^2+b^2=a+b$,
+
+\[
+ D'(a)=-3(2a-1)(a+b)<0,
+ \qquad
+ h'(a)=\frac{2(b-a)}{2b-1}>0.
+\tag{C.19.1}\label{contact:two-triple-asymmetric-exclusion-1}
+\]
+
+For shape $221$, the first coordinate's three deletion-CDF values are
+$q_2,q_2,l_2$, where $l_2$ is the lowest mass, $m_2$ the middle mass,
+and $q_2=l_2+m_2$. The second coordinate's three values are
+$1,q_1,0$. Therefore
+
+\[
+ C K^3D(a_1)=m_2<1=C K^3D(a_2).
+\]
+
+Equation \eqref{contact:two-triple-asymmetric-exclusion-1} forces $a_1>a_2$ and hence $h_1>h_2$.
+
+On the other hand, the selected representation is middle-middle. The high-low
+corner is included, and the low-high corner is excluded. The unique threshold representation
+makes both relevant comparisons strict:
+
+\[
+ b_1-a_2<c_1+c_2<-a_1+b_2.
+\]
+
+With $u_i=a_i+c_i$, these are exactly
+
+\[
+ h_1<u_1+u_2<h_2,
+\]
+
+contradicting $h_1>h_2$. Interchanging the two coordinates transposes
+$221$ to $320$, so that shape is excluded as well.
+\subsection{Two triples: triangular event with a unique representation}\label{contact:two-triple-triangle-exclusion}
+
+
+\paragraph{Contact geometry and notation}
+
+Normalize total variance to one. Write the discrepancy as $D=C R$, the
+selected threshold as $z$, and put
+
+\[
+ K=\frac{2A}{3C}=R+\frac{z\phi(z)}{3C}.
+\]
+
+The full-law cubic contacts from
+Proposition~\ref{prop:finite-contact-exclusion}
+give supports $K(-a_i,c_i,b_i)$, with the selected point in the middle
+of each coordinate. The two nonselected points are smooth minima.
+In shape $321$ their deletion-CDF values are $1$ and the other
+coordinate's lowest mass, so the minimum-height difference is positive.
+Consequently
+
+\[
+ \frac12<a_i<1<b_i,\qquad
+ a_i^2+b_i^2=a_i+b_i=:h_i\leq2.
+\tag{C.20.1}\label{contact:two-triple-triangle-exclusion-1}
+\]
+
+Define $u_i=a_i+c_i$ and $v_i=b_i-c_i$. The two cross corners are
+strictly below the selected middle-middle sum. Thus
+
+\[
+ v_1<u_2,\qquad v_2<u_1,
+ \qquad
+ c_1+c_2>\max\{b_1-a_2,b_2-a_1\}>0.
+\tag{C.20.2}\label{contact:two-triple-triangle-exclusion-2}
+\]
+
+In particular $z=K(c_1+c_2)>0$ and $K>0$. Let $l_i,m_i,r_i$
+denote the lowest, middle, and highest masses, and put $p_i=m_i+r_i$.
+The actual selected event probability and its complement are
+
+\[
+ F=1-p_1p_2+m_1m_2,\qquad
+ P_{\rm out}=r_1p_2+r_2p_1-r_1r_2.
+\tag{C.20.3}\label{contact:two-triple-triangle-exclusion-3}
+\]
+
+\paragraph{A divided-difference inequality on the actual triangle}
+
+For a pair $a,b$ satisfying \eqref{contact:two-triple-triangle-exclusion-1}, let
+
+\[
+ d_a(c)=[-a,c,b]|x|^3.
+\]
+
+The divided-difference convention is $[x_0,x_1,x_2]x^2=1$.
+Direct interpolation gives
+
+\[
+ d_a(c)=
+ \begin{cases}
+ b+c-a+\dfrac{2a^3}{(a+b)(a+c)},&c\geq0,\\[4pt]
+ a-b-c+\dfrac{2b^3}{(a+b)(b-c)},&c\leq0.
+ \end{cases}
+\tag{C.20.4}\label{contact:two-triple-triangle-exclusion-4}
+\]
+
+This is a strictly convex function of $c$ on $(-a,b)$, with
+
+\[
+ d_a(0)=1,\qquad d_a'(0)=\frac{b-a}{a+b}>0.
+\tag{C.20.5}\label{contact:two-triple-triangle-exclusion-5}
+\]
+
+We prove that \eqref{contact:two-triple-triangle-exclusion-2} implies
+
+\[
+ \boxed{\quad d_{a_1}(c_1)+d_{a_2}(c_2)>2.\quad}
+\tag{C.20.6}\label{contact:two-triple-triangle-exclusion-6}
+\]
+
+Relabel so $a_1\le a_2$. Then $b_1\ge b_2$, $h_1\le h_2$, and the
+slopes $k_i=(b_i-a_i)/h_i$ satisfy $k_1\ge k_2$. Put
+$z_0=b_2-a_1>0$. We need one derivative comparison:
+
+\[
+ d_{a_2}'(z_0)\geq k_1.
+\tag{C.20.7}\label{contact:two-triple-triangle-exclusion-7}
+\]
+
+By \eqref{contact:two-triple-triangle-exclusion-4}, this is equivalent to
+
+\[
+ a_2^3h_1\leq a_1h_2(h_2-a_1)^2.
+\]
+
+Use $h_1\le 2$ and $h_2\ge a_2+1$. With $a=a_1$, $b=a_2$, it is
+sufficient that
+
+\[
+ a(b+1)(b+1-a)^2\geq2b^3,
+ \qquad 1/2\leq a\leq b\leq1.
+\tag{C.20.8}\label{contact:two-triple-triangle-exclusion-8}
+\]
+
+For fixed $b$, the function $a(b+1-a)^2$ has at most one interior
+critical point, a maximum. Its minimum on $[1/2,b]$ is at an endpoint.
+At $a=b$, \eqref{contact:two-triple-triangle-exclusion-8} follows from $b+1\ge 2b^2$. At $a=1/2$, it follows from
+
+\[
+ (b+1)(b+1/2)^2-4b^3
+ =\frac12+(1-b)(3b^2+b-1/4)>0.
+\]
+
+This proves \eqref{contact:two-triple-triangle-exclusion-7}.
+
+If both middle points are nonnegative, \eqref{contact:two-triple-triangle-exclusion-6} follows immediately from
+\eqref{contact:two-triple-triangle-exclusion-5}, since their sum is positive. If $c_1<0$, then \eqref{contact:two-triple-triangle-exclusion-2} gives
+$c_2>z_0-c_1$. Along $s$ from $c_1$ to zero, strict convexity and
+\eqref{contact:two-triple-triangle-exclusion-7} give
+
+\[
+ \frac{d}{ds}\{d_{a_1}(s)+d_{a_2}(z_0-s)\}
+ \leq k_1-d_{a_2}'(z_0)\leq0.
+\]
+
+The sum is therefore at least $1+d_{a_2}(z_0)>2$. The replacement
+argument stays within the middle-knot intervals because
+$z_0-c_1<c_2<b_2$. If $c_2<0$, the same argument uses
+$d_{a_1}'(z_0)\ge k_1\ge k_2$. This proves \eqref{contact:two-triple-triangle-exclusion-6}, including mixed signs.
+
+\paragraph{The actual probability Hessian forces K>1}
+
+Use the centered unit-variance signed probability directions on the two
+three-point supports displayed in Proposition~\ref{prop:finite-contact-exclusion}. Their third-moment
+derivatives are
+
+\[
+ \gamma_i=K d_{a_i}(c_i).
+\]
+
+For their two perturbation parameters $s,t$, the total variance is
+$1+s+t$, the sum of third absolute moments is $R+\gamma_1 s+\gamma_2 t$, and the selected CDF
+is $F+f_1s+f_2t+g st$. Both signs of each sufficiently small parameter
+are admissible. At the maximizing ratio, differentiate
+
+\[
+ J(s,t)=(1+s+t)^{3/2}
+ \{F(s,t)-\Phi(z/\sqrt{1+s+t})\}
+ -C(R+\gamma_1s+\gamma_2t).
+\]
+
+It has a local maximum zero. First stationarity and direct second
+differentiation give its Hessian entries
+
+\[
+ J_{ii}=3C\gamma_i-B_*=-b_i^*,\qquad
+ J_{12}=g-\frac{b_1^*+b_2^*}{2},
+\]
+
+\[
+ B_*=(15CR+\phi'''(z))/4,\qquad b_i^*=B_*-3C\gamma_i\geq0.
+\tag{C.20.9}\label{contact:two-triple-triangle-exclusion-9}
+\]
+
+This is the two-coordinate extension of
+Section~\ref{contact:three-point-variance-curvature}.
+Negative semidefiniteness implies
+
+\[
+ g\leq\frac{b_1^*+b_2^*}{2}+\sqrt{b_1^*b_2^*}
+ \leq b_1^*+b_2^*.
+\tag{C.20.10}\label{contact:two-triple-triangle-exclusion-10}
+\]
+
+The actual $321$ grid gives, exactly,
+
+\[
+ g=\frac{1-v_1v_2/(h_1h_2)}{K^4u_1v_1u_2v_2}
+   >\frac3{4K^4}.
+\tag{C.20.11}\label{contact:two-triple-triangle-exclusion-11}
+\]
+
+Indeed \eqref{contact:two-triple-triangle-exclusion-2} gives $h_1h_2>(v_1+v_2)^2\ge 4v_1v_2$, and
+$u_iv_i\le h_i^2/4\le 1$.
+
+Since $CR=CK-z \phi(z)/3$ and $\phi'''(z)=(3z-z^3)\phi(z)$, equations
+\eqref{contact:two-triple-triangle-exclusion-6}, \eqref{contact:two-triple-triangle-exclusion-9}--\eqref{contact:two-triple-triangle-exclusion-11} yield
+
+\[
+ \frac3{4K^4}
+ <\frac32CK-\frac12z(z^2+2)\phi(z).
+\tag{C.20.12}\label{contact:two-triple-triangle-exclusion-12}
+\]
+
+Put $N(z)=\Phi(z)-z \phi(z)/3$. It is strictly increasing and exceeds
+$1/2$ for positive $z$. The ratio identity is $CK=F-N(z)$, so $CK<1/2$.
+Equation \eqref{contact:two-triple-triangle-exclusion-12} now implies
+
+\[
+ \boxed{\quad K>1,\qquad K<1/(2C).\quad}
+\tag{C.20.13}\label{contact:two-triple-triangle-exclusion-13}
+\]
+
+\paragraph{The Hessian also forces z<1/4}
+
+Let
+
+\[
+ L(z)=1-N(z)=Q(z)+z\phi(z)/3,
+ \qquad
+ A_*(z)=\frac32Q(z)-\frac12z(z^2+1)\phi(z).
+\]
+
+We have $CK<L(z)$. Equation \eqref{contact:two-triple-triangle-exclusion-12}, and $C\ge49/120$, imply
+
+\[
+ \frac34<K^4A_*(z)
+       <\left(\frac{L(z)}{49/120}\right)^4A_*(z).
+\tag{C.20.14}\label{contact:two-triple-triangle-exclusion-14}
+\]
+
+The middle expression must be positive, so \eqref{contact:two-triple-triangle-exclusion-14} is only used when
+$A_*(z)>0$. First, $z<1$: the moment inequality $R\ge 1/\sqrt{2}$ gives
+$CR>1/4$, whereas $Q(1)<\phi(1)<1/4$. A threshold $z\ge 1$ would thus
+contradict $CR=F-\Phi(z)\le Q(z)$.
+
+On $[0,1]$, both $L$ and $A_*$ strictly decrease, since
+
+\[
+ L'(z)=-(2+z^2)\phi(z)/3,
+ \qquad
+ A_*'(z)=-(2+z^2-z^4/2)\phi(z).
+\]
+
+At $z=1/4$, use $Q(z)\le 1/2-z \phi(z)$ and $\phi(1/4)>3/8$ to get
+
+\[
+ L(1/4)<7/16,
+ \qquad A_*(1/4)<573/1024.
+\]
+
+If $z\ge 1/4$, \eqref{contact:two-triple-triangle-exclusion-14} would consequently give
+
+\[
+ \frac34<\left(\frac{15}{14}\right)^4\frac{573}{1024}<\frac34,
+\]
+
+a contradiction. The exact slack in the last comparison is
+$495363/39337984$. We have proved
+
+\[
+ \boxed{\quad0<z<1/4.\quad}
+\tag{C.20.15}\label{contact:two-triple-triangle-exclusion-15}
+\]
+
+The Gaussian comparisons are elementary: $\phi(0)>39/100$ and
+$\exp(-1/32)>31/32$ give $\phi(1/4)>3/8$; also $\pi e>8$ gives
+$\phi(1)<1/4$.
+
+\paragraph{The necessary outside probability is too large}
+
+By \eqref{contact:two-triple-triangle-exclusion-2}, \eqref{contact:two-triple-triangle-exclusion-13}, and \eqref{contact:two-triple-triangle-exclusion-15},
+
+\[
+ b_j-a_i<c_1+c_2=z/K<1/4.
+\]
+
+Since $b_j>1$, this forces $a_i>3/4$ for each coordinate. Its selected
+middle point also has $c_i>0$. Indeed its contact value is strictly less
+than the left-minimum value one, whereas for $c\le 0$ the exact negative
+branch difference is
+
+\[
+ f(Kc)-f(-Ka)=CK^3(c+a)^2(2a-3/2-c)>0
+ \quad(a>3/4).
+\]
+
+Centering and the variance identity give
+
+\[
+ p_i=\frac{a_i+m_iv_i}{h_i}>\frac{a_i}{h_i}>\frac{39}{100},
+ \qquad
+ \operatorname{Var}(X_i)/K^2=a_ic_i+r_i h_iv_i.
+\tag{C.20.16}\label{contact:two-triple-triangle-exclusion-16}
+\]
+
+For the first estimate, $a_i>3/4$ and
+$b_i<(2+\sqrt{7})/4<7/6$ give $a_i/h_i>9/23>39/100$.
+Moreover
+
+\[
+ h_iv_i<h_ib_i\leq\frac{17+7\sqrt7}{16}<\frac94.
+\tag{C.20.17}\label{contact:two-triple-triangle-exclusion-17}
+\]
+
+To check the middle bound, differentiating along \eqref{contact:two-triple-triangle-exclusion-1} gives
+$(h b)'=h(3-4a)/(2b-1)\le 0$ for $a\ge 3/4$.
+
+Let $r=r_1+r_2$. From \eqref{contact:two-triple-triangle-exclusion-13}, \eqref{contact:two-triple-triangle-exclusion-16}--\eqref{contact:two-triple-triangle-exclusion-17}, $a_i<1$, and $c_i>0$,
+
+\[
+ \frac94r>
+ \frac1{K^2}-\sum_i a_ic_i
+ >\left(\frac{49}{60}\right)^2-z.
+\]
+
+Hence
+
+\[
+ r>r_0-4z/9=:r_*(z),\qquad r_0=\frac{2401}{8100}<3/10.
+\tag{C.20.18}\label{contact:two-triple-triangle-exclusion-18}
+\]
+
+Also $0<r<1$, because $r_i<a_i/h_i<1/2$. Equation \eqref{contact:two-triple-triangle-exclusion-3}, \eqref{contact:two-triple-triangle-exclusion-16}, and
+$r_1r_2\le r^2/4$ now imply
+
+\[
+ P_{\rm out}>f(r):=\frac{39}{100}r-r^2/4\geq f(r_*(z)).
+\tag{C.20.19}\label{contact:two-triple-triangle-exclusion-19}
+\]
+
+For the last inequality, $f$ is concave, so its minimum on
+$[r_*(z),1]$ is at an endpoint. The second endpoint has
+$f(1)=7/50$, whereas $f(r_*(z))<(39/100)(3/10)<7/50$.
+
+On the other hand, $\phi(z)>3/8$ gives
+$N(z)\ge 1/2+(2/3)z \phi(z)>1/2+z/4$. The ratio identity and \eqref{contact:two-triple-triangle-exclusion-13} give
+
+\[
+ P_{\rm out}=1-N(z)-CK<\frac{11}{120}-\frac{z}{4}.
+\tag{C.20.20}\label{contact:two-triple-triangle-exclusion-20}
+\]
+
+Equations \eqref{contact:two-triple-triangle-exclusion-19}--\eqref{contact:two-triple-triangle-exclusion-20} are incompatible. At zero their required gap is
+exactly
+
+\[
+ f(r_0)-\frac{11}{120}=\frac{103447}{52488000}>0.
+\]
+
+For $0\le z\le 1/4$, the derivative of
+$f(r_0-4z/9)-(11/120-z/4)$ is at least
+$1/4-(4/9)(39/100)=23/300>0$. The gap therefore stays positive.
+This is the final contradiction and proves the $321$ exclusion.
+\subsection{Two triples: upper collisions}\label{contact:two-triple-collision-322-exclusion}
+Normalize the total variance to one; factors of $K$ in the supports are displayed explicitly below.
+
+
+
+
+\[
+ K=R+z\phi(z)/(3C)>0,\qquad \phi_0=\phi(0).
+\]
+
+For shape $322$, the maximal included cells are exactly $(0,2)$ and
+$(2,1)$. A genuine collision at the selected threshold therefore has
+precisely these two representations. Let the second coordinate's high
+atom have mass $r_2>0$, and put $q=1-r_2$.
+
+\paragraph{The first triple forces a substantially negative threshold}
+
+The first coordinate's deletion levels are $(1,q,q)$. If its successive
+physical support gaps are $u,v>0$, its actual centered unit-variance
+CDF derivative is
+
+\[
+ L=\frac{r_2}{u(u+v)}>0.
+\]
+
+The first and second variance derivatives are valid at collisions because
+the support and closed threshold are fixed. Their elimination, derived
+directly in
+Section~\ref{contact:one-triple-bernoulli-collision-211},
+gives
+
+\[
+ 12L+3CR+(z^3+3z)\phi(z)\leq0.
+\]
+
+Consequently $z=-s<0$, and substitution of $CR=CK+s \phi(s)/3$ yields
+
+\[
+ 12L+3CK\leq s(s^2+2)\phi(s)\leq2s\phi_0.
+\tag{C.21.1}\label{contact:two-triple-collision-322-exclusion-1}
+\]
+
+The last inequality follows by differentiating $(s^2+2)\phi(s)$.
+
+\paragraph{The second triple's equal-level contact prevents that threshold}
+
+The second coordinate's deletion levels are $(1,1,\ell_1)$, where $\ell_1$
+is the positive low mass of the first triple. Its low support point is
+nonselected, hence a smooth negative minimum of the global cubic dual.
+Write its first two support points as $-Ka,Kc$.
+
+The contact at $Kc$ has the same value as the negative minimum, and its
+derivative is nonpositive. Therefore the elementary equal-level cubic
+calculation gives
+
+\[
+ c\geq-1/2.
+\tag{C.21.2}\label{contact:two-triple-collision-322-exclusion-2}
+\]
+
+For clarity, if $c\le 0$, factor the negative cubic at $-a$: its other
+equal-height contact is $c=2a-3/2$ with $a>1/2$, so $c>-1/2$.
+If $c>0$, inequality \eqref{contact:two-triple-collision-322-exclusion-2} is immediate. No unique-representation assumption is
+used for this contact; the nonpositive derivative follows from the
+global majorant at any deletion-CDF jump.
+
+The selected representation $(2,1)$ uses the first coordinate's highest
+support point, which is strictly positive by centering and nondegeneracy,
+and the second coordinate's middle point $Kc$. Thus
+
+\[
+ z>-K/2,\qquad 0<s<K/2.
+\tag{C.21.3}\label{contact:two-triple-collision-322-exclusion-3}
+\]
+
+Combining \eqref{contact:two-triple-collision-322-exclusion-1} and \eqref{contact:two-triple-collision-322-exclusion-3} gives
+
+\[
+ 3CK<2s\phi_0<K\phi_0,
+ \qquad C<\phi_0/3,
+\]
+
+contrary to $C\ge49/120>\phi_0$. This excludes $322$. Exchanging the two
+coordinates transposes its grid to $331$ and proves that exclusion too.
+\subsection{Unit-span divided differences}\label{contact:unit-span-third-moment slope}
+
+
+For $s,\mu \in [0,1]$, put $T=s(1-s)$ and
+
+\[
+ \rho(s,\mu)=(1-s)\mu^3+s(1-\mu)^3-|s-\mu|^3.
+\]
+
+This is exactly the third-moment slope in the three-representation $321$ mass-elimination
+chart. One has the unconditional bounds
+
+\[
+ \boxed{T/2\le\rho(s,\mu)\le T\max\{1+s,2-s\}\le2T.}
+\tag{C.22.1}\label{contact:unit-span-third-moment slope-1}
+\]
+
+At $0<s<1$, $\rho/T$ is the second divided difference of $|x|^3$ on
+$(-\mu,s-\mu,1-\mu)$. The elementary three-point divided-difference bound in
+Section~\ref{contact:three-point-variance-curvature} is half
+the support diameter, giving the lower bound $\rho/T\ge 1/2$. The endpoint
+cases $s=0,1$ satisfy $\rho=T=0$ directly.
+
+For the upper bound, direct differentiation in $\mu$ gives
+
+\[
+ \partial_\mu^2\rho
+ =6\{(1-s)\mu+s(1-\mu)-|s-\mu|\}
+ =\begin{cases}12\mu(1-s),&\mu\le s,\\
+ 12s(1-\mu),&\mu\ge s.
+ \end{cases}
+\]
+
+Thus $\rho$ is convex in $\mu$ on $[0,1]$, including its common derivative at
+$\mu=s$, and its maximum is at an endpoint. The endpoint values are exactly
+$\rho(s,0)=T(1+s)$ and $\rho(s,1)=T(2-s)$, proving \eqref{contact:unit-span-third-moment slope-1}.
+
+In the complementary-gap two-coordinate chart, both third-moment slopes have
+this same $T$. Their half difference $a=(\rho_1-\rho_2)/2$ therefore satisfies
+
+\[
+ \boxed{|a|\le3T/4.}
+\tag{C.22.2}\label{contact:unit-span-third-moment slope-2}
+\]
+\subsection{Three representations: contact and variance equations}\label{contact:three-owner-321-contact-reduction}
+
+
+\paragraph{One exact five-cube and a uniform variance bound}
+
+Translations and a common positive scale put the raw supports and selected
+raw threshold into the form
+
+\[
+ X_{\rm raw}=(0,s,1),\qquad Y_{\rm raw}=(0,1-s,1),
+ \qquad y_{\rm raw}=1,\qquad 0<s<1.
+\tag{C.23.1}\label{contact:three-owner-321-contact-reduction-1}
+\]
+
+Parameterize the two independent probability vectors by
+
+\[
+ p_1=m,\quad p_2=(1-m)r,\quad p_0=(1-m)(1-r),
+\]
+\[
+ q_1=n,\quad q_2=(1-n)t,\quad q_0=(1-n)(1-t).
+\tag{C.23.2}\label{contact:three-owner-321-contact-reduction-2}
+\]
+
+The single parameter cube is $(s,m,r,n,t) \in [0,1]^5$. Strict positivity of
+all six probabilities is a necessary condition. The two means are $\mu,\nu$;
+write centered raw support vectors $x,y$, variances $v_1,v_2$, third absolute moments
+$r_1,r_2$, and signed second moments
+$M_1=\sum_jp_jx_j|x_j|$, $M_2=\sum_jq_jy_j|y_j|$. Set
+
+\[
+ V=v_1+v_2,\qquad R=r_1+r_2,\qquad o=1-\mu-\nu,
+ \qquad z=o/\sqrt V.
+\tag{C.23.3}\label{contact:three-owner-321-contact-reduction-3}
+\]
+
+The fixed-two-coordinate bounds imply every normalized support point has
+absolute value less than four. For this bound, let $\widehat X_1,\widehat X_2$
+be the centered raw laws rescaled to total variance one. Their global
+majorants are
+
+\[
+ f_i(u)=C|u|^3-Au^2-B_i u+D_i,
+ \quad A=(3D+z\phi(z))/2,
+ \quad B_i=3C\E[\widehat X_i|\widehat X_i|]+\phi(z).
+\]
+
+The already proved bounds $D<11/20$, $|z \phi(z)|<49/200$, and
+$C<227/500$ give $A<19/20$ and $|B_i|<881/500$. Global majorization
+gives $D_i=f_i(0)\ge 0$; a support contact has $f_i(u)\le 1$. Since $C\ge49/120$,
+at $w=|u|\ge 4$ it would follow that
+
+\[
+ 1>\frac{49}{120}w^3-\frac{19}{20}w^2-\frac{881}{500}w>1.
+\]
+
+The last cubic exceeds one at four and increases thereafter. This contradiction
+proves the support bound. The common normalized span in \eqref{contact:three-owner-321-contact-reduction-1} is $1/\sqrt{V}<8$.
+Consequently the raw quantities satisfy
+
+\[
+ \boxed{V>1/64,\qquad R>1/725.}
+\tag{C.23.4}\label{contact:three-owner-321-contact-reduction-4}
+\]
+
+The third-moment bound follows from $R\ge V^{3/2}/\sqrt{2}$ and
+$512 \sqrt{2}<725$. These bounds avoid any division by a vanishing raw variance
+or sum of third absolute moments in the compact certificate. Both coordinate variance fractions
+also exceed $13/200$, by the dominant-coordinate theorem.
+
+\paragraph{Actual event, ratio, and global contact equations}
+
+The event probability is the actual six-cell sum
+
+\[
+ F=1-p_1q_2-p_2(q_1+q_2),\qquad D=F-\Phi(z)>0,
+ \qquad C=D V^{3/2}/R.
+\tag{C.23.5}\label{contact:three-owner-321-contact-reduction-5}
+\]
+
+Thus require
+
+\[
+ (49/120)^2R^2\le D^2V^3<(227/500)^2R^2.
+\tag{C.23.6}\label{contact:three-owner-321-contact-reduction-6}
+\]
+
+For the two coordinates the actual deletion levels are respectively
+
+\[
+ H_1=(1,q_0+q_1,q_0),\qquad
+ H_2=(1,p_0+p_1,p_0).
+\tag{C.23.7}\label{contact:three-owner-321-contact-reduction-7}
+\]
+
+Write $L=3D+z \phi(z)$. After multiplication by the positive factor $2VR$,
+the global dual contact equation at a raw centered support point $u$ of
+coordinate $i$ is
+
+\[
+ \boxed{
+ 2VD(|u|^3-r_i)-LR(u^2-v_i)
+ -(6VDM_i+2\sqrt V\phi(z)R)u+2VR(F-H_i(u))=0.
+ }
+\tag{C.23.8}\label{contact:three-owner-321-contact-reduction-8}
+\]
+
+Indeed the unscaled dual price is $D/R$, its quadratic coefficient is
+$L/(2V)$, its linear coefficient is $3DM_i/R+\phi(z)/\sqrt{V}$, and averaging
+the majorant over the coordinate determines its constant. This proves \eqref{contact:three-owner-321-contact-reduction-8}
+directly and preserves the actual centered moments.
+
+The same positive multiplier applied to its raw support derivative gives
+
+\[
+ S_i(u)=6VD(u|u|-M_i)-2LRu-2\sqrt V\phi(z)R.
+\tag{C.23.9}\label{contact:three-owner-321-contact-reduction-9}
+\]
+
+Each selected contact satisfies $S_i(u)\le 0$. Moving the two support points
+of each representation by opposite amounts preserves all three raw collision sums.
+The resulting gradient pairings are
+
+\[
+ \boxed{p_i S_1(x_i)=q_{2-i}S_2(y_{2-i}),\qquad i=0,1,2.}
+\tag{C.23.10}\label{contact:three-owner-321-contact-reduction-10}
+\]
+
+These are necessary even though none of the six support contacts is a smooth
+minimum. Equations \eqref{contact:three-owner-321-contact-reduction-8}--\eqref{contact:three-owner-321-contact-reduction-10} are deliberately redundant; this improves
+outward rejection without adding assumptions.
+
+The nonnegative constants of the two global majorants give two further tests:
+
+\[
+ 2VRF-2VD r_i+LRv_i\geq0.
+\tag{C.23.11}\label{contact:three-owner-321-contact-reduction-11}
+\]
+
+\paragraph{The original full variance Hessian}
+
+For the two centered signed mass vectors, use
+
+\[
+ w_1=(1-s,-1,s),\qquad w_2=(s,-1,1-s),\qquad T=s(1-s).
+\]
+
+Both raw variance derivatives equal $T$. Their raw cubic derivatives are
+$\rho_i=\sum_j w_{i,j}|x_{i,j}|^3$, where
+$x_{1,j}=x_j$ and $x_{2,j}=y_j$ are the centered raw supports.
+The actual $321$ mixed event
+coefficient is
+
+\[
+ M_0=1-s+s^2=1-T.
+\]
+
+Put
+
+\[
+ W=R\{15D+\phi'''(z)\}/4,
+\]
+\[
+ N_i=WT^2-3DVT\rho_i,
+\]
+\[
+ H_{12}=RV^2M_0+\frac32DVT(\rho_1+\rho_2)-WT^2.
+\tag{C.23.12}\label{contact:three-owner-321-contact-reduction-12}
+\]
+
+The necessary conditions from the original variance Hessian are
+
+\[
+ \boxed{N_1\geq0,\quad N_2\geq0,\quad
+ N_1N_2-H_{12}^2\geq0.}
+\tag{C.23.13}\label{contact:three-owner-321-contact-reduction-13}
+\]
+
+To verify the normalization, start with the independent unnormalized Hessian
+derived at the end of
+Section~\ref{contact:two-triple-collision-221-reduction},
+replace its $G$ by $R/D$, and multiply all matrix entries by $D>0$.
+The raw support scale need not equal $K$ for that calculation. Formula \eqref{contact:three-owner-321-contact-reduction-12}
+uses the actual $\phi'''(z)=(3z-z^3)\phi(z)$.
+
+In particular \eqref{contact:three-owner-321-contact-reduction-13} is effective at coalescing-support faces: as $s$ tends to
+zero or one, $T$ tends to zero while $M_0$ tends to one. The positive bounds
+\eqref{contact:three-owner-321-contact-reduction-4} prevent the off-diagonal term $RV^2M_0$ from disappearing. No division by
+$s$ or $1-s$ has been introduced.
+
+\paragraph{Further unconditional necessary tests}
+
+The actual canonical variance widths are
+
+\[
+ W_1=\min\{(1-\mu)s,\mu(1-s)\},\qquad
+ W_2=\min\{(1-\nu)(1-s),\nu s\}.
+\]
+
+Lemma~\ref{lem:mixture-width} requires $3(W_1+W_2)>V$ at a violating
+candidate. The three excluded cells $(1,2),(2,1),(2,2)$ have raw gaps
+$s,1-s,1$ and masses $p_1q_2,p_2q_1,p_2q_2$. Maximizing the threshold gives
+
+\[
+ 25(p_iq_j)^2V<4\Delta_{ij}^2
+\tag{C.23.14}\label{contact:three-owner-321-contact-reduction-14}
+\]
+
+for those three pairs.
+\subsection{Three representations: the gap product}\label{contact:three-owner-321-gap-collar}
+Use the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
+
+
+
+At a genuine attained violating fixed-two-coordinate three-representation $321$
+maximum, retain the notation
+
+\[
+ T=s(1-s),\quad L=1-T,\quad
+ W={15D+\phi'''(z)\over4},\quad C=\kappa V^{3/2}.
+\]
+
+The original variance Hessian has diagonal necessary quantities
+
+\[
+ N_i=WT^2-3\kappa VT\rho_i,
+\]
+
+and its determinant implies
+
+\[
+ N_1+N_2\ge V^2L.
+\tag{C.24.1}\label{contact:three-owner-321-gap-collar-1}
+\]
+
+The pointwise third-moment slope bound
+Section~\ref{contact:unit-span-third-moment slope} gives
+$\rho_1+\rho_2\ge T$. Hence
+
+\[
+ V^2L\le N_1+N_2\le(2W-3\kappa V)T^2.
+\tag{C.24.2}\label{contact:three-owner-321-gap-collar-2}
+\]
+
+The bound \eqref{eq:joint-normal-bound} gives $W<79/40$. Also $V\le 1/2$
+and $C\ge49/120$ yield
+
+\[
+ \kappa V={C\over\sqrt V}>{49\sqrt2\over120}>{343\over600},
+\]
+
+where the final step uses $\sqrt{2}>7/5$. Thus
+
+\[
+ 2W-3\kappa V<79/20-343/200=447/200.
+\]
+
+Since $L\ge 3/4$, \eqref{contact:three-owner-321-gap-collar-2} proves
+
+\[
+ \boxed{T^2>{50\over149}V^2.}
+\tag{C.24.3}\label{contact:three-owner-321-gap-collar-3}
+\]
+
+The unit-span diameter bound is $V>2401/24964$. Substituting
+it into \eqref{contact:three-owner-321-gap-collar-3} gives
+
+\[
+ T^2>{144120025\over46428496552}>{1\over324},
+ \qquad\boxed{s(1-s)>1/18.}
+\tag{C.24.4}\label{contact:three-owner-321-gap-collar-4}
+\]
+
+The exact final slack is $66597887/3760708220712>0$, saved in
+the computational supplement. Equivalently,
+
+\[
+ {3-\sqrt7\over6}<s<{3+\sqrt7\over6}.
+\]
+
+In particular $1/18<s<17/18$.
+\subsection{Three representations: an upper variance bound}\label{contact:three-owner-321-variance-upper}
+The scale is the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
+
+
+
+At an attained violating fixed-two-coordinate maximum with two genuine
+three-point laws and all three representations of the closed $321$ event,
+
+\[
+ \boxed{V<3/10.}
+\tag{C.25.1}\label{contact:three-owner-321-variance-upper-1}
+\]
+
+\paragraph{A scalar lower bound}
+
+Retain $D>49/(120\sqrt{2})$ and $-5/4<z<3/5$ from
+Section~\ref{contact:fixed-c2-threshold-collar}. Define
+
+\[
+ J=3D+(z^3+3z)\phi(z).
+\]
+
+Then
+
+\[
+ \boxed{J>-9/50.}
+\tag{C.25.2}\label{contact:three-owner-321-variance-upper-2}
+\]
+
+For $z\ge 0$ this is immediate. For $z=-t$, $0<t<5/4$, the derivative of
+$(t^3+3t)\phi(t)$ is $(3-t^4)\phi(t)>0$. Thus its maximum on this interval
+is less than $(365/64)\phi(5/4)$. The elementary bound $\phi(0)<399/1000$,
+used in Section~\ref{contact:fixed-c2-threshold-collar}, and the alternating exponential
+upper polynomial give
+
+\[
+ \phi(5/4)<{399\over1000}
+ \sum_{j=0}^6{(-25/32)^j\over j!}
+ ={9415683872273\over51539607552000}<{183\over1000}.
+\]
+
+Also $\sqrt{2}<99/70$, so $3D>343/396$. Consequently
+
+\[
+ J>{343\over396}-{365\over64}{183\over1000}
+ =-{9\over50}+{631\over253440}>-{9\over50}.
+\]
+
+\paragraph{Eliminate the cubic slopes from the mass Hessian}
+
+Write
+
+\[
+ T=s(1-s),\quad L=1-T,\quad
+ u=(1-s)\nu,\quad v=s\mu,\quad w=m+n,
+\]
+\[
+ E_0=\mu(1-\mu)+\nu(1-\nu),\quad V=E_0-Tw,
+\]
+\[
+ A={3D+z\phi(z)\over2V},\quad
+ W={15D+\phi'''(z)\over4},\quad \kappa=D/R.
+\]
+
+Applying the centered mass direction $(1-s,-1,s)$ to the first coordinate's
+three actual contact equations cancels its constant and linear terms.
+The deletion levels $(1,q_0+q_1,q_0)$ give
+
+\[
+ \kappa\rho_1-AT=(1-s)q_2-sq_1=u-Ln=:\eta_1.
+\]
+
+Similarly, the second coordinate's direction $(s,-1,1-s)$ gives
+
+\[
+ \kappa\rho_2-AT=s p_2-(1-s)p_1=v-Lm=:\eta_2.
+\tag{C.25.3}\label{contact:three-owner-321-variance-upper-3}
+\]
+
+The regularized diagonal Hessian quantities from
+Section~\ref{contact:three-owner-321-contact-reduction}
+are therefore
+
+\[
+ H_i=W-3\kappa V\rho_i/T
+     =-{J\over4}-{3V\eta_i\over T},
+\tag{C.25.4}\label{contact:three-owner-321-variance-upper-4}
+\]
+
+since $W-3VA=-J/4$. The determinant condition implies
+$H_1+H_2\ge V^2L/T^2$. Set
+
+\[
+ B_0=LE_0-T(u+v).
+\]
+
+As $\eta_1+\eta_2=(LV-B_0)/T$, \eqref{contact:three-owner-321-variance-upper-4} yields the scalar necessary inequality
+
+\[
+ \boxed{3VB_0-4LV^2-JT^2/2\ge0.}
+\tag{C.25.5}\label{contact:three-owner-321-variance-upper-5}
+\]
+
+This eliminates both third-moment slopes and their difference from this part of
+the Hessian. The identity uses the true independent convolution levels.
+
+\paragraph{Maximize the remaining quadratic in the two means}
+
+For fixed $s$, independently maximize the two concave quadratics in
+$\mu,\nu$ appearing in $B_0$. This gives
+
+\[
+ {B_0\over L}\le
+ { (L-Ts)^2+(L-T(1-s))^2\over4L^2}
+ ={(1-2T)(T^2-2T+2)\over4(1-T)^2}=:M(T).
+\tag{C.25.6}\label{contact:three-owner-321-variance-upper-6}
+\]
+
+The maximizing means lie in $[0,1]$; the displayed inequality also follows
+by completing the two squares and does not need this observation.
+The function $M$ strictly decreases on $0\le T\le 1/4$. Indeed, with
+$L=1-T$, it is
+
+\[
+ M=L/2-1/4+1/(2L)-1/(4L^2),\qquad
+ {dM\over dL}={L^3-L+1\over2L^3}>0
+\]
+
+on $3/4\le L\le 1$. Its useful rational value is
+
+\[
+ M(19/100)={513391\over1312200}
+ ={47\over120}-{277\over656100}<{47\over120}.
+\tag{C.25.7}\label{contact:three-owner-321-variance-upper-7}
+\]
+
+Combining \eqref{contact:three-owner-321-variance-upper-2}, \eqref{contact:three-owner-321-variance-upper-5}, \eqref{contact:three-owner-321-variance-upper-6}, and $T^2/L\le 1/12$ gives
+
+\[
+ 4V^2-3M(T)V-3/400<0.
+\tag{C.25.8}\label{contact:three-owner-321-variance-upper-8}
+\]
+
+In particular, whenever $T>19/100$, \eqref{contact:three-owner-321-variance-upper-7} implies
+
+\[
+ f(V):=4V^2-(47/40)V-3/400<0.
+\tag{C.25.9}\label{contact:three-owner-321-variance-upper-9}
+\]
+
+But $f(3/10)=0$ exactly and $f$ increases for $V\ge 3/10$.
+
+\paragraph{Two finite bootstrap steps}
+
+The gap bound is $T^2>(50/149)V^2$. If $V\ge 1/3$,
+then
+
+\[
+ T^2>{50\over1341}>{361\over10000},
+\]
+
+so \eqref{contact:three-owner-321-variance-upper-9} contradicts $V\ge 1/3$. Thus first $V<1/3$.
+
+It follows that
+
+\[
+ \kappa V={C\over\sqrt V}>{49\sqrt3\over120}>{7\over10},
+\]
+
+using $\sqrt{3}>12/7$. The original gap-Hessian derivation now improves to
+
+\[
+ V^2L\le(2W-3\kappa V)T^2
+ <{37\over20}T^2,
+ \qquad T^2>{15\over37}V^2.
+\tag{C.25.10}\label{contact:three-owner-321-variance-upper-10}
+\]
+
+If $V\ge 3/10$, \eqref{contact:three-owner-321-variance-upper-10} gives
+
+\[
+ T^2>{27\over740}>{361\over10000}.
+\]
+
+As a convenient weaker consequence of \eqref{contact:three-owner-321-variance-upper-1},
+$\kappa\,V>37/50$, since $(37/50)^2\,(3/10)<(49/120)^2$.
+Repeating the same gap inequality gives $T^2>(75/173)V^2$.
+\subsection{Three representations: joint mean and variance bounds}\label{contact:three-owner-321-joint-mean-bound}
+Keep the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
+
+
+
+In the three-representation $321$ case, coupling the two means to the threshold improves the variance bound to
+
+\[
+ \boxed{V<11/40.}
+\tag{C.26.1}\label{contact:three-owner-321-joint-mean-bound-1}
+\]
+
+\paragraph{Couple the quadratic mean bound with the scalar J}
+
+Retain $T,L,B_0,M(T)$ from Section~\ref{contact:three-owner-321-variance-upper} and
+$J=3D+(z^3+3z)\phi(z)$, and write $g=T^2/L$ and
+$d_{\min}=49/(120\sqrt{2})$. Set
+
+\[
+ y=z\sqrt V=1-\mu-\nu,\qquad d=\mu-\nu.
+\]
+
+Completing the square in $d$ while retaining $y$ gives
+
+\[
+ {B_0\over L}\le N_0(T)+{T\over2L}y-{y^2\over2},
+\]
+\[
+ N_0(T)={1\over2}-{T\over2L}+{T^2(1-4T)\over8L^2}
+ =M(T)-{T^2\over8L^2}\le M(T).
+\tag{C.26.2}\label{contact:three-owner-321-joint-mean-bound-2}
+\]
+
+For $z\le 0$, monotonicity of $(t^2+3)\phi(t)$ for $t\ge 0$ gives
+
+\[
+ (z^3+3z)\phi(z)\ge(6/5)z,
+ \qquad J>3d_{\min}+(6/5)z.
+\tag{C.26.3}\label{contact:three-owner-321-joint-mean-bound-3}
+\]
+
+Indeed the derivative of $(t^2+3)\phi(t)$ is
+$-t(t^2+1)\phi(t)\le 0$, and its value at zero is $3\phi(0)<6/5$.
+In the actual contact/Hessian inequality
+
+\[
+ 4V\le3B_0/L-Jg/(2V),
+\]
+
+substitute \eqref{contact:three-owner-321-joint-mean-bound-2}--\eqref{contact:three-owner-321-joint-mean-bound-3}. The coefficient of $y\le 0$ is
+
+\[
+ {3T\over2L}-{3g\over5V^{3/2}}
+ ={3T\over2L}\left(1-{2T\over5V^{3/2}}\right)>0
+\]
+
+whenever $V\ge 1/4$, because then $T/V^{3/2}\le 2$. Hence that linear term
+and $-3y^2/2$ are nonpositive. It follows that
+
+\[
+ 4V^2-3M(T)V+{3d_{\min}\over2}g<0.
+\tag{C.26.4}\label{contact:three-owner-321-joint-mean-bound-4}
+\]
+
+For $z\ge 0$, the same inequality follows directly from $J\ge 3D>3dmin$
+and $B_0/L\le M(T)$. Thus \eqref{contact:three-owner-321-joint-mean-bound-4} holds for every candidate with $V\ge 1/4$.
+In particular, since $3dmin/2>3/7$,
+
+\[
+ 4V^2-3M(T)V+(3/7)g<0.
+\tag{C.26.5}\label{contact:three-owner-321-joint-mean-bound-5}
+\]
+
+\paragraph{Two rational bootstrap steps}
+
+The already proved $V<3/10$ gives $\kappa V>37/50$. Therefore the
+gap-Hessian inequality gives
+
+\[
+ g>{100\over173}V^2.
+\tag{C.26.6}\label{contact:three-owner-321-joint-mean-bound-6}
+\]
+
+If $V\ge 7/25$, \eqref{contact:three-owner-321-joint-mean-bound-6} implies
+$g>196/4325>361/8100=g(19/100)$. Since $g(T)$ increases, $T>19/100$,
+and Section~\ref{contact:three-owner-321-variance-upper} gives $M(T)<47/120$. Equation \eqref{contact:three-owner-321-joint-mean-bound-5} would then force
+
+\[
+ V<{47/40\over4+300/1211}
+ ={56917\over205760}<{7\over25}.
+\]
+
+This contradiction proves $V<7/25$. Consequently $\kappa V>77/100$, so
+
+\[
+ g>{25\over41}V^2.
+\tag{C.26.7}\label{contact:three-owner-321-joint-mean-bound-7}
+\]
+
+If $V\ge 11/40$, \eqref{contact:three-owner-321-joint-mean-bound-7} gives
+
+\[
+ g>{121\over2624}>{576\over12625}=g(24/125).
+\]
+
+Thus $T>24/125$, and exact evaluation gives
+
+\[
+ M(24/125)={994301\over2550250}
+ ={39\over100}-{593\over5100500}<{39\over100}.
+\]
+
+Equation \eqref{contact:three-owner-321-joint-mean-bound-5} now forces
+
+\[
+ V<{117/100\over4+75/287}
+ ={33579\over122300}<{11\over40},
+\]
+
+again a contradiction. This proves \eqref{contact:three-owner-321-joint-mean-bound-1}.
+\subsection{Three representations: scalar exclusion}\label{contact:three-owner-321-scalar-closure}
+Keep the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
+
+
+
+Use the notation $V,z,T=s(1-s),L=1-T,m,n,w=m+n$, and
+$v_0=2401/24964$. The range is
+
+\[
+ v_0<V<11/40,\qquad -5/4<z<3/5.
+\tag{C.27.1}\label{contact:three-owner-321-scalar-closure-1}
+\]
+
+\paragraph{The actual bounded sum and its exact slack}
+
+The raw sum $U$ is in $[0,2]$, has mean $1-o$, variance $V$, and the
+selected event is $U\le 1$, where $o=z\sqrt V$. Pointwise
+$U(U-1)\le 2\ind_{\{U>1\}}$. Therefore
+
+\[
+ F\le1-\{V-o+o^2\}/2.
+\tag{C.27.2}\label{contact:three-owner-321-scalar-closure-2}
+\]
+
+The precise nonnegative slack, using the actual independent $321$ event,
+is
+
+\[
+ S:=2(1-F)-(V-o+o^2)
+ =T(mq_0+p_0n)+(2-s-s^2)mq_2+(3s-s^2)p_2n.
+\]
+
+Both outside coefficients are at least $T$, so
+
+\[
+ S\ge T\{m(1-n)+n(1-m)\}
+ \ge T\{w-w^2/2\}.
+\tag{C.27.3}\label{contact:three-owner-321-scalar-closure-3}
+\]
+
+Let $H_{\Sigma}=H_1+H_2$, with $H_i$ defined in
+\eqref{contact:three-owner-321-variance-upper-4}. The mass-Hessian
+condition gives
+\[
+ H_{\Sigma}\ge\frac{V^2L}{T^2}\ge12V^2,
+ \qquad T=s(1-s)\le\frac14,\quad L=1-T.
+\]
+The contact identities yield
+\[
+ \eta_{\mathrm{sum}}=u+v-Lw
+ =-\frac{T(H_{\Sigma}+J/2)}{3V}.
+\]
+Since $J>-9/50$ and $12v_0^2>9/100$, this is negative. Therefore
+
+\[
+ w>{u+v\over L}.
+\tag{C.27.4}\label{contact:three-owner-321-scalar-closure-4}
+\]
+
+If $T>1/5$, both $s$ and $1-s$ belong to $(1/4,3/4)$ and $L<4/5$.
+Thus \eqref{contact:three-owner-321-scalar-closure-4} gives $w>5(\mu+\nu)/16$. The range \eqref{contact:three-owner-321-scalar-closure-1} gives
+$\mu+\nu=1-z\sqrt V>137/200$, using $\sqrt{11/40}<21/40$. Hence
+
+\[
+ w>{137\over640}=:a.
+\]
+
+Let $X_1,X_2$ denote the raw marginals, and set $a_1=s$, $a_2=1-s$,
+$m_1=m$, $m_2=n$. Since
+$a_i\in(1/4,3/4)$, the raw marginal variances satisfy
+\[
+ v_i\le\E(X_i-a_i)^2<9(1-m_i)/16.
+\]
+Summing gives
+
+\[
+ w\le2-16V/9<2-16v_0/9=:b.
+\]
+
+The concave function $f(w)=w-w^2/2$ has its minimum on $[a,b]$ at an
+endpoint. Both exact endpoint values exceed $3/20$. Consequently
+
+\[
+ \boxed{T>1/5\quad\Longrightarrow\quad S>3/100.}
+\tag{C.27.5}\label{contact:three-owner-321-scalar-closure-5}
+\]
+
+\paragraph{Combine with the mass Hessian}
+
+The mass Hessian and $\rho_1+\rho_2\ge T$ give
+
+\[
+ V^2\le\left\{{15D+\phi'''(z)\over2}-{3C\over\sqrt V}\right\}{T^2\over L}.
+\tag{C.27.6}\label{contact:three-owner-321-scalar-closure-6}
+\]
+
+If $T\le 1/5$, then $T^2/L\le 1/20$, so
+$15D+\phi'''(z)\ge 40V^2+6C/\sqrt{V}$. If $T>1/5$, use $T^2/L\le 1/12$
+instead, giving $15D+\phi'''(z)\ge 24V^2+6C/\sqrt{V}$, together with \eqref{contact:three-owner-321-scalar-closure-5}.
+
+The two cases are therefore enclosed by $(A,S_0)=(40,0)$ and
+$(A,S_0)=(24,3/100)$. Put $c_0=49/120$ and
+
+\[
+ B(V,z;A,S_0)=15(1-\Phi(z))-{15\over2}V(1+z^2)
+ +{15\over2}z\sqrt V-{15\over2}S_0
+ +(3z-z^3)\phi(z)-AV^2-{6c_0\over\sqrt V}.
+\tag{C.27.7}\label{contact:three-owner-321-scalar-closure-7}
+\]
+
+The plain probability bound also gives
+
+\[
+ P(V,z;A)=15(1-\Phi(z))+(3z-z^3)\phi(z)-AV^2-6c_0/\sqrt V.
+\]
+
+When $z<0$, Cantelli gives the additional bound
+
+\[
+ Q(V,z;A)=15\{(1+z^2)^{-1}-\Phi(z)\}
+ +(3z-z^3)\phi(z)-AV^2-6c_0/\sqrt V.
+\tag{C.27.8}\label{contact:three-owner-321-scalar-closure-8}
+\]
+
+Every genuine candidate requires each applicable upper expression to
+be strictly positive, including when $C=c_0$. The proper selected
+downset has probability less than one. The bounded-sum comparison has
+positive slack at an interior support point; when the prescribed slack
+is positive, \eqref{contact:three-owner-321-scalar-closure-5} gives a
+strict improvement over it. For negative thresholds, equality in
+Cantelli's inequality would force a two-point sum law, whereas the sum
+of two genuine triples has at least five support points. At $z=0$ the
+Cantelli expression equals the probability expression. Thus a
+nonpositive enclosure excludes the candidate also at $C=c_0$.
+It suffices to cover \eqref{contact:three-owner-321-scalar-closure-1},
+separately for both $(A,S_0)$ cases, by boxes on which at least one of
+$B,P$, or $Q$ (when the whole box has $z\le0$) is nonpositive.
+
+\paragraph{Whole-box derivative enclosures}
+
+For \eqref{contact:three-owner-321-scalar-closure-7}, the exact first derivatives are
+
+\[
+ B_V=-{15\over2}(1+z^2)+{15z\over4\sqrt V}-2AV+3c_0/V^{3/2},
+\]
+\[
+ B_z=(z^4-6z^2-12)\phi(z)-15Vz+{15\over2}\sqrt V.
+\]
+
+For $P,Q$, their $V$ derivative is $-2AV+3c_0/V^{3/2}$; their $z$
+derivatives are respectively $(z^4-6z^2-12)\phi(z)$ and that quantity
+minus $30z/(1+z^2)^2$. These formulas apply throughout the original
+rectangle, independently of candidate constraints. A midpoint value plus
+these whole-box gradient enclosures gives a valid enclosure by the mean
+value integral. The numerical domain has $V\ge v_0>0$.
+The fixed certificate \texttt{three\_owner321} covers both cases in
+\eqref{contact:three-owner-321-scalar-closure-1} and proves that every
+point has a nonpositive applicable exclusion expression. Therefore
+no maximizing pair can have all three representations of the $321$
+threshold. Section~\ref{sec:verification} gives the enclosure and
+partition rules.
+
+\subsection{Two representations: contact geometry}\label{contact:two-owner-321-contact-reduction}
+
+
+Use the contact scale and the strict bounds in
+\eqref{eq:contact-basic-collars}:
+$K=R_{\mathrm{normalized}}+z \phi(z)/(3C)$, scaled support coordinates equal the
+normalized coordinates divided by $K$, and $\tau=C K^3$. Raw moments in
+this calculation refer to those scaled supports. Thus
+
+\[
+ \frac1{20}<\tau<2,\qquad \frac{25}{64}<V<4,
+ \qquad C=\tau V^{3/2}.
+\tag{C.28.1}\label{contact:two-owner-321-contact-reduction-1}
+\]
+
+The two coordinate variance fractions exceed $13/200$. Define the cubic
+potential
+
+\[
+ P_\beta(x)=|x|^3-\frac32x^2-3\beta x.
+\]
+
+Every global majorant in this scale is a constant plus
+$\tau P_\beta$. A nonselected positive contact $b$ has $\beta=b(b-1)$; a
+nonselected negative contact $-a$ has $\beta=a(1-a)$.
+
+\paragraph{Adjacent representations}
+
+Write the supports and the selected threshold as
+
+\[
+ X=(-t,c,b),\quad Y=(-a,d,e),\quad
+ o=e-t=c+d,\qquad d=e-t-c.
+\tag{C.28.2}\label{contact:two-owner-321-contact-reduction-2}
+\]
+
+Here the representations are $(0,2),(1,1)$. The unused maximal cell $(2,0)$ is
+strictly lower: $b-a<o$. The high point $b$ and the low point $-a$ are
+nonselected smooth minima, so $b>1/2$ and $a>1/2$.
+In fact $b\ge1$. If $1/2<b<1$, then $\beta=b(b-1)<0$
+and $P_\beta$ has a negative minimum at $-a_*$ with $a_*>1$.
+Its value is less than $-1/2$, whereas
+$P_\beta(b)=b^2(3/2-2b)>-1/2$.
+The deletion CDF at $-a_*$ is at least its value at $b$;
+global majorization therefore rules out this lower minimum.
+
+Also $a<1$. Otherwise $-a$ would be a global minimum of
+$P_{a(1-a)}$. Indeed, for $x\ge0$,
+\[
+ P_{a(1-a)}(x)=x^3-\frac32x^2+3a(a-1)x
+ \ge-\frac12\ge P_{a(1-a)}(-a),
+\]
+and for $x=-t\le0$ the difference from the value at $-a$ is
+$(t-a)^2(t+2a-3/2)\ge0$.
+The contact level at $-a$ is one, so a global minimum there would
+preclude the smaller contact levels at the other support points.
+
+The nonpositive derivative at the selected high point gives
+$e\le B(a)$, where $B$ is defined below. The unused-corner inequality
+now gives
+\[
+ t+b<a+e\le a+B(a)\le2.
+\]
+Since $b\ge1$, we have $t<1$. The nonpositive derivative at $-t$
+gives $b(b-1)\ge t(1-t)$, hence $b\ge B(t)$.
+The function $x+B(x)$ is strictly increasing on $(0,1)$, because
+its derivative is $1+(1-2x)/\sqrt{1+4x(1-x)}>0$.
+Thus $t\ge a$ would contradict the strict span inequality.
+Finally $e>t+b-a>t$, so $o=e-t>0$. We have proved
+
+\[
+ \frac12<a<1,\quad 0<t<a,\quad
+ B(t)\leq b<2-t,\quad 0<e\leq B(a),\quad -t<c<b,
+\]
+\[
+ B(v)=\frac{1+\sqrt{1+4v(1-v)}}2,\qquad
+ A_2:=a+e>A_1:=t+b,\qquad o>0.
+\tag{C.28.3}\label{contact:two-owner-321-contact-reduction-3}
+\]
+
+The strict span ordering also implies $-a<d<e$; it need not be imposed by
+a separate chart. Set $h=t+c=e-d>0$, $v=b-c>0$.
+
+The first high contact has actual deletion level $\ell_2$; the second low
+contact has level one. Define
+
+\[
+ g_b(x)=P_{b(b-1)}(x)-P_{b(b-1)}(b),\qquad
+ G=g_b(-t),\quad g=g_b(c),
+\]
+\[
+ U_a(x)=P_{a(1-a)}(-a)-P_{a(1-a)}(x)
+ =a^2(3/2-2a)-|x|^3+\frac32x^2+3a(1-a)x.
+\tag{C.28.4}\label{contact:two-owner-321-contact-reduction-4}
+\]
+
+The actual deletion levels of the closed $321$ event are
+$(1,1-r_2,\ell_2)$ and $(1,1-r_1,\ell_1)$. Subtracting the contacts at the
+respective nonselected minima determines all probabilities:
+
+\[
+ (\ell_1,m_1,r_1)
+ =(1-\tau U_a(e),\ \tau[U_a(e)-U_a(d)],\ \tau U_a(d)),
+\]
+\[
+ (\ell_2,m_2,r_2)
+ =(1-\tau G,\ \tau g,\ \tau[G-g]).
+\tag{C.28.5}\label{contact:two-owner-321-contact-reduction-5}
+\]
+
+Consequently a genuine candidate requires
+$U_a(e)>U_a(d)>0$ and $G>g>0$. First-coordinate centering is exactly
+
+\[
+ t=\tau\{hU_a(e)+vU_a(d)\}.
+\]
+
+Its denominator is strictly positive, so set
+
+\[
+ \boxed{\tau=\frac{t}{hU_a(e)+vU_a(d)}.}
+\tag{C.28.6}\label{contact:two-owner-321-contact-reduction-6}
+\]
+
+The second-coordinate centering equation is retained as the first residual:
+
+\[
+ \boxed{\tau\{(a+e)G-hg\}-a=0.}
+\tag{C.28.7}\label{contact:two-owner-321-contact-reduction-7}
+\]
+
+Define the nonnegative selected slope magnitudes
+
+\[
+ H_t=3[t^2-t+b(b-1)],\qquad
+ H_c=3[b(b-1)+c-c|c|],
+\]
+\[
+ H_d=3[a(1-a)+d-d|d|],\qquad
+ H_e=3[a(1-a)+e-e^2].
+\]
+
+Collision-preserving support variations give the two further residuals
+
+\[
+ \boxed{\ell_1H_t-r_2H_e=0,\qquad m_1H_c-m_2H_d=0.}
+\tag{C.28.8}\label{contact:two-owner-321-contact-reduction-8}
+\]
+
+Put $\sigma=\ell_1 H_t+m_1 H_c>0$. By \eqref{contact:two-owner-321-contact-reduction-8} it also equals
+$m_2 H_d+r_2 H_e$.
+
+There is a useful additional global-majorant constraint. The unused maximal
+cell $(2,0)$ creates a deletion jump at $y_*=o-b$, with
+$-a<y_*<d$. At that point the second deletion CDF is still one. Its majorant
+is $1-\tau U_a$, so
+
+\[
+ \boxed{U_a(o-b)\leq0.}
+\tag{C.28.9}\label{contact:two-owner-321-contact-reduction-9}
+\]
+
+The corresponding first-coordinate deletion jump lies above $b$. Its
+majorant bound follows automatically from increase of $P_{b(b-1)}$ to the
+right of the positive minimum.
+
+A single closed five-cube covers \eqref{contact:two-owner-321-contact-reduction-3}, with strict conditions retained as
+rejection tests. For $(k_1,\ldots ,k_5) \in [0,1]^5$, take
+
+\[
+ a=\frac{1+k_1}{2},\quad t=ak_2,\quad
+ b=B(t)+(2-t-B(t))k_3,\quad e=B(a)k_4,
+ \quad c=-t+(t+b)k_5.
+\tag{C.28.10}\label{contact:two-owner-321-contact-reduction-10}
+\]
+
+All valid adjacent-representation parameters have a preimage. The cube contains
+extraneous parameters, including failures of $a+e>t+b$; they are rejected
+by necessary tests. Transposition covers the other adjacent representation pair.
+
+\paragraph{Endpoint representations}
+
+Now the representations are $(0,2),(2,0)$ and the unused middle-middle cell lies
+strictly below their common threshold. Both nonselected middle contacts
+are negative smooth minima. A positive smooth minimum would force a positive derivative at the larger contact, contrary to Lemma~\ref{lem:full-law-contacts}; zero cannot be a minimum because the quadratic coefficient is negative. Write
+
+\[
+ X=(-t_1,-a_1,b_1),\qquad Y=(-t_2,-a_2,b_2),
+\]
+\[
+ \frac12<a_i<1,\quad a_i<t_i<4,\quad 0<b_i\leq B(a_i),
+ \quad A=t_1+b_1=t_2+b_2,
+\]
+\[
+ o=b_2-t_1=b_1-t_2>-a_1-a_2.
+\tag{C.28.11}\label{contact:two-owner-321-contact-reduction-11}
+\]
+
+Put $u_i=t_i-a_i$, $v_i=a_i+b_i$, and define
+
+\[
+ E_i=u_i^2(t_i+2a_i-3/2)>0,\qquad U_i=U_{a_i}(b_i)>0.
+\tag{C.28.12}\label{contact:two-owner-321-contact-reduction-12}
+\]
+
+Subtraction of the actual contact levels gives
+
+\[
+ (\ell_1,m_1,r_1)
+ =(1-\tau(E_2+U_2),\ \tau U_2,\ \tau E_2),
+\]
+\[
+ (\ell_2,m_2,r_2)
+ =(1-\tau(E_1+U_1),\ \tau U_1,\ \tau E_1).
+\tag{C.28.13}\label{contact:two-owner-321-contact-reduction-13}
+\]
+
+The identity defining $E_i$ is the exact factorization
+$P_{a_i(1-a_i)}(-t_i)-P_{a_i(1-a_i)}(-a_i)=E_i$.
+First-coordinate centering therefore eliminates the positive parameter
+
+\[
+ \boxed{\tau=\frac{t_1}{U_2u_1+E_2A},}
+\tag{C.28.14}\label{contact:two-owner-321-contact-reduction-14}
+\]
+
+and the retained second centering residual is
+
+\[
+ \boxed{\tau(U_1u_2+E_1A)-t_2=0.}
+\tag{C.28.15}\label{contact:two-owner-321-contact-reduction-15}
+\]
+
+Let
+
+\[
+ H_{t_i}=3u_i(t_i+a_i-1)>0,\qquad
+ H_{b_i}=3[a_i(1-a_i)+b_i-b_i^2].
+\]
+
+The two actual representation pairings are
+
+\[
+ \boxed{\ell_1H_{t_1}-r_2H_{b_2}=0,\qquad
+ r_1H_{b_1}-\ell_2H_{t_2}=0.}
+\tag{C.28.16}\label{contact:two-owner-321-contact-reduction-16}
+\]
+
+Set $\sigma=\ell_1 H_{t_1}+r_1 H_{b_1}>0$. Equations \eqref{contact:two-owner-321-contact-reduction-16} equate it with
+the corresponding sum for the second coordinate. They also imply the two
+high slope magnitudes are strictly positive.
+
+The unused middle-middle cell produces deletion jumps at $o+a_2$ and
+$o+a_1$, strictly between the respective middle and high support points.
+Immediately at each jump the relevant deletion level still equals its
+nonselected middle contact level. Global majorization therefore requires
+
+\[
+ \boxed{U_{a_1}(o+a_2)\leq0,\qquad U_{a_2}(o+a_1)\leq0.}
+\tag{C.28.17}\label{contact:two-owner-321-contact-reduction-17}
+\]
+
+A single closed five-cube covers all of \eqref{contact:two-owner-321-contact-reduction-11}:
+
+\[
+ a_1=(1+k_1)/2,\quad a_2=(1+k_2)/2,
+\quad t_1=a_1+(4-a_1)k_3,\quad t_2=a_2+(4-a_2)k_4,
+\]
+\[
+ b_1=B(a_1)k_5,\qquad b_2=t_1+b_1-t_2.
+\tag{C.28.18}\label{contact:two-owner-321-contact-reduction-18}
+\]
+
+The necessary tests retain $0<b_2\le B(a_2)$ and the unused middle-cell
+inequality in \eqref{contact:two-owner-321-contact-reduction-11}. The denominator in \eqref{contact:two-owner-321-contact-reduction-14} is positive at a genuine
+candidate. A numerical evaluator may divide by it only when its enclosure
+is positive on the complete box.
+
+\paragraph{Three common residuals and the original full Hessian}
+
+For either family, use the probabilities just derived to sum raw centered
+variances $v_i$, third absolute moments $r_i$, and totals $V,R$. Let
+
+\[
+ F=\ell_1+m_1(\ell_2+m_2)+r_1\ell_2
+   =1-m_1r_2-r_1(m_2+r_2),\qquad z=o/\sqrt V.
+\]
+
+The common scale, density and actual-CDF equations are
+
+\[
+ \boxed{3(V-R)-\sigma o=0,\quad
+ \tau\sigma\sqrt V-\phi(z)=0,\quad
+ F-\Phi(z)-\tau R=0.}
+\tag{C.28.19}\label{contact:two-owner-321-contact-reduction-19}
+\]
+
+Together with \eqref{contact:two-owner-321-contact-reduction-7},\eqref{contact:two-owner-321-contact-reduction-8}, or respectively \eqref{contact:two-owner-321-contact-reduction-15},\eqref{contact:two-owner-321-contact-reduction-16}, these give six necessary
+equations on each five-cube. The first equation follows from the definition
+of $K$, the second from $\E f_i'(X_i)=-\phi(z)$, and the third from the actual
+ratio $C=\tau V^{3/2}$.
+
+The strict ratio tests are
+
+\[
+ (49/120)^2\le \tau^2V^3<(227/500)^2.
+\tag{C.28.20}\label{contact:two-owner-321-contact-reduction-20}
+\]
+
+Also $\tau R>49/(120 \sqrt{2})$ follows from \eqref{contact:two-owner-321-contact-reduction-20} and the two-coordinate
+moment bound $R\ge V^{3/2}/\sqrt{2}$. This is a necessary discrepancy lower
+bound, not an additional variational assumption.
+
+The full variance Hessian can be evaluated in the original signed-mass
+basis. For each support vector $(x_0,x_1,x_2)$, set
+
+\[
+ w_i=\left(\frac{x_2-x_1}{x_2-x_0},-1,
+             \frac{x_1-x_0}{x_2-x_0}\right),\quad
+ T_i=(x_1-x_0)(x_2-x_1),\quad
+ \rho_i=\sum_jw_{i,j}|x_j|^3.
+\]
+
+Let $M_0=\sum_{j+k\le 2}w_{1,j}w_{2,k}$, the actual $321$ mixed event
+coefficient, and put
+
+\[
+ W=\{15\tau R+\phi'''(z)\}/4,
+\quad N_i=WT_i^2-3\tau VT_i\rho_i,
+\]
+\[
+ Q=V^2M_0+\frac32\tau V(T_1\rho_2+T_2\rho_1)-WT_1T_2.
+\]
+
+Necessary second-order conditions are
+
+\[
+ N_1\geq0,\qquad N_2\geq0,\qquad N_1N_2-Q^2\geq0.
+\tag{C.28.21}\label{contact:two-owner-321-contact-reduction-21}
+\]
+
+These are the already derived original Hessian entries multiplied by the
+positive scalar $\tau$, with the actual normal derivative
+$\phi'''(z)=(3z-z^3)\phi(z)$.
+
+Finally retain the canonical mixture-width exclusion, both variance-fraction
+bounds, and the three excluded-cell atom-gap inequalities. In the adjacent
+case the excluded cells $(1,2),(2,1),(2,2)$ have gaps $h,v,A_1$; in the
+endpoint case their gaps are $u_1,u_2,A$. Each satisfies
+the inequality $25p_*^2V<4\delta_*^2$, where $p_*$ is the atom's
+probability and $\delta_*$ its raw gap. These tests and
+\eqref{contact:two-owner-321-contact-reduction-9},\eqref{contact:two-owner-321-contact-reduction-17} are
+inequalities; they need not enter the full-box derivative system.
+
+\subsection{Adjacent representations: scalar exclusion}\label{contact:adjacent-owner-321-scalar-reduction}
+
+
+\paragraph{Normalize by the larger span}
+
+Translate each support to start at zero and divide by the second span. The
+supports and selected threshold become
+
+\[
+ X\in\{0,a,r\},\quad Y\in\{0,1-a,1\},\quad
+ 0<a<r<1,\quad X+Y\le1.
+\tag{C.29.1}\label{contact:adjacent-owner-321-scalar-reduction-1}
+\]
+
+Let $V$ denote total variance in this raw scale, $z$ the standardized
+selected threshold, $D=F-\Phi(z)$, and $C=D V^{3/2}/R$. The uniform
+diameter and threshold bounds give
+
+\[
+ v_0:=2401/24964<V\le(1+r^2)/4\le1/2,\qquad 0<z<3/5.
+\tag{C.29.2}\label{contact:adjacent-owner-321-scalar-reduction-2}
+\]
+
+Put $s=a/r$, $T=s(1-s)$, and use the centered mass directions
+$(1-s,-1,s)$ and $(a,-1,1-a)$. Their raw variance derivatives are
+$T_1=a(r-a)$ and $T_2=a(1-a)$. Summation over the actual $321$ cells gives
+the mixed event derivative
+
+\[
+ M=1-a+a^2/r=1-rT.
+\tag{C.29.3}\label{contact:adjacent-owner-321-scalar-reduction-3}
+\]
+
+The cubic third-moment derivatives divided by $T_i$ are the centered second
+divided differences $\gamma_i$. The elementary divided-difference diameter
+bound gives $\gamma_1\ge r/2$ and $\gamma_2\ge 1/2$.
+
+\paragraph{Retain the dependence between the mixed coefficient and span}
+
+Write $W=(15D+\phi'''(z))/4$ and
+$H_i=W-3C \gamma_i/\sqrt{V}$. The mass-Hessian condition
+\eqref{contact:two-owner-321-contact-reduction-21}, divided by the positive variance-direction factors,
+implies
+
+\[
+ H_1+H_2\ge V^2\Lambda,\qquad \Lambda=M/(T_1T_2).
+\tag{C.29.4}\label{contact:adjacent-owner-321-scalar-reduction-4}
+\]
+
+This follows directly from its determinant: the off-diagonal entry is
+$V^2 \Lambda-(H_1+H_2)/2$, whose absolute value is at most
+$\sqrt{H_1H_2}\le (H_1+H_2)/2$.
+
+Now $a(1-a)\le 1/4$, and
+$T_1\,T_2=r^2 T\,a(1-a)$. Therefore
+
+\[
+ \Lambda\ge {4(1-rT)\over r^2T}
+ \ge {16-4r\over r^2}\ge{12\over r^2}.
+\tag{C.29.5}\label{contact:adjacent-owner-321-scalar-reduction-5}
+\]
+
+Combining \eqref{contact:adjacent-owner-321-scalar-reduction-4}, \eqref{contact:adjacent-owner-321-scalar-reduction-5}, and the two divided-difference bounds proves
+
+\[
+ \boxed{15D+\phi'''(z)\ge
+ {32-8r\over r^2}V^2+{3C(1+r)\over\sqrt V}.}
+\tag{C.29.6}\label{contact:adjacent-owner-321-scalar-reduction-6}
+\]
+
+The universal bound $15D+\phi'''(z)<79/10$ also gives
+$V^2 \Lambda<79/20$. Hence
+$r^2>(240/79)V^2>(240/79)v_0^2>1/36$, proving the convenient
+strict bound $r>1/6$. The final comparison is exact rational arithmetic.
+
+\paragraph{The bounded sum supplies the scalar upper bounds}
+
+Set $U=X+Y$. It belongs to $[0,1+r]$, has mean $1-z\sqrt V$, and its
+selected event is $U\le 1$. Pointwise,
+
+\[
+ U(U-1)\le r(1+r)\ind_{\{U>1\}}.
+\]
+
+Consequently
+
+\[
+ F\le1-{V(1+z^2)-z\sqrt V\over r(1+r)},\qquad F\le1.
+\tag{C.29.7}\label{contact:adjacent-owner-321-scalar-reduction-7}
+\]
+
+Put $c_0=49/120$, $A(r)=32/r^2-8/r$, and
+
+\[
+ P(r,V,z)=15(1-\Phi(z))+(3z-z^3)\phi(z)
+ -A(r)V^2-{3c_0(1+r)\over\sqrt V},
+\]
+\[
+ B(r,V,z)=P(r,V,z)
+ -{15\{V(1+z^2)-z\sqrt V\}\over r(1+r)}.
+\tag{C.29.8}\label{contact:adjacent-owner-321-scalar-reduction-8}
+\]
+
+Every genuine candidate requires both $P>0$ and $B>0$, including when
+$C=c_0$. The selected downset is proper, so $F<1$. The bounded-sum
+comparison is also strict: the sum has an interior support point at
+which its pointwise quadratic bound has positive slack. Together with
+\eqref{contact:adjacent-owner-321-scalar-reduction-6}, these strict
+comparisons show that a nonpositive enclosure excludes the candidate
+at the equality floor too. It suffices to cover the closed box
+
+\[
+ [1/6,1]\times[v_0,1/2]\times[0,3/5]
+\tag{C.29.9}\label{contact:adjacent-owner-321-scalar-reduction-9}
+\]
+
+by boxes on each of which one expression in
+\eqref{contact:adjacent-owner-321-scalar-reduction-8} is nonpositive.
+
+\paragraph{Whole-box derivatives for a fixed outward cover}
+
+Let $N=V(1+z^2)-z\sqrt V$. On the whole domain
+\eqref{contact:adjacent-owner-321-scalar-reduction-9}, the exact derivatives are
+
+\[
+ P_r=(64/r^3-8/r^2)V^2-3c_0/\sqrt V,
+\]
+\[
+ P_V=-2A(r)V+{3c_0(1+r)\over2V^{3/2}},\qquad
+ P_z=(z^4-6z^2-12)\phi(z),
+\]
+\[
+ B_r=P_r+{15N(1+2r)\over r^2(1+r)^2},
+\]
+\[
+ B_V=P_V-{15\{1+z^2-z/(2\sqrt V)\}\over r(1+r)},\qquad
+ B_z=P_z-{15(2Vz-\sqrt V)\over r(1+r)}.
+\]
+
+Thus midpoint values plus whole-box derivative enclosures give a valid
+mean-value enclosure. Both denominators $r$ and $V$ are uniformly positive.
+The fixed records \texttt{adjacent\_owner321} and
+\texttt{adjacent\_owner321\_completion} cover
+\eqref{contact:adjacent-owner-321-scalar-reduction-9}; at every point
+they prove $P\le0$ or $B\le0$. Thus the adjacent-representation
+case has no maximizing pair. Section~\ref{sec:verification} gives
+the enclosure and partition rules, including the subdivision of the
+four cells treated by the completion record.
+
+\subsection{Endpoint representations: scalar exclusion}\label{contact:endpoint-owner-321-scalar-reduction}
+
+
+\paragraph{Geometry, variance directions, and the first scalar inequality}
+
+Translate both supports to start at zero and divide by their common span:
+
+\[
+ X\in\{0,a,1\},\quad Y\in\{0,b,1\},\quad
+ a,b>0,\quad s:=a+b<1,
+ \qquad U=X+Y\le1.
+\tag{C.30.1}\label{contact:endpoint-owner-321-scalar-reduction-1}
+\]
+
+Let the respective means be $\mu,\nu$, middle masses $m,n$, and total raw
+variance and sum of third absolute moments be $V,R$. Write
+
+\[
+ D=F-\Phi(z),\quad C=DV^{3/2}/R,\quad
+ T_1=a(1-a),\quad T_2=b(1-b),\quad
+ M=a+b-ab,\quad g=T_1T_2/M.
+\]
+
+The diameter and threshold results give
+
+\[
+ v_0:=2401/24964<V\le1/2,\qquad -5/4<z<3/5,
+ \qquad D>{49\over120\sqrt2},\quad C\ge c_0:=49/120.
+\tag{C.30.2}\label{contact:endpoint-owner-321-scalar-reduction-2}
+\]
+
+The actual mixed derivative of the $321$ event in the centered mass
+directions $(1-a,-1,a)$ and $(1-b,-1,b)$ is $M$. The original mass Hessian,
+as in the two-representation reduction, implies
+
+\[
+ 15D+\phi'''(z)\ge {2V^2\over g}+{6C\over\sqrt V},
+\tag{C.30.3}\label{contact:endpoint-owner-321-scalar-reduction-3}
+\]
+
+using the lower bound $1/2$ for each centered cubic divided difference.
+
+We will use the uniform bound
+
+\[
+ \boxed{g<1/11.}
+\tag{C.30.4}\label{contact:endpoint-owner-321-scalar-reduction-4}
+\]
+
+Indeed put $p=ab$, $d=(1-a)(1-b)=1-s+p$; then $g=pd/(s-p)$.
+For fixed $s$, its derivative in $p$ has positive numerator
+$s(1-s+2p)-p^2$. Thus its maximum occurs at $p=s^2/4$, or $a=b=x$.
+The resulting function is $x(1-x)^2/(2-x)$, $0<x\le 1/2$, whose derivative
+has the sign of $x^2-3x+1$. Its maximum is
+$(5\sqrt{5}-11)/2<1/11$; the last comparison follows from
+$\sqrt{5}<123/55$, since $123^2-5\,55^2=4>0$.
+
+\paragraph{At moderately negative thresholds the actual contacts give mass bounds}
+
+For $z\ge -3/4$, define $J=3D+(z^3+3z)\phi(z)$. Then
+
+\[
+ J>{343\over396}-{171\over64}{31\over100}
+ ={24001\over633600}>0.
+\tag{C.30.5}\label{contact:endpoint-owner-321-scalar-reduction-5}
+\]
+
+Here $\sqrt{2}<99/70$, and $\phi(3/4)<31/100$. The latter follows from
+$\phi(0)<399/1000$ and the degree-four upper Taylor polynomial for
+$\exp(-9/32)$. On $[0,3/4]$, both
+$t(t^2+3)\phi(t)$ and $t(t^2+2)\phi(t)$ increase; their derivatives are
+respectively $(3-t^4)\phi(t)$ and $(2+t^2-t^4)\phi(t)$.
+
+Let $\kappa=D/R$, $A=(3D+z\phi(z))/(2V)$, and
+$W=(15D+\phi'''(z))/4$. Applying each centered mass direction to its three
+actual contact equations gives
+
+\[
+ \eta_1:=\kappa\rho_1-AT_1=(1-a)\nu-Mn,
+ \qquad
+ \eta_2:=\kappa\rho_2-AT_2=(1-b)\mu-Mm.
+\tag{C.30.6}\label{contact:endpoint-owner-321-scalar-reduction-6}
+\]
+
+The diagonal Hessian quantities satisfy
+$H_i=W-3\kappa V \rho_i/T_i=-J/4-3V \eta_i/T_i\ge 0$.
+Thus \eqref{contact:endpoint-owner-321-scalar-reduction-5} gives $\eta_i<0$. Both middle contacts are negative after centering,
+so $\mu>a$ and $\nu>b$. Consequently
+
+\[
+ \boxed{m>{a(1-b)\over M},\qquad n>{b(1-a)\over M}.}
+\tag{C.30.7}\label{contact:endpoint-owner-321-scalar-reduction-7}
+\]
+
+Define the cubic contact scale in the present unit-span coordinates by
+
+\[
+ k={\sqrt V\{D+z\phi(z)/3\}\over C}.
+\tag{C.30.8}\label{contact:endpoint-owner-321-scalar-reduction-8}
+\]
+
+A nonselected negative minimum of the cubic majorant has distance strictly
+larger than $k/2$ from zero: its second derivative is positive, and the
+quadratic coefficient is $-3k/2$ relative to the cubic coefficient. Hence
+$\mu-a>k/2$ and $\nu-b>k/2$. Positivity of the low masses now gives
+
+\[
+ \boxed{1-m>{k\over2(1-a)},\qquad
+ 1-n>{k\over2(1-b)}.}
+\tag{C.30.9}\label{contact:endpoint-owner-321-scalar-reduction-9}
+\]
+
+\paragraph{A uniform positive lower bound on this raw contact scale}
+
+Combining \eqref{contact:endpoint-owner-321-scalar-reduction-3}, \eqref{contact:endpoint-owner-321-scalar-reduction-4}, and \eqref{contact:endpoint-owner-321-scalar-reduction-8} yields
+
+\[
+ k\ge{2\over5}+{\sqrt V\over15C}
+       \{22V^2+(z^3+2z)\phi(z)\}.
+\tag{C.30.10}\label{contact:endpoint-owner-321-scalar-reduction-10}
+\]
+
+For $z\ge 0$, the braces are positive. For $-3/4\le z\le 0$, their value exceeds
+$1/5-(123/64)(31/100)=-2533/6400$, because $22v_0^2>1/5$.
+Moreover $\sqrt{V}/(15C)<(5/7)/(49/8)=40/343$. In either sign case,
+
+\[
+ \boxed{k>{7\over20}.}
+\tag{C.30.11}\label{contact:endpoint-owner-321-scalar-reduction-11}
+\]
+
+The exact margin in the negative sign case is
+$2/5-(40/343)(2533/6400)-7/20=211/54880>0$.
+
+\paragraph{Exact event slack, retaining the independent probabilities}
+
+Let $p_0,m,p_2$ and $q_0,n,q_2$ be the actual probabilities. The nonnegative
+bounded-sum slack is
+
+\[
+ S:=2(1-F)-\{V-z\sqrt V+z^2V\}
+\]
+\[
+ =T_1mq_0+T_2p_0n+s(1-s)mn
+ +(1-a)(2+a)mq_2+(1-b)(2+b)p_2n.
+\tag{C.30.12}\label{contact:endpoint-owner-321-scalar-reduction-12}
+\]
+
+Since $\mu>a$, $\nu>b$, the high masses satisfy
+$p_2>a(1-m)$ and $q_2>b(1-n)$. After grouping each low/high pair in \eqref{contact:endpoint-owner-321-scalar-reduction-12},
+
+\[
+ S>A_0m(1-n)+B_0n(1-m)+s(1-s)mn,
+\]
+
+where $A_0=(1-a)(a+2b)$ and $B_0=(1-b)(b+2a)$. Inserting \eqref{contact:endpoint-owner-321-scalar-reduction-7}, \eqref{contact:endpoint-owner-321-scalar-reduction-9} into
+the first two positive terms proves
+
+\[
+ S>{k\over2M}\{aA_0+bB_0\}
+ ={k\over2M}\{s^2(1-s)+p(s+2)\}.
+\tag{C.30.13}\label{contact:endpoint-owner-321-scalar-reduction-13}
+\]
+
+The expression in braces is at least $4pd$. To see this, subtract $4pd$:
+$s^2(1-s)+p(5s-2)-4p^2$ is concave in $p \in [0,s^2/4]$. Its endpoint
+values are $s^2(1-s)\ge 0$ and $s^2(2+s-s^2)/4>0$.
+Using $g=pd/M$, \eqref{contact:endpoint-owner-321-scalar-reduction-13} therefore yields the simple exact inequality
+
+\[
+ \boxed{S>2kg\qquad(z\ge-3/4).}
+\tag{C.30.14}\label{contact:endpoint-owner-321-scalar-reduction-14}
+\]
+
+In particular, \eqref{contact:endpoint-owner-321-scalar-reduction-11} proves
+
+\[
+ \boxed{g>1/20,\ z\ge-3/4\quad\Longrightarrow\quad S>7/200.}
+\tag{C.30.15}\label{contact:endpoint-owner-321-scalar-reduction-15}
+\]
+
+\paragraph{Three fixed scalar rectangles suffice}
+
+The expressions $P,B,Q$ below are upper bounds obtained respectively from $F\le 1$,
+the bounded sum with slack $S_0$, and Cantelli for $z\le 0$:
+
+\[
+ P=15(1-\Phi(z))+(3z-z^3)\phi(z)-A_0V^2-6c_0/\sqrt V,
+\]
+\[
+ B=P-{15\over2}\{V(1+z^2)-z\sqrt V+S_0\},\qquad
+ Q=P+15\{(1+z^2)^{-1}-1\}.
+\tag{C.30.16}\label{contact:endpoint-owner-321-scalar-reduction-16}
+\]
+
+Every candidate requires each applicable expression to be strictly positive,
+including at $C=c_0$, by the strict probability and bounded-sum
+comparisons used in Section~\ref{contact:three-owner-321-scalar-closure}.
+For the positive prescribed slack use
+\eqref{contact:endpoint-owner-321-scalar-reduction-15}; for negative
+thresholds Cantelli equality is impossible for a sum with at least five
+support points.
+The following three closed rectangles cover all possibilities:
+
+\begin{center}\small
+\begin{tabular}{llll}\toprule
+Case & Coefficient $A_0$ & Slack $S_0$ & $z$ interval\\\midrule
+$g\le 1/20$ & 40 & 0 & $[-5/4,3/5]$\\
+$g>1/20$, negative tail & 22 & 0 & $[-5/4,-3/4]$\\
+$g>1/20$, remaining thresholds & 22 & $7/200$ & $[-3/4,3/5]$\\
+\bottomrule\end{tabular}\end{center}
+
+Every row has the same $V$ interval $[2401/24964,1/2]$. The first row uses
+\eqref{contact:endpoint-owner-321-scalar-reduction-3} directly; the others use \eqref{contact:endpoint-owner-321-scalar-reduction-4}, and the last also uses \eqref{contact:endpoint-owner-321-scalar-reduction-15}.
+Closed shared faces do not omit any genuine candidate.
+
+The whole-box derivatives are the ones in
+Section~\ref{contact:three-owner-321-scalar-closure}, with
+the displayed coefficient and slack. They hold independently of all
+candidate restrictions throughout these rectangles.
+The fixed certificate \texttt{endpoint\_owner321} covers all three
+rectangles and proves that every point has a nonpositive applicable
+expression in \eqref{contact:endpoint-owner-321-scalar-reduction-16}.
+Hence the endpoint-representation case has no maximizing pair.
+Section~\ref{sec:verification} gives the enclosure and partition rules.
+
+\subsection{Two triples: the collided asymmetric event}\label{contact:two-triple-collision-221-reduction}
+
+
+\[
+ K=R+z\phi(z)/(3C),\qquad \tau=CK^3,
+ \qquad \sigma=\phi(z)/(CK^2).
+\]
+
+The elementary fixed-two-coordinate bounds give
+$1/2<K<8/5$, $1/20<\tau<2$, and $49/120\le C<227/500$.
+All support quantities below are divided by $K$.
+
+\paragraph{Supports, actual levels, and exact compact charts}
+
+The maximal included cells are $(1,1)$ and $(2,0)$. A genuine selected
+collision therefore has these two representations. Write
+
+\[
+ T_1=(-a,c,b),\qquad T_2=(-t,d,e),
+ \qquad h=b-c=t+d>0,
+\]
+\[
+ u=a+c>0,\qquad A_1=a+b=u+h,
+ \qquad v=e-d>0,\qquad A_2=t+e=h+v.
+\tag{C.31.1}\label{contact:two-triple-collision-221-reduction-1}
+\]
+
+The unused corner $(0,2)$ is excluded, giving the strict geometric condition
+
+\[
+ A_2>A_1,\qquad\text{equivalently }v>u.
+\tag{C.31.2}\label{contact:two-triple-collision-221-reduction-2}
+\]
+
+Denote low/middle/high probabilities by $\ell_i,m_i,r_i$, and put
+$q_i=\ell_i+m_i=1-r_i$. The first triple's deletion levels are
+$(q_2,q_2,\ell_2)$; the second triple's levels are $(1,q_1,0)$.
+The first low support and the second high support are nonselected. They are
+smooth minima of their global cubic majorants.
+
+In the first triple the negative minimum $-a$ and the selected middle contact
+$c$ have equal height and nonpositive derivatives. The complete equal-height
+charts from the contact formulas above are
+
+\[
+ \begin{array}{c|c|c}
+ &a(k)&c(k)\\ \hline
+ \text{negative}&\frac12+\frac{k}{4}&\frac{k-1}{2}\\[2mm]
+ \text{positive}&\frac{3(1+k)^2}{2(k^3+3k+2)}&k a(k)
+ \end{array}
+ \quad 0\leq k\leq1.
+\tag{C.31.3}\label{contact:two-triple-collision-221-reduction-3}
+\]
+
+The next positive minimum is
+
+\[
+ B(a)=\frac{1+\sqrt{1+4a(1-a)}}2.
+\]
+
+The selected high contact satisfies $0<b\le B(a)$. Set $b=wB(a)$,
+$0\le w\le 1$, retaining $b>c$ as a strict necessary condition. The genuine
+level drop below the negative minimum ensures $a<1$; including the boundary
+$a=1$ in \eqref{contact:two-triple-collision-221-reduction-3} is harmless because the level drop is tested separately.
+
+For the second triple its nonselected high contact has level zero. Its scaled
+cubic majorant is exactly
+
+\[
+ g_e(x)=|x|^3-\frac32x^2-3e(e-1)x+B_0,
+ \qquad B_0=e^2(2e-3/2).
+\tag{C.31.4}\label{contact:two-triple-collision-221-reduction-4}
+\]
+
+Necessarily $e\ge 1$. Indeed a smooth positive minimum has $e>1/2$; if
+$1/2<e<1$, the corresponding negative minimum has smaller potential value.
+That contradicts global majorization of a nonnegative deletion CDF when
+$g_e(e)=0$. More generally the same argument applies to a nonselected positive
+minimum at any deletion level, since the deletion CDF is nonincreasing.
+
+At the low contact set
+
+\[
+ G=g_e(-t)=t^3-\frac32t^2+3e(e-1)t+B_0=1/\tau.
+\tag{C.31.5}\label{contact:two-triple-collision-221-reduction-5}
+\]
+
+Thus $1/2<G<20$. It follows that $1\le e<5/2$ and $0<t<7/2$.
+For $e\ge 5/2$, the expression in \eqref{contact:two-triple-collision-221-reduction-5} increases with $t\ge 0$ and is at
+least $B_0\ge 175/8>20$. For $t\ge 7/2$, it is at least
+$t^3-(3/2)t^2+1/2\ge 25>20$.
+
+Use $e=1+(3/2)E$, $t=(7/2)T$, and $d=h-t$. Together with \eqref{contact:two-triple-collision-221-reduction-3}, the
+two parameter cubes are $(k,w,E,T,m_1) \in [0,1]^5$.
+
+\paragraph{Contact values determine the remaining masses}
+
+The first triple's scaled level difference is
+
+\[
+ U=a^2(3/2-2a)-b^3+\frac32b^2+3a(1-a)b>0.
+\tag{C.31.6}\label{contact:two-triple-collision-221-reduction-6}
+\]
+
+Actual deletion levels give
+
+\[
+ \boxed{m_2=U/G.}
+\tag{C.31.7}\label{contact:two-triple-collision-221-reduction-7}
+\]
+
+Centering determines all remaining probabilities:
+
+\[
+ \ell_1=\frac{b-m_1h}{A_1},\quad
+ r_1=\frac{a-m_1u}{A_1},\qquad
+ \ell_2=\frac{e-m_2v}{A_2},\quad
+ r_2=\frac{t-m_2h}{A_2}.
+\tag{C.31.8}\label{contact:two-triple-collision-221-reduction-8}
+\]
+
+Require all six masses strictly positive. The second middle contact supplies
+the exact equation
+
+\[
+ \boxed{(1-r_1)G-g_e(d)=0.}
+\tag{C.31.9}\label{contact:two-triple-collision-221-reduction-9}
+\]
+
+In the open region $u>0$, equation \eqref{contact:two-triple-collision-221-reduction-9} can eliminate the last free mass:
+$m_1=(A_1 g_e(d)/G-b)/u$. The five-cube formulation retains $m_1$ and
+\eqref{contact:two-triple-collision-221-reduction-9}, avoiding a division whose denominator vanishes on the coalescing-support
+face. This is a numerical choice, not an extra mathematical degree of freedom
+in an actual solution.
+
+\paragraph{Collision-preserving gradients and actual moments}
+
+Define the nonnegative contact slopes
+
+\[
+ H_c=3[a(1-a)+c-c|c|],\quad H_b=3[a(1-a)+b-b^2],
+\]
+\[
+ H_t=3[t^2-t+e(e-1)],\quad H_d=3[e(e-1)+d-d|d|].
+\tag{C.31.10}\label{contact:two-triple-collision-221-reduction-10}
+\]
+
+Moving the two support points in either selected representation by opposite
+amounts, with the usual recentering of the two marginals, preserves both
+selected raw sums. These two admissible variations give
+
+\[
+ \boxed{m_1H_c=m_2H_d,\qquad r_1H_b=\ell_2H_t.}
+\tag{C.31.11}\label{contact:two-triple-collision-221-reduction-11}
+\]
+
+Consequently
+
+\[
+ \sigma=m_1H_c+r_1H_b=\ell_2H_t+m_2H_d>0.
+\tag{C.31.12}\label{contact:two-triple-collision-221-reduction-12}
+\]
+
+The scaled variances and third absolute moments are
+
+\[
+ V_1=ab-m_1uh,\quad V_2=te-m_2hv,\quad V=V_1+V_2,
+\]
+\[
+ R_1=\ell_1a^3+m_1|c|^3+r_1b^3,
+ \quad R_2=\ell_2t^3+m_2|d|^3+r_2e^3,
+ \quad R_0=R_1+R_2.
+\tag{C.31.13}\label{contact:two-triple-collision-221-reduction-13}
+\]
+
+The selected scaled sum is $o=b-t=c+d$. Thus
+
+\[
+ K=V^{-1/2},\quad z=o/\sqrt V,\quad C=V^{3/2}/G,
+\]
+\[
+ \boxed{3(V-R_0)-\sigma o=0,\qquad
+ \sigma\sqrt V-G\phi(o/\sqrt V)=0.}
+\tag{C.31.14}\label{contact:two-triple-collision-221-reduction-14}
+\]
+
+The actual closed CDF is
+
+\[
+ F=q_2-m_2r_1.
+\]
+
+Its exact normal equation and a useful necessary positive expression are
+
+\[
+ \boxed{G[F-\Phi(o/\sqrt V)]-R_0=0,}
+\tag{C.31.15}\label{contact:two-triple-collision-221-reduction-15}
+\]
+\[
+ \boxed{B_0-\tfrac32V_2-R_1>0.}
+\tag{C.31.16}\label{contact:two-triple-collision-221-reduction-16}
+\]
+
+Equation \eqref{contact:two-triple-collision-221-reduction-16} follows by averaging the second dual \eqref{contact:two-triple-collision-221-reduction-4}, giving
+$GF=R_2-(3/2)V_2+B_0$, and using $\Phi(z)=F-R_0/G>0$.
+
+The fixed-two-coordinate and dominant-coordinate results impose
+
+\[
+ \frac{25}{64}<V<4,\qquad V_i>\frac{13}{200}V\quad(i=1,2),
+\]
+\[
+ (49/120)^2G^2\le V^3<(227/500)^2G^2.
+\tag{C.31.17}\label{contact:two-triple-collision-221-reduction-17}
+\]
+
+The unconditional two-triple mixture-window result additionally requires
+
+\[
+ 3(W_1+W_2)>V,
+\tag{C.31.18}\label{contact:two-triple-collision-221-reduction-18}
+\]
+
+where the actual canonical variance widths are
+$W_1=\min(bu,ah)$ and $W_2=\min(eh,tv)$. Equivalently,
+$W_1=bu$ for $c\le 0$ and $W_1=ah$ for $c\ge 0$, while
+$W_2=(eh+tv-|d|A_2)/2$. The adjacent-gap products $uh,hv$ only
+give upper bounds for these widths; they are not the canonical widths.
+
+\paragraph{The full actual variance Hessian, with cleared denominators}
+
+For the centered unit-variance directions of the two triples, the actual CDF
+first and mixed derivatives are
+
+\[
+ L_1=-\frac{m_2V}{hA_1},\qquad
+ L_2=\frac{(r_1A_2-h)V}{hvA_2},\qquad
+ g=\frac{V^2}{A_1h^2v}>0.
+\tag{C.31.19}\label{contact:two-triple-collision-221-reduction-19}
+\]
+
+These follow directly from the deletion levels and signed weights in
+Proposition~\ref{prop:finite-contact-exclusion}.
+In particular the mixed coefficient is that of the actual $221$ event.
+
+Use centered mass parameters whose individual variations have raw
+total-variance derivative $V$; these are unit-variance directions
+after standardization. Write
+\[
+ J=F-\Phi(o/\sqrt V)-\frac{CR}{V^{3/2}},
+\]
+where $C$ is fixed, the raw quantities $F,V,R$ vary, and the raw
+threshold $o$ stays fixed.
+At the attained maximum, both first derivatives vanish and the Hessian is
+negative semidefinite. If $\gamma_i$ is the scaled second divided difference
+of $|x|^3$, put
+
+\[
+ B_i=\frac{15R_0+G\phi'''(z)}4-3V\gamma_i=-GJ_{ii}.
+\]
+
+The full condition is
+
+\[
+ B_1\geq0,\quad B_2\geq0,\quad
+ B_1B_2-\left[Gg-\frac{B_1+B_2}{2}\right]^2\geq0.
+\tag{C.31.20}\label{contact:two-triple-collision-221-reduction-20}
+\]
+
+Eliminating both divided differences and the normal derivative gives polynomial necessary inequalities. The variance identity
+in Section~\ref{contact:one-triple-bernoulli-collision-211}
+is
+
+\[
+ 4J_{ii}=12L_i+3D+(z^3+3z)\phi(z),
+ \qquad D=\frac{R_0}{G}=\frac{CR_0}{V^{3/2}}.
+\]
+
+For completeness, the raw third-moment derivative in this direction is
+$V\gamma_i$. The first derivative gives
+$C\gamma_i/\sqrt V=L_i+3D/2+z\phi(z)/2$, while the second gives
+$J_{ii}=3C\gamma_i/\sqrt V-(15D+\phi'''(z))/4$.
+Eliminating $\gamma_i$ proves the displayed identity.
+
+Using \eqref{contact:two-triple-collision-221-reduction-14}, define
+
+\[
+ M=3R_0V+\sigma o(o^2+3V),\qquad
+ D_*=4Vh^2A_1vA_2>0,
+\]
+\[
+ P_1=12V^2Uh vA_2-Mh^2A_1vA_2,
+\]
+\[
+ P_2=-12GV^2(r_1A_2-h)hA_1-Mh^2A_1vA_2,
+ \qquad Q=4GV^3A_2.
+\tag{C.31.21}\label{contact:two-triple-collision-221-reduction-21}
+\]
+
+Direct substitution gives $P_i=D_*B_i$ and $Q=D_*Gg$. Therefore the
+equivalent denominator-cleared necessary conditions are
+
+\[
+ \boxed{P_1\geq0,\qquad P_2\geq0,\qquad
+ 4P_1P_2-(2Q-P_1-P_2)^2\geq0.}
+\tag{C.31.22}\label{contact:two-triple-collision-221-reduction-22}
+\]
+
+Only division by $G>1/2$ and the positive outer spans is needed to evaluate
+the necessary system. The Hessian tests remain finite when one of
+the adjacent gaps approaches zero.
+
+\paragraph{Additional global-dual and threshold-gap tests}
+
+At a maximizing threshold, every excluded sum atom at $z+\delta$ with
+$\delta>0$ has mass at most $\Phi(z+\delta)-\Phi(z)\le \phi(0)\delta$.
+Since $\phi(0)<2/5$, a scaled gap $\Delta=\delta/K$ and atom mass $w_0$
+must satisfy
+
+\[
+ 25w_0^2V<4\Delta^2.
+\tag{C.31.23}\label{contact:two-triple-collision-221-reduction-23}
+\]
+
+Four available excluded atoms give $(w_0,\Delta)$ respectively
+
+\[
+ (\ell_1r_2,A_2-A_1),\quad (m_1r_2,v),
+ \quad(r_1m_2,h),\quad(r_1r_2,A_2).
+\]
+
+For the first pair, the strict sum-gap \eqref{contact:two-triple-collision-221-reduction-2} cannot approach zero with a fixed
+positive atom mass. This controls the transition from $221$ to $321$ at
+positive masses, rather than treating it as a missing boundary face.
+
+Two further tests follow by evaluating the global majorants at unused jumps.
+For the first dual, the point $o-e=b-A_2<-a$ has deletion level one. The
+negative cubic factors at $-a$, giving
+
+\[
+ \boxed{(A_2-A_1)^2(A_2-b+2a-3/2)-r_2G\geq0.}
+\tag{C.31.24}\label{contact:two-triple-collision-221-reduction-24}
+\]
+
+For the second dual, $o+a=A_1-t$ lies strictly between $d$ and $e$,
+and its deletion level is $\ell_1$. Hence
+
+\[
+ \boxed{g_e(A_1-t)-\ell_1G\geq0.}
+\tag{C.31.25}\label{contact:two-triple-collision-221-reduction-25}
+\]
+
+These tests use only global majorization and the actual convolution levels.
+\subsection{Two triples: eliminating the masses}\label{contact:two-triple-221-mass-elimination}
+Keep the contact scale of Section~\ref{contact:two-triple-collision-221-reduction}.
+
+
+
+Use the notation and equal-height charts of Section~\ref{contact:two-triple-collision-221-reduction}:
+
+\[
+ T_1=(-a,c,b),\quad T_2=(-t,d,e),\quad
+ u=a+c,\ h=b-c=t+d,\ v=e-d,
+\]
+\[
+ A_1=a+b=u+h,\quad A_2=t+e=h+v,\quad A_2>A_1.
+\]
+
+The supports depend on only $(k,w,E,T) \in [0,1]^4$ in each chart:
+$a,c$ are the equal-height functions, $b=w B(a)$, $e=1+3E/2$,
+$t=7T/2$, and $d=b-c-t$. The eliminated variable was the first middle mass.
+
+\paragraph{Contact height determines the useful mass products}
+
+Let $G=g_e(-t)$, $g=g_e(d)$, and $U$ be the first triple's positive level
+drop, as in the reduction. Put
+
+\[
+ N=A_1g-bG,\qquad N_0=bG-hg,\qquad Z=N/G.
+\tag{C.32.1}\label{contact:two-triple-221-mass-elimination-1}
+\]
+
+The second middle deletion level gives $q_1=1-r_1=g/G$. Centering the first
+coordinate then yields
+
+\[
+ \boxed{r_1=1-g/G,\quad m_1u=Z,\quad
+ m_1={N\over uG},\quad \ell_1={N_0\over uG}.}
+\tag{C.32.2}\label{contact:two-triple-221-mass-elimination-2}
+\]
+
+Thus all three masses are positive exactly when $N>0$, $N_0>0$, $G-g>0$
+(with $G,u>0$). They sum to one and have mean zero by direct substitution.
+Use $Z=m_1u$; the formulas below then require no division by $u$.
+The second coordinate is as follows:
+
+\[
+ m_2=U/G,\qquad \ell_2=(e-m_2v)/A_2,\qquad
+ r_2=(t-m_2h)/A_2.
+\tag{C.32.3}\label{contact:two-triple-221-mass-elimination-3}
+\]
+
+\paragraph{Equal height removes the apparent cubic-moment singularity}
+
+The first low and middle contacts have equal cubic-majorant height.
+Subtracting those values gives the exact identity
+
+\[
+ |c|^3-a^3=(a+c)\left[\frac32(c-a)+3a(1-a)\right].
+\]
+
+Define its bracket as $W_c$. Since $\ell_1+m_1=q_1$, the first variance and
+sum of third absolute moments become
+
+\[
+ \boxed{V_1=ab-hZ,\qquad
+ R_1=q_1a^3+ZW_c+r_1b^3.}
+\tag{C.32.4}\label{contact:two-triple-221-mass-elimination-4}
+\]
+
+These are exactly the centered raw moments. Neither contains a small-gap
+denominator. The same holds for the selected derivative. The quotient
+$J_c=H_c/u$ has the explicit closed-chart extensions
+
+\[
+ \boxed{
+ J_c=\begin{cases}
+ u=3k/4,&\text{negative chart},\\[1mm]
+ \displaystyle{3(1-k)(k^2+4k+1)\over2(k^3+3k+2)},
+       &\text{positive chart}.
+ \end{cases}}
+\tag{C.32.5}\label{contact:two-triple-221-mass-elimination-5}
+\]
+
+For the negative chart, $H_c=u^2$. For the positive chart, substitute
+$c=ka$ into $H_c/u=3[1-a(1+k^2)/(1+k)]$, and then the exact rational formula
+for $a(k)$. Hence
+
+\[
+ \boxed{\sigma=ZJ_c+r_1H_b.}
+\tag{C.32.6}\label{contact:two-triple-221-mass-elimination-6}
+\]
+
+The two retained representation-gradient equations can be written
+
+\[
+ \boxed{N J_c-UH_d=0,\qquad
+ A_2(G-g)H_b-(eG-Uv)H_t=0.}
+\tag{C.32.7}\label{contact:two-triple-221-mass-elimination-7}
+\]
+
+They are just the original equations multiplied by candidate-positive
+factors. The second-middle height equation has been used exactly, not
+discarded.
+
+\paragraph{Remaining equations, probability signs and curvature}
+
+Set $V_2=te-m_2hv$ and compute $R_2$ from the second raw support and masses.
+Then $V=V_1+V_2$, $R=R_1+R_2$, $o=b-t$, $z=o/\sqrt{V}$. The actual event is
+
+\[
+ F=\ell_2+m_2q_1.
+\]
+
+The remaining three zero equations are as follows:
+
+\[
+ 3(V-R)-\sigma o=0,\qquad
+ \sigma^2V-G^2\phi(z)^2=0,\qquad
+ G[F-\Phi(z)]-R=0.
+\tag{C.32.8}\label{contact:two-triple-221-mass-elimination-8}
+\]
+
+The positive slope requirement retains the sign of the unsquared density
+equation. All ratio, raw moment, variance-fraction, width, diameter and
+majorant tests remain necessary. In particular the useful CDF expression remains
+$e^2(2e-3/2)-(3/2)V_2-R_1>0$.
+
+The full variance Hessian in
+\eqref{contact:two-triple-collision-221-reduction-21}--\eqref{contact:two-triple-collision-221-reduction-22} uses
+only $U$, $V$, $R$, $\sigma$, $r_1$, $h$, $v$, $A_1$, $A_2$, $G$ and $o$.
+All are now functions of the four retained parameters with no division by
+$u$, so the identical three cleared Hessian inequalities can be retained.
+For an independent original-Hessian formulation, its first divided
+difference also has the regular expression
+
+\[
+ \gamma_1={b^3-a^3-A_1W_c\over hA_1}.
+\tag{C.32.9}\label{contact:two-triple-221-mass-elimination-9}
+\]
+
+This follows by subtracting the two secant slopes and using the equal-height
+identity. It likewise has no $u$ denominator.
+
+\paragraph{Uniform bounds for the denominators that remain}
+
+The canonical widths satisfy
+
+\[
+ W_1=\min(bu,ah),\quad W_2=\min(eh,tv),\quad
+ W_1+W_2>V/3>25/192.
+\]
+
+Since $a<1$ and $e<5/2$, their sum is at most $(a+e)h<(7/2)h$.
+Since $v>u$, $b<B(a)<5/4$, and $t<7/2$, it is also smaller than
+$(b+t)v<(19/4)v$. Therefore
+
+\[
+ \boxed{h>25/672,\qquad v>25/912.}
+\tag{C.32.10}\label{contact:two-triple-221-mass-elimination-10}
+\]
+
+Also $V_1>13/512$ and $V_1\le ab<b$ imply $b>13/512$.
+Similarly $t>13/1280$ follows from $V_2>13/512$ and $e<5/2$.
+The outer spans obey $A_1>1/2$, $A_2\ge 1$, and $G>1/2$ was already proved.
+Thus every remaining rational moment/curvature denominator is uniformly
+bounded away from zero at a genuine candidate. The first gap $u$ may tend
+to zero, but no evaluation denominator uses it.
+
+\paragraph{Global-dual and atom-gap tests without individual first masses}
+
+The first unused dual jump is the inequality already stated for $g_a$. For the second unused jump,
+multiply its necessary inequality by $u>0$ and use \eqref{contact:two-triple-221-mass-elimination-2}:
+
+\[
+ \boxed{u\,g_e(A_1-t)-N_0\geq0.}
+\tag{C.32.11}\label{contact:two-triple-221-mass-elimination-11}
+\]
+
+For the excluded low/high and middle/high atoms, multiply the squared
+atom-gap inequalities by $(uG)^2>0$:
+
+\[
+ 4(A_2-A_1)^2u^2G^2-25N_0^2r_2^2V>0,
+\]
+\[
+ 4v^2u^2G^2-25N^2r_2^2V>0.
+\tag{C.32.12}\label{contact:two-triple-221-mass-elimination-12}
+\]
+
+The other two atom-gap inequalities need only $r_1,m_2,r_2$, already
+available without $u$ division. Two aggregate tests remain nontrivial on
+the coalescing face. At the middle/high sum, both first-low/second-high and
+first-middle/second-high atoms have entered the CDF, with total mass
+$q_1r_2$ and maximal raw gap $v$. At the largest sum, the entire excluded
+mass $1-F$ has entered, with raw gap $A_2$. Therefore
+
+\[
+ \boxed{4v^2-25(q_1r_2)^2V>0,\qquad
+ 4A_2^2-25(1-F)^2V>0.}
+\tag{C.32.13}\label{contact:two-triple-221-mass-elimination-13}
+\]
+
+Both follow from threshold maximality and $\phi(0)<2/5$, exactly as the
+individual atom-gap tests. Coincidences among later atoms cause no problem.
+
+Each genuine collided maximum is covered by the support chart
+and maps into one of the two original closed four-cubes. Conversely, on
+$u,G>0$, the retained probability signs reconstruct a normalized centered
+first triple through \eqref{contact:two-triple-221-mass-elimination-2}. The closed face $u=0$ is included by continuity.
+\subsection{Support geometry inequalities}\label{contact:candidate-support-geometry-closure}
+The following identities are used in the contact-scale charts of Sections~\ref{contact:collision-210-contact-reduction} and~\ref{contact:two-triple-collision-221-reduction}.
+
+
+
+If the candidate values satisfy an affine equation
+$\sum_j a_j x_j=b$, with fixed nonzero exact coefficients, then for every
+$i$ they satisfy
+
+\[
+ x_i={b-\sum_{j\ne i}a_jx_j\over a_i}. \tag{C.33.1}\label{contact:candidate-support-geometry-closure-1}
+\]
+
+Evaluate the right side on current candidate intervals and intersect with
+the interval for $x_i$. This preserves every candidate. Any fixed
+sequence of such operations is valid by induction; stopping before a
+fixed point only weakens the resulting test. No derivative is involved.
+The coefficients used below are integers or exact half-integers.
+
+For collided $210$, use all support equations
+
+\[
+ A=t+b=h+v,\quad h=t+c=d+e,\quad v=b-c,
+ \quad o=c-d=e-t,
+\]
+
+and the probability, variance, and third-moment sums. For collided $221$, use
+
+\[
+ A_1=a+b=u+h,\quad A_2=t+e=h+v,\quad
+ u=a+c,\quad h=b-c=t+d,\quad v=e-d,
+\]
+\[
+ \delta=A_2-A_1=v-u,\qquad o=b-t=c+d.
+\]
+
+On its chart with nonpositive first middle contact also use $3a-u=3/2$, $3c-2u=-3/2$,
+and $4u=3k$, where $k$ is that chart's parameter (the contact scale remains
+one). These are the exact chart identities, including the retained $u=0$
+face. On the positive chart $a>0$, so $k=c/a$ may be intersected before
+re-evaluating its rational chart formulas.
+
+After a support interval narrows, re-evaluate the original cubic duals and
+their slopes on those narrower candidate values. For example in $221$,
+$G=g_e(-t)$, $g=g_e(d)$, and $m_2=U/G$ remain exact candidate equalities.
+These are not ambient derivatives of the support-chart residuals.
+
+Two existing unused-jump majorizations are also useful in inverse form:
+
+\[
+ r_2\le {\delta^2(A_2-b+2a-3/2)\over G},\qquad
+ Y\le {u\,g_e(A_1-t)\over G}. \tag{C.33.2}\label{contact:candidate-support-geometry-closure-2}
+\]
+
+Here $Y=u \ell_1$; \eqref{contact:candidate-support-geometry-closure-2} never divides by $u$. The factor in the first bound
+is nonnegative at every candidate since $a\ge 1/2$ and
+$A_2-b+2a-3/2=\delta+3a-3/2$. On the negative chart it is exactly
+$\delta+u=v$, so the first bound simplifies to
+
+\[
+ \boxed{\quad r_2\le\delta^2v/G.\quad} \tag{C.33.3}\label{contact:candidate-support-geometry-closure-3}
+\]
+
+The potential $g_e(A_1-t)$ in the second bound is nonnegative because the
+global cubic majorant dominates a nonnegative deletion CDF. Its factorized
+form is $\delta^2(3e-\delta-3/2)$ when $A_1-t\ge 0$, and its absolute-cubic form
+works without a sign restriction. Divisions by $G$, outer spans and $a$
+use their already proved positive lower bounds.
+\subsection{The support Hessian with fixed moments}\label{contact:two-triple-221-fixed-moment-support-hessian}
+Keep the contact scale of Section~\ref{contact:two-triple-collision-221-reduction}.
+
+
+
+Keep the scaled supports $(-a,c,b)$, $(-t,d,e)$, gaps
+$u=a+c$, $h=b-c=t+d$, $v=e-d$, spans $A_1=u+h$, $A_2=h+v$, and
+$A_2>A_1$. Let $G$, the six masses, and the contact slopes have their
+previous meanings. Write $Z=u m_1$, $J_c=H_c/u$, and $L(x)=6|x|-3$.
+The selected-support equations are
+
+\[
+ m_1H_c=m_2H_d,\qquad r_1H_b=\ell_2H_t. \tag{C.34.1}\label{contact:two-triple-221-fixed-moment-support-hessian-1}
+\]
+
+\paragraph{An actual two-parameter family}
+
+Vary the supports as
+
+\[
+ (-a,c+\epsilon,b+\eta),\qquad (-t-\eta,d-\epsilon,e).
+\tag{C.34.2}\label{contact:two-triple-221-fixed-moment-support-hessian-2}
+\]
+
+For each marginal separately choose its three masses to keep its total
+mass, mean zero, and original variance fixed. The two $3\times3$ Vandermonde
+systems have unique smooth solutions near every genuine candidate. The
+base masses are positive, so both signs of small $\epsilon$ and $\eta$ are
+admissible. Both selected raw sums remain exactly $o=c+d=b-t$ and all
+other event inequalities remain strict. Thus the event matrix is the
+actual $221$ matrix throughout this family. Its CDF is
+$F=\ell_2+m_2(1-r_1)$.
+
+Both the centered threshold and the total variance are fixed. The normal
+CDF term is therefore constant, and the relevant objective is $F-R/G$.
+Let $P_1,P_2$ be the scaled cubic dual potentials. Their values at the three
+supports equal $G$ times the actual deletion probabilities. Their first
+derivatives are respectively $(0,-H_c,-H_b)$ and $(-H_t,-H_d,0)$, and their
+second derivatives are $L(x)$. Adding the fixed mean, variance and mass
+constraints to the objective changes it only by a constant on \eqref{contact:two-triple-221-fixed-moment-support-hessian-2}.
+The resulting Lagrangian has zero derivatives in all mass variables at
+the base point.
+
+Consequently, for two tangent support motions $s,t$, its Hessian multiplied
+by $G$ is exactly
+
+\[
+ G\sum_{ij} I_{ij}(w_{1i}^{s}w_{2j}^{t}+w_{1i}^{t}w_{2j}^{s})
+ -\sum_{ij}p_{ij}L(x_{ij})\dot x_{ij}^{s}\dot x_{ij}^{t}
+ -\sum_{ij}P_i'(x_{ij})(w_{ij}^{s}\dot x_{ij}^{t}
+                         +w_{ij}^{t}\dot x_{ij}^{s}). \tag{C.34.3}\label{contact:two-triple-221-fixed-moment-support-hessian-3}
+\]
+
+There are no second derivatives of the masses in \eqref{contact:two-triple-221-fixed-moment-support-hessian-3}: their coefficients
+are the zero first mass derivatives of this Lagrangian. The support paths
+are affine. Equation \eqref{contact:two-triple-221-fixed-moment-support-hessian-1} makes both first support derivatives zero.
+
+\paragraph{Exact weights and regular Hessian}
+
+For a marginal with support points $x_0,x_1,x_2$, let $L_i$ be its
+quadratic Lagrange basis, defined by $L_i(x_j)=\ind_{\{i=j\}}$.
+If $x_j$ moves with velocity $s$, preserving mass, mean, and variance
+requires the probability derivative $w_i=-p_j s L_i'(x_j)$.
+The entries needed in the actual event are
+
+\[
+\begin{array}{c|cc}
+ &\epsilon&\eta\\ \hline
+ w_{1r}&-Z/(A_1h)&-r_1(A_1+h)/(A_1h)\\
+ w_{1m}&-m_1(h-u)/(uh)&r_1A_1/(uh)\\
+ w_{2m}&m_2(v-h)/(hv)&\ell_2A_2/(hv)\\
+ w_{2\ell}&-m_2v/(hA_2)&-\ell_2(h+A_2)/(hA_2).
+\end{array} \tag{C.34.4}\label{contact:two-triple-221-fixed-moment-support-hessian-4}
+\]
+
+The mixed event form is exactly $-w_{1r}w_{2m}$. Substitution in \eqref{contact:two-triple-221-fixed-moment-support-hessian-3}, followed
+only by \eqref{contact:two-triple-221-fixed-moment-support-hessian-1}, gives the scaled Hessian
+
+\[
+ \begin{pmatrix}-C_m&B\\ B&-C_e\end{pmatrix}\preceq0, \tag{C.34.5}\label{contact:two-triple-221-fixed-moment-support-hessian-5}
+\]
+
+where
+
+\[
+ C_m=m_2L(d)+Z\left({L(c)+2J_c\over u}-{2J_c\over v}\right)
+       -{2GZm_2(v-h)\over A_1h^2v}, \tag{C.34.6}\label{contact:two-triple-221-fixed-moment-support-hessian-6}
+\]
+\[
+ C_e=r_1L(b)+\ell_2L(-t)
+       +2r_1H_b\left({1\over A_1}-{1\over A_2}\right)
+       -{2Gr_1\ell_2A_2(A_1+h)\over A_1h^2v}, \tag{C.34.7}\label{contact:two-triple-221-fixed-moment-support-hessian-7}
+\]
+\[
+ \begin{split}
+ B={G\{Z\ell_2A_2+r_1m_2(A_1+h)(v-h)\}\over A_1h^2v}
+   -{ZH_b\over A_1h}+{r_1A_1J_c\over h}
+   +{m_2vH_t\over hA_2}-{\ell_2A_2H_d\over hv}.
+ \end{split} \tag{C.34.8}\label{contact:two-triple-221-fixed-moment-support-hessian-8}
+\]
+
+Thus every genuine candidate satisfies $C_m\ge 0$, $C_e\ge 0$, and
+$C_m\,C_e-B^2\ge 0$. On the negative first-middle chart, $J_c=u$, $L(c)=-4u$,
+so \eqref{contact:two-triple-221-fixed-moment-support-hessian-6} has the regular form
+
+\[
+ \boxed{C_m=m_2L(d)-2Z(1+u/v)
+                 -{2GZm_2(v-h)\over A_1h^2v}.} \tag{C.34.9}\label{contact:two-triple-221-fixed-moment-support-hessian-9}
+\]
+
+\paragraph{Analytic restriction when $c\le 0$ and $v\ge h$}
+
+In this genuine subcase $Z>0$, $m_2>0$, and $0<u\le 3/4$. Equation \eqref{contact:two-triple-221-fixed-moment-support-hessian-9}
+first gives $L(d)>0$, hence $|d|>1/2$. If $d>1/2$, then $h=t+d>d$
+and $e=d+v\ge d+h>2d\ge 1$. Since $x(x-1)$ increases for $x\ge 1$,
+
+\[
+ H_d=3\{e(e-1)+d-d^2\}>3d(3d-1).
+\]
+
+But \eqref{contact:two-triple-221-fixed-moment-support-hessian-1} and \eqref{contact:two-triple-221-fixed-moment-support-hessian-9} also give $L(d)\ge 2Z/m_2=2Hd/u$, so
+
+\[
+ 6d-3>8d(3d-1).
+\]
+
+This is impossible because
+
+\[
+ 24d^2-14d+3=24(d-7/24)^2+23/24>0.
+\]
+
+Therefore
+
+\[
+ \boxed{c\le0,\quad v\ge h\quad\Longrightarrow\quad d<-1/2.} \tag{C.34.10}\label{contact:two-triple-221-fixed-moment-support-hessian-10}
+\]
+
+There is also a useful upper-support bound. Write $w=-d>1/2$.
+Equation \eqref{contact:two-triple-221-fixed-moment-support-hessian-9} is strict in the weaker form $m_2 L(d)>2Z$, since $u/v>0$.
+Using \eqref{contact:two-triple-221-fixed-moment-support-hessian-1} yields
+
+\[
+ e(e-1)+w^2-w<u(w-1/2).
+\]
+
+Complete the square in $w$ to obtain
+
+\[
+ \boxed{e(e-1)<{1+u^2\over4},\qquad
+ e<{1+\sqrt{2+u^2}\over2}\le {1\over2}+{\sqrt{41}\over8}.} \tag{C.34.11}\label{contact:two-triple-221-fixed-moment-support-hessian-11}
+\]
+
+The last two inequalities hold when $v\ge h$; the next calculation proves this condition on the negative chart.
+\subsection{The negative middle contact}\label{contact:two-triple-221-negative-middle-location}
+Keep the contact scale of Section~\ref{contact:two-triple-collision-221-reduction}.
+
+
+
+
+On the chart with nonpositive first middle contact,
+
+\[
+ c=2a-3/2,\quad u=a+c\in(0,3/4],\quad
+ h=b-c\le7/4,\quad v=e-d>u,\quad e\ge1.
+\]
+
+The actual first dual height and selected-flow identity give
+
+\[
+ U=A_1^2h-2b^3<A_1^2h,\qquad
+ (A_1g-bG)u=U H_d,\quad g=g_e(d),\quad G>0.
+\tag{C.35.1}\label{contact:two-triple-221-negative-middle-location-1}
+\]
+
+In particular $H_d>0$ and $U/A_1<u g/H_d$. The middle support
+curvature, after using $Z u=m_2 H_d$, is
+
+\[
+ {C_m\over m_2}=L(d)-{2H_d\over u}Q,\quad
+ Q=1+{u\over v}-{U(h-v)\over A_1h^2v},\quad L(d)=6|d|-3.
+\tag{C.35.2}\label{contact:two-triple-221-negative-middle-location-2}
+\]
+
+A maximum requires $C_m\ge 0$.
+
+First suppose $-1/2\le d\le 1/8$. If $v\ge h$, then $Q\ge 1+u/v>0$.
+If $v<h$, use the first upper bound in \eqref{contact:two-triple-221-negative-middle-location-1}:
+
+\[
+ Q>2-h/v+u/h.
+\]
+
+Since $v=e-d\ge 7/8$ and $h\le 7/4$, the right side is at least $u/h>0$.
+But $L(d)\le 0$, so \eqref{contact:two-triple-221-negative-middle-location-2} is strictly negative. This interval is impossible.
+
+Now suppose $d\ge 1/8$. If $v\ge h$, \eqref{contact:two-triple-221-negative-middle-location-2} and $v>u$ give
+
+\[
+ C_m/m_2<L(d)-2H_d/v=3-6e<0.
+\]
+
+If $v<h$, write $r=v/h$ and $\ell=e+d-1\ge d\ge 1/8$.
+The positive-side cubic potential factors exactly as
+
+\[
+ {g\over H_d}={v\over2}+{v^2\over6\ell}.
+\]
+
+Hence, using $0<r<1$, $h\le 7/4$,
+
+\[
+ {g(h-v)\over H_dh^2}
+ ={r(1-r)\over2}+{h\over6\ell}r^2(1-r)
+ \le {1\over8}+{7\over3}{4\over27}
+ ={305\over648}<1.
+\tag{C.35.3}\label{contact:two-triple-221-negative-middle-location-3}
+\]
+
+The second upper bound in \eqref{contact:two-triple-221-negative-middle-location-1} now implies
+
+\[
+ Q>1+{u\over v}-{u\over v}{305\over648}>1>{u\over v}.
+\]
+
+Again \eqref{contact:two-triple-221-negative-middle-location-2} is strictly below $L(d)-2Hd/v=3-6e<0$.
+This excludes every $d\ge 1/8$. Combining the two ranges proves
+
+\[
+ \boxed{d<-1/2\quad\hbox{throughout the chart with nonpositive first middle contact}.}
+\tag{C.35.4}\label{contact:two-triple-221-negative-middle-location-4}
+\]
+
+In fact the opposite-gap sector is impossible. Put $w=-d>1/2$.
+The first high support satisfies the exact bound
+
+\[
+ b<B(a)={1+\sqrt{1+4a(1-a)}\over2}
+ \le {1+\sqrt2\over2}.
+\]
+
+Consequently
+
+\[
+ h=b-c<1+1/\sqrt2-2u/3<1+1/\sqrt2.
+\tag{C.35.5}\label{contact:two-triple-221-negative-middle-location-5}
+\]
+
+If $v\le h$, then $v=e+w$ lies in $(3/2,1+1/\sqrt{2})$.
+For fixed $v$, convexity in $w$ on $[1/2,v-1]$ gives
+
+\[
+ {H_d\over3}=e^2-e+w^2-w
+ \le\max\{v^2-2v+1/2,\ (v-1)(v-2)\}<0.
+\]
+
+Both endpoint expressions are strictly negative on the stated interval.
+This contradicts $H_d>0$ from the selected flow. Thus
+
+\[
+ \boxed{v>h\quad\hbox{throughout the chart with nonpositive first middle contact}.}
+\tag{C.35.6}\label{contact:two-triple-221-negative-middle-location-6}
+\]
+
+The conditional negative-chart support bound therefore
+also holds unconditionally on this chart:
+$e(e-1)<(1+u^2)/4$, hence $e<1/2+\sqrt{41}/8$.
+\subsection{The signed divided-difference inequality}\label{contact:two-triple-221-corrected-dd-load}
+In the two-triple $221$ contact scale let $r=\sqrt V$. The identities
+$C=r^3/G$, $\phi(z)=\sigma r/G$, $z=o/r$, and $3(V-R)=\sigma o$ give
+\[
+ \frac Cr=D+\frac{z\phi(z)}3,\qquad
+ L=\frac14+\frac{\sigma o(o^2+2V)}{12V^2}
+  =\frac14+\frac{rz\phi(z)(z^2+2)}{12C}
+  =\frac14+\frac{z\phi(z)(z^2+2)}{12(D+z\phi(z)/3)}.
+\]
+The own-variance curvature inequality is
+\[
+ \gamma_i\le\frac{r\{15D+(3z-z^3)\phi(z)\}}{12C}=\frac32-L.
+\]
+For $z\ge0$ one has $L\ge1/4$. For $z=-y\in[-5/4,0]$, the function
+$y(y^2+2)\phi(y)$ increases: its derivative is
+$(2-y^2)(1+y^2)\phi(y)>0$. Since
+$\phi(0)<2/5$ and $\sum_{j=0}^5(25/32)^j/j!>24/11$,
+$\phi(5/4)<11/60$. Using $r<2$ and $C\ge49/120$ gives
+\[
+ y(y^2+2)\phi(y)<\frac{285}{64}\frac{11}{60}=\frac{209}{256},
+ \qquad L>\frac14-\frac{20}{49}\frac{209}{256}
+ =-\frac{261}{3136}>-\frac1{12}.
+\]
+The height identities, with $q$ allowed either sign, are
+\[
+ p=\frac32-\gamma_1=\frac{U}{A_1h}>0,\qquad
+ q=\frac32-\gamma_2=\frac{G(h-A_2r_1)}{A_2hv},\qquad p,q\ge L.
+\]
+Thus $\gamma_2<4965/3136$ and $A_2<4965/1568$ by
+\eqref{eq:contact-dd-diameter}. The exact mass and event identities read
+\[
+ m_2=\frac{pA_1h}{G},\quad
+ r_1=\frac h{A_2}-\frac{qhv}{G},\quad
+ q_1=\frac v{A_2}+\frac{qhv}{G},\quad
+ F=\frac e{A_2}+\frac{m_2qhv}{G}.
+\]
+Put $x=p-L$, $y=q-L$, and $b_0=GV/(3A_1h^2v)$. The original
+probability Hessian is negative semidefinite only if
+\[
+ x\ge0,\quad y\ge0,\quad x+y\ge b_0,\qquad
+ 4xy-(2b_0-x-y)^2\ge0.
+\]
+These are the signed inequalities used in the supplied positive-chart
+calculation. They impose no positivity assumption on $q$ or $F-e/A_2$.
+
+\subsection{A parameter bound for a positive middle contact}\label{contact:positive-parameter}
+Keep the contact scale of Section~\ref{contact:two-triple-collision-221-reduction}.
+
+In the positive chart for the collided two-triple $221$ event, $k<8/9$.
+Indeed, with $u=a(1+k)$ and $A_1=u+h$, the centered marginal and selected
+contact equations give
+\[
+ \beta_1=1-\frac{2a^2}{A_1u},\quad
+ \sigma=\frac{aH_b}{A_1}+\left(J_c-\frac{H_b}{A_1}\right)Z,\quad
+ J_c-\frac{H_b}{A_1}=3h\beta_1,\quad Z=a-A_1r_1.
+\]
+Thus $0<Z<a$. If $k\ge8/9$, then $A_1u>u^2>2a^2$, so
+$\beta_1>0$ and $\sigma\le aJ_c\le J_c$. But
+\[
+ J_c=\frac{3(1-k)(k^2+4k+1)}{2(k^3+3k+2)}
+\]
+decreases on $[1/2,1]$: its derivative has the sign of
+$k^4-4k^3-6k^2-4k+1<0$, as follows from $k^4\le k^3$ and evaluation
+of the resulting decreasing polynomial at $1/2$. Consequently
+$\sigma\le J_c(8/9)=1299/7828$.
+On the other hand $\sigma=V\phi(z)/C$, and the bounds
+$V>2401/5476$, $\phi(z)>9/50$, $C<227/500$ imply
+\[
+ \sigma>\frac{108045}{621526}
+ =\frac{1299}{7828}+\frac{19206993}{2432652764}.
+\]
+This contradiction proves the parameter bound used in the positive-chart
+certificate.
+
+The fixed certificates \texttt{tt221\_negative} and
+\texttt{tt221\_positive} prove that neither compact support chart
+contains a point satisfying the necessary conditions in
+Sections~\ref{contact:two-triple-collision-221-reduction}--\ref{contact:positive-parameter}.
+Thus the collided $221$ event and its transpose $320$ cannot occur
+at a maximizing pair. Section~\ref{sec:verification} gives the enclosure
+and partition rules.

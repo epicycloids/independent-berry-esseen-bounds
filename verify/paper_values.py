@@ -9,6 +9,9 @@ ROOT = Path(__file__).resolve().parent.parent
 def render(result):
     values = {
         'UpperBound': result['upper_bound'],
+        'ExactUpper': '\\frac{'+result['largest_recorded_upper_fraction'].replace('/', '}{')+'}',
+        'ReplayedCount': f"{result['arithmetic_replayed_leaves']:,}",
+        'SharedBoundCount': f"{result['containing_band_bound_leaves']:,}",
         'SmallUpper': result['small_L_upper_decimal'],
         'VarianceUpper': result['variance_upper_decimal'],
         'LargeUpper': result['large_L_upper_decimal'],

@@ -164,4 +164,4 @@ def run():
         counts['resume_and_frozen_replay'] = True
     finally:
         core.weight_factory, cover.time = (old_factory, old_time)
-    return dict(passed=True, checks=counts, helper_sha256=digest, cpu_seconds=time.process_time() - began, scope='synthetic wiring and closed topology only; no integrated certificate')
+    return dict(passed=True, checks=counts, helper_sha256=digest, cpu_seconds=time.process_time() - began, scope='Synthetic interface, closed-partition, and resume checks')

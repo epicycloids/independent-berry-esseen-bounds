@@ -12,7 +12,7 @@ except ModuleNotFoundError as error:
     if error.name != 'energy_envelope':
         raise
     from envelope import compressed_box_upper, REVIEWED_SHA256
-REFERENCE_SHA256 = '755cc244a6f8f2b1a2940d3ef3198571a7cfe99bff4210c7240b9c30edbc1b2d'
+REFERENCE_SHA256 = '7c9c4d9d58383780969ace001ac62112578225e457ce9466fea1bd2ec5e7c4a6'
 
 @lru_cache(maxsize=1)
 def reviewed_reference():
@@ -83,5 +83,5 @@ def energy_reference_bounds(nodes, deletion_caps, *, energy_table, L, d, tau, ma
     finally:
         ctx.prec = previous_precision
     result = dict(old)
-    result.update(status='AUTHOR source-only energy/reference wrapper; no signed smoothing certificate', E_upper=radii, endpoint_upper=endpoints, cells=cells, old_E_upper=old['E_upper'], old_endpoint_upper=old['endpoint_upper'], energy_improved_source_cells=int(source_changes), energy_improved_radius_cells=sum((eligible and new < prior for eligible, new, prior in zip(old['eligible'], radii, old['E_upper']))), M_upper_role='Inherited old moment factor; the selected energy source varies by cell', reference_source_sha256=REFERENCE_SHA256, energy_source_sha256=REVIEWED_SHA256, energy_table_replayed_per_box=False)
+    result.update(status='energy and reference component bounds', E_upper=radii, endpoint_upper=endpoints, cells=cells, old_E_upper=old['E_upper'], old_endpoint_upper=old['endpoint_upper'], energy_improved_source_cells=int(source_changes), energy_improved_radius_cells=sum((eligible and new < prior for eligible, new, prior in zip(old['eligible'], radii, old['E_upper']))), M_upper_role='Moment factor shared by the cellwise energy bounds', reference_source_sha256=REFERENCE_SHA256, energy_source_sha256=REVIEWED_SHA256, energy_table_replayed_per_box=False)
     return result

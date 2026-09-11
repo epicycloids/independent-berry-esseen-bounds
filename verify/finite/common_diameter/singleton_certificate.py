@@ -35,7 +35,7 @@ class Box:
 
 
 def interval(lo: Fraction, hi: Fraction) -> arb:
-    """Return the exact outward ball with endpoints ``lo`` and ``hi``."""
+    """Return an outward ball enclosing [lo, hi]."""
 
     midpoint = (lo + hi) / 2
     radius = (hi - lo) / 2

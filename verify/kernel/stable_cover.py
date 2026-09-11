@@ -143,32 +143,6 @@ def cover_band(lo, hi, target, N, state=None, seconds_limit=190, kind='stability
         record.update(stack=stack, unresolved=len(stack), reason=reason, bad=bad)
     return record
 
-def run_section(start, end, step, target, N, pending=None, kind='stability'):
-    began = time.monotonic()
-    checks = {'elementary': elementary_checks(), 'stability': stable_checks()}
-    if kind != 'stability':
-        checks['directional'] = directional_checks()
-    if kind == 'cosine':
-        from paired_bounds import checks as cosine_checks
-        checks['cosine'] = cosine_checks()
-    lo = start
-    rows = []
-    while lo < end:
-        remaining = 200 - (time.monotonic() - began)
-        if remaining < 15:
-            break
-        width = min(step, 0.025 * lo) if kind in ['refined', 'cosine'] else step
-        hi = pending['Lhi'] if pending else min(end, lo + width)
-        row = cover_band(lo, hi, target, N, pending, min(185, remaining), kind)
-        print({k: row.get(k) for k in ['Llo', 'Lhi', 'complete', 'method', 'nodes', 'upper', 'reason']}, flush=True)
-        if not row['complete']:
-            pending = row
-            break
-        rows.append(row)
-        lo = hi
-        pending = None
-    return {'status': 'closed continuum cover, independent analytic audit outstanding', 'start': start, 'end': end, 'step': step, 'target': target, 'N': N, 'kind': kind, 'checks': checks, 'completed_until': lo, 'complete': lo == end, 'bands': rows, 'pending': pending, 'elapsed_seconds': time.monotonic() - began}
-
 def replay_band(record, numerical=True):
     lo, hi = (record['Llo'], record['Lhi'])
     limit = al(arb(record['target']))

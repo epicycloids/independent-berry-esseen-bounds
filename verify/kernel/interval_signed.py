@@ -187,4 +187,4 @@ class SignedRectangles:
         if not detail:
             return answer
         peak = int(np.argmax(per_interval))
-        return dict(upper=answer, old_upper=old, signed_upper=new, inside_upper=inside, outside_upper=outside, peak_threshold_interval=list(map(str, self.theta[peak:peak + 2])), threshold_intervals=len(per_interval), per_interval=per_interval.tolist(), eligible_cells=int(np.count_nonzero(eligible)), improved_cells=int(np.count_nonzero(cells < old_cells)), negative_cells=int(np.count_nonzero(cells < 0)), build_seconds=self.build_seconds, status='author outward signed reference comparison; independent review required')
+        return dict(upper=answer, old_upper=old, signed_upper=new, inside_upper=inside, outside_upper=outside, peak_threshold_interval=list(map(str, self.theta[peak:peak + 2])), threshold_intervals=len(per_interval), per_interval=per_interval.tolist(), eligible_cells=int(np.count_nonzero(eligible)), improved_cells=int(np.count_nonzero(cells < old_cells)), negative_cells=int(np.count_nonzero(cells < 0)), build_seconds=self.build_seconds, status='outward signed reference bound')

@@ -100,7 +100,7 @@ def compile_envelope(records, *, denominator=128, precision_bits=128):
                 branch = 'old'
             Q, price = (max(Q, qj), max(price, pj))
             rows.append(dict(left=str(left), right=str(right), branch=branch, Q_upper=qj, lambda_upper=pj, prefix_Q_upper=Q, prefix_lambda_upper=price))
-        return dict(status='AUTHOR whole-frequency assembly with replayed new rows and proved old fallbacks', rows=rows, new_upper_interval_complete=all((row['branch'] == 'new' for row in rows[1:])), verified_scalar_records=len(usable), ignored_incomplete_records=ignored, source_sha256=REVIEWED_SHA256, precision_bits=ctx.prec, scope='Scalar sum only; no reference consumer, smoothing bound, or moment cover')
+        return dict(status='whole-frequency energy bounds', rows=rows, new_upper_interval_complete=all((row['branch'] == 'new' for row in rows[1:])), verified_scalar_records=len(usable), ignored_incomplete_records=ignored, source_sha256=REVIEWED_SHA256, precision_bits=ctx.prec, scope='Scalar energy-sum bounds over the frequency range')
     finally:
         ctx.prec = previous
 

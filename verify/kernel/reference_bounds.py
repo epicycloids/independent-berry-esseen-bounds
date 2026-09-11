@@ -137,7 +137,7 @@ def reference_bounds(nodes, deletion_caps, *, L, d, tau, max_argument=Fraction(3
             eligible.append(True)
             endpoints.append(endpoint)
             records.append(dict(index=index, eligible=True, source_upper=source, propagation_ratio_upper=decay, E_upper=whole, endpoint_upper=endpoint, lower_offset=dl, upper_offset=du))
-        return dict(status='AUTHOR outward reference components conditional on supplied deletion caps', E_upper=E_upper, lower_offset=lower_offset, upper_offset=upper_offset, eligible=eligible, endpoint_upper=endpoints, M_upper=M, taulo_used=str(taulo), tauhi_used=str(tauhi), exact_grid=all((lo == hi for lo, hi in nodes)), cells=records, precision_bits=ctx.prec, full_smoothing_certificate=False)
+        return dict(status='outward reference components for the supplied deletion caps', E_upper=E_upper, lower_offset=lower_offset, upper_offset=upper_offset, eligible=eligible, endpoint_upper=endpoints, M_upper=M, taulo_used=str(taulo), tauhi_used=str(tauhi), exact_grid=all((lo == hi for lo, hi in nodes)), cells=records, precision_bits=ctx.prec, full_smoothing_certificate=False)
     finally:
         ctx.prec = previous_precision
 
@@ -190,4 +190,4 @@ def quick_checks():
             assert center - gaussian <= law_bounds['upper_offset'][j] + 2e-14
             law_points += 1
     assert ctx.prec == old_precision
-    return dict(all_passed=True, scope='small recurrence components; no full smoothing certificate', exact_fraction_grid=True, paired_outward_grid=True, interior_M_maximum=True, exact_Rademacher_zero=True, zero_source=True, pole_prefix_fallback=True, M_upper=result['M_upper'], direct_law_points=law_points, precision_restored=True, cpu_seconds=time.process_time() - began)
+    return dict(all_passed=True, scope='Fixed checks of the reference recurrence components', exact_fraction_grid=True, paired_outward_grid=True, interior_M_maximum=True, exact_Rademacher_zero=True, zero_source=True, pole_prefix_fallback=True, M_upper=result['M_upper'], direct_law_points=law_points, precision_restored=True, cpu_seconds=time.process_time() - began)

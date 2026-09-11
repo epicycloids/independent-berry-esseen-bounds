@@ -40,43 +40,18 @@
       "large_positive_coefficients": 70,
       "program": "verify/finite/support_odds/exact_certificate.py",
       "program_sha256_in_record": "a18a180ce9769c693bc4afe635de01fca563c7fded1ccc03c3754169f84c37c8"
-    },
-    "two_summand_first_interior_threshold": {
-      "precision_bits": 192,
-      "processed_boxes": 2231,
-      "accepted_boxes": 1116,
-      "deepest_accepted": 16,
-      "unresolved_boxes": 0,
-      "program": "verify/finite/two_summands/certificate.py",
-      "program_sha256_in_record": "22358b52cc0133d629aa709bc5f22a6343c2ff42c70bcef686c2f3f630d97310"
-    },
-    "two_summand_second_interior_threshold": {
-      "precision_bits": 192,
-      "processed_boxes": 3509,
-      "accepted_boxes": 1755,
-      "deepest_accepted": 17,
-      "unresolved_boxes": 0,
-      "program": "verify/finite/two_summands/row10_certificate.py",
-      "program_sha256_in_record": "df4dd74d6e26e5432e961866e59bf1516cd9cd9e78a8681d3d611ef718681bf6"
     }
   },
   "source_sha256": {
-    "verify/finite/common_diameter/singleton_certificate.py": "5c3705394a198b91d014c9279bae8c7964a9b5108613a641b2fcd735bd9aca10",
+    "verify/finite/common_diameter/singleton_certificate.py": "e73a21bb436906492080580e720a07bb483693f2ff91a56001a5828303764253",
     "verify/finite/scalar_atom/compact_certificate.py": "35410ea2f44560967980d836834cf856c4ec088b9c318d2d17e7c207ca53b75f",
-    "verify/finite/scalar_atom/independent_certificate.py": "1e993b025a90f88335f5b1d0d68c0a9794a4a8da6f8223e64d5c2e877bbe44e3",
+    "verify/finite/scalar_atom/independent_certificate.py": "06734d31fa697b0bc4deba324c3def37b97f6b511f1c2ce5ac34b77128c093b9",
     "verify/finite/support_odds/exact_certificate.py": "22da22abf118a2552120c330e9c5070355e664a225984bdbf11c5d31d3dddb15",
     "verify/finite/support_odds/failure_controls.py": "19a2416554cd0120fa188a490ac7dbbe54edf122c5ee7d647284ff1b645ab151",
-    "verify/finite/support_odds/independent_certificate.py": "a29990f5750b314e9b1a187db3bae94ccad1dee9ce5c87543a0477bfe93754bf",
-    "verify/finite/two_summands/certificate.py": "d1d9f43f683bc6e0e107c518c2458405ec38dc3f063e9b95fe1f3b9a7cb02d36",
-    "verify/finite/two_summands/exact_checks.py": "d94b1796265405a9a899e42924bb5fdb9e8a9775ed5de2140f253c2519a99af5",
-    "verify/finite/two_summands/failure_controls.py": "6abb1d0c0b5abe255faf017d99639c8e8516c80111bcbc41e984101e1b6b3c18",
-    "verify/finite/two_summands/independent_certificate.py": "a09c8da6226faa57faf9a49f906ad7cbbf9769f5e8e4caed6018fad9bff5fc11",
-    "verify/finite/two_summands/independent_checks.py": "287d56443d92ef66937a137a91cce01778a09cc7bedeb03d3c0c99532be4f580",
-    "verify/finite/two_summands/independent_frame.py": "6233c4f3a037ff872b114b25cbd125245edc0389af85d9a8fda32f0633ea119c",
-    "verify/finite/two_summands/row10_certificate.py": "4875833df0eb05dea1fed76cc0a69513a06d466502dc7138883f8cd2192c3fcd"
+    "verify/finite/support_odds/independent_certificate.py": "a29990f5750b314e9b1a187db3bae94ccad1dee9ce5c87543a0477bfe93754bf"
   },
   "source_preparation": "Executable mathematics matches the recorded programs. The source_sha256 table identifies the supplied files; program_sha256_in_record identifies programs used for the recorded complete evaluations.",
-  "recorded_independent_results": {
+  "recorded_arithmetic_checks": {
     "binomial_plus_bernoulli_curvature": {
       "program": "verify/finite/common_diameter/singleton_certificate.py",
       "program_sha256_in_record": "253a72da1a2b14fa37e808fc490f25b231e1964f8ff2f93fb4519ce02cd87121",
@@ -115,32 +90,7 @@
       ],
       "large_positive_coefficients": 70,
       "output_sha256_in_record": "c89cd96c17800077a3b27c212216b8abf85cb6ad93db74fb71ace74e00368885"
-    },
-    "two_summand_first_interior_threshold": {
-      "program": "verify/finite/two_summands/independent_certificate.py",
-      "program_sha256_in_record": "eb68bcc6d014de59402859c1c7f1d013b46f97ea35d127e7aaab5afdf49b54fd",
-      "method": "Separate interval implementation with a different subdivision rule.",
-      "precision_bits": [
-        128,
-        192,
-        256
-      ],
-      "processed_boxes": 3287,
-      "accepted_boxes": 1644,
-      "deepest_accepted": 17,
-      "recorded_weakest_lower_bound": "9.39896876557018238022102348683e-6",
-      "output_sha256_at_192_bits_in_record": "237fe2a167a8d30096013d7269298520ebe37dad13e809cbd7ddec424f087bce"
-    },
-    "two_summand_second_interior_threshold": {
-      "program": "verify/finite/two_summands/independent_checks.py",
-      "program_sha256_in_record": "6c8d05d31c2f9cc28a5d3862490603b54db5681ce35a822379ac2e9251917e36",
-      "method": "Complete rerun of the primary interval program at higher precision, with separate exact formula, boundary, and failure checks.",
-      "precision_bits": 256,
-      "processed_boxes": 3509,
-      "accepted_boxes": 1755,
-      "deepest_accepted": 17,
-      "recorded_weakest_lower_bound_prefix": "1.33934333223971705970534906597e-5",
-      "output_sha256_in_record": "3d0e39637264bbf9b7c1287a1ab63502802cf4f892f44b13b7e0ef9cbb8f942c"
     }
-  }
+  },
+  "current_finite_record": "current-results.json"
 }

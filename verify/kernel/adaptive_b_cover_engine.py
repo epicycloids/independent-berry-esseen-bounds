@@ -52,11 +52,3 @@ def install():
         return choose
     stable_cover.weight_factory = factory
     INSTALLED = True
-
-def run_section(start, end, step, target, N, pending=None):
-    install()
-    CERTIFICATES.clear()
-    CUTOFF_RECORDS.clear()
-    result = stable_cover.run_section(start, end, step, target, N, pending, KIND)
-    result.update(product_variant=PRODUCT, gaussian_certificates=dict(CERTIFICATES), cutoff_records=dict(CUTOFF_RECORDS), split_axes=tree.SPLIT_AXES, b_policy=tree.B_POLICY, b_partitions='selective depth<=6, evaluations<=127', coupling=False, threshold_grid='inherited default 1/32 on [-2,2]')
-    return result

@@ -6,88 +6,98 @@ $$
 V=\sum_j\mathbb E X_j^2>0,\qquad
 L=\frac{\sum_j\mathbb E|X_j|^3}{V^{3/2}},\qquad
 \Delta=\sup_x\left|\mathbb P\!\left(
-\frac{\sum_jX_j}{\sqrt V}\le x\right)-\Phi(x)\right|,
+\frac{\sum_jX_j}{\sqrt V}\le x\right)-\Phi(x)\right|.
 $$
 
-where $\Phi$ is the standard normal distribution function and every third
-absolute moment is finite. The constant $C_{\mathrm{ind}}$ is the supremum
-of $\Delta/L$ over these families. The companion papers write $\ell$ for $L$.
+Here $\Phi$ is the standard normal distribution function, and every third
+absolute moment is finite. The constant $C_{\mathrm{ind}}$
+is the supremum of $\Delta/L$ over these families; $C_2$ is the same
+supremum restricted to families of at most two summands. The companion
+papers also use $\ell$ for $L$.
 
 | Bound on $C_{\mathrm{ind}}$ | Source |
 | --- | --- |
-| $C_{\mathrm{ind}}\ge C_{\mathrm E}=(\sqrt{10}+3)/(6\sqrt{2\pi})=0.4097321837023963\ldots$ | [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946); see also [Shevtsova (2012), Section 1](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf) |
-| $C_{\mathrm{ind}}\le0.5583$ | [Shevtsova (2013)](https://www.mathnet.ru/eng/ia252) |
-| $C_{\mathrm{ind}}<0.454$ | [Upper-bound paper](../paper/independent-berry-esseen.pdf) |
+| $C_{\mathrm{ind}}\ge C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})=0.409732\ldots$ | [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946) |
+| $C_{\mathrm{ind}}<0.44995$ | [Upper-bound paper](../paper/independent-berry-esseen.pdf) |
 
 The conjecture $C_{\mathrm{ind}}=C_{\mathrm E}$ remains open.
 
-## The explicit upper-bound calculation
+## The general upper bound
 
-The interval calculation uses endpoints $L_-\approx0.0014$ and
-$L_+\approx1.21$. Their exact rational values are stored in
-[the certificate](../certificates/cover.json) and given in the
-[paper](../paper/independent-berry-esseen.pdf).
+The computation covers an intermediate interval $[L_-,L_+]$, where
+$L_-\approx0.0014$ and $L_+\approx1.21$. The exact rational endpoints
+are specified in the [paper](../paper/independent-berry-esseen.pdf) and
+[certificate](../certificates/cover.json).
 
-| Range | Estimate used | Bound for $\Delta/L$ |
+| Range | Estimate | Upper bound for $\Delta/L$ |
 | --- | --- | --- |
-| $0<L\le L_-$ | $C_{\mathrm E}+0.3413L^{1/3}$ | Less than 0.447913037296 |
-| $L_-\le L\le L_+$ | Interval calculation of the paper's smoothing bounds | Recorded interval bound $U_*$, defined below |
-| $L\ge L_+$ | $\Delta<0.540936541549$ | Less than 0.447055000001 |
+| $0<L\le L_-$ | $C_{\mathrm E}+0.3413L^{1/3}$ | $0.447913037296$ |
+| $L_-\le L\le L_+$ | Interval evaluation of the smoothing bounds | $U_*$ below |
+| $L\ge L_+$ | $\Delta<0.540936541549$ | $0.447055000001$ |
 
-The estimate for $0<L\le L_-$ is Corollary 4.18 of
+The first estimate is Corollary 4.18 of
 [Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf),
-which applies to independent summands when $L\le0.01$.
-The bound on $\Delta$ follows from Cantelli's inequality by maximizing
-$\Phi(x)-x^2/(1+x^2)$ over $x>0$.
+valid for independent summands when $L\le0.01$. The variance-only bound
+in the last row follows from Cantelli's inequality by maximizing
+$\Phi(x)-x^2/(1+x^2)$ for $x>0$.
 
-The calculation covers $[L_-,L_+]$ with 1,683 closed intervals. Its largest
-recorded upper bound for $\Delta/L$ is the exact rational number
+The largest bound in the intermediate interval is
 
 $$
-U_*=\frac{4089268438506339}{9007199254740992}<0.454.
+U_*=\frac{8105578597689285}{18014398509481984}
+=0.44994999935317664\ldots<0.44995.
 $$
 
-Together, the three ranges give $C_{\mathrm{ind}}\le U_*<0.454$. The
-[verification guide](../verify/README.md) describes the arithmetic and
-the commands for checking the calculation.
+Thus $C_{\mathrm{ind}}\le U_*$. The
+[verification guide](../verify/README.md) describes the finite partition,
+the arithmetic, and the checks supplied with the calculation.
 
-## Classes satisfying the conjectured inequality
+## Finite classes satisfying the sharp inequality
 
-The [finite-results paper](../paper/finite-arrays/finite-arrays.pdf) proves
-the following statements with $L$ as defined above.
+The [finite-array paper](../paper/finite-arrays/finite-arrays.pdf) proves:
 
-| Class of independent centered summands | Bound |
+| Class | Bound |
 | --- | --- |
-| Variables supported on at most two points, with one common positive support diameter for all nondegenerate summands | $\Delta\le C_{\mathrm E}L$; the constant is optimal over this class |
-| Two variables, each supported on at most two points, with arbitrary diameters and positive total variance | $\Delta<C_{\mathrm E}L$ |
-| At each coordinate, an arbitrary mixture of a fixed centered Esseen law and its reflection, with the same scale for every coordinate | $\Delta\le C_{\mathrm E}L$ |
+| At most two arbitrary summands | $C_2<49/120=0.408333\ldots<C_{\mathrm E}$ |
+| At most three summands, each supported on at most two points, with arbitrary support diameters | $\Delta\le C_{\mathrm E}L$ |
+| Any number of summands, each supported on at most two points, with a common positive support diameter | $\Delta\le C_{\mathrm E}L$; the constant is optimal over this class |
+| Arrays with two Bernoulli coordinates carrying at least $22/23$ of total variance | $\Delta\le C_{\mathrm E}L$ |
+| Arrays with two arbitrary coordinates carrying at least $439/440$ of total variance | $\Delta\le C_{\mathrm E}L$ |
 
-In the last row, the variance-one Esseen law gives probability
-$p=(4-\sqrt{10})/2$ to $\sqrt{(1-p)/p}$ and probability $1-p$ to
-$-\sqrt{p/(1-p)}$. The scale is a common factor $c>0$ multiplying this law
-or its reflection; each coordinate may have its own mixture weight.
+Here a Bernoulli coordinate means a centered variable supported on at most
+two points. A common support diameter is the same distance between the
+two support points of every nondegenerate summand.
 
-A common support diameter means that every nondegenerate summand has the
-same distance between its two support points. Lattice support alone allows
-different integer multiples of a common span and is a broader condition.
-The two-summand result does not determine the optimal constant for that
-class. The [finite-results supplement](../certificates/finite/README.md)
-describes the algebraic and interval computations used in these proofs.
+The paper also gives conditions involving the third absolute moments of
+a selected pair. For example, after normalizing total variance to one,
+two coordinates satisfying
 
-## The sharp bound at small and large $L$
+$$
+\operatorname{Var}(X_i)+\operatorname{Var}(X_j)\ge\frac{11}{16},
+\qquad \mathbb E|X_i|^3+\mathbb E|X_j|^3\le\frac L2
+$$
+
+imply the sharp inequality for the full array. If coordinates are grouped
+into new summands, the increase in their third absolute moments must also
+be included.
+
+The Bernoulli variance threshold follows from the uniform two-coordinate
+margin $C_{\mathrm E}L-\Delta>3/80$ at total variance one. The
+[finite-results supplement](../certificates/finite/README.md) describes
+the interval calculations supporting the finite theorems.
+
+## Small and large Lyapunov ratios
 
 The [small-Lyapunov paper](../paper/small-lyapunov/small-lyapunov.pdf) proves
 that a universal $L_0>0$ exists such that every independent array with
-$0<L\le L_0$ satisfies $\Delta\le C_{\mathrm E}L$. Its proof adapts
-[He and Cheng's i.i.d. argument (2026)](https://arxiv.org/abs/2609.06358v1)
-and uses the common-diameter theorem above. The proof gives no numerical
-value of $L_0$, so the explicit computation for $C_{\mathrm{ind}}<0.454$
-continues to use Shevtsova's estimate at its lower endpoint.
+$0<L\le L_0$ satisfies $\Delta\le C_{\mathrm E}L$. It adapts
+[He and Cheng's method (2026)](https://arxiv.org/abs/2609.06358v1) and uses
+the common-diameter theorem. Since the proof supplies no numerical value
+of $L_0$, the explicit bound above uses Shevtsova's estimate near zero.
 
-At the other end, the variance-only bound
-$\Delta<0.540936541549$ implies $\Delta<C_{\mathrm E}L$ whenever
-$L\ge1.321$, since $C_{\mathrm E}>0.4097$ and
-$1.321\cdot0.4097=0.5412137$. Thus the unresolved part of the sharp
-conjecture lies in $L_0<L<1.321$. The small-$L$ theorem changes neither
-Esseen's lower bound nor the numerical upper bound on
-$C_{\mathrm{ind}}$.
+The variance-only bound $\Delta<0.540936541549$ gives
+$\Delta<C_{\mathrm E}L$ for $L\ge1.321$: one has $C_{\mathrm E}>0.4097$
+and $1.321\cdot0.4097=0.5412137$. The unresolved part of the sharp
+conjecture therefore lies in $L_0<L<1.321$, outside the classes listed
+above. The [extremizer paper](../paper/extremizers/extremizers.pdf) gives
+further structural restrictions on possible maximizing violations.

@@ -63,13 +63,3 @@ def install():
         return choose
     stable_cover.weight_factory = factory
     INSTALLED = True
-
-def run_section(start, end, step, target, N, pending=None):
-    install()
-    CERTIFICATES.clear()
-    CUTOFF_RECORDS.clear()
-    result = stable_cover.run_section(start, end, step, target, N, pending, KIND)
-    result['product_variant'] = PRODUCT
-    result['gaussian_certificates'] = dict(CERTIFICATES)
-    result['cutoff_records'] = dict(CUTOFF_RECORDS)
-    return result

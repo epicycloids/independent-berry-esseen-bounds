@@ -53,7 +53,7 @@ def scalar_bounds(lower_endpoint, upper_endpoint):
         assert variance < rational('0.540936541549')
         assert small < rational('0.447913037296')
         assert large < rational('0.447055000001')
-        assert small < rational('0.454') and large < rational('0.454')
+        assert small < rational('0.44995') and large < rational('0.44995')
         return {'arb_precision_bits': ctx.prec, 'lower_bound': str(ce),
                 'theta': str(theta), 'kappa': str(kappa),
                 'cantelli_stationary_point': str(x), 'variance_upper': str(variance),

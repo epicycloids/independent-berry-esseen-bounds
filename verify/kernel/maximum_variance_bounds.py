@@ -6,7 +6,7 @@ import importlib.util
 import math
 from pathlib import Path
 from flint import arb, ctx
-REFERENCE_SHA256 = '755cc244a6f8f2b1a2940d3ef3198571a7cfe99bff4210c7240b9c30edbc1b2d'
+REFERENCE_SHA256 = '7c9c4d9d58383780969ace001ac62112578225e457ce9466fea1bd2ec5e7c4a6'
 
 @lru_cache(maxsize=1)
 def reviewed_reference():
@@ -177,5 +177,5 @@ def refine_reference(inherited, nodes, *, d, tau, precision_bits=128):
             cells.append(row)
     finally:
         ctx.prec = previous_precision
-    result.update(status='AUTHOR attained-maximum reference refinement; inherited sources unchanged', E_upper=radii, endpoint_upper=endpoints, upper_offset=offsets, cells=cells, maximum_variance_refinement=parts, maximum_variance_improved_radius_cells=sum((a < b for a, b in zip(radii, inherited['E_upper']))), maximum_variance_improved_center_cells=sum((a < b for a, b in zip(offsets, inherited['upper_offset']))), source_upper_values_preserved=True, center_lower_preserved=True, reference_source_sha256=REFERENCE_SHA256)
+    result.update(status='attained-maximum reference bound', E_upper=radii, endpoint_upper=endpoints, upper_offset=offsets, cells=cells, maximum_variance_refinement=parts, maximum_variance_improved_radius_cells=sum((a < b for a, b in zip(radii, inherited['E_upper']))), maximum_variance_improved_center_cells=sum((a < b for a, b in zip(offsets, inherited['upper_offset']))), source_upper_values_preserved=True, center_lower_preserved=True, reference_source_sha256=REFERENCE_SHA256)
     return result

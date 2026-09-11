@@ -1,231 +1,223 @@
-"""Reconstruct the closed cover from stored partitions and numerical bounds.
-
-Checks source hashes, Gaussian interpolation partitions and exact comparisons.
-The accepted-leaf and Gaussian-node integrals are not recomputed."""
-from collections import Counter
+"""Check the current closed moment cover and its saved interval coefficients."""
+from collections import Counter, OrderedDict
 from fractions import Fraction
 import hashlib
 import json
 import math
 from pathlib import Path
 import sys
+import zipfile
 
 from scalars import scalar_bounds
 
-ROOT = Path(__file__).resolve().parent.parent
-KERNEL = Path(__file__).resolve().parent / "kernel"
-sys.path.insert(0, str(KERNEL))
+ROOT=Path(__file__).resolve().parent.parent
+KERNEL=ROOT/'verify/kernel'
+sys.path.insert(0,str(KERNEL))
+UPPER=Fraction(8105578597689285,18014398509481984)
+CHOICES=((1.,0.),(1.02,-.02),(1.04,-.02))
+CUTOFFS=(.75,.78125,.8125,.84375,.875,.90625,.9375,.96875,1.)
 
+class CertificateError(ValueError):pass
 
-class CertificateError(ValueError):
-    pass
+def require(condition,message):
+    if not condition:raise CertificateError(message)
 
-
-def require(condition, message):
-    if not condition:
-        raise CertificateError(message)
-
-
-def sha256(data):
-    return hashlib.sha256(data).hexdigest()
-
-
-def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
-
-
+def sha256(data):return hashlib.sha256(data).hexdigest()
+def file_sha256(path):
+    with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
 def finite(value):
-    require(type(value) in (int, float) and math.isfinite(value), "Expected a finite number")
+    require(type(value) in (int,float) and math.isfinite(value),'Expected a finite real number')
     return Fraction(value)
 
-
 def load_inputs(root=ROOT):
-    require(__debug__, "Run without Python optimization: the curated kernels use assertions")
-    result = json.loads((root / "result.json").read_text())
-    raw = (root / "certificates/cover.json").read_bytes()
-    require(sha256(raw) == result["cover_sha256"], "Cover file digest mismatch")
-    cover = json.loads(raw)
-    for name, expected in cover["kernel_sha256"].items():
-        require(Path(name).name == name and Path(name).suffix in (".py", ".json"), "Invalid kernel filename")
-        require(sha256((root / "verify/kernel" / name).read_bytes()) == expected,
-                "Curated mathematical source changed: " + name)
-    return cover, result
+    require(__debug__,'Run without Python optimization')
+    result=json.loads((root/'result.json').read_text());raw=(root/result['cover_file']).read_bytes()
+    require(sha256(raw)==result['cover_sha256'],'Cover index digest mismatch');cover=json.loads(raw)
+    for name,pin in cover['kernel_sha256'].items():
+        require(Path(name).name==name and Path(name).suffix in ('.py','.json'),'Invalid numerical source name')
+        require(file_sha256(root/'verify/kernel'/name)==pin,'Numerical source changed: '+name)
+    require(file_sha256(root/cover['band_archive'])==cover['band_archive_sha256'],'Changed band archive')
+    for row in cover['gaussian_archives']:
+        require(file_sha256(root/row['file'])==row['sha256'],'Changed Gaussian archive')
+    return cover,result
 
+def load_band(bundle,row):
+    require(row['file'].startswith('bands/') and Path(row['file']).suffix=='.json','Invalid interval filename')
+    raw=bundle.read(row['file']);require(sha256(raw)==row['sha256'],'Interval record changed')
+    return json.loads(raw)
 
-def mixed_record(record, *, numerical=False, callbacks=None):
-    """Verify that the second tree covers the first tree's unresolved boxes."""
-    from flint import ctx
-    import prefix_reuse as geometry
-    require(record["kind"] == "dt_verified_prefix_continuation_v1" and
-            record["method"] == "mixed_source_prefix", "Wrong mixed record kind")
-    require(record["geometry_precision_bits"] == 100, "Geometry precision changed")
-    require(record["dt_priority"] == [1., 1.], "Continuation subdivision policy changed")
-    lo, hi = record["Llo"], record["Lhi"]
-    origin, continuation = record["origin"], record["continuation"]
-    old_descriptor, new_descriptor = record["origin_evaluator"], record["evaluator"]
-    require(record["complete"] is True and not record["stack"] and record["unresolved"] == 0, "Mixed tree is unfinished")
-    require(origin["complete"] is False and origin["split_axes"] == "DT" and
-            origin["b_policy"] == "full_feasible_each_evaluation", "Wrong origin contract")
-    require((origin["Llo"], origin["Lhi"]) == (lo, hi), "Origin domain differs")
-    require(origin["target"] == old_descriptor["target"] == "0.453" and
-            record["target"] == new_descriptor["target"] == "0.454", "Source-specific targets changed")
-    expected_parameters = dict(theta_denominator=32, threshold_domain=[-2, 2], coupling=False,
-        b_max_depth=6, b_max_evaluations=127, b_depth_policy="depth_for_box",
-        fixed_cap_fraction=[17, 20], reference_cache_entries=16,
-        cutoff_portfolio="frozen fast_maximum_cover_engine.CUTOFFS")
-    for descriptor in (old_descriptor, new_descriptor):
-        require(descriptor["kind"] == "adaptive_b_fast_maximum_fixed085_dual5_cutoff_v1" and
-                descriptor["N"] == 512 and descriptor["weight_parameter"] == hi and
-                descriptor["parameters"] == expected_parameters, "Mixed evaluator parameters changed")
-        require(0 < finite(descriptor["s"]) < 1 and finite(descriptor["T"]) > 0, "Invalid smoothing parameters")
-    for field in ("kind", "N", "T", "s", "weight_parameter"):
-        require(old_descriptor[field] == origin[field] == new_descriptor[field], "Origin evaluator descriptor mismatch")
-    require(new_descriptor["dt_priority"] == [1., 1.], "New descriptor priority mismatch")
-    require(not numerical or callbacks is not None, "Numerical replay needs two explicit evaluator callbacks")
+def validate_evaluators(evaluators):
+    require(evaluators,'Empty evaluator collection')
+    for ident,value in evaluators.items():
+        require(ident==sha256(canonical(value)),'Evaluator descriptor changed')
+        require(value['kind'] in ('quadratic','quadratic-ceil','signed','signed-tail') and value['N'] in (512,1024,2048),'Unknown evaluator')
+        if value['kind'].startswith('signed'):
+            require(value==dict(kind=value['kind'],N=512,stop_target=value['stop_target'],b_max_depth=6,b_max_evaluations=127,
+                               coupling=False,cap_bucket=17,theta_denominator=32,threshold_domain=[-2,2],reference_cache_entries=16),
+                    'Signed evaluator settings changed')
+            require(value['stop_target'] in ('0.450','0.44995'),'Unspecified signed early-return level')
+        elif value['kind']=='quadratic':require(value['stop_target'] is None,'Quadratic formula has no stopping parameter')
+        else:require(value['stop_target']=='0.448','Ceiling portfolio early-return level changed')
+
+def validate_band(band,evaluators,callback=None):
+    """Replay each closed split and outward clipping operation."""
+    from flint import arb,ctx
+    import stable_cover as core
+    from interval_bounds import au
+    lo,hi=band['Llo'],band['Lhi'];require(0<finite(lo)<finite(hi),'Invalid L interval')
     with ctx.workprec(100):
-        root = tuple(geometry._canonical_root(hi))
-        require(list(root) == record["root"] == origin["root"], "Mixed canonical root differs")
-        old_tree = geometry._unpack(origin)
-        old = geometry._walk(old_tree, [(root, 0)], hi,
-            evaluate=callbacks[0] if numerical else None, descriptor=old_descriptor,
-            lo=lo, target=Fraction(origin["target"]))
-        frontier = geometry._stack(origin["stack"])
-        require(old["stack"] == frontier and len(frontier) == origin["unresolved"] > 0, "Origin frontier mismatch")
-        new_tree = geometry._unpack(continuation)
-        new = geometry._walk(new_tree, frontier, hi,
-            evaluate=callbacks[1] if numerical else None, descriptor=new_descriptor,
-            lo=lo, target=Fraction(record["target"]))
-        require(not new["stack"], "Continuation does not finish the original frontier")
-    for saved, replay, target in ((origin, old, "0.453"), (continuation, new, "0.454")):
-        require(0 <= finite(saved["upper"]) < Fraction(target), "Saved component upper exceeds its own target")
-        require(len(bytes.fromhex(saved["leaf_chain_sha256"])) == 32, "Invalid leaf chain")
-        for key in ("accepted", "infeasible"):
-            require(type(saved[key]) is int and saved[key] == replay[key], "Mixed leaf count mismatch")
-        if numerical:
-            require(replay["chain"] == saved["leaf_chain_sha256"] and replay["upper"] == saved["upper"] and
-                    canonical(replay["worst_box"]) == canonical(saved["worst_box"]), "Numerical leaf chain/maximum differs")
-    require(record["upper"] == max(origin["upper"], continuation["upper"]), "Mixed maximum differs")
-    for key in ("nodes", "accepted", "infeasible"):
-        require(type(record[key]) is int and record[key] == origin[key] + continuation[key], "Mixed aggregate counts differ")
-    return {key: record[key] for key in ("nodes", "accepted", "infeasible")}
-
-
-def validate_cover(cover, result):
-    from flint import ctx
-    import stable_cover
-    require(cover["schema"] == "independent-be-cover-v3" and result["schema"] == "independent-be-result-v3", "Unsupported certificate schema")
-    require(result["status"] == "interval-bound", "Unexpected result type")
-    require(result["sharp_conjecture_resolved"] is False, "Incorrect conjecture status")
-    require(cover["comparison_target"] == result["comparison_target"] == result["upper_bound"] == "0.454", "Wrong current target")
-    domain = cover["domain"]
-    for side in ("lower", "upper"):
-        require(finite(domain[side]) == Fraction(domain[side + "_fraction"]), "Exact endpoint mismatch")
-        require(float.fromhex(domain[side + "_hex"]) == domain[side], "Dyadic endpoint mismatch")
-    require(domain["lower"] == .0014 and domain["upper"] == 1.21, "Wrong interval domain")
-    require(bool(cover["bands"]), "Empty finite cover")
-    counts = Counter(bands=0, nodes=0, accepted=0, infeasible=0)
-    methods, families = Counter(), Counter()
-    intervals, uppers = [], []
-    with ctx.workprec(100):
-        for band in cover["bands"]:
-            record = band["record"]
-            lo, hi, upper = (finite(record[k]) for k in ("Llo", "Lhi", "upper"))
-            require(0 < lo < hi and Fraction(domain["lower"]) <= lo < hi <= Fraction(domain["upper"]), "Band leaves finite domain")
-            require(record["complete"] is True and 0 <= upper < Fraction(record["target"]) <= Fraction("0.454"), "Incomplete or nonaccepting band")
-            if band["type"] == "standard":
-                require(band["weights_regenerated_on_numerical_replay"] is True, "Legacy weight scope differs")
-                require(record["method"] in ("stability", "uniform", "variance"), "Unknown band method")
-                require(record["kind"] in ("quadratic_maxwell_dual5_cutoff",
-                    "quadratic_maxwell_dual5_cutoff_lazy_ceil20",
-                    "full_b_fast_maximum_fixed085_dual5_cutoff_v1_b8",
-                    "adaptive_b_fast_maximum_fixed085_dual5_cutoff_v1"), "Unsupported evaluator family")
-                require(record["weight_parameter"] == record["Lhi"] and record["N"] in (512,1024,2048), "Unexpected evaluator grid")
-                local = stable_cover.replay_band(record, numerical=False)
-                for key, value in local.items():
-                    require(type(value) is int and value >= 0 and (key not in record or record[key] == value), "Standard tree counts disagree")
+        root=[0.,min(1.,au(arb(hi)**(arb(2)/3))),0.,hi,0.,min(1.,hi)]
+        require(band['root']==root,'The canonical moment root was reduced')
+        require(band['method'] in ('partition','uniform','variance'),'Unknown interval method')
+        extra=band['extra_clips'];require(extra==sorted(set(extra)),'Repeated clipping location')
+        stack=[(tuple(root),'')];cursor=excluded=0;seen_extra=set();uppers=[];replayed=0;recipes=set()
+        for code in band['tree']:
+            require(stack,'Tree extends beyond its root');raw,path=stack.pop()
+            box=core.feasible_clip(raw,hi) if band['method']=='partition' else raw
+            if path in extra:
+                require(box is not None,'Redundant clipping at an empty node');box=core.feasible_clip(box,hi);seen_extra.add(path)
+            if code=='X':require(box is None,'Excluded feasible moment box');excluded+=1;continue
+            require(box is not None,'Accepted empty moment box')
+            if code=='A':
+                require(cursor<len(band['leaves']),'Missing accepted leaf');leaf=band['leaves'][cursor]
+                require(leaf['path']==path and leaf['box']==list(box),'Accepted leaf differs from closed partition')
+                upper=finite(leaf['upper']);require(0<=upper<=UPPER,'Leaf exceeds current global upper bound')
+                ident=leaf['evaluator'];require(ident in evaluators,'Missing evaluator');recipes.add(ident)
+                require(leaf['bound_kind'] in ('leaf','containing_band'),'Unknown upper-bound meaning')
+                require(type(leaf['arithmetic_replayed']) is bool and leaf['arithmetic_replayed']==(leaf['bound_kind']=='leaf'),'Reevaluation scope differs')
+                if callback is not None:
+                    value=callback(evaluators[ident],lo,hi,tuple(box),band['method'])
+                    if leaf['bound_kind']=='leaf':require(value==leaf['upper'],'Numerical leaf value differs')
+                    else:require(Fraction(value)<=upper,'Numerical leaf exceeds containing-band bound')
+                replayed+=leaf['arithmetic_replayed'];uppers.append(upper);cursor+=1
             else:
-                require(band["type"] == "mixed", "Unknown band type")
-                local = mixed_record(record)
-            counts.update(local)
-            counts["bands"] += 1
-            methods[record["method"]] += 1
-            families[record.get("evaluator",record)["kind"]] += 1
-            intervals.append((lo, hi))
-            uppers.append(upper)
-    cursor = Fraction(domain["lower"])
-    for lo, hi in sorted(intervals):
-        require(lo <= cursor, "Finite closed union has a gap")
-        cursor = max(cursor, hi)
-    require(cursor == Fraction(domain["upper"]), "Finite union misses the endpoint")
-    require(dict(counts) == result["counts"] == {"bands":1683,"nodes":412067,"accepted":200239,"infeasible":6636}, "Aggregate counts disagree")
-    require(dict(methods) == result["band_methods"] and dict(families) == result["evaluator_families"], "Method counts disagree")
-    require(max(uppers) == Fraction(result["largest_recorded_upper_fraction"]) == Fraction(result["largest_recorded_upper"]) ==
-            Fraction(4089268438506339,9007199254740992), "Maximum upper enclosure differs")
-    return {"counts":dict(counts), "largest_recorded_upper_fraction":str(max(uppers)),
-            "closed_domain":[str(Fraction(domain["lower"])),str(cursor)]}
+                require(band['method']=='partition' and code in 'DBT' and len(path)<60,'Invalid moment split')
+                left,right=core.children(box,code);stack.extend(((right,path+'1'),(left,path+'0')))
+        require(not stack and cursor==len(band['leaves']) and seen_extra==set(extra),'Partition is incomplete')
+        if band['method']!='partition':require(band['tree']=='A' and not extra,'Uniform bound has a subdivision')
+        require(cursor>0,'Empty complete interval')
+        require(band['weights']==sorted(set(band['weights'])) and band['weights'],'Missing interval coefficients')
+    return dict(nodes=len(band['tree']),accepted=cursor,infeasible=excluded,replayed_leaves=replayed,upper=max(uppers),evaluators=recipes)
 
+def validate_cover(cover,result,root=ROOT):
+    require(cover['schema']=='independent-be-cover-v4' and result['schema']=='independent-be-result-v4','Unsupported certificate schema')
+    require(result['status']=='interval-bound' and result['sharp_conjecture_resolved'] is False,'Wrong result class')
+    require(cover['comparison_target']==result['comparison_target']==result['upper_bound']=='0.44995','Wrong comparison target')
+    require(Fraction(cover['upper_fraction'])==Fraction(result['largest_recorded_upper_fraction'])==finite(result['largest_recorded_upper'])==UPPER,'Exact upper endpoint differs')
+    require(UPPER<Fraction('0.44995') and cover['geometry_precision_bits']==100,'Invalid upper or geometry precision')
+    domain=cover['domain']
+    for side in ('lower','upper'):
+        require(finite(domain[side])==Fraction(domain[side+'_fraction']) and float.fromhex(domain[side+'_hex'])==domain[side],'Exact endpoint differs')
+    require(domain['lower']==.0014 and domain['upper']==1.21,'Wrong finite L domain')
+    validate_evaluators(cover['evaluators']);counts=Counter(bands=0,nodes=0,accepted=0,infeasible=0);uppers=[];intervals=[];replayed=0
+    with zipfile.ZipFile(root/cover['band_archive']) as bundle:
+        require(set(bundle.namelist())=={r['file']for r in cover['bands']} and len(bundle.namelist())==len(cover['bands']),'Wrong interval archive members')
+        for number,row in enumerate(cover['bands']):
+            band=load_band(bundle,row);require(band['index']==number,'Interval order changed')
+            local=validate_band(band,cover['evaluators']);counts['bands']+=1
+            for key in ('nodes','accepted','infeasible'):require(local[key]==row[key],'Interval count differs');counts[key]+=local[key]
+            require(local['upper']==Fraction(row['upper']) and row['interval']==[str(finite(band['Llo'])),str(finite(band['Lhi']))],'Interval bound or domain differs')
+            require(set(band['weights'])<=cover['weight_sha256'].keys(),'Missing interval weight set')
+            intervals.append(tuple(map(Fraction,row['interval'])));uppers.append(local['upper']);replayed+=local['replayed_leaves']
+    cursor=Fraction(domain['lower'])
+    for lo,hi in sorted(intervals):
+        require(Fraction(domain['lower'])<=lo<hi<=Fraction(domain['upper']) and lo<=cursor,'Finite closed union has a gap')
+        cursor=max(cursor,hi)
+    require(cursor==Fraction(domain['upper']) and max(uppers)==UPPER,'Incomplete global interval or wrong maximum')
+    require(dict(counts)==result['counts'] and counts['bands']==1670,'Aggregate counts differ')
+    require(replayed==result['arithmetic_replayed_leaves']==141533 and counts['accepted']-replayed==result['containing_band_bound_leaves'],'Bound meanings differ')
+    analytic=cover['analytic_complements']
+    require(analytic['small_L']['endpoint']==domain['lower_fraction'] and analytic['large_L']['endpoint']==domain['upper_fraction'],'Analytic complements do not meet the cover')
+    require(Fraction(analytic['small_L']['upper'])<UPPER and Fraction(analytic['large_L']['ratio_upper'])<UPPER,'Analytic complement exceeds global bound')
+    return dict(counts=dict(counts),largest_recorded_upper_fraction=str(UPPER),closed_domain=[domain['lower_fraction'],str(cursor)],arithmetic_replayed_leaves=replayed)
 
-def validate_gaussian(data, cover):
+class CoefficientArchive:
+    """A bounded cache of the indexed Gaussian archive shards."""
+    def __init__(self,cover,root):self.cover=cover;self.root=root;self.opened=OrderedDict()
+    def __enter__(self):return self
+    def __exit__(self,*args):
+        for archive in self.opened.values():archive.close()
+    def read(self,name):
+        require(name in self.cover['coefficient_members'],'Unindexed coefficient member')
+        filename=self.cover['coefficient_members'][name]
+        if filename not in self.opened:
+            if len(self.opened)>=3:self.opened.popitem(last=False)[1].close()
+            self.opened[filename]=zipfile.ZipFile(self.root/'certificates'/filename)
+        self.opened.move_to_end(filename);return self.opened[filename].read(name)
+    def names(self,prefix):
+        found=set()
+        for row in self.cover['gaussian_archives']:
+            with zipfile.ZipFile(self.root/row['file']) as archive:
+                names=archive.namelist();require(len(names)==len(set(names)),'Duplicate coefficient member')
+                for name in names:
+                    require(self.cover['coefficient_members'].get(name)==Path(row['file']).name,'Coefficient belongs to another shard')
+                    if name.startswith(prefix+'/'):
+                        require(name not in found,'Repeated coefficient member');found.add(name);yield name
+        require(found=={n for n in self.cover['coefficient_members']if n.startswith(prefix+'/')},'Missing coefficient member')
+
+def validate_gaussian(cover,root=ROOT):
     import signed_gaussian
-    require(data["schema"] == "independent-be-gaussian-v2", "Unknown Gaussian schema")
-    counts = Counter(records=0, threshold_nodes=0, intervals=0)
-    for key, scalar in data["records"].items():
-        require(key == sha256(canonical(scalar)), "Scalar record digest differs")
-        checked = signed_gaussian.verify_partition(scalar)
-        require(checked["all_passed"] is True, "Gaussian interpolation failed")
-        counts["records"] += 1
-        counts["threshold_nodes"] += checked["threshold_nodes"]
-        counts["intervals"] += checked["intervals"]
-    for key, weights in data["weight_sets"].items():
-        require(key == sha256(canonical(weights)), "Weight-set digest differs")
-        require(set(weights["scalar_ids"]) <= data["records"].keys(), "Missing scalar record")
-        full_splits = {data["records"][c["scalar_id"]]["T"]: c["rounded_split"]
-                       for c in weights["cutoffs"] if c["k"] == c["N"]}
-        for cutoff in weights["cutoffs"]:
-            scalar = data["records"][cutoff["scalar_id"]]
-            require(cutoff["N"] > 0 and 1 <= cutoff["k"] <= cutoff["N"], "Invalid Gaussian cutoff")
-            require(cutoff["rounded_split"] == scalar["s"] and finite(cutoff["upper"]) >= 0 and
-                    finite(cutoff["endpoint_correction"]) >= 0, "Scalar cutoff mismatch")
-            if cutoff["k"] == cutoff["N"]:
-                # The full split also takes minima with two other Gaussian
-                # bounds. Their numerical values are regenerated on replay.
-                require(cutoff["endpoint_correction"] == 0 and cutoff["upper"] <= scalar["upper"],
-                        "Full-split comparison metadata changed")
-            else:
-                from flint import arb, ctx
-                from interval_bounds import two_kernel, au
-                require(cutoff["exact_split"] == "s*k/N", "Wrong partial cutoff convention")
-                with ctx.workprec(100):
-                    exact = arb(full_splits[scalar["T"]]) * cutoff["k"] / cutoff["N"]
-                    approximate = arb(cutoff["rounded_split"])
-                    correction = au(abs(exact-approximate)*two_kernel(exact.union(approximate)))
-                require(cutoff["endpoint_correction"] >= correction, "Cutoff endpoint correction is understated")
-                require(finite(cutoff["upper"]) >= finite(scalar["upper"]) + finite(cutoff["endpoint_correction"]),
-                        "Cutoff bound understates its correction")
-    for band in cover["bands"]:
-        for name in (() if band["type"] == "standard" else ("origin_weights","continuation_weights")):
-            require(band[name] in data["weight_sets"], "Missing band weights")
+    from flint import arb,ctx
+    from interval_bounds import au,two_kernel
+    counts=Counter(records=0,threshold_nodes=0,intervals=0,cutoffs=0);used=set();weight_geometry={}
+    def member(bundle,prefix,ident,mapping):
+        raw=bundle.read(prefix+'/'+ident+'.json');require(sha256(raw)==mapping[ident],'Gaussian file changed')
+        value=json.loads(raw);require(sha256(canonical(value))==ident,'Gaussian mathematical identity differs');return value
+    with CoefficientArchive(cover,root) as bundle:
+        require(len(cover['coefficient_members'])==len(cover['gaussian_sha256'])+len(cover['weight_sha256']),'Unexpected Gaussian member count')
+        for name in bundle.names('gaussian'):
+            ident=Path(name).stem
+            scalar=member(bundle,'gaussian',ident,cover['gaussian_sha256']);checked=signed_gaussian.verify_partition(scalar)
+            require(checked['all_passed'],'Gaussian interpolation failed');counts['records']+=1
+            counts['threshold_nodes']+=checked['threshold_nodes'];counts['intervals']+=checked['intervals']
+        for name in bundle.names('weights'):
+            ident=Path(name).stem
+            weight=member(bundle,'weights',ident,cover['weight_sha256']);N=weight['N'];hi=weight['Lhi'];expected={}
+            require(N in (512,1024,2048) and 0<finite(hi),'Invalid weight geometry')
+            weight_geometry[ident]=(hi,N,set(weight['cap_values']))
+            for cap in weight['cap_values']:
+                require(0<finite(cap),'Invalid smoothing cap')
+                for scale,shift in CHOICES:
+                    T=float(round(scale*2*math.pi/(hi+cap),8));s0=float(min(.14+.43*hi+shift,5/T))
+                    for k in sorted(set([N]+[min(N,max(1,int(round(N*x))))for x in CUTOFFS])):
+                        expected[(T,s0,k)]=float(float(s0)*k/N)
+            require(len(weight['cutoffs'])==len(expected),'Incomplete smoothing portfolio')
+            seen=set()
+            with ctx.workprec(100):
+                for row in weight['cutoffs']:
+                    key=(row['T'],row['original_s'],row['k']);require(key in expected and key not in seen,'Wrong or repeated cutoff');seen.add(key)
+                    require(row['N']==N and row['rounded_split']==expected[key],'Changed original cutoff split')
+                    scalar=member(bundle,'gaussian',row['scalar_id'],cover['gaussian_sha256']);used.add(row['scalar_id'])
+                    require(scalar['T']==row['T'] and scalar['s']==row['rounded_split'],'Scalar belongs to another cutoff')
+                    if row['k']==N:require(row['endpoint_correction']==0 and 0<=finite(row['upper'])<=finite(scalar['upper']),'Full Gaussian bound differs')
+                    else:
+                        exact=arb(row['original_s'])*row['k']/N;rounded=arb(row['rounded_split'])
+                        correction=au(abs(exact-rounded)*two_kernel(exact.union(rounded)))
+                        require(row['exact_split']=='s*k/N' and finite(row['endpoint_correction'])>=Fraction(correction),'Understated endpoint correction')
+                        require(finite(row['upper'])>=finite(scalar['upper'])+finite(row['endpoint_correction']),'Understated Gaussian cutoff')
+                    counts['cutoffs']+=1
+        require(used==set(cover['gaussian_sha256']),'Unreferenced scalar partition')
+    with zipfile.ZipFile(root/cover['band_archive']) as bands:
+        for row in cover['bands']:
+            band=load_band(bands,row);available={}
+            for ident in band['weights']:
+                hi,N,caps=weight_geometry[ident];require(hi==band['Lhi'],'Weights belong to another moment interval')
+                available.setdefault(N,set()).update(caps)
+            for leaf in band['leaves']:
+                recipe=cover['evaluators'][leaf['evaluator']];hi=band['Lhi'];N=recipe['N']
+                bucket=17 if recipe['kind'].startswith('signed') else (20 if band['method']!='partition' else min(20,max(1,round(20*leaf['box'][-1]/hi))))
+                require(N in available and hi*bucket/20 in available[N],'An active leaf lacks its smoothing portfolio')
     return dict(counts)
 
-
 def check(root=ROOT):
-    cover, result = load_inputs(root)
-    summary = validate_cover(cover, result)
-    raw_gaussian = (root / cover["gaussian_file"]).read_bytes()
-    require(sha256(raw_gaussian) == result["gaussian_file_sha256"], "Mixed Gaussian data digest differs")
-    gaussian = json.loads(raw_gaussian)
-    summary["stored_gaussian_partitions"] = validate_gaussian(gaussian, cover)
-    summary["scalar_enclosures"] = scalar_bounds(cover["domain"]["lower"], cover["domain"]["upper"])
-    summary.update(status="exact saved-data checks passed",
-        tree_geometry_replayed=True, accepted_leaf_quadrature_replayed=False,
-        legacy_gaussian_partitions_replayed=False,
-        gaussian_node_quadrature_replayed=False)
+    cover,result=load_inputs(root);summary=validate_cover(cover,result,root)
+    summary['stored_gaussian_partitions']=validate_gaussian(cover,root)
+    summary['scalar_enclosures']=scalar_bounds(cover['domain']['lower'],cover['domain']['upper'])
+    summary.update(status='current closed cover and stored coefficients verified',numerical_leaf_integrals_recomputed=False,gaussian_node_integrals_recomputed=False)
     return summary
 
-
-if __name__ == "__main__":
-    try:
-        print(json.dumps(check(), indent=2))
-    except (CertificateError, AssertionError, ArithmeticError, KeyError, ValueError) as error:
-        print(f"Certificate check failed: {error}", file=sys.stderr)
-        raise SystemExit(1)
+if __name__=='__main__':
+    try:print(json.dumps(check(),indent=2))
+    except (CertificateError,AssertionError,ArithmeticError,KeyError,ValueError) as error:
+        print('Certificate check failed: '+str(error),file=sys.stderr);raise SystemExit(1)

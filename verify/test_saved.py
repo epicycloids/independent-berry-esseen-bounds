@@ -1,69 +1,38 @@
-"""Regression checks for certificate coverage and metadata."""
+"""Failure controls for the current closed moment partition."""
 from copy import deepcopy
 from fractions import Fraction
-import json
 import unittest
-
-from check_saved import ROOT, CertificateError, canonical, load_inputs, mixed_record, validate_cover
-
+import zipfile
+from check_saved import ROOT,CertificateError,UPPER,load_inputs,load_band,validate_band,validate_evaluators
 
 class SavedCertificateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.cover, cls.result = load_inputs()
-        cls.mixed = next(b["record"] for b in cls.cover["bands"] if b["type"] == "mixed")
-
-    def test_upper_bound_target_is_exact(self):
-        upper = Fraction(self.result["largest_recorded_upper_fraction"])
-        self.assertLess(upper,Fraction("0.454"))
-        self.assertEqual(upper,Fraction(self.result["largest_recorded_upper"]))
-
-    def test_curated_source_identity_loaders(self):
-        import adaptive_b_cover_engine
-        import energy_reference
-        import energy_small_table
-        import maximum_variance_bounds
-        adaptive_b_cover_engine.install()
-        self.assertIs(energy_reference.reviewed_reference(),maximum_variance_bounds.reviewed_reference())
-        self.assertEqual(energy_small_table.worker().REMAINDER_SHA256,
-                         energy_small_table.REMAINDER_SHA256)
-        table = json.loads((ROOT/"verify/kernel/energy_table_complete.json").read_text())
-        self.assertEqual(table["source_sha256"],energy_reference.REVIEWED_SHA256)
-        self.assertEqual(energy_small_table._compiled_endpoint(table["small_frequency_prefix"]),Fraction(1,2))
-
-    def test_old_target_cannot_be_relabelled(self):
-        record = deepcopy(self.mixed)
-        record["origin"]["target"] = "0.454"
-        with self.assertRaises(CertificateError):mixed_record(record)
-
-    def test_frontier_must_be_original(self):
-        record = deepcopy(self.mixed)
-        record["origin"]["stack"].pop()
-        with self.assertRaises((CertificateError,ValueError)):mixed_record(record)
-
-    def test_closed_root_cannot_shrink(self):
-        record = deepcopy(self.mixed)
-        record["root"][1] *= .99
-        with self.assertRaises(CertificateError):mixed_record(record)
-
-    def test_empty_continuation_cannot_claim_completion(self):
-        import stable_cover
-        import hashlib
-        record = deepcopy(self.mixed)
-        record["continuation"].update(tree_zlib_base64=stable_cover.pack(""),tree_sha256=hashlib.sha256(b"").hexdigest(),nodes=0)
-        with self.assertRaises(CertificateError):mixed_record(record)
-
-    def test_mixed_topology_counts_replay(self):
-        counts = mixed_record(self.mixed)
-        self.assertEqual(counts,{k:self.mixed[k] for k in ("nodes","accepted","infeasible")})
-
-    def test_wrong_b_coverage_policy_rejected(self):
-        record = deepcopy(self.mixed)
-        record["evaluator"]["parameters"]["b_max_depth"] = 7
-        with self.assertRaises(CertificateError):mixed_record(record)
-
-    def test_numerical_mode_requires_both_roles(self):
-        with self.assertRaises(CertificateError):mixed_record(self.mixed,numerical=True)
-
-
-if __name__ == "__main__":unittest.main()
+        cls.cover,cls.result=load_inputs()
+        with zipfile.ZipFile(ROOT/cls.cover['band_archive']) as archive:cls.band=load_band(archive,cls.cover['bands'][0])
+    @classmethod
+    def tearDownClass(cls):
+        del cls.cover,cls.result,cls.band
+    def test_exact_upper(self):
+        self.assertEqual(UPPER,Fraction(self.result['largest_recorded_upper']));self.assertLess(UPPER,Fraction('0.44995'))
+    def test_complete_tree(self):
+        local=validate_band(self.band,self.cover['evaluators']);self.assertEqual(local['accepted'],len(self.band['leaves']))
+    def test_root_cannot_shrink(self):
+        band=deepcopy(self.band);band['root'][1]*=.99
+        with self.assertRaises(CertificateError):validate_band(band,self.cover['evaluators'])
+    def test_tree_cannot_end_early(self):
+        band=deepcopy(self.band);band['tree']=band['tree'][:-1]
+        with self.assertRaises(CertificateError):validate_band(band,self.cover['evaluators'])
+    def test_leaf_box_cannot_change(self):
+        band=deepcopy(self.band);band['leaves'][0]['box'][1]*=.99
+        with self.assertRaises(CertificateError):validate_band(band,self.cover['evaluators'])
+    def test_underlying_replay_scope_cannot_change(self):
+        band=deepcopy(self.band);band['leaves'][0]['arithmetic_replayed']=False
+        with self.assertRaises(CertificateError):validate_band(band,self.cover['evaluators'])
+    def test_evaluator_depth_is_fixed(self):
+        values=deepcopy(self.cover['evaluators']);key=next(k for k,v in values.items()if v['kind']=='signed');values[key]['b_max_depth']=7
+        with self.assertRaises(CertificateError):validate_evaluators(values)
+    def test_cap_above_global_upper_rejected(self):
+        band=deepcopy(self.band);band['leaves'][0]['upper']=.45
+        with self.assertRaises(CertificateError):validate_band(band,self.cover['evaluators'])
+if __name__=='__main__':unittest.main()
