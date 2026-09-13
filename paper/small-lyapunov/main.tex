@@ -23,6 +23,7 @@ pdfauthor={Logan Bell}}
 \DeclareMathOperator{\Law}{Law}
 \DeclareMathOperator{\Bern}{Bern}
 \DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\dist}{dist}
 \newcommand{\E}{\mathbb E}
 \newcommand{\Pp}{\mathbb P}
 \newcommand{\R}{\mathbb R}
@@ -34,1685 +35,478 @@ pdfauthor={Logan Bell}}
 \newcommand{\pe}{p_{\mathrm E}}
 \newcommand{\qe}{q_{\mathrm E}}
 \newcommand{\te}{\tau_{\mathrm E}}
-\newcommand{\de}{d_{\mathrm E}}
-\newcommand{\re}{\rho_{\mathrm E}}
+\newcommand{\he}{h_{\mathrm E}}
 \newcommand{\phz}{\phi(0)}
 \title{The sharp Berry--Esseen bound for independent arrays\\
 with small Lyapunov ratio}
 \author{Logan Bell}
-\date{11 September 2026}
+\date{13 September 2026\quad Version 0.5.0}
 \begin{document}
 \maketitle
 \begin{abstract}
-There is a universal number $\ell_0>0$ such that every finite independent
-centered array with positive total variance and finite third absolute
-moments satisfies $\Delta\le C_{\mathrm E}\ell$ whenever
-$\ell\le\ell_0$, where
-$C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$. Here $\Delta$ is the
-Kolmogorov distance of the standardized sum from the standard normal law,
-and $\ell$ is its Lyapunov ratio. The constant is optimal. The proof adapts the uniform
-jitter, support contact, and local comparison arguments of He and Cheng
-to independent summands with different laws. A penalized maximization
-preserves small Lyapunov ratio. For the maximizing arrays, a Fourier
-expansion and the equality case of Esseen's moment inequality determine a
-common scale. The variational equations confine each of their supports to
-two small clusters or to a small neighborhood of zero. An exact comparison
-with common-diameter Bernoulli arrays completes the proof. The latter bound
-is supplied by a companion paper and uses validated finite calculations.
-The present argument gives no numerical value of $\ell_0$.
+Every finite independent centered array with positive total variance
+and finite third absolute moments satisfies $\Delta\le C_{\mathrm E}\ell$
+whenever $\ell\le\exp(-\exp(20004))$, where $\Delta$ is the
+Kolmogorov distance of the standardized sum from the normal law,
+$\ell$ is its Lyapunov ratio, and
+$C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$.
+The coefficient is optimal. The proof develops the variational,
+uniform-jitter, and local-comparison methods of He and Cheng for
+summands with different laws. A finite approximate-period argument and
+a quantitative form of Esseen's moment inequality identify a common
+scale. Support variations put every coordinate of a maximizing array
+into two narrow clusters or a small neighborhood of zero. An exact
+comparison with a common-diameter Bernoulli array completes the proof.
+All parameters are explicit. The common-diameter bound and an auxiliary
+unrestricted bound are supplied by companion papers with validated
+finite calculations.
 \end{abstract}
+\tableofcontents
 
-\section{The theorem and its inputs}\label{sec:theorem}
-Let $X_1,\ldots,X_n$ be independent centered real random variables. Write
+\section{The theorem and the proof}\label{sec:theorem}
+Let $X_1,\ldots,X_n$ be independent centered real random variables. Put
 \begin{equation}\label{eq:basic-data}
- B^2=\sum_{i=1}^n\E X_i^2>0,\qquad
- T=\sum_{i=1}^n\E|X_i|^3<\infty,\qquad
- \ell=\frac{T}{B^3},
+ B^2=\sum_i\E X_i^2>0,\qquad T=\sum_i\E|X_i|^3<\infty,
+ \qquad\ell=T/B^3,
 \end{equation}
-and let
+and write
 \[
- \Delta=\sup_{x\in\R}
- \left|\Pp\left\{B^{-1}\sum_{i=1}^nX_i\le x\right\}-\Phi(x)\right|,
- \qquad
- \mathcal R(X_1,\ldots,X_n)=\frac{\Delta}{\ell}.
+ \Delta=\sup_x\left|\Pp\left\{B^{-1}\sum_iX_i\le x\right\}-\Phi(x)\right|,
+ \qquad\mathcal R(X_1,\ldots,X_n)=\Delta/\ell.
 \]
-Here $\Phi$ and $\phi$ are the standard normal distribution function and
-density. Zero summands are allowed. Set
-\[
- \ce=3+\sqrt{10},\qquad \be=\frac{\ce\phz}{6}.
-\]
+Here $\Phi$ and $\phi$ are the standard normal distribution function
+and density. Zero coordinates are allowed. Set
+$\ce=3+\sqrt{10}$ and $\be=\ce\phz/6$.
 
 \begin{theorem}\label{thm:main}
-There exists an absolute constant $\ell_0>0$ such that, for every integer
-$n\ge1$ and every array satisfying \eqref{eq:basic-data},
+For every array satisfying \eqref{eq:basic-data},
 \[
-             \ell\le\ell_0\quad\Longrightarrow\quad
-             \Delta\le\be\ell.
+ \boxed{\quad\ell\le\ell_0:=\exp\bigl(-\exp(20004)\bigr)
+          \quad\Longrightarrow\quad\Delta\le\be\ell.\quad}
 \]
-The constant $\be$ cannot be decreased, even if all summands have the
-same two-point law.
+The coefficient $\be$ cannot be decreased, even when all coordinates
+have the same two-point law.
 \end{theorem}
 
-The unrestricted conjecture $\Delta\le\be\ell$ remains open for general
-independent arrays. Theorem~\ref{thm:main} excludes violations whose
-Lyapunov ratios tend to zero; its proof does not give an explicit
-threshold.
+The value of $\ell_0$ is a sufficient threshold. The proof does not
+estimate the largest admissible threshold, and the sharp inequality
+for unrestricted independent arrays remains open.
 
-He and Cheng \cite{HeCheng2026} prove the sharp bound for iid summands
-once the sample size exceeds a universal threshold. We use their
-uniform-jitter expansion and exact local comparison as the starting
-points for the independent-array argument. Their contamination method
-also supplies the support equations used below. The replacements for
-identical distribution are proved here: selection by a smooth moment
-penalty, a variance-weighted Fourier construction, arithmetic restrictions
-on every support point, and conditional estimates for a weighted
-Poisson-binomial sum.
+He and Cheng \cite[Theorem~1.1, Sections~2--5, and Appendix~A]{HeCheng2026} prove
+the sharp inequality for iid sums once their sample size exceeds a
+universal threshold. Their proof supplies three mechanisms used here:
+coordinate contamination gives support equations, uniform jitter
+reveals a lattice scale, and a local comparison separates small and
+large residual variance. Independence with different laws requires
+additional estimates. We prove these for the original coordinates,
+including those outside the two-cluster class. In particular,
+conditioning on a Bernoulli count does not make the residuals
+independent; our conditional Fourier argument retains each label
+together with its residual.
 
-We record the two sharp inputs. Define
-\begin{equation}\label{eq:esseen-parameters}
- \pe=\frac{4-\sqrt{10}}2,\qquad \qe=1-\pe,\qquad
- \de=\sqrt{\pe\qe},\qquad \te=\pe^2+\qe^2.
+Two finite bounds from the companion papers enter the proof:
+\begin{align}
+ \mathcal R\bigl(h(B_1-p_1),\ldots,h(B_m-p_m)\bigr)&\le\be,
+                                                        \label{eq:finite-input}\\
+ \mathcal R(X_1,\ldots,X_n)&<9/20.                      \label{eq:upper-input}
+\end{align}
+In \eqref{eq:finite-input}, the $B_i$ are independent Bernoulli
+variables with arbitrary parameters and positive total variance, and
+$h>0$. This is the common-diameter theorem
+\cite[Theorem~1.2(ii)]{BellFinite2026}; its proof uses Schulz's
+binomial theorem \cite[Theorem~1]{Schulz2016} and validated finite
+calculations. Equation~\eqref{eq:upper-input} follows from the
+unrestricted bound \cite[Theorem~1.1]{BellUpper2026}.
+These are the computational dependencies of the present theorem.
+We also use Shevtsova's general-independent estimate
+\begin{equation}\label{eq:published-excess}
+ \Delta\le\be\ell+0.2538\ell^{4/3}\qquad(\ell\le10^{-3})
 \end{equation}
-Let $Z_{\mathrm E}$ have the centered variance-one law
-\[
- \Law(Z_{\mathrm E})
- =\qe\delta_{-\pe/\de}+\pe\delta_{\qe/\de},
- \qquad
- \beta_{\mathrm E}=\E|Z_{\mathrm E}|^3=\frac{\te}{\de},
- \qquad \re=\beta_{\mathrm E}^{-1}.
-\]
-Its third moment is positive.
+\cite[Corollary~4.18, p.~303]{Shevtsova2012}. Its role is to localize
+a maximizing counterexample. Its positive remainder is removed by
+the subsequent support and local comparisons.
 
-Esseen's lattice moment theorem \cite[pp.~161--162]{Esseen1956} has the
-following homogeneous form. If a centered random variable $Y$ with
-finite third absolute moment is supported on a translate of $h\Z$,
-$h>0$, then
+For the lattice step, define
+\begin{equation}\label{eq:esseen-data}
+ \pe=\frac{4-\sqrt{10}}2=\frac{1-1/\ce}{2},\quad
+ \qe=1-\pe,\quad\te=\pe^2+\qe^2,\quad\he=1/\te.
+\end{equation}
+Esseen's moment inequality \cite[pp.~161--162]{Esseen1956} states
+that a centered variable $Y$ supported on a translate of $h\Z$ satisfies
 \begin{equation}\label{eq:esseen-moment}
  |\E Y^3|+3h\E Y^2\le\ce\E|Y|^3.
 \end{equation}
-For positive variance, equality holds exactly for
-$\Law(Y)=\Law(\pm h\de Z_{\mathrm E})$. In particular, the maximal
-span of an equality law is $h$. A constant centered variable has both
-sides zero. The corresponding iid asymptotic formula gives
-$\mathcal R(Z_{\mathrm E},\ldots,Z_{\mathrm E})\to\be$
-as the number of summands tends to infinity
-\cite{Esseen1956,MattnerShevtsova2019}. Its Lyapunov ratio is
-$\beta_{\mathrm E}/\sqrt n$, proving the optimality assertion in
-Theorem~\ref{thm:main}.
+For positive variance, equality holds precisely for
+$Y\overset d=\pm h(B-\pe)$, $B\sim\Bern(\pe)$.
+Appendix~\ref{app:confinement} proves the quantitative form needed here.
+The iid asymptotic formula for this law gives a ratio tending to $\be$
+and a Lyapunov ratio tending to zero
+\cite{Esseen1956,MattnerShevtsova2019}. This proves optimality.
 
-The finite input is the common-diameter theorem of the companion paper
-\cite[Theorem~1.2(ii)]{BellFinite2026}:
-\begin{equation}\label{eq:finite-input}
- \mathcal R\bigl(h(B_1-p_1),\ldots,h(B_m-p_m)\bigr)\le\be
- \quad(h>0),
-\end{equation}
-where the $B_i$ are independent Bernoulli variables with arbitrary
-parameters $p_i\in[0,1]$ and positive total variance. That theorem uses
-Schulz's binomial bound \cite[Theorem~1]{Schulz2016} and the validated
-finite calculations described in the companion paper. The numerical
-dependency of Theorem~\ref{thm:main} is through
-\eqref{eq:finite-input}.
-
-We also use the usual independent Berry--Esseen inequality with some
-finite universal constant $C_U$; no particular numerical value is needed
-\cite{Shevtsova2013}. For a real random variable $S$, put
-$F_S(x)=\Pp(S\le x)$ and $F_S^-(x)=\Pp(S<x)$. Since the normal
-distribution function is continuous,
+We use closed and strict CDFs $F_S(x)=\Pp(S\le x)$ and
+$F_S^-(x)=\Pp(S<x)$. For a centered sum of variance $B^2$,
 \begin{equation}\label{eq:branches}
  \sup_x|F_S(x)-\Phi(x/B)|
- =\sup_x\max\{F_S(x)-\Phi(x/B),\ \Phi(x/B)-F_S^-(x)\}
+ =\sup_x\max\{F_S(x)-\Phi(x/B),\ \Phi(x/B)-F_S^-(x)\}.
 \end{equation}
-when $S$ is centered with variance $B^2$. Reflection changes the second
-branch into the first. Constants denoted by $C$ and $c$ below may change
-between estimates. Subscripts specify fixed parameters on which they
-may depend. We write $A\asymp_\alpha B$ when
-$c_\alpha B\le A\le C_\alpha B$ for positive constants depending only
-on $\alpha$. Limits of arrays always refer to finite rows; their lengths
-may grow without a prescribed rate.
+Reflection interchanges these branches. The comparisons below retain
+these endpoint conventions and therefore include laws with atoms.
 
-The proof proceeds by contradiction. Section~\ref{sec:selection}
-selects exact maximizers whose Lyapunov ratios tend to zero and bounds
-each support at that scale. Sections~\ref{sec:jitter}
-and~\ref{sec:confinement} identify the common scale and confine the
-supports. Section~\ref{sec:local} proves the exact local comparison
-needed for the final contradiction.
+Section~\ref{sec:selection} selects an attained counterexample with
+small Lyapunov ratio and bounds every support.
+Section~\ref{sec:jitter} finds an approximate period by a finite
+procedure. Section~\ref{sec:confinement} converts its moment information
+into restrictions on every support point. Section~\ref{sec:local}
+proves the independent local comparison with explicit parameters, and
+Section~\ref{sec:completion} evaluates their composition. The appendices
+give the Fourier estimates, the quantitative support argument, and the
+conditional-moment estimates used in these sections.
 
-\section{Selecting maximizers and bounding their supports}
-\label{sec:selection}
-Suppose that Theorem~\ref{thm:main} fails. Normalize each array to
-$B=1$. For integers $j\ge1$, let
-\[
- \eta_j=j^{-1},\qquad t_j=e^{-j^2},\qquad
- f(r)=
- \begin{cases}
-  0,&r\le0,\\
-  r^2/(1+r),&r>0,
- \end{cases}
- \qquad
- \psi_j(t)=\eta_j f(\log(t/t_j)).
-\]
-The function $\psi_j$ is continuously differentiable and nondecreasing,
-and
-\begin{equation}\label{eq:penalty}
- \psi_j\ge0,\quad
- \psi_j(t)=0\ (t\le t_j),\quad
- 0\le t\psi_j'(t)\le\eta_j,\quad
- \psi_j(t)\ge\eta_j\{\log(t/t_j)-1\}.
-\end{equation}
-Choose a violating array with $\ell\le t_j$, and let $n_j$ be its
-length. In that fixed dimension maximize, over independent centered
-arrays of total variance one and thresholds $z\in\R$,
-\begin{equation}\label{eq:penalized-objective}
- \frac{F_S(z)-\Phi(z)}{\ell}-\psi_j(\ell),
- \qquad S=\sum_iX_i.
-\end{equation}
-Its supremum exceeds $\be$, since reflection permits a positive branch
-of the chosen violation.
+\section{Selection and support equations}\label{sec:selection}
+Normalize total variance to one, so $\ell=T$.
+For a fixed number of coordinates, maximize the positive signed ratio
+at a threshold, less a nondecreasing penalty on $\ell$.
 
-\begin{lemma}\label{lem:attainment}
-The supremum in \eqref{eq:penalized-objective} is attained. For a
-maximizer, write
-\[
- R_j=\frac{F_{S_j}(z_j)-\Phi(z_j)}{\ell_j}.
-\]
-Then
+\begin{lemma}[Localized selection]\label{lem:selection}
+Let $0<\eta\le1/100$ and
+$0<t\le\min\{1/2000,\eta^3/108\}$. If a finite array has
+$\ell\le t$ and $\mathcal R>\be$, there is an attained penalized
+maximizer with the same number of coordinates, a threshold $z$, and
 \begin{equation}\label{eq:selected}
- R_j>\be,\qquad R_j\le C_U,\qquad
- \ell_j\le t_j\exp\{1+(C_U-\be)/\eta_j\}\longrightarrow0.
+ \be<R<9/20,\quad\ell<2t,\quad
+ R\le K:=R+\ell\psi_t'(\ell)\le R+\eta.
 \end{equation}
-Moreover, $\mathcal R(X_{1,j},\ldots,X_{n_j,j})=R_j$.
+Here $R$ is its full ratio. If a coordinate has variance $s$ and
+third absolute moment $b$, then
+\begin{equation}\label{eq:deletion-penalty}
+ \psi_t\left(\frac{\ell-b}{(1-s)^{3/2}}\right)-\psi_t(\ell)
+                         \le2\eta s.
+\end{equation}
 \end{lemma}
 
 \begin{proof}
-For a fixed dimension $n$, Lyapunov's inequality and convexity give
+Put $f(v)=0$ for $v\le0$, $f(v)=v^2/(1+v)$ for $v>0$, and
+$\psi_t(u)=2u^{1/3}f(\log(u/t))$. This penalty is continuously
+differentiable, nonnegative, nondecreasing, and zero for $u\le t$.
+After reflection if necessary, the supremum of
+\begin{equation}\label{eq:objective}
+              [F_S(z)-\Phi(z)]/\ell-\psi_t(\ell)
+\end{equation}
+over centered variance-one arrays of the specified length is above $\be$.
+If the objective exceeds $r_0>0$, then $n^{-1/2}\le\ell\le r_0^{-1}$.
+Bounded third moments give coordinatewise weak subsequences and uniform
+integrability of squares, preserving means and total variance.
+Chebyshev bounds the thresholds because their discrepancies are at
+least $r_0/\sqrt n$. Moving-threshold Portmanteau for the closed CDF
+gives the required upper semicontinuity at a limit. A strict loss of
+third moments would increase the positive ratio and decrease the
+penalty, contradicting the supremum. Thus the limit attains it.
+This is the fixed-dimension argument of
+\citet[Lemma~4.1]{HeCheng2026}, applied coordinatewise.
+
+Since $f(\log2)>4/15>1/4$, one has $\psi_t(u)>u^{1/3}/2$ for
+$u\ge2t$. For $u\le10^{-3}$ this exceeds the excess in
+\eqref{eq:published-excess}; for $u\ge10^{-3}$ it is at least
+$1/20>9/20-\be$. Hence the maximizer has $\ell<2t$.
+For $t<u\le4t$, $f<1$ and $0\le f'\le1$ give
 \[
- \ell\ge\sum_i(\E X_i^2)^{3/2}\ge n^{-1/2}.
+ 0\le u\psi_t'(u)\le\tfrac83(4t)^{1/3}
+                         <3(4t)^{1/3}\le\eta.
 \]
-Along a maximizing sequence with objective greater than a fixed
-$r_0>0$, the positive discrepancy is at least $r_0\ell$ and at most
-one, so $\ell\le r_0^{-1}$. Each coordinate has a bounded third
-absolute moment. Coordinatewise weak subsequences preserve means and
-variances, because this bound gives uniform integrability of squares.
-The limiting total variance is therefore one.
-
-The thresholds stay bounded. Uniformly over centered variance-one sums,
-Chebyshev's inequality makes their positive discrepancies tend to zero
-as the threshold tends to either infinity, whereas here they are at
-least $r_0/\sqrt n$. Pass to a subsequence on which the thresholds
-converge to $z$ and the third-moment sums converge to $L$.
-Moving-threshold Portmanteau gives
-$F_S(z)\ge\limsup F_{S_r}(z_r)$, and lower semicontinuity gives the
-limiting third-moment sum $\ell\le L$. If $\ell<L$, the limiting
-positive ratio strictly increases and its nondecreasing penalty
-weakly decreases, exceeding the supremum. Thus $\ell=L$ and the
-limit attains the supremum. This is the fixed-dimension compactness
-argument of \citet[Lemma~4.1]{HeCheng2026}, applied coordinatewise.
-
-At the maximizer, $R_j-\psi_j(\ell_j)>\be$ and $R_j\le C_U$.
-Equation~\eqref{eq:penalty} gives \eqref{eq:selected}.
-A larger discrepancy of either sign in the same array, with reflection
-if necessary, would increase \eqref{eq:penalized-objective}; hence its
-full ratio is $R_j$.
+This holds also for $u\le t$. Each coordinate has
+$s^{3/2}\le\ell<10^{-3}$, so $s\le1/4$ and
+$\ell_-=(\ell-b)/(1-s)^{3/2}<(8/5)\ell<4t$.
+If $\ell_->\ell$, integration on this actual interval gives
+\[
+ \psi_t(\ell_-)-\psi_t(\ell)
+ \le\eta\log(\ell_-/\ell)
+ \le\tfrac32\eta[-\log(1-s)]\le2\eta s.
+\]
+Otherwise monotonicity suffices. A larger discrepancy in the selected
+array, reflected for the other branch, would increase its objective;
+therefore $R$ is its full ratio.
 \end{proof}
 
-We suppress $j$ temporarily. Put
-\[
- s_i=\E X_i^2,\qquad b_i=\E|X_i|^3,\qquad
- M_i=\E[X_i|X_i|],\qquad
- K=R+\ell\psi_j'(\ell).
-\]
-Thus $R\le K\le R+\eta_j$. Let $F=F_S$ and let $G_i$ be the CDF
-of $S-X_i$.
-
+Write $s_i=\E X_i^2$, $b_i=\E|X_i|^3$,
+$M_i=\E[X_i|X_i|]$, and let $G_i$ be the CDF of $S-X_i$.
 \begin{lemma}[Support contact]\label{lem:contact}
 For every $y\in\R$,
 \begin{align}
- D_i(y):={}&G_i(z-y)-F(z)+\phi(z)y
+ D_i(y):={}&G_i(z-y)-F_S(z)+\phi(z)y
        +\frac{z\phi(z)}2(y^2-s_i)\notag\\
  &+\frac32K\ell(y^2-s_i)
        -K\{|y|^3-b_i-3M_i y\}\le0.                 \label{eq:contact}
 \end{align}
 Equality holds at every $y\in\supp X_i$.
 \end{lemma}
-
 \begin{proof}
 Replace the raw law of coordinate $i$ by
-$(1-e)\Law(X_i)+e\delta_y$, keeping the raw threshold $z$ fixed,
-and then center and standardize the resulting array. The derivatives
-at $e=0$ of its total mean, total variance, and sum of absolute third
-central moments are, respectively,
-\[
- y,\qquad y^2-s_i,\qquad |y|^3-b_i-3M_i y.
-\]
-For the third identity, differentiation under the expectation is
-justified by a bound $C_y(1+X_i^2)$. The raw CDF derivative is
-$G_i(z-y)-F(z)$. Consequently the derivative of the normalized
-third-moment sum is
-\[
- |y|^3-b_i-3M_i y-\frac32\ell(y^2-s_i).
-\]
-Differentiating \eqref{eq:penalized-objective} and multiplying by
-$\ell$ gives \eqref{eq:contact}. Maximality makes it nonpositive.
-
-Its integral under $\Law(X_i)$ is zero: each displayed moment term
-integrates to zero, and $\E G_i(z-X_i)=F(z)$. Thus $D_i=0$
-almost surely. A CDF is upper semicontinuous, so $D_i$ is upper
-semicontinuous. The closed set $\{D_i=0\}$ therefore contains the
-entire support. This is the independent-coordinate version of
-\citet[Lemma~4.3]{HeCheng2026}; the moment coefficient $K$ includes
-the derivative of the penalty.
+$(1-e)\Law(X_i)+e\delta_y$, retain the raw threshold, and center
+and standardize the new array. The derivatives at $e=0$ of its mean,
+variance, and total third absolute central moment are
+$y$, $y^2-s_i$, and $|y|^3-b_i-3M_i y$.
+The last differentiation is justified by a bound $C_y(1+X_i^2)$.
+The raw CDF derivative is $G_i(z-y)-F_S(z)$. Differentiating
+\eqref{eq:objective} and multiplying by $\ell$ gives
+\eqref{eq:contact}, with its sign supplied by maximality.
+Its integral under $\Law(X_i)$ is zero. Upper semicontinuity of $D_i$
+then extends equality to the entire support. This is the
+independent-coordinate form of the contamination argument of
+\citet[Lemma~4.3]{HeCheng2026}.
 \end{proof}
 
-For $0\le s\le1/2$ define the Gaussian remainder
-\[
- H_s(z,y)=
- \Phi\left(\frac{z-y}{\sqrt{1-s}}\right)-\Phi(z)
- +\phi(z)y+\frac{z\phi(z)}2(y^2-s).
-\]
-The cancellation used in \citet[Lemma~4.4]{HeCheng2026} gives
-\begin{align}
- |H_s(z,y)|
- &\le\frac{\phz}{6}|y|^3+C(s|y|+s^2),                  \label{eq:H-global}\\
- H_s(z,y)
- &=\phi''(z)\left(\frac{sy}{2}-\frac{y^3}{6}\right)
-     +O(y^4+sy^2+s^2)                                  \label{eq:H-local}
-\end{align}
-in the second formula for bounded $y$, uniformly in $z$.
-For completeness, translation Taylor expansion has remainder at most
-$\|\phi''\|_\infty|y|^3/6=\phz|y|^3/6$. For $u=z-y$,
-differentiating $\lambda\mapsto\Phi(u/\sqrt{1-\lambda})$ twice
-shows that its second derivative is uniformly bounded for
-$0\le\lambda\le1/2$. The scale correction, after cancellation of
-the term $sz\phi(z)/2$, is
-\[
- \frac{s}{2}\{(z-y)\phi(z-y)-z\phi(z)\}+O(s^2).
-\]
-The derivative of $z\phi(z)$ is $-\phi''(z)$ and all the Gaussian
-derivatives in question are bounded. These facts give both formulas.
-
-Delete coordinate $i$, and suppose $s_i\le1/2$. Its Lyapunov ratio is
-\[
- \ell_-=\frac{\ell-b_i}{(1-s_i)^{3/2}}.
-\]
-Adding a zero coordinate puts the deleted array in the same
-maximization class. Its positive signed ratio at every threshold is
-therefore at most $R+\psi_j(\ell_-)-\psi_j(\ell)$. With
-$\log_+t=\max(\log t,0)$, equation~\eqref{eq:penalty} gives
-\[
- \psi_j(\ell_-)-\psi_j(\ell)
- \le\eta_j\log_+(\ell_-/\ell)\le3\eta_j s_i.
-\]
-Substitution into the contact equality yields, for $y\in\supp X_i$,
-\begin{align}
-0\le{}&H_{s_i}(z,y)-K|y|^3+\frac32K\ell y^2+3KM_i y\notag\\
- &+C\ell s_i^2+\eta_j b_i+C\eta_j\ell s_i.             \label{eq:deletion}
-\end{align}
-Here and below these estimates are used for large $j$, so all the
-constants are uniform. To verify the remainder, the constant terms
-before applying upper bounds are
-\[
- R(\ell_--\ell)-\frac32K\ell s_i+Kb_i
- +\{\psi_j(\ell_-)-\psi_j(\ell)\}\ell_-.
-\]
-Writing $K=R+\vartheta$, $0\le\vartheta\le\eta_j$, the terms with
-$R$ equal
-\[
- R\ell\{(1-s_i)^{-3/2}-1-\tfrac32s_i\}
- -Rb_i\{(1-s_i)^{-3/2}-1\}.
-\]
-The second is nonpositive. The remaining terms are bounded above
-by those in \eqref{eq:deletion}.
-
-The support estimate below adapts the cubic domination argument of
-\citet[Proposition~4.5]{HeCheng2026} to the coordinate variance scales.
-
-\begin{proposition}\label{prop:support-bound}
-There is a finite constant $L$ such that the selected arrays satisfy
-\begin{equation}\label{eq:common-support}
-                 \supp X_{i,j}\subset[-L\ell_j,L\ell_j]
-                 \quad\hbox{for all $i$ and all sufficiently large $j$}.
+\begin{lemma}[Uniform support bound]\label{lem:support}
+Every nonzero coordinate of the selected maximizer satisfies
+\begin{equation}\label{eq:support}
+ b_i<3\ell s_i,\qquad s_i<9\ell^2,
+                 \qquad\supp X_i\subset(-8\ell,8\ell).
 \end{equation}
-\end{proposition}
-
+\end{lemma}
 \begin{proof}
-The contact equality first bounds every support by one fixed interval:
-its cubic coefficient is at most $-\be$, while all coefficients of
-lower degree are uniformly bounded. Indeed $\ell\le1/\be$,
-$b_i\le\ell$, $s_i\le1$, $|M_i|\le s_i$, and
-$\phi(z),z\phi(z),R,K$ are bounded. Thus each support is compact.
-Let $L_i=\max\{|y|:y\in\supp X_i\}$. Since
-$s_i^{3/2}\le b_i\le\ell_j\to0$, eventually every $s_i\le1/2$.
-Also $b_i\le s_iL_i$.
-
-Use \eqref{eq:H-global} in \eqref{eq:deletion} at an extreme
-support point. Since $\gamma:=\be-\phz/6>0$,
+Deletion, padded by a zero coordinate, stays in the maximization class.
+Its ratio at every threshold is at most $R+2\eta s_i$.
+Compare the convolution of the deleted normal approximation with $X_i$
+to its convolution with $N(0,s_i)$. Put
+$a=\phz(1+4\phz)/6<13/75$. Translation Taylor expansion and
+$\E|N(0,s_i)|^3=4\phz s_i^{3/2}\le4\phz b_i$ give
 \[
- \gamma L_i^3
- \le C\{\ell L_i^2+s_iL_i+s_i^2+\eta_j\ell s_i\}.
+ R\ell(1-s_i)^{3/2}\le(R+2\eta s_i)(\ell-b_i)+ab_i.
 \]
-If $L_i$ is a sufficiently large multiple of $\ell+\sqrt{s_i}$,
-division by $L_i^3$ contradicts this inequality. Hence
-\begin{equation}\label{eq:first-support}
-                     L_i\le C(\ell+\sqrt{s_i}).
+Using $1-(1-s_i)^{3/2}\le3s_i/2$ and rearranging gives
+\[
+ (R-a)b_i\le(3R/2+2\eta)\ell s_i.
+\]
+Since $R>2/5$, the right coefficient is less than $3(R-a)$.
+This proves $b_i<3\ell s_i$, and Jensen gives $\sqrt{s_i}<3\ell$.
+
+For $0\le s\le1/4$ put
+\[
+ H_s(z,y)=\Phi\left(\frac{z-y}{\sqrt{1-s}}\right)-\Phi(z)
+                     +\phi(z)y+\tfrac12z\phi(z)(y^2-s).
+\]
+Translation and scale Taylor expansions give
+\begin{align}
+ |H_s(z,y)|&\le\phz|y|^3/6+\phz s|y|/2+s^2/6,    \label{eq:gaussian-global}\\
+ |H_s(z,y)-\phi''(z)(sy/2-y^3/6)|
+       &\le y^4/36+sy^2/6+s^2/6.                   \label{eq:gaussian-local}
+\end{align}
+Use $\|\phi''\|_\infty=\phz$, $\|\phi'''\|_\infty\le2/\pi<2/3$;
+the scale remainder is bounded in absolute value by $4s^2/27<s^2/6$.
+Substitute the deleted bound in the contact equality. Its constant
+terms are
+\[
+ R(\ell_--\ell)-\tfrac32K\ell s+Kb
+                  +[\psi_t(\ell_-)-\psi_t(\ell)]\ell_-.
+\]
+Since $(1-s)^{-3/2}<8/5$ and
+$(1-s)^{-3/2}-1-3s/2\le6s^2$, every support point satisfies
+\begin{equation}\label{eq:deletion}
+ 0\le H_s(z,y)-K|y|^3+\tfrac32K\ell y^2+3KM_i y
+                       +6R\ell s^2+\eta b+4\eta\ell s.
 \end{equation}
-
-Suppose now that some sequence of coordinates has
-$\sigma_j/\ell_j\to\infty$, where $\sigma_j=\sqrt{s_{i,j}}$.
-Then $\sigma_j\to0$, and \eqref{eq:first-support} bounds the
-centered variance-one laws $X_{i,j}/\sigma_j$ in a common compact
-interval. Extract a weak limit $Q$, still centered with variance one,
-and further subsequences such that
+The contact equation first bounds the support, since its negative
+cubic term dominates at infinity. Let $A_i$ be its maximum absolute
+value. Use $|M_i|\le s$, $b\le sA_i$, $K\le23/50$, and
+\eqref{eq:gaussian-global} to obtain
 \[
- R_j\to r\ge\be,\qquad
- \frac{\phi''(z_j)}6\to d,\qquad
- \frac{M_{i,j}}{\sigma_j^2}\to m,\qquad |d|\le\phz/6.
+ A_i^3/3\le(7/10)\ell A_i^2+(8/5)sA_i+(3/5)s^2+(1/25)\ell s.
 \]
-For any $u\in\supp Q$ choose support points
-$\sigma_j u_j$ with $u_j\to u$. Divide \eqref{eq:deletion} by
-$\sigma_j^3$ and use \eqref{eq:H-local}. The quadratic term tends
-to zero. The remainders tend to zero because
+With $s\le9\ell^2$, $\ell\le1/8$, and $x=A_i/\ell$,
 \[
- \frac{\ell s_i^2}{\sigma_j^3}=\ell_j\sigma_j\to0,\quad
- \frac{\eta_j b_i}{\sigma_j^3}
- \le C\eta_j(1+\ell_j/\sigma_j)\to0,\quad
- \frac{\eta_j\ell s_i}{\sigma_j^3}
- =\eta_j\ell_j/\sigma_j\to0.
+ x^3/3\le7x^2/10+72x/5+1287/200.
 \]
-We obtain
-\[
-              0\le -du^3-r|u|^3+A u,\qquad A=3(d+rm).
-\]
-The support of $Q$ contains $u_+>0$ and $u_-<0$. The first requires
-$A\ge(r+d)u_+^2>0$, while the second requires
-$A\le-(r-d)|u_-|^2<0$. This contradiction proves
-$\sup_i\sigma_{i,j}=O(\ell_j)$, and \eqref{eq:first-support}
-proves \eqref{eq:common-support}.
+The difference is $2539/600>0$ at $x=8$ and has positive derivative
+for $x\ge8$. Thus $A_i<8\ell$.
 \end{proof}
 
-\section{Uniform jitter and equality in the moment bound}
-\label{sec:jitter}
-We give the Fourier argument for arbitrary independent rows satisfying
-\[
- \sum_i\E X_{i,j}^2=1,\qquad
- \ell_j=\sum_i\E|X_{i,j}|^3\longrightarrow0,\qquad
- |X_{i,j}|\le L\ell_j.
-\]
-Put $Y_{i,j}=X_{i,j}/\ell_j$ and take independent copies $Y'_{i,j}$.
-The measures
-\begin{equation}\label{eq:diff-measure}
- \mu_j(A)=\frac{\ell_j^2}{2}\sum_i
- \E\bigl[(Y_{i,j}-Y'_{i,j})^2
-           \ind_{\{Y_{i,j}-Y'_{i,j}\in A\}}\bigr]
-\end{equation}
-are probability measures supported in $[-2L,2L]$. Pass to a
-subsequence on which $\mu_j\Rightarrow\mu$ and
-\[
- \theta_j=\ell_j^{-1}\sum_i\E X_{i,j}^3\longrightarrow\theta,
- \qquad |\theta|\le1.
-\]
-Write $f_{i,j}(u)=\E e^{iuY_{i,j}}$ and
-\begin{equation}\label{eq:g}
- g_j(u)=\ell_j^2\sum_i(1-|f_{i,j}(u)|^2)
- =2\int\frac{1-\cos(ud)}{d^2}\,\mu_j(dd)
- \longrightarrow
- g(u)=2\int\frac{1-\cos(ud)}{d^2}\,\mu(dd).
-\end{equation}
-The quotient at $d=0$ is $u^2/2$. This convergence holds locally
-in $C^2$. A nonzero zero $u$ of $g$ requires
-$\mu(\{0\})=0$ and $ud\in2\pi\Z$ for $\mu$-almost every $d$.
-The zero set is consequently a closed additive subgroup. Since
-$g''(0)=2$, zero is isolated, and the subgroup is either $\{0\}$
-or $(2\pi/h)\Z$ for some $h>0$. Put $h=0$ in the first case.
-At every zero of $g$, its second derivative is two.
+\section{An approximate period and uniform jitter}\label{sec:jitter}
+A uniform random shift suppresses the nonzero lattice peaks of a
+characteristic function. Its period must be chosen from the array
+itself. The following finite construction gives an explicit error.
 
-\begin{lemma}[Uniform-jitter expansion]\label{lem:jitter}
-Let $V_h$ be independent and uniform on $[-h/2,h/2]$, with $V_0=0$,
-and put $\kappa_j=\sum_i\E X_{i,j}^3$. Then
+\begin{lemma}[Finite period selection]\label{lem:period}
+Let $\mu$ be a probability measure on $[-M,M]$, $M>0$, and put
+\[
+ g(u)=\int\frac{|e^{iud}-1|^2}{d^2}\,\mu(dd),\quad
+ q(u)=\sqrt{g(u)},\quad\delta=1/(4M),
+\]
+where the integrand at zero is $u^2$. For $T\ge\delta$ and
+$0<r\le\delta/4$ define
+\[
+ B_0=T/\delta+2,\quad J=\lceil\log_2(T/\delta)\rceil+1,\quad
+ \eps=r/(2B_0^J),\quad E=\{u\in[\delta,T]:q(u)\le\eps\}.
+\]
+If $E\ne\varnothing$, there is $p\in[\delta,T]$ such that
+$q(p)\le r/2$ and $\dist(u,p\Z)<r$ for every $u\in E$.
+For $h=2\pi/p$ and $\ell>0$,
+\begin{equation}\label{eq:high-frequency}
+ \int_\delta^T e^{-g(u)/(2\ell^2)}|\sinc(hu/2)|\,\frac{du}{u}
+ \le\frac{56\sqrt\pi}{9}\frac{r\ell}{p^2}
+           +\log(T/\delta)e^{-\eps^2/(2\ell^2)}.
+\end{equation}
+If $E=\varnothing$, take $h=0$; the exponential term alone suffices.
+\end{lemma}
+\begin{proof}
+The Hilbert-space triangle inequality gives subadditivity of $q$,
+$q(-u)=q(u)$, and $q(u)\le|u|$. Thus $q$ is $1$-Lipschitz.
+Also $g''\ge2-M^2g$ and $g(u)\ge u^2/2$ for $|u|\le\delta$.
+Start with $p_0\in E$. If $v\in E$ has distance at least $r$ from
+$p_j\Z$, choose the nearest integer $k$ and put
+$p_{j+1}=|v-kp_j|$. While $p_j\ge\delta$,
+\[
+ r\le p_{j+1}\le p_j/2,\qquad
+ q(p_{j+1})\le\eps+(T/\delta+1/2)q(p_j)\le B_0^{j+1}\eps.
+\]
+A proposed value in $[r,\delta]$ would satisfy both $q\le r/2$
+and $q\ge r/\sqrt2$. There are at most
+$\lceil\log_2(T/\delta)\rceil$ halvings before this happens.
+The construction therefore stops with the required $p$.
+
+Retain each $I_k=[kp-r,kp+r]\cap[\delta,T]$, $k\ge1$, that meets
+$E$. On it $q\le\eps+2r\le5\delta/8$, so $g''\ge1$.
+At its minimum $a_k$, including an endpoint minimum,
+$g(u)\ge(u-a_k)^2/2$. Moreover
+$|\sinc(\pi u/p)|\le r/u$ and $u\ge(k-1/4)p$.
+Its integral is at most $2\sqrt\pi\ell r/[(k-1/4)^2p^2]$.
+Sum using $\sum_{k\ge1}(k-1/4)^{-2}\le28/9$.
+Outside the retained intervals $g>\eps^2$, proving the assertion.
+\end{proof}
+
+\begin{proposition}[Uniform jitter]\label{prop:jitter}
+Suppose $\sum\E X_i^2=1$, $\ell=\sum\E|X_i|^3\le1/8$, and
+$|X_i|\le8\ell$. For $0<\rho\le1$ put
+\begin{align}
+ \delta&=1/64,&T&=80/\rho,&r&=\rho\delta^2/48,\notag\\
+ B_0&=T/\delta+2,&J&=\lceil\log_2(T/\delta)\rceil+1,
+ &\eps&=r/(2B_0^J),\notag\\
+ L_{\rm jit}(\rho)&=
+ \min\left\{\frac18,\frac\rho{48000},
+              \frac{\rho\eps^2}{8\log(T/\delta)}\right\}.
+                                                        \label{eq:jitter-parameters}
+\end{align}
+If $\ell\le L_{\rm jit}(\rho)$, there is $0\le h\le128\pi$ such
+that, for an independent $U_h$ uniform on $[-h/2,h/2]$,
 \begin{equation}\label{eq:jitter}
- \sup_x\left|
- \Pp\left\{\sum_iX_{i,j}+\ell_jV_h\le x\right\}
- -\Phi(x)-\frac{\kappa_j}{6}(1-x^2)\phi(x)
- \right|=o(\ell_j).
+ \left\|F_{S+\ell U_h}(x)-\Phi(x)
+           -\frac\kappa6(1-x^2)\phi(x)\right\|_\infty\le\rho\ell,
+ \qquad\kappa=\sum_i\E X_i^3.
 \end{equation}
-In particular, uniformly in $x$,
-\begin{align}
- F_{S_j}(x)-\Phi(x)
- &\le\ell_j\phi(x)\left\{\frac h2+
-                      \frac{\theta_j}{6}(1-x^2)\right\}
-                      +o(\ell_j),                    \label{eq:upper-envelope}\\
- \Phi(x)-F_{S_j}^-(x)
- &\le\ell_j\phi(x)\left\{\frac h2-
-                      \frac{\theta_j}{6}(1-x^2)\right\}
-                      +o(\ell_j).                    \label{eq:lower-envelope}
-\end{align}
-\end{lemma}
-
+When $h>0$, $g(2\pi/h)\le r^2/4$ for the measure below. Here $U_0=0$.
+\end{proposition}
 \begin{proof}
-We use the signed smoothing inequality of
-\citet[Lemma~2.1]{HeCheng2026}. In its needed form, if $F$ is a
-probability CDF with finite first absolute moment, and $\nu$ is a
-finite signed measure of mass one with
-$\int|x|\,d|\nu|(x)<\infty$ whose CDF $G$ is globally Lipschitz
-with constant $M$, then
-\begin{equation}\label{eq:signed-smoothing}
- \|F-G\|_\infty
- \le C_1\int_{-A}^A
-       \frac{|\widehat F(t)-\widehat\nu(t)|}{|t|}\,dt
-       +\frac{C_2M}{A}\qquad(A>0).
+Set $Y_i=X_i/\ell$, with independent copies $Y_i'$. The measure
+\begin{equation}\label{eq:diff-measure}
+ \mu(A)=\frac{\ell^2}{2}\sum_i
+        \E[(Y_i-Y_i')^2\ind_{\{Y_i-Y_i'\in A\}}]
 \end{equation}
-Our Fourier convention is $\widehat\nu(t)=\int e^{itx}\nu(dx)$,
-and $\sinc u=\sin(u)/u$, with $\sinc0=1$.
-The signed CDF
-$G_j(x)=\Phi(x)+\kappa_j(1-x^2)\phi(x)/6$
-satisfies these hypotheses with a uniform Lipschitz constant, and
+is a probability measure on $[-16,16]$. It satisfies
 \[
- \widehat\nu_j(t)=e^{-t^2/2}\{1+\kappa_j(it)^3/6\}.
+ g(u)=\ell^2\sum_i(1-|\E e^{iuY_i}|^2),\qquad
+ |\E e^{iuS/\ell}|\le e^{-g(u)/(2\ell^2)}.
 \]
-
-The product bound replacing the iid power is
-\begin{equation}\label{eq:product}
- \left|\prod_i f_{i,j}(u)\right|
- \le \exp\{-g_j(u)/(2\ell_j^2)\}.
+Apply Lemma~\ref{lem:period}. The low-frequency and signed-smoothing
+estimates in Appendix~\ref{app:fourier} bound the norm in
+\eqref{eq:jitter} by
+\begin{equation}\label{eq:jitter-error}
+ 12000\ell^2+12r\ell/\delta^2+
+       \log(T/\delta)e^{-\eps^2/(2\ell^2)}+20\ell/T.
 \end{equation}
-At low standardized frequencies,
-$\sum_i\E X_{i,j}^4\le L\ell_j^2$ and
-$\sum_i(\E X_{i,j}^2)^2\le L^2\ell_j^2$. Taylor expansion of
-the logarithms, for $|t|\ell_j\le\delta_L$ with $\delta_L>0$
-sufficiently small, gives
-\[
- \sum_i\log\E e^{itX_{i,j}}
- =-\frac{t^2}{2}+\frac{(it)^3\kappa_j}{6}
-       +O_L(t^4\ell_j^2).
-\]
-The real part of the remainder is at most a fixed fraction of
-$t^2$. Since the cubic term is purely imaginary, the inequalities
-$|e^{iv}-1-iv|\le v^2/2$ for real $v$ and
-$|e^w-1|\le|w|e^{|w|}$ imply
-\[
- \left|\prod_i\E e^{itX_{i,j}}-\widehat\nu_j(t)\right|
- \le C_L e^{-ct^2}\ell_j^2(t^4+t^6)
- \qquad(|t|\ell_j\le\delta_L).
-\]
-Multiplication by $\sinc(h\ell_jt/2)$ adds an integrable
-$O_h(\ell_j^2t^2e^{-ct^2})$ term. Thus the low-frequency part
-of the integral in \eqref{eq:signed-smoothing} is $O_L(\ell_j^2)$.
-
-Fix a raw cutoff $T>\delta_L$ whose endpoints are not zeros of
-$g$, and set $A=T/\ell_j$. Near each nonzero zero
-$u_k=2\pi k/h$ in $[-T,T]$, local $C^2$ convergence makes $g_j$
-strictly convex. Its unique nearby minimum $v_{j,k}$ tends to
-$u_k$, and nonnegativity gives
-$g_j(u)\ge(u-v_{j,k})^2/2$ on a fixed small neighborhood.
-The jitter multiplier vanishes at $u_k$, and is bounded there by
-$C(|u-v_{j,k}|+|v_{j,k}-u_k|)$. Since $|u|$ is bounded away
-from zero in this neighborhood, its contribution to the smoothing
-integral is at most
-\[
- C\int_\R
- (|u-v_{j,k}|+|v_{j,k}-u_k|)
- e^{-(u-v_{j,k})^2/(4\ell_j^2)}\,du
- =O(\ell_j^2)+o(\ell_j).
-\]
-On the remaining compact raw-frequency set $g$ has a positive
-minimum, and \eqref{eq:product} gives exponential decay. If $h=0$
-there are no nonzero zeros to consider. The Gaussian comparison
-transform is itself exponentially small at these frequencies.
-Equation~\eqref{eq:signed-smoothing} leaves $C\ell_j/T$.
-Taking the row limit first and then $T\to\infty$ proves
-\eqref{eq:jitter}. This is the displaced-resonance argument of
-\citet[Lemma~2.2]{HeCheng2026}, with \eqref{eq:diff-measure}
-controlling the independent product.
-
-Let $J_j$ be the jittered CDF. Bounded support of the jitter gives
-$J_j(x-h\ell_j/2)\le F_{S_j}^-(x)\le F_{S_j}(x)
-\le J_j(x+h\ell_j/2)$ when $h>0$. Taylor expansion gives
-\eqref{eq:upper-envelope}--\eqref{eq:lower-envelope}.
-For $h=0$, \eqref{eq:jitter} also holds for left limits by
-continuity of $G_j$. This is the envelope step of
-\citet[Corollary~2.4]{HeCheng2026}.
+Each term is at most $\rho\ell/4$ under
+\eqref{eq:jitter-parameters}; for the third use $e^{-x}\le1/x$.
 \end{proof}
 
-\begin{proposition}[Equality in the array bound]\label{prop:equality}
-For the selected arrays of Section~\ref{sec:selection},
-\begin{equation}\label{eq:equality-limits}
- R_j\longrightarrow\be,\qquad z_j\longrightarrow0,\qquad
- h=\frac1{\te}=\frac{\ce}{\sqrt{10}},\qquad
- \theta=\frac1{\sqrt{10}}
+\section{From moment stability to complete supports}\label{sec:confinement}
+The contact equations strengthen the moment estimates into bounds for
+each coordinate's full support.
+
+\begin{proposition}[Two-cluster reduction]\label{prop:reduction}
+Let $0<\lambda\le1$ and $N\ge1$. Set
+\begin{equation}\label{eq:reduction-parameters}
+ \rho=10^{-26}\lambda^2,\qquad\eta=10^{-10}\lambda,\qquad
+ L_* =\min\{L_{\rm jit}(\rho),1/(2\sqrt N)\}.
 \end{equation}
-on every subsequence chosen above. In addition,
-\begin{equation}\label{eq:law-weight}
- \sum_i \E X_{i,j}^2\,\delta_{\Law(X_{i,j}/\ell_j)}
- \ \Longrightarrow\
- \delta_{\Law(\re Z_{\mathrm E})}.
+An attained maximizer of Lemma~\ref{lem:selection} with this penalty
+bound and $\ell\le L_*$ can be represented, after division by $\ell$,
+as independent coordinates
+\begin{equation}\label{eq:clusters}
+ Y_i=h_i(B_i-p_i)+U_i\quad(1\le i\le m),\qquad Z_1,\ldots,Z_s,
 \end{equation}
-The outer measures in \eqref{eq:law-weight} are probability measures
-on the space of laws supported in $[-L,L]$.
+where $m\ge N$, $h>0$, $B_i\sim\Bern(p_i)$, and
+\begin{gather}
+ p_i\in[1/4,3/4],\quad |h_i/h-1|\le\lambda,\quad
+ \E(U_i\mid B_i)=0,\quad |U_i|\le\lambda h,              \label{eq:cluster-bounds}\\
+ \E Z_j=0,\quad |Z_j|\le\lambda h,\quad
+                        \sum_j\Var Z_j\le\lambda m h^2. \label{eq:extra-bounds}
+\end{gather}
+The representations are coordinatewise. Each pair $(B_i,U_i)$ is
+independent of the other pairs and of all $Z_j$.
 \end{proposition}
 
-\begin{proof}
-The envelopes give
-\begin{equation}\label{eq:spectral-envelope}
- \limsup_j R_j\le\frac{\phz}{6}(|\theta|+3h).
+The proof is in Appendix~\ref{app:confinement}. Rounding at the period
+from Proposition~\ref{prop:jitter} loses a controlled total second
+moment. The deficit in Esseen's inequality forces that period close to
+$\he$ and the maximizing threshold close to zero. Using the same
+jitter for every deletion shows that its one-sided smoothing loss is
+small at each support point. Comparing two such losses restricts every
+difference of support points to a small neighborhood of $h\Z$.
+The cubic expansion of \eqref{eq:deletion} bounds each scaled support
+diameter by $7/2$ and puts the two-cluster probabilities in $[1/4,3/4]$.
+Coordinates with small diameter have small total variance by moment
+stability.
+No lower bound on individual atom masses enters the argument.
+
+\input{local-comparison.tex}
+
+\section{Evaluation of the threshold}\label{sec:completion}
+Take $\lambda,N$ from \eqref{eq:local-constants} and
+$\rho,\eta,L_*$ from \eqref{eq:reduction-parameters}. A violation
+with Lyapunov ratio at most
+\begin{equation}\label{eq:tstar}
+             t_*:=\min\{L_*/2,\eta^3/108,1/2000\}
 \end{equation}
-If $h=0$, the right side is at most $\phz/6<\be$, which is
-impossible. Suppose $h>0$ and put $u_0=2\pi/h$.
-For each $i,j$, choose the phase of $f_{i,j}(u_0)$, arbitrarily
-when that value is zero, and round $Y_{i,j}$ to the nearest point
-on the corresponding translate of $h\Z$. Call the rounded
-variable $Z_{i,j}$ and its centered version $Q_{i,j}$.
-If $d$ is the distance to the selected lattice, $|d|\le h/2$,
-then
-$|e^{iu_0Y_{i,j}}-e^{i\arg f_{i,j}(u_0)}|\ge4|d|/h$.
-It follows that
+would give, by Lemma~\ref{lem:selection}, an attained violating
+maximizer with $\ell<2t_*\le L_*$. Proposition~\ref{prop:reduction}
+puts the entire array into the class of Theorem~\ref{thm:local},
+contradicting $R>\be$.
+
+It remains to show $\ell_0<t_*$. Write $A=\mathcal A=e^{10000}$,
+so $\lambda=e^{-A}$, $N=\lceil e^A\rceil$,
+$\rho=10^{-26}e^{-2A}$, and $\eta=10^{-10}e^{-A}$.
+For the jitter parameters put
 \[
- \E|Y_{i,j}-Q_{i,j}|^2
- \le \E|Y_{i,j}-Z_{i,j}|^2
- \le \frac{h^2}{8}(1-|f_{i,j}(u_0)|^2).
+ Q=T/\delta=5120/\rho,\quad B_0=Q+2,\quad
+ J=\lceil\log_2Q\rceil+1,\quad r=\rho/(48\cdot4096),
+ \quad\eps=r/(2B_0^J).
 \]
-Consequently
-\begin{equation}\label{eq:round-error}
-              e_j:=\ell_j^2\sum_i
-                    \E|Y_{i,j}-Q_{i,j}|^2\longrightarrow0.
-\end{equation}
-All centered rounded variables lie in a fixed compact interval.
-For variables $Y,Q$ in that interval, the differences of their
-second moments, signed third moments, and absolute third moments
-are bounded by a constant times
-$\E[|Y-Q|(|Y|+|Q|)]$. Summing by Cauchy--Schwarz and using
-\eqref{eq:round-error} gives
-\begin{equation}\label{eq:aggregate-rounding}
- \ell_j^2\sum_i\E Q_{i,j}^2\to1,\qquad
- \ell_j^2\sum_i\E|Q_{i,j}|^3\to1,\qquad
- \ell_j^2\sum_i\E Q_{i,j}^3\to\theta.
-\end{equation}
-The second moments in the Cauchy--Schwarz bound have bounded sum:
-$\ell_j^2\sum_i\E(|Y_{i,j}|+|Q_{i,j}|)^2\le6+4e_j$.
-These estimates impose no bound on $n_j\ell_j^2$.
-
-Apply \eqref{eq:esseen-moment} to each $Q_{i,j}$ and sum.
-Equations~\eqref{eq:aggregate-rounding} imply
+Since $A>1000$, $\log2>2/3$, and $\log10<3$,
 \[
-                         |\theta|+3h\le\ce.
+ \log(1/\rho),\ \log Q,\ \log B_0,\ \log(1/r)<3A,
+ \qquad J<5A.
 \]
-Since $R_j>\be$, equality holds here and in
-\eqref{eq:spectral-envelope}, and $R_j\to\be$.
-In particular, both nonnegative quantities
-\begin{align*}
- &\ell_j^2\sum_i
-   \{\ce\E|Q_{i,j}|^3-|\E Q_{i,j}^3|-3h\E Q_{i,j}^2\},\\
- &\ell_j^2\left\{\sum_i|\E Q_{i,j}^3|
-                        -\left|\sum_i\E Q_{i,j}^3\right|\right\}
-\end{align*}
-tend to zero.
-
-Consider the compact class of centered laws on translates of $h\Z$
-in a fixed bounded interval. For such a law $Q$ write
+The ceiling is included: $J<\log Q/\log2+2<5A$. Thus
+$\log(1/\eps)<3A+1+15A^2<16A^2$.
+The negative logarithm of the third entry defining $L_{\rm jit}$ is
 \[
- v(Q)=\int y^2Q(dy),\qquad
- d(Q)=\ce\int |y|^3Q(dy)-\left|\int y^3Q(dy)\right|-3hv(Q).
+ \log(1/\rho)+2\log(1/\eps)+\log(8\log Q)
+                         <32A^2+4A<40A^2.
 \]
-On subsets where $v(Q)$ is bounded below, continuity and Esseen's
-equality case imply that $d(Q)/v(Q)$ is bounded below by a positive
-number away from the two laws $\Law(\pm h\de Z_{\mathrm E})$.
-The same conclusion holds near variance zero. Indeed, if nondegenerate
-laws $Q_r$ tend to $\delta_0$, its mass tends to one at a unique lattice
-site $c_r\to0$. Represent a variable of law $Q_r$ as
-$V_r=c_r+D_r$, where $D_r\in h\Z$,
-and let $a_r=\Pp(D_r\ne0)\to0$. Bounded support and centering give
-$|c_r|=O(a_r)$ and $\E D_r^2\ge h^2a_r$. Hence
+The first two entries have smaller negative logarithms. Also
+$N<2e^A$, so $\log(2\sqrt N)<A$ and $-\log L_*<40A^2$.
+The other entries of \eqref{eq:tstar} have negative logarithms
 \[
- \Var V_r=\E D_r^2\{1+O(a_r)\},\qquad
- \frac{\E|V_r|^3}{\Var V_r}\ge h-o(1).
+ 3A+30\log10+\log108<4A,\qquad\log2000<A.
 \]
-Using $|\E V_r^3|\le\E|V_r|^3$, we obtain
-\begin{equation}\label{eq:zero-variance-gap}
- \frac{d(Q_r)}{v(Q_r)}
- \ge(\ce-4)h-o(1)=(\sqrt{10}-1)h-o(1)>0.
-\end{equation}
-
-The vanishing first deficit therefore concentrates variance weight
-on $\Law(\pm h\de Z_{\mathrm E})$. At these two laws, the signed
-third moment divided by variance is the nonzero number
-$\pm h(\qe-\pe)$. The vanishing second deficit forces one of the
-two orientation weights to tend to zero. The ratio of the
-aggregate absolute third moment to variance in
-\eqref{eq:aggregate-rounding} is one, whereas at either equality
-law it is $h\de\beta_{\mathrm E}=h\te$. Thus
-$h=1/\te$ and the magnitude of $\theta$ is
-$h(\qe-\pe)=1/\sqrt{10}$.
-
-The positive branch determines its sign. Write
-$A=h/2$ and $D=|\theta|/6$. The possible positive envelopes are
-$E_\pm(x)=\phi(x)(A\pm D\mp Dx^2)$. Since $A>3D$,
+Therefore $-\log t_*<41A^2$. Finally
+$e^4>\sum_{j=0}^5 4^j/j!=643/15>41$, whence
 \[
- E_-'(x)=x\phi(x)(3D-A-Dx^2)<0\qquad(x>0),
+ -\log\ell_0=e^{20004}=e^4A^2>41A^2>-\log t_*.
 \]
-so its maximum is $\phz(A-D)<\be$. The negative orientation
-cannot support $R_j>\be$. The function $E_+$ has its unique
-global maximum $\phz(A+D)=\be$ at zero, by
-$\phi(x)\le\phz$ and $(1-x^2)\phi(x)\le\phz$.
-Both envelopes tend to zero at infinity. Uniformity in
-\eqref{eq:upper-envelope} now gives $z_j\to0$ and
-$\theta>0$. This is the active-branch argument used in
-\citet[Lemma~5.1]{HeCheng2026}.
+This completes the proof of Theorem~\ref{thm:main}.
 
-Finally, \eqref{eq:round-error} transfers the conclusion from
-rounded laws and their weights to the original ones. Explicitly,
-\[
- \ell_j^2\sum_i
-   |\Var Y_{i,j}-\Var Q_{i,j}|
- \le e_j^{1/2}
- \left(\ell_j^2\sum_i\E(|Y_{i,j}|+|Q_{i,j}|)^2\right)^{1/2}
- \longrightarrow0.
-\]
-If $W_1(P,Q)$ denotes the infimum of $\E|Y-Z|$ over couplings
-with laws $P,Q$, the same coupling
-gives
-\[
- \ell_j^2\sum_i\Var(Y_{i,j})\,
-       W_1(\Law(Y_{i,j}),\Law(Q_{i,j}))^2\le L^2e_j\to0.
-\]
-On the compact space of bounded-support laws, this proves
-\eqref{eq:law-weight}. Every subsequence admits the preceding
-argument with the same scale and positive orientation, so the
-assertions hold for the selected sequence.
-\end{proof}
-
-\section{Confinement of every support}\label{sec:confinement}
-Throughout this section we use the selected arrays, the scale
-$h=1/\te$, and the limits in Proposition~\ref{prop:equality}.
-We first show that two support points of the same coordinate can
-have only an asymptotically integral separation in units of $h\ell_j$.
-This extends the support-separation argument of
-\citet[Lemma~5.3]{HeCheng2026}.
-
-\begin{lemma}[Arithmetic support differences]\label{lem:arithmetic}
-Choose arbitrary coordinate indices $i_j$ and support points
-$x_j,y_j\in\supp X_{i_j,j}$. Every subsequential limit of
-$(y_j-x_j)/\ell_j$ belongs to $h\Z$.
-\end{lemma}
-
-\begin{proof}
-Deleting any coordinate changes $g_j$ and its first two derivatives
-on a fixed compact interval by $O(\ell_j^2)$, uniformly over that
-coordinate. Also, by Proposition~\ref{prop:support-bound},
-\[
- s_i=O(\ell_j^2),\quad b_i=O(\ell_j^3),\quad
- |M_i|=O(\ell_j^2),\quad
- \ell_-=\ell_j+O(\ell_j^3).
-\]
-The deleted arrays therefore have the same limiting function $g$.
-Lemma~\ref{lem:jitter} applies uniformly to their standardized laws.
-Indeed, failure of uniformity would select one failing coordinate per
-row and contradict that lemma for the resulting sequence. We may use
-raw jitter width exactly $h\ell_j$: the natural width of a standardized
-deleted array, after returning to raw units, differs from it by
-$O(\ell_j^3)$. Coupling the two uniform jitters and using the
-bounded derivative of their smooth comparison CDF gives an
-$o(\ell_j)$ error.
-
-At a support point $y=O(\ell_j)$, the contact equality gives
-\[
- G_i(z_j-y)-F(z_j)
- =-\phi(z_j)y-\frac{z_j\phi(z_j)}2(y^2-s_i)+O(\ell_j^3).
-\]
-The Gaussian expansion has the same first two terms. Thus
-\begin{equation}\label{eq:deleted-saturation}
- G_i(z_j-y)-\Phi\left(\frac{z_j-y}{\sqrt{1-s_i}}\right)
- =R_j\ell_j+O(\ell_j^3),
-\end{equation}
-uniformly over all coordinates and their support points.
-
-Fix the chosen coordinate $i_j$, put $T_j=S_j-X_{i_j,j}$ and
-$u_j=z_j-x_j$, and define locally finite measures
-\[
-       \nu_j(A)=\ell_j^{-1}
-          \Pp\{(T_j-u_j)/\ell_j\in A\}.
-\]
-Let $J_j$ be the CDF of $T_j+\ell_jV_h$.
-The jitter envelopes bound $\nu_j$ on every compact interval:
-for fixed $a<b$, the mass on $[a,b]$ is at most
-\[
- \ell_j^{-1}
- \{J_j(u_j+\ell_j(b+h/2))
-        -J_j(u_j+\ell_j(a-h/2))\}.
-\]
-Using slightly enlarged endpoints gives the same bound if needed.
-The jitter expansion makes this bounded, so a subsequence has
-a vague limit $\nu$. Since $u_j\to0$, that expansion also gives
-\[
- \ell_j^{-1}
- \{J_j(u_j+\ell_j b)-J_j(u_j+\ell_j a)\}
- \longrightarrow \phz(b-a).
-\]
-Convolution with a compactly supported measure passes to vague
-limits when tested against continuous functions of compact support.
-It follows that
-\begin{equation}\label{eq:local-convolution}
-              \nu*\operatorname{Unif}[-h/2,h/2]=\phz\,dx .
-\end{equation}
-Differentiation in the sense of distributions gives equality of
-the translates of $\nu$ by $h/2$ and $-h/2$. Hence $\nu$ is
-$h$-periodic.
-
-Equations~\eqref{eq:deleted-saturation} and \eqref{eq:equality-limits}
-give
-$J_j(u_j+h\ell_j/2)-G_{i_j}(u_j)=o(\ell_j)$.
-The exact identity
-\[
- J_j(u_j+h\ell_j/2)-G_{i_j}(u_j)
- =\E\left[
- \left(1-\frac{T_j-u_j}{h\ell_j}\right)
- \ind_{\{u_j<T_j<u_j+h\ell_j\}}\right]
-\]
-has a nonnegative integrand. After division by $\ell_j$, it
-forces the limiting mass of each compact subinterval of $(0,h)$
-to be zero. Therefore $\nu((0,h))=0$. Periodicity and
-\eqref{eq:local-convolution} now identify
-\begin{equation}\label{eq:comb}
-                  \nu=\phz h\sum_{k\in\Z}\delta_{kh}.
-\end{equation}
-
-Suppose $(y_j-x_j)/\ell_j\to d$. The second support contact is at
-$z_j-y_j=u_j-\ell_j d_j$. Its saturation, by the same nonnegative
-integral, gives no limiting mass in $(-d,h-d)$. If $d\notin h\Z$,
-one atom of \eqref{eq:comb} lies strictly inside that interval.
-A compact neighborhood of that atom contradicts saturation.
-Thus $d\in h\Z$.
-\end{proof}
-
-\begin{lemma}[Limits of entire coordinate supports]\label{lem:support-limits}
-Choose any coordinate $i_j$ from each row, and pass to a subsequence
-on which $\Law(X_{i_j,j}/\ell_j)$ converges weakly to $Q$ and its
-support converges in Hausdorff distance to a nonempty compact set $A$.
-Then either $A=\{0\}$ and $Q=\delta_0$, or $A$ consists of exactly
-two points at distance $h$ and $Q$ gives positive mass to both.
-\end{lemma}
-
-\begin{proof}
-All laws and supports lie in the fixed interval $[-L,L]$, so these
-subsequences exist. Put $v=\int y^2Q(dy)$ and
-$M=\int y|y|Q(dy)$.
-For every $t\in A$, choose support points $y_j=\ell_j t_j$ with
-$t_j\to t$. In \eqref{eq:deletion}, set
-$s_{i_j,j}=\ell_j^2v_j$ and $M_{i_j,j}=\ell_j^2M_j$.
-Formula~\eqref{eq:H-local} is uniform for bounded $t_j,v_j$,
-including $v_j\to0$. Divide by $\phz\ell_j^3/6$ and use
-$R_j,K_j\to\be$ and $z_j\to0$. The remainder in
-\eqref{eq:deletion}, divided by $\ell_j^3$, is $O(\eta_j)+o(1)$.
-We obtain
-\begin{equation}\label{eq:support-polynomial}
- t^3-\ce|t|^3+\frac32\ce t^2+3(\ce M-v)t\ge0
- \qquad(t\in A).
-\end{equation}
-This is the independent-coordinate counterpart of the limiting
-support polynomial in \citet[Lemma~5.2]{HeCheng2026}.
-
-If $Q$ is nondegenerate, the extreme points of $A$ can be written
-$-a,b$ with $a,b>0$, because $\supp Q\subset A$ and $Q$ is
-centered. Evaluating \eqref{eq:support-polynomial} at these two
-points and eliminating its linear coefficient gives
-\[
-        (\ce+1)a^2+(\ce-1)b^2\le\frac32\ce(a+b).
-\]
-At fixed $a+b$, the left side is at least
-$(\ce^2-1)(a+b)^2/(2\ce)$. Since $\ce^2-1=6\ce$,
-\begin{equation}\label{eq:diameter}
-               a+b\le\frac{3\ce^2}{\ce^2-1}
-                      =\frac{\ce}{2}<2h.
-\end{equation}
-Lemma~\ref{lem:arithmetic} says that every difference between
-points of $A$ belongs to $h\Z$. Hence $A$ has exactly two
-points and their distance is $h$. The limiting law has positive
-variance, so both masses are positive.
-
-If $Q$ is degenerate, centering makes it $\delta_0$, and
-$v=M=0$. Equation~\eqref{eq:support-polynomial} confines $A$ to
-\[
- \left[-\frac{3\ce}{2(\ce+1)},\
-             \frac{3\ce}{2(\ce-1)}\right]\subset(-h,h).
-\]
-Since $0\in A$, Lemma~\ref{lem:arithmetic} forces $A=\{0\}$.
-In particular, support points whose probabilities vanish in the
-weak limit are also covered.
-\end{proof}
-
-\begin{proposition}[Two clusters and the remaining coordinates]
-\label{prop:partition}
-For all sufficiently large $j$, partition the coordinates according
-to whether the support diameter of $Y_{i,j}=X_{i,j}/\ell_j$ is at
-least $h/2$. Let $m_j$ count the coordinates in that class.
-There is an $\alpha\in(0,1/2)$ for which those coordinates have
-representations
-\begin{equation}\label{eq:core-representation}
- Y_{i,j}=h_{i,j}(B_{i,j}-p_{i,j})+U_{i,j},\qquad
- p_{i,j}\in[\alpha,1-\alpha],\qquad
- \E(U_{i,j}\mid B_{i,j})=0,
-\end{equation}
-with independent pairs, such that
-\[
- \max_i|h_{i,j}-h|\to0,\qquad
- \max_i\|U_{i,j}\|_\infty\to0.
-\]
-The other coordinates, denoted $Z_{r,j}$ in these same scaled units,
-are centered, independent of all those pairs, and satisfy
-\begin{equation}\label{eq:tiny}
- \max_r\|Z_{r,j}\|_\infty\to0,\qquad
- m_j\asymp\ell_j^{-2}\to\infty,\qquad
- \sum_r\Var Z_{r,j}=o(m_j).
-\end{equation}
-\end{proposition}
-
-\begin{proof}
-Lemma~\ref{lem:support-limits} and compactness make the following
-conclusions uniform over coordinates. Supports with diameter below
-$h/2$ have diameters tending to zero. The other diameters tend to
-$h$, and their supports approach their two extreme points.
-Otherwise one could select a coordinate per row whose simultaneous
-law and support limit violated that lemma.
-
-Divide each such support at the midpoint of its extreme points,
-and let $B_{i,j}$ indicate the upper cluster. Both cluster
-probabilities are bounded away from zero uniformly. If one
-tended to zero, the weak limit would be a point mass, while the
-full support limit would retain two points at distance $h$,
-contrary to Lemma~\ref{lem:support-limits}. Choose $\alpha>0$
-accordingly. The difference of the two conditional means is
-$h_{i,j}\to h$ uniformly. Subtracting these means defines
-$U_{i,j}$ and gives \eqref{eq:core-representation}; its supremum
-norm tends uniformly to zero.
-
-Every remaining centered support contains zero in its convex hull,
-so its shrinking diameter bounds its absolute values as well.
-Equation~\eqref{eq:law-weight} then implies that their total
-original variance tends to zero: their scaled laws converge
-uniformly to $\delta_0$, which is separated from
-$\Law(\re Z_{\mathrm E})$. The variances of the two-cluster
-coordinates in scaled units are bounded above and below by fixed
-positive constants. Their total original variance tends to one,
-and so $m_j\asymp\ell_j^{-2}$. Finally,
-\[
- \sum_r\Var Z_{r,j}
- =\ell_j^{-2}\sum_{\text{remaining }r}\Var X_{r,j}
- =o(\ell_j^{-2})=o(m_j).
-\]
-\end{proof}
-
-\section{An exact comparison near a common diameter}\label{sec:local}
-The following local theorem includes the additional coordinates in
-Proposition~\ref{prop:partition}. Its proof adapts the two regimes
-of \citet[Section~3]{HeCheng2026}. Conditioning on a Bernoulli
-count now leaves different label probabilities and different gaps;
-we prove the conditional estimates explicitly.
-
-\begin{theorem}[Local comparison]\label{thm:local}
-For each $\alpha\in(0,1/2)$ there exist $\eta>0$ and an integer
-$N$ with the following property. Suppose $m\ge N$, $h>0$, and
-\[
- X_i=h_i(B_i-p_i)+U_i,\qquad 1\le i\le m,
-\]
-where the pairs $(B_i,U_i)$ are independent,
-$B_i\sim\Bern(p_i)$, $p_i\in[\alpha,1-\alpha]$,
-$\E(U_i\mid B_i)=0$, and
-\[
- |h_i/h-1|\le\eta,\qquad |U_i|\le\eta h.
-\]
-There may also be any finite family of centered variables $Z_r$,
-mutually independent and independent of all the pairs, satisfying
-\[
- |Z_r|\le\eta h,\qquad \sum_r\Var Z_r\le\eta m h^2.
-\]
-Then the entire array satisfies
-\[
-               \mathcal R(X_1,\ldots,X_m,Z_1,\ldots)\le\be.
-\]
-\end{theorem}
-
-We prove this by considering any sequence with $m\to\infty$,
-$p_i\in[\alpha,1-\alpha]$, gap and individual residual bounds
-tending to zero, and total extra variance $o(mh^2)$.
-If the theorem were false, taking $\eta\downarrow0$ and
-$N\to\infty$ would give a violating sequence of exactly this kind.
-Within a row put
-\[
- v_i=p_i(1-p_i),\qquad
- \tau_i=p_i^2+(1-p_i)^2,\qquad
- V=\sum_i v_i,\qquad T_0=\sum_i v_i\tau_i,\qquad
- \mu=\sum_i p_i .
-\]
-Scale the whole array by the variance-weighted mean gap
-$\bar h=V^{-1}\sum_i v_i h_i$. In the new units write
-\begin{equation}\label{eq:projected-gaps}
-\begin{gathered}
- h_i=1+a_i,\qquad \sum_i v_i a_i=0,\qquad
- K=\sum_i B_i,\\
- A=\sum_i a_i(B_i-p_i),\qquad
- U=\sum_i U_i+\sum_r Z_r,\qquad W=A+U .
-\end{gathered}
-\end{equation}
-The uncentered sum $S=K+W$ has mean $\mu$. Define
-\begin{equation}\label{eq:residual-data}
- \Lambda_A=\sum_i v_i a_i^2,\qquad
- \Lambda_U=\sum_i\E U_i^2+\sum_r\E Z_r^2,\qquad
- \Lambda=\Lambda_A+\Lambda_U,\qquad B^2=V+\Lambda .
-\end{equation}
-Conditional centering and \eqref{eq:projected-gaps} give exactly
-$\Cov(K,W)=0$ and $\Var S=B^2$. Along the sequence,
-\[
- V\asymp_\alpha m,\quad T_0\asymp_\alpha m,\quad
- \max_i|a_i|\to0,\quad
- \eps:=\max\{\max_i\|U_i\|_\infty,\max_r\|Z_r\|_\infty\}\to0,
- \quad \Lambda=o(m).
-\]
-Empty maxima are zero.
-
-Let $T_X$ be the actual sum of absolute third moments of all the
-centered coordinates, and let $\kappa$ be their signed third-moment
-sum. We will use
-\begin{equation}\label{eq:budget-comparison}
- |T_X-T_0|\le C_\alpha\{\sqrt{m\Lambda_A}+\Lambda\},
- \qquad
- |\kappa-\kappa_0|\le C_\alpha\{\sqrt{m\Lambda_A}+\Lambda\},
- \quad \kappa_0=\sum_i v_i(1-2p_i).
-\end{equation}
-To prove these bounds, for large rows the signs of
-$(1+a_i)(B_i-p_i)+U_i$ on the two clusters agree with those
-of $B_i-p_i$. Expand the signed and absolute cubes. The terms
-linear in $U_i$ vanish conditionally; the others are bounded by
-$C_\alpha\E U_i^2$. The pure two-point absolute third moment is
-$(1+a_i)^3v_i\tau_i$, whose difference from $v_i\tau_i$ is
-bounded by $C_\alpha v_i(|a_i|+a_i^2)$.
-Cauchy--Schwarz gives
-$\sum_i v_i|a_i|\le\sqrt{V\Lambda_A}$. The signed moment has
-the same bounds, and the extra variables contribute at most
-$\eps\sum_r\E Z_r^2$. This proves \eqref{eq:budget-comparison}.
-In particular $T_X=T_0+o(m)$ and $B^2=V+o(m)$.
-
-\subsection{The count and its conditional moments}\label{subsec:count}
-\begin{lemma}\label{lem:count}
-Uniformly in $p_i\in[\alpha,1-\alpha]$ and integers $k$,
-\begin{equation}\label{eq:count-local}
- b_k:=\Pp(K=k)=
- \frac{\phi((k-\mu)/\sqrt V)}{\sqrt V}+O_\alpha(m^{-1}),
- \qquad \sup_k b_k\le C_\alpha m^{-1/2}.
-\end{equation}
-For each fixed $M<\infty$, uniformly when $|k-\mu|\le M\sqrt m$,
-\begin{align}
- m_k:=\E(A\mid K=k)
-     &=O_{\alpha,M}(\sqrt{\Lambda_A}/\sqrt m),\label{eq:cond-mean}\\
- \Var(A\mid K=k)
-     &=\Lambda_A\{1+O_{\alpha,M}(m^{-1/2})\},\label{eq:cond-var}\\
- \E[(A-m_k)^4\mid K=k]
-     &\le C_{\alpha,M}\Lambda_A^2.             \label{eq:cond-four}
-\end{align}
-Every error in these last three assertions has the displayed
-homogeneous dependence on the weight vector $(a_i)$.
-\end{lemma}
-
-\begin{proof}
-Fourier inversion on $[-\pi,\pi]$ applies to the count. For its
-centered characteristic function $F$,
-\[
- |F(t)|\le
- \exp\{-2V\sin^2(t/2)\}\le e^{-c_\alpha mt^2}.
-\]
-On a sufficiently small fixed interval,
-$\log F(t)=-Vt^2/2+O_\alpha(m|t|^3)$.
-The real remainder can be absorbed in the quadratic term, and hence
-the difference from $e^{-Vt^2/2}$ has integral
-$O_\alpha(m\int_\R|t|^3e^{-cmt^2}\,dt)=O_\alpha(m^{-1})$.
-Off that interval both the count transform and Gaussian integral
-have exponentially small tails. Inversion proves the first formula
-in \eqref{eq:count-local}, uniformly because its translating phase
-has modulus one. Integrating $|F|$ gives the second. The same
-statements hold after deleting any fixed number of coordinates.
-In particular,
-\begin{equation}\label{eq:delete-ratio}
- \frac{\Pp(K-B_i=k-b)}{\Pp(K=k)}
- =1+O_{\alpha,M}(m^{-1/2}),\qquad b=0,1,\quad
- |k-\mu|\le M\sqrt m.
-\end{equation}
-Indeed the means, variances and thresholds in numerator and
-denominator differ by bounded amounts, their central Gaussian
-masses have relative error $O_{\alpha,M}(m^{-1/2})$, and the
-absolute error in \eqref{eq:count-local} has that same relative
-order in this region.
-
-For a central $k$, choose the unique real $\theta$ such that
-\[
- r_i=\frac{p_i e^\theta}{1-p_i+p_i e^\theta},
- \qquad \sum_i r_i=k.
-\]
-Then $\theta=O_{\alpha,M}(m^{-1/2})$, since the derivative of the
-last sum is of order $m$ on a fixed neighborhood of zero.
-All $r_i$ remain in one compact subinterval of $(0,1)$.
-Tilting by $e^{\theta K}$ leaves the conditional law given $K=k$
-unchanged. With expectations under this tilted product law denoted
-by $\E_\theta$, set
-\[
- w_i=r_i(1-r_i),\qquad V_\theta=\sum_iw_i,\qquad
- c_\theta=\frac{\sum_iw_i a_i}{V_\theta},\qquad b_i'=a_i-c_\theta.
-\]
-On $K=k$ we have
-\begin{equation}\label{eq:tilted-projection}
- A=\sum_i a_i(r_i-p_i)+L,\qquad
- L=\sum_i b_i'(B_i-r_i),\qquad
- \sum_iw_i b_i'=0.
-\end{equation}
-The expansions
-$r_i-p_i=\theta v_i+O_\alpha(\theta^2v_i)$ and
-$w_i=v_i\{1+O_\alpha(|\theta|)\}$ give
-\begin{align}
- \left|\sum_i a_i(r_i-p_i)\right|
- &\le C_{\alpha,M}\sqrt{\Lambda_A}/\sqrt m,\label{eq:tilt-drift}\\
- Q_\theta:=\sum_iw_i(b_i')^2
- &=\Lambda_A\{1+O_{\alpha,M}(m^{-1/2})\},\qquad
- Q:=\sum_i(b_i')^2\asymp_\alpha\Lambda_A. \label{eq:tilt-Q}
-\end{align}
-For the first estimate the linear term is exactly zero by
-\eqref{eq:projected-gaps}. For the second, expand
-$Q_\theta=\sum_iw_i a_i^2-(\sum_iw_i a_i)^2/V_\theta$;
-the subtracted term is $O_{\alpha,M}(\Lambda_A/m)$.
-If $\Lambda_A=0$, all the conditional assertions are immediate.
-Assume henceforth $Q>0$.
-
-Here are the required Fourier moment estimates. Put
-$Z_i'=B_i-r_i$, $f_i(t)=\E_\theta e^{itZ_i'}$, and
-$F_\theta(t)=\prod_i f_i(t)$.
-For small fixed $|t|$, these factors are bounded away from zero.
-Let $c_{i,r}(t)$ be the $r$th derivative at $u=0$ of
-\[
- \log\frac{\E_\theta e^{(it+u)Z_i'}}{\E_\theta e^{itZ_i'}}.
-\]
-Uniformly on that interval,
-\[
- c_{i,1}(t)=iw_i t+O_\alpha(t^2),\qquad
- c_{i,2}(t)=w_i+O_\alpha(|t|),\qquad
- |c_{i,3}(t)|+|c_{i,4}(t)|\le C_\alpha .
-\]
-Define $M_r(t)=\sum_i(b_i')^r c_{i,r}(t)$. Cancellation in
-\eqref{eq:tilted-projection}, together with
-$\sum_i|b_i'|\le\sqrt{mQ}$ and
-$\sum_i|b_i'|^r\le Q^{r/2}$ for $r\ge2$, gives
-\begin{equation}\label{eq:fourier-M}
- \begin{gathered}
- |M_1(t)|\le C_\alpha\sqrt{mQ}\,t^2,\qquad
- M_2(t)=Q_\theta+O_\alpha(Q|t|),\\
- |M_3(t)|\le C_\alpha Q^{3/2},\qquad
- |M_4(t)|\le C_\alpha Q^2.
- \end{gathered}
-\end{equation}
-Differentiating the exponential of the sum of logarithms shows
-that the Fourier numerators for $L,L^2,L^4$ are
-\begin{align*}
- &F_\theta M_1,\qquad
- F_\theta(M_1^2+M_2),\\
- &F_\theta(M_1^4+6M_1^2M_2+3M_2^2+4M_1M_3+M_4).
-\end{align*}
-Their integrals over $[-\pi,\pi]$, divided by $2\pi$, are
-$\E_\theta[L^r\ind_{\{K=k\}}]$, since
-$\sum_i r_i=k$ is an integer.
-On the central frequency interval use
-$|F_\theta(t)|\le e^{-c_\alpha mt^2}$ and
-\[
- \int_\R |t|^r e^{-cmt^2}\,dt=C_{c,r}m^{-(r+1)/2}.
-\]
-After division by
-$\Pp_\theta(K=k)\asymp_\alpha m^{-1/2}$,
-the first numerator gives $O(\sqrt Q/\sqrt m)$.
-In the second, the constant $Q_\theta F_\theta$, integrated over the full
-frequency interval, gives $Q_\theta$ exactly; its omitted central-interval
-tail is exponentially small. The $O(Q|t|)$ term gives
-$O(Q/\sqrt m)$, and $M_1^2$ gives $O(Q/m)$.
-For the fourth numerator, the five displayed terms give,
-respectively,
-\[
- O(Q^2/m^2),\quad O(Q^2/m),\quad O(Q^2),\quad
- O(Q^2/\sqrt m),\quad O(Q^2).
-\]
-
-Away from the central interval, expand
-$\E_\theta[L^r e^{it(K-k)}]$ before factoring. Each term contains
-at most $r$ chosen coordinate factors and retains exponential
-decay from the remaining factors. Its absolute integral is at
-most
-\[
- C_{\alpha,r}e^{-c_\alpha m}
-       \left(\sum_i|b_i'|\right)^r
- \le C_{\alpha,r}e^{-c_\alpha m}(mQ)^{r/2}
- \qquad(r=1,2,4).
-\]
-This is absorbed in the bounds just obtained after conditioning;
-in particular it contains no additive error independent of $Q$.
-We have proved
-\[
- \E_\theta(L\mid K=k)=O(\sqrt Q/\sqrt m),\quad
- \E_\theta(L^2\mid K=k)=Q_\theta+O(Q/\sqrt m),\quad
- \E_\theta(L^4\mid K=k)\le C Q^2 .
-\]
-Subtracting the conditional mean, and using
-\eqref{eq:tilt-drift}--\eqref{eq:tilt-Q}, proves
-\eqref{eq:cond-mean}--\eqref{eq:cond-four}.
-\end{proof}
-
-\begin{lemma}\label{lem:residual-moments}
-For every fixed $M$, uniformly when $|k-\mu|\le M\sqrt m$,
-\[
- \E(W\mid K=k)=m_k,\qquad
- \Var(W\mid K=k)=\Lambda\{1+O_{\alpha,M}(m^{-1/2})\}.
-\]
-Put
-\[
- D=\Lambda^2+\eps^2\Lambda_U,\qquad
- H=\max\left\{\sqrt{\Lambda_A},
-          \frac{\Lambda}{\sqrt{\Lambda+\eps^2}}\right\}
- \quad(\Lambda>0).
-\]
-Then
-\begin{equation}\label{eq:residual-moments}
- \E[(W-m_k)^4\mid K=k]\le C_{\alpha,M}D,\qquad
- \E(|W-m_k|\mid K=k)\ge c_{\alpha,M}H,\qquad
- |m_k|\le C_{\alpha,M}H/\sqrt m.
-\end{equation}
-Also $\E W^4\le C_\alpha D$ without conditioning.
-\end{lemma}
-
-\begin{proof}
-Write $s_{ib}=\E(U_i^2\mid B_i=b)$. Given the full label vector
-$\mathbf b$, the summands in $U$ are independent and centered,
-and their variance is
-$T_{\mathbf b}=\sum_i s_{i,b_i}+\sum_r\E Z_r^2$.
-Since both label probabilities are at least $\alpha$,
-$T_{\mathbf b}\le\Lambda_U/\alpha$.
-Equation~\eqref{eq:delete-ratio} gives the relative estimate
-\[
- \E(T_{\mathbf B}\mid K=k)
-      =\Lambda_U\{1+O_{\alpha,M}(m^{-1/2})\}.
-\]
-For independent centered variables, expansion of the fourth
-power gives a fourth moment at most the sum of fourth moments
-plus three times the squared variance. Thus
-\[
- \E(U^4\mid\mathbf B)\le3T_{\mathbf B}^2+\eps^2T_{\mathbf B},
-\]
-and averaging preserves the bound
-$C_\alpha(\Lambda_U^2+\eps^2\Lambda_U)$.
-The conditional covariance between $A$ and $U$ is zero, because
-$A$ is determined by the labels and $\E(U\mid\mathbf B)=0$.
-Lemma~\ref{lem:count} proves the mean, variance and fourth-moment
-claims for $W$.
-
-Interpolation in the form
-$\E|Y|\ge(\E Y^2)^{3/2}/(\E Y^4)^{1/2}$ gives
-\[
- \E(|W-m_k|\mid K=k)
- \ge c_{\alpha,M}
-          \frac{\Lambda}{\sqrt{\Lambda+\eps^2}}.
-\]
-There is also a bound from the gap residual alone. Conditional
-Jensen, first given the full labels, gives
-\[
- \E(|A+U-m_k|\mid K=k)
- \ge\E(|A-m_k|\mid K=k)\ge c_{\alpha,M}\sqrt{\Lambda_A},
-\]
-using \eqref{eq:cond-var}--\eqref{eq:cond-four}.
-These prove the bound by $H$, and \eqref{eq:cond-mean} proves
-the drift bound. Finally,
-$\max_i a_i^2\le\Lambda_A/[\alpha(1-\alpha)]$, so direct fourth
-moment expansion gives $\E A^4\le C_\alpha\Lambda_A^2$.
-The preceding full-label bound for $U$ then gives
-$\E W^4\le C_\alpha D$.
-\end{proof}
-
-\subsection{Uniform jitter before standardization}\label{subsec:local-jitter}
-\begin{lemma}\label{lem:unit-jitter}
-Along the sequences specified after Theorem~\ref{thm:local}, let $J$
-be the CDF of $S+V_1$, where $V_1$ is independent and uniform on
-$[-1/2,1/2]$. Uniformly over $x\in\R$, with $z=(x-\mu)/B$,
-\begin{equation}\label{eq:unit-jitter}
- J(x)=\Phi(z)+\frac{\kappa}{6B^3}(1-z^2)\phi(z)
-                         +o(m^{-1/2}).
-\end{equation}
-Both signed discrepancies of $S$, multiplied by $B^3/T_X$, are
-therefore bounded above by
-\begin{equation}\label{eq:local-envelope}
- \phi(z)\left\{\frac{B^2}{2T_X}
-                 +\frac{|\kappa|}{6T_X}|1-z^2|\right\}+o(1).
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-Set $d_m=T_X/B^2$. By \eqref{eq:budget-comparison},
-$d_m$ lies eventually in a fixed compact subinterval of $(0,\infty)$,
-and each subsequence has a further one with $d_m\to d>0$.
-Apply Lemma~\ref{lem:jitter} to the centered array divided by $B$.
-Its Lyapunov ratio is $d_m/B\asymp_\alpha m^{-1/2}$ and each
-coordinate is bounded by a fixed multiple of that ratio.
-In the measure \eqref{eq:diff-measure}, the variables before
-symmetrization are the raw coordinates divided by $d_m$.
-
-The total squared difference between two-cluster coordinates and
-$B_i-p_i$, divided by $B^2$, is $O(\Lambda/m)=o(1)$.
-The additional coordinates contribute
-$\sum_r\Var Z_r/B^2=o(1)$ to this variance-weighted measure.
-For the Bernoulli coordinates, the nonzero symmetrized differences
-are $1$ and $-1$, each with probability $v_i$; their difference
-variance is $2v_i$. Thus the limit of \eqref{eq:diff-measure} is
-\[
-                    \frac12\delta_{-1/d}+\frac12\delta_{1/d}.
-\]
-Thus the jitter parameter in Lemma~\ref{lem:jitter} is $h=1/d$.
-That lemma gives \eqref{eq:unit-jitter} with raw jitter width $d_m/d\to1$.
-Couple this jitter with width one. Their difference is $o(1)$
-in raw units, or $o(B^{-1})$ after standardization. Bounding
-the two CDFs by shifted versions of one another, using the bounded
-derivative of the smooth comparison function, preserves the
-$o(m^{-1/2})$ error. The subsequence argument proves the asserted
-expansion along the original sequence. Shift the jittered CDF
-by $\pm1/2$ to obtain \eqref{eq:local-envelope}, also for the
-strict lower branch.
-\end{proof}
-
-\subsection{Comparison when the residual variance tends to zero}
-\label{subsec:small-residual}
-We need a one-sided estimate that keeps the size of the residual
-in its error. The following slightly enlarged version of
-\citet[Lemma~3.2]{HeCheng2026} follows from their clipping proof;
-we include the enlargement to accommodate the conditional mean.
-
-\begin{lemma}[One-sided loss]\label{lem:one-sided}
-There are absolute constants $c_0,C,\kappa_*>0$ such that, if
-$\E Y=0$, $\E Y^4\le\kappa_*$, and
-$f\in C^1([-7/10,7/10])$ satisfies $f(0)=0$ and
-$3/4\le f'\le5/4$, then for $|u|\le3/5$,
-\begin{equation}\label{eq:one-sided}
- \Pp(Y>u)+f(u)\ge c_0\E|Y|-C\E Y^4,\qquad
- \Pp(Y<u)-f(u)\ge c_0\E|Y|-C\E Y^4.
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-First let $V$ be centered with $|V|\le a=1/10$ and
-$|u|\le13/20$. Writing $V_+=\max(V,0)$, for $u\ge0$ the bounds
-$\E V_+\le u+a\Pp(V>u)$ and $f(u)\ge3u/4$ give
-$\Pp(V>u)+f(u)\ge3\E|V|/8$. If $u=-r$ with $0<r\le a$, put
-$t=\Pp(V>-r)$. Centering implies
-$0\le at-r(1-t)$, so $r\le2at$. Also
-$\E|V|=2\E V_+\le2at$. Hence
-$t+f(-r)\ge t-5r/4\ge3t/4\ge3\E|V|/8$.
-For $a<r\le13/20$ the probability is one, and
-$1+f(-r)\ge3/16\ge3\E|V|/8$.
-
-For general $Y$, clip it at $a_0=1/20$: put
-$T=\max(-a_0,\min(Y,a_0))$, $b=\E T$, and $V=T-b$.
-Writing $M_4=\E Y^4$,
-\[
- |b|\le a_0^{-3}M_4,\qquad
- \Pp(T\ne Y)\le a_0^{-4}M_4,\qquad
- \E|V|\ge\E|Y|-2a_0^{-3}M_4 .
-\]
-Choose $\kappa_*$ so that $|b|\le1/20$. Then $|V|\le1/10$
-and $|u-b|\le13/20$. Apply the preceding estimate at $u-b$,
-using
-\[
- \Pp(Y>u)\ge\Pp(V>u-b)-\Pp(T\ne Y),\qquad
- |f(u)-f(u-b)|\le5|b|/4 .
-\]
-This proves the first inequality. Apply it to $-Y$ and
-$-f(-\,\cdot\,)$ to prove the second. The strict inequalities
-in the events throughout also cover atoms at $u$.
-\end{proof}
-
-\begin{proposition}\label{prop:small-residual}
-Along any subsequence of the local arrays for which $\Lambda\to0$,
-\[
- \mathcal R(X_1,\ldots,X_m,Z_1,\ldots)
- \le\mathcal R(B_1-p_1,\ldots,B_m-p_m)\le\be
-\]
-for all sufficiently large rows. The first inequality is strict
-when $\Lambda>0$.
-\end{proposition}
-
-\begin{proof}
-If $\Lambda=0$, all residuals vanish and
-\eqref{eq:finite-input} applies directly. Consider the rows with
-$\Lambda>0$. Write $R_0=\mathcal R(B_1-p_1,\ldots,B_m-p_m)$.
-We compare both signed branches at an arbitrary threshold
-$x=k+u$, where $k$ is a nearest integer and $|u|\le1/2$.
-The exact count decompositions are
-\begin{align}
- F_S(k+u)
- &=F_K(k)-b_k\Pp(W>u\mid K=k)+e^+_{k,u},\label{eq:layer-plus}\\
- F_S^-(k+u)
- &=F_K(k-1)+b_k\Pp(W<u\mid K=k)+e^-_{k,u}.\label{eq:layer-minus}
-\end{align}
-For either remainder, the absolute value is bounded by
-\[
- \sum_{j\ne k}b_j
- \Pp\{|W|\ge |j-k|-1/2\mid K=j\}.
-\]
-Fix $M$. For $|k-\mu|\le M\sqrt m$, split this sum at
-$|j-k|\le\sqrt m$. For the nearby count values, the conditional fourth
-moment is at most $C_{\alpha,M}D$ by
-Lemma~\ref{lem:residual-moments}, including the fourth power of
-the mean. Use $b_j\le C_\alpha/\sqrt m$ and the convergent
-series $\sum_{r\ne0}(|r|-1/2)^{-4}$. For the remote count values,
-the denominator is at least $cm^2$, and summing the conditional
-fourth moments with their probabilities gives $\E W^4\le C_\alpha D$.
-Therefore, uniformly in central $k$ and $|u|\le1/2$,
-\begin{equation}\label{eq:leakage}
-                    |e^\pm_{k,u}|\le C_{\alpha,M}D/\sqrt m .
-\end{equation}
-
-Put
-\[
- G_k(u)=\Phi((k-\mu+u)/B),\qquad
- f_k(u)=\{G_k(u)-G_k(0)\}/b_k .
-\]
-Equation~\eqref{eq:count-local} implies
-$3/4\le f_k'(u)\le5/4$ on $[-1,1]$ for all sufficiently
-large rows, uniformly in central $k$. Indeed,
-$f_k'(u)=\phi((k-\mu+u)/B)/(Bb_k)$, and $B^2=V+\Lambda$
-with $\Lambda\to0$. This use of the relative count estimate
-introduces no additive discrepancy error.
-
-Let $m_k=\E(W\mid K=k)$ and
-$Y=W-m_k$ under this conditional law. For large rows
-$|m_k|\le1/20$ and $\E(Y^4\mid K=k)\le\kappa_*$.
-Apply Lemma~\ref{lem:one-sided} to
-$\widetilde f(v)=f_k(v+m_k)-f_k(m_k)$ at $v=u-m_k$.
-The derivative bound on $[-1,1]$ covers all its evaluations.
-By Lemma~\ref{lem:residual-moments}, both losses satisfy
-\begin{align}
- \Pp(W>u\mid K=k)+f_k(u)&\ge c_{\alpha,M}H
-                                  -C_{\alpha,M}(D+|m_k|),\notag\\
- \Pp(W<u\mid K=k)-f_k(u)&\ge c_{\alpha,M}H
-                                  -C_{\alpha,M}(D+|m_k|).
-                                                        \label{eq:conditional-loss}
-\end{align}
-
-Substitute \eqref{eq:conditional-loss} into
-\eqref{eq:layer-plus}--\eqref{eq:layer-minus}, subtract the
-normal CDF, and multiply by $B^3/T_X\asymp_\alpha\sqrt m$.
-The product $(B^3/T_X)b_k$ is bounded above and below by positive
-constants on this central region. Changing the normal variance
-from $V$ to $V+\Lambda$ costs at most
-$C_\alpha\Lambda/m$ before this multiplication, because
-$\sup_z|z\phi(z)|<\infty$. Changing the prefactor from
-$V^{3/2}/T_0$ to $B^3/T_X$ costs at most
-\[
- C_\alpha\{\sqrt{\Lambda_A}/\sqrt m+\Lambda/m\}
-\]
-after normalization: use \eqref{eq:budget-comparison} and the
-bound $R_0\le C_U$. Including \eqref{eq:leakage} and the
-conditional drift, either normalized central branch is at most
-\begin{equation}\label{eq:central-comparison}
- R_0-c_{\alpha,M}H+
- C_{\alpha,M}\left\{D+
-                \frac{\sqrt{\Lambda_A}+\Lambda}{\sqrt m}\right\}.
-\end{equation}
-All these errors are absorbable relative to $H$, since
-\begin{equation}\label{eq:absorption}
- \frac{D}{H}\le(\Lambda+\eps^2)^{3/2},\qquad
- \frac{\sqrt{\Lambda_A}}{H}\le1,\qquad
- \frac{\Lambda}{H}\le\sqrt{\Lambda+\eps^2}.
-\end{equation}
-For sufficiently large rows, \eqref{eq:central-comparison} is
-therefore at most $R_0-c_{\alpha,M}H/2$.
-This conclusion holds for every positive $\Lambda$, however
-small its value relative to $m$.
-
-It remains to restrict the threshold to a fixed central region.
-A jump of size $b_k$ gives a signed discrepancy on one of its
-two sides of at least $b_k/2$. Choose $k$ nearest to $\mu$
-in \eqref{eq:count-local}; since $T_0\le V$,
-\[
-          R_0\ge\frac{V^{3/2}}{2T_0}\max_k b_k
-                  \ge\phz/4
-\]
-for large $m$. Meanwhile \eqref{eq:local-envelope} is bounded
-by $C_\alpha(1+z^2)\phi(z)+o(1)$, uniformly over all thresholds.
-Choose a fixed large radius so that this is below $\phz/8$
-outside the radius for large rows. Since $B\asymp_\alpha\sqrt m$,
-choose $M$ to contain the remaining thresholds and their nearest
-integers. The far branches are at most $R_0-\phz/8$.
-Together with the central comparison this proves the strict
-inequality for $\Lambda>0$. This is the exact-loss comparison of
-\citet[Lemma~3.3]{HeCheng2026}, with the conditional estimates
-above in place of iid conditional symmetry.
-\end{proof}
-
-\subsection{Positive mass in intervals of fixed length}
-\label{subsec:local-mass}
-We next treat subsequences for which $\Lambda\ge\Lambda_*>0$.
-The variance may grow, but remains $o(m)$.
-
-\begin{lemma}\label{lem:local-mass}
-Fix $\Lambda_*>0$, $R<\infty$, and real numbers $a<b$.
-Along a local sequence with $\Lambda\ge\Lambda_*$ there is
-$c_*>0$, depending on these fixed parameters and $\alpha$, such
-that eventually
-\begin{equation}\label{eq:local-mass}
- \inf_{|x-\mu|\le R\sqrt m}
-          \Pp\{S\in(x+a,x+b)\}\ge c_*m^{-1/2}.
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-For each $x$ in the indicated region choose all integers $k$
-with $|k-x|\le r$, where $r=\max(1,\sqrt\Lambda)$.
-There are at least $\sqrt\Lambda$ such integers. Since
-$\Lambda=o(m)$, they lie in a fixed enlarged central region
-for large rows, and each satisfies $b_k\ge c_{\alpha,R}/\sqrt m$.
-Tilt the labels to mean $k$ and use the projection from the
-proof of Lemma~\ref{lem:count}. Conditional on $K=k$,
-\[
- W=m_k^0+R_k,\qquad
- m_k^0=\sum_i a_i(r_i-p_i),\qquad
- R_k=\sum_i\{b_i'(B_i-r_i)+U_i\}+\sum_r Z_r .
-\]
-Under the tilted independent law,
-\begin{equation}\label{eq:joint-data}
- \E_\theta R_k=0,\quad
- \Cov_\theta(K,R_k)=0,\quad
- L_k:=\Var_\theta R_k
-   =\Lambda\{1+O_{\alpha,R}(m^{-1/2})\},\quad
- |m_k^0|\le C_{\alpha,R}\sqrt{\Lambda_A}/\sqrt m .
-\end{equation}
-The variance comparison follows from \eqref{eq:tilt-Q} and the
-relative $O(m^{-1/2})$ change in each label probability; the
-extra variables are unchanged. Every individual summand of
-$R_k$ is bounded by a number $\delta_m\to0$, uniformly over
-these $k$.
-
-We prove a conditional local estimate for a fixed continuous
-integrable function $g$ with integrable Fourier transform supported
-in $[-T,T]$:
-\begin{equation}\label{eq:conditional-local}
- \sup_{y\in\R}\left|
- \E_\theta[g(R_k-y)\mid K=k]
-       -\E g(\sqrt{L_k}\,Z-y)\right|
-                  =o(L_k^{-1/2}),\qquad Z\sim N(0,1).
-\end{equation}
-All errors here are uniform over the selected values of $k$.
-Let
-$\chi_k(s,t)=\E_\theta e^{is(K-k)+itR_k}$.
-For a sufficiently small fixed $\delta>0$, symmetrization of
-each independent pair gives, for large rows,
-\begin{equation}\label{eq:joint-bound}
- |\chi_k(s,t)|
- \le \exp\{-c_\alpha(V_\theta s^2+L_k t^2)\},
- \qquad |s|\le\delta,\quad |t|\le T .
-\end{equation}
-In detail, each pair phase has diameter at most
-$|s|+2T\delta_m$. For this diameter small enough,
-$1-\cos u\ge c u^2$ bounds its characteristic-function
-modulus by the exponential of minus a constant times its
-phase variance. The sum of those variances is exactly
-$V_\theta s^2+L_k t^2$, by the zero covariance in
-\eqref{eq:joint-data}. Extra coordinates have count component
-zero and contribute their actual variance to $L_k$.
-For $\delta\le|s|\le\pi$, each factor corresponding to a pair $(B_i,U_i)$ differs
-from $\E_\theta e^{is(B_i-r_i)}$ by at most $T\delta_m$.
-The latter moduli are bounded away from one uniformly over
-this compact range of $s$ and the allowed $r_i$. The product
-is therefore $O(e^{-cm})$; additional factors have modulus
-at most one.
-
-For bounded $u,v$, at $s=u/\sqrt{V_\theta}$ and
-$t=v/\sqrt{L_k}$ the sum of absolute third phase moments is
-at most
-\[
- C_\alpha\left\{
-    \frac{|u|^3}{\sqrt m}
-       +\frac{\delta_m|v|^3}{\sqrt{L_k}}\right\}=o(1),
-\]
-because $L_k\ge\Lambda_*/2$ eventually. The logarithmic
-characteristic-function expansion hence gives
-$\chi_k(s,t)-e^{-V_\theta s^2/2-L_k t^2/2}\to0$ uniformly
-on bounded scaled frequency sets. The Gaussian majorant
-\eqref{eq:joint-bound} makes its integrated absolute difference
-on $[-\delta,\delta]\times[-T,T]$ equal to
-$o((V_\theta L_k)^{-1/2})$: after the change of variables,
-first restrict to a bounded rectangle and then use Gaussian
-tails. The other count frequencies are exponentially small
-at this scale, since $L_k=o(m)$.
-
-Fourier inversion in the integer count coordinate and in the
-residual coordinate gives
-\[
- \E_\theta[g(R_k-y)\ind_{\{K=k\}}]
- =\frac1{(2\pi)^2}
-   \int_{-\pi}^{\pi}\int_{-T}^T
-       \widehat g(t)e^{ity}\chi_k(s,-t)\,dt\,ds .
-\]
-The translating factor has modulus one and
-$|\widehat g|\le\|g\|_1$. The preceding integrated estimate
-therefore applies uniformly in $y$. Replacing $\chi_k$ by
-the Gaussian product gives
-$(2\pi V_\theta)^{-1/2}\E g(\sqrt{L_k}Z-y)$, up to
-an exponentially small count tail. Divide by
-\[
- \Pp_\theta(K=k)
-    =(2\pi V_\theta)^{-1/2}\{1+O_\alpha(m^{-1/2})\},
-\]
-from \eqref{eq:count-local}. The denominator replacement is
-also $o(L_k^{-1/2})$, since
-$|\E g(\sqrt{L_k}Z-y)|\le\phz\|g\|_1/\sqrt{L_k}$.
-This proves \eqref{eq:conditional-local}, including when
-$L_k\to\infty$.
-
-To obtain an interval probability, put $w_0=(a+b)/2$ and
-$d=(b-a)/2$, and for a fixed large $\omega>0$ define
-\[
- g(w)=\left(1-\frac{(w-w_0)^2}{d^2}\right)
-             \left(\frac{\sin(\omega(w-w_0))}{\omega(w-w_0)}\right)^4 .
-\]
-Then $g\le\ind_{(a,b)}$, including at the endpoints, and
-$g\in L^1(\R)$. The Fourier transform of the fourth power
-of sinc is a compactly supported cubic spline. Multiplication
-by the quadratic corresponds to two derivatives, so
-$\widehat g$ is continuous, integrable and supported in
-$[-4\omega,4\omega]$.
-For any fixed $C_0$, choose $\omega$ sufficiently large that
-\begin{equation}\label{eq:minorant}
- \E g(\sqrt\lambda Z-y)\ge c_1/\sqrt\lambda
- \quad\left(\lambda\ge\Lambda_*/2,\quad
-                   |y|\le C_0\sqrt\lambda\right).
-\end{equation}
-Here is a direct lower bound. On $|w-w_0|\le1/\omega$ the
-positive part of $g$ has integral at least $c/\omega$.
-The Gaussian density there is bounded below by
-$c_{\Lambda_*,C_0,a,b}/\sqrt\lambda$. The negative part
-has integral at most
-$2/(d^3\omega^4)$, while the density is at most
-$\phz/\sqrt\lambda$. Fixing $\omega$ large enough makes the
-positive contribution dominate and proves \eqref{eq:minorant}.
-
-For each chosen $k$ set $y=x-k-m_k^0$.
-By \eqref{eq:joint-data} and $|k-x|\le r$,
-$|y|\le C_{\Lambda_*,R}\sqrt{L_k}$.
-Use \eqref{eq:conditional-local}--\eqref{eq:minorant} to get
-\[
- \Pp\{W\in(x+a-k,x+b-k)\mid K=k\}
- \ge c_2/\sqrt\Lambda .
-\]
-Each chosen value of $K$ has probability at least $c_{\alpha,R}/\sqrt m$,
-and there are at least $\sqrt\Lambda$ such values. Summing proves
-\eqref{eq:local-mass}.
-\end{proof}
-
-\begin{proposition}\label{prop:large-residual}
-Along a local sequence with $\Lambda\ge\Lambda_*>0$,
-\[
- \limsup\mathcal R(X_1,\ldots,X_m,Z_1,\ldots)<\be .
-\]
-\end{proposition}
-
-\begin{proof}
-The uniform-jitter identities, with strict events, are
-\begin{align*}
- J(x+1/2)-F_S(x)
-   &=\E[(x+1-S)\ind_{\{x<S<x+1\}}],\\
- F_S^-(x)-J(x-1/2)
-   &=\E[(S-x+1)\ind_{\{x-1<S<x\}}].
-\end{align*}
-Lemma~\ref{lem:local-mass}, applied for example to the intervals
-$(x+1/4,x+1/2)$ and $(x-1/2,x-1/4)$, makes both quantities
-at least $c_R/\sqrt m$ in any fixed central region.
-Combine this with \eqref{eq:unit-jitter} and Taylor expansion
-at the shifts $\pm1/2$. Multiplying by $B^3/T_X$, either
-central branch is at most
-\begin{equation}\label{eq:strict-envelope}
-          \frac{\phz(3B^2+|\kappa|)}{6T_X}-c_R'+o(1).
-\end{equation}
-The Bernoulli case of \eqref{eq:esseen-moment}, with span one,
-gives
-$3V+|\kappa_0|\le\ce T_0$. Equations
-\eqref{eq:budget-comparison} and $\Lambda=o(m)$ show that
-the first term of \eqref{eq:strict-envelope} is at most
-$\be+o(1)$. Outside a sufficiently large fixed standardized
-region, the ordinary envelope \eqref{eq:local-envelope} is
-less than $\be/2$ for large rows. Choose this region first,
-then its positive central loss $c_R'$. This proves the strict
-upper limit. The interval-loss step corresponds to
-\citet[Lemmas~3.4--3.5]{HeCheng2026}; the two-dimensional
-calculation above supplies the mass bound for unequal probabilities
-and gaps.
-\end{proof}
-
-\begin{proof}[Proof of Theorem~\ref{thm:local}]
-If the theorem failed, select violating rows with $m_j\ge j$,
-gap and residual bounds at most $1/j$, and extra variance at
-most $m_jh^2/j$. After the common normalization
-\eqref{eq:projected-gaps}, these have exactly the sequential
-hypotheses used above. If $\Lambda_j$ failed to tend to zero,
-a subsequence would have $\Lambda_j\ge\Lambda_*>0$, contradicting
-Proposition~\ref{prop:large-residual}. Thus $\Lambda_j\to0$.
-Proposition~\ref{prop:small-residual} and
-\eqref{eq:finite-input} then contradict the strict violations.
-\end{proof}
-
-\section{Completion of the proof}\label{sec:completion}
-\begin{proof}[Proof of Theorem~\ref{thm:main}]
-If violations existed with arbitrarily small Lyapunov ratio,
-Lemma~\ref{lem:attainment} would produce exact penalized
-maximizers with $R_j>\be$ and $\ell_j\to0$.
-Proposition~\ref{prop:support-bound} gives their common support
-bound. Proposition~\ref{prop:equality} and the support arguments
-of Section~\ref{sec:confinement} put every sufficiently late
-row in the class of Theorem~\ref{thm:local}: use the fixed
-nominal gap $h=1/\te$, the probability interval from
-Proposition~\ref{prop:partition}, and
-$m_j\asymp\ell_j^{-2}\to\infty$. The remaining coordinates
-have shrinking support and total scaled variance $o(m_j)$,
-as required. Theorem~\ref{thm:local}, which uses all actual
-variances and third absolute moments, therefore gives
-$R_j\le\be$, a contradiction. Some universal $\ell_0>0$
-must exist. The Esseen iid sequence described in
-Section~\ref{sec:theorem} proves optimality.
-\end{proof}
-
+\appendix
+\input{fourier-estimates.tex}
+\input{support-confinement.tex}
+\input{conditional-moments.tex}
 \bibliographystyle{plainnat}
 \bibliography{refs}
 \end{document}

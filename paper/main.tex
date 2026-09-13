@@ -33,7 +33,7 @@
 
 \title{An upper bound on the Berry--Esseen constant\\ for independent summands}
 \author{Logan Bell}
-\date{11 September 2026}
+\date{13 September 2026}
 
 \begin{document}
 \maketitle
@@ -50,7 +50,7 @@ variables having the same variances. The reference characteristic function
 is real, so its difference from the Gaussian can be retained with its sign
 in part of the Fourier integral. Analytic estimates cover small and
 large $L$; an interval calculation covers the intermediate range.
-The largest recorded upper endpoint is $\RecordedUpper\ldots$. The supplement
+The largest recorded upper endpoint is approximately $\RecordedUpper$. The supplement
 contains the partition records and arithmetic sources.
 
 \end{abstract}
@@ -202,9 +202,10 @@ frequency interval at an endpoint. On the cosine branch,
  &=\frac{V_0^3}{E_0^3}\{u\sin u-2(1-\cos u)\}\le0.
 \end{align*}
 The same signs hold on the cubic branch. The maximizing equation for
-$\theta$ makes the formulas agree at the joins. Consequently the upper
-bounds decrease with the variance argument and increase with the moment
-argument on the domains just specified.
+$\theta$ makes the formulas agree at the joins. Consequently, as functions of the independent arguments of $\psi$,
+the upper bounds decrease with $V_0$ and increase with $E_0$ on these
+domains. For a moment box, $E_0$ is bounded separately; in
+\eqref{eq:single-cf} it includes the term $v^{3/2}$.
 
 For $r(x)=(\cos x-1+x^2/2)/x^3$, differentiation gives
 \[
@@ -652,100 +653,7 @@ $|A_x(y)-A_x(1)|\le(x/2+x^3/6)|y^2-1|$, which bounds $J_x(y)$
 by a constant times $y^2(y+1)^2/(y+1/2)$, which grows cubically.
 \end{proof}
 
-To verify \eqref{eq:current-J-majorant}, set $z=xy$, $q=1+x^2/3$,
-and
-\[
- R(x,z)=\frac{\cos z+x^2\sinc z-\cos x-x^2\sinc x}{z^2-x^2},
-\]
-continued across $z=x$.  Multiplication of the difference in
-\eqref{eq:current-J-majorant} by $x(z+x/2)$ gives
-\[
- \mathcal L(x,z)=x(z+x/2)\left\{J_x(1)
-       +\frac{J_x'(1)}{2x^2}(z^2-x^2)\right\}
-       +\frac{(z-x)^2(z+x/2)^2}{4}
-       -z^2(z+x)^2R(x,z)^2.
-\]
-It has a double zero at $z=x$.  Define
-\[
- w_n(u)=\frac1{(2n)!}+\frac{u}{(2n+1)!},\qquad
- S_n(x,z)=\sum_{j=0}^{n-1}x^{2j}z^{2(n-1-j)}.
-\]
-For $r=m+n$, the polynomial
-\[
- Q_{mn}(x,z)=\frac{
- z^2(z+x)^2S_mS_n
- -\frac{4mn}{9}x^{2r-3}(z+x/2)
-        \{(5-3r)x^2+(3r+1)z^2\}}{(z-x)^2}
-\]
-is well defined by exact division.  Expansion and collection of terms give
-\begin{equation}\label{eq:current-odd-series}
- \frac{\mathcal L(x,z)}{(z-x)^2}
- =\frac{q^2x(x+4z)}{144}
-   -\frac{(q^2-1)(z+x/2)^2}{4}
-   +\sum_{r\ge3}(-1)^{r+1}
-       \sum_{m=1}^{r-1}w_m(x^2)w_{r-m}(x^2)Q_{m,r-m}(x,z).
-\end{equation}
-This identity also defines the removable diagonal.  Each $Q_{mn}$ is
-homogeneous of degree $2r-2$, has positive rational coefficients, and
-$Q_{mn}(1,1)\le8mnr^2$.  One way to check these assertions is to put
-$x=1$.  The polynomial numerator is
-\[
- N(z)-M(z)=z^2(z+1)^2S_m(1,z)S_n(1,z)
- -\frac{4mn}{9}(z+1/2)\{5-3r+(3r+1)z^2\}.
-\]
-The constant and linear coefficients of its quotient by $(z-1)^2$ are
-$2mn(3r-5)/9$ and four times that value.  Higher coefficients are
-positive sums of coefficients of $N$.  Also
-$Q_{mn}(1,1)=\{N''(1)-M''(1)\}/2\le8mnr^2$.
-
-Truncate \eqref{eq:current-odd-series} at $r=24$ and write its polynomial
-uniquely as
-\[
- x^2F_1(x^2,z^2)+z^4F_0(z^2)+xzG(x^2,z^2),
-\]
-assigning positive even powers of $x$ to the first term.  On
-$(x^2,z^2)\in[0,4]\times[0,49]$, exact tensor Bernstein conversion
-gives minimum coefficients $1/144$ for $F_1$, greater than $1/200$
-for $F_0$, and $1/36$ for $G$. These inequalities follow from
-\eqref{eq:current-odd-series} by the accompanying rational checker;
-its scalar certificate records the exact minima.
-The conversion itself uses, after scaling to $[0,1]^2$,
-\[
- b_{ij}=\sum_{p\le i,\,q\le j}a_{pq}
-       \frac{\binom ip}{\binom{d_1}p}
-       \frac{\binom jq}{\binom{d_2}q}.
-\]
-Bernstein basis functions are nonnegative and sum to one.
-
-To control the omitted series, use $w_n(x^2)\le7/[3(2n)!]$ and
-\[
- \sum_{m=1}^{r-1}\frac{m(r-m)}{(2m)!(2r-2m)!}
-       =\frac{2^{2r-5}}{(2r-2)!}.
-\]
-The positive order-$r$ term at $(x,z)=(2,7)$ is at most
-\[
- B_r=\frac{49}{1764}\frac{r^2 196^r}{(2r-2)!}.
-\]
-It equals $4F_{1,r}+2401F_{0,r}+14G_r$, so each component is at most
-$B_r/4$.  For $r\ge25$, $B_{r+1}/B_r<1/10$; each absolute component
-tail is therefore at most $5B_{25}/18<1/1250$.  The rational checker
-verifies that each minimum minus this tail exceeds $1/250$.
-Thus $\mathcal L/(z-x)^2\ge(x^2+z^4+xz)/250\ge0$ on the rectangle.
-
-For $z\ge7$, the elementary bound $|A_x(y)-A_x(1)|\le2(x+1/x)$ gives
-\[
- \frac{J_x(y)}{(x^2/4)h(y)}
- \le\frac{16(1+x^2)^2z^2}{(z-x)^4(z+x/2)^2}
- \le\frac{400}{(z-2)^4}\le\frac{16}{25}<1.
-\]
-The two tangent terms in \eqref{eq:current-J-majorant} are nonnegative
-there.  Indeed $J_x(1)\ge0$, while $J_x'(1)>0$: writing
-$k_0=2\sinc x-\cos x$ and
-$\ell_0=(2-x^2)\sinc x-3\cos x$ gives
-$J_x'(1)=2x^2k_0(4k_0-3\ell_0)/9$; $k_0>0$, and alternating Taylor
-bounds give $4k_0-3\ell_0\ge257/105$ on $[0,2]$.
-This proves the remaining spatial tail and completes
-\eqref{eq:current-J-majorant}.
+The polynomial verification of \eqref{eq:current-J-majorant} is given in Appendix~\ref{app:odd-majorant}.
 
 \subsection{Aggregation by a concave majorant}
 For $0\le x\le2$, use $\alpha$ and $q$ defined above and put
@@ -1104,7 +1012,7 @@ and positivity of $\cos u$ prove \eqref{eq:current-elementary-energy}.
 Also $p(x)=\int_0^1r\cos(rx)/\cos x\,dr$ is positive and increasing
 below $\pi/2$.
 
-The scalar inequality in Section~\ref{sec:current-energy-cert} gives
+The scalar inequality in Appendix~\ref{sec:current-energy-cert} gives
 \begin{equation}\label{eq:current-energy}
  |\E T_x(W)|^2\le(\rho-1)
      \{q_{\rm ref}(x)+\tfrac98(\rho-1)\},\qquad
@@ -1146,9 +1054,227 @@ This gives the forcing bound
 \end{equation}
 The maximizing weights need not satisfy the total-variance identity;
 maximizing over this larger set preserves an upper bound. We use the
-minimum of the three forcing bounds on their respective domains.
+minimum of the applicable forcing bounds.
 For $1<t\sqrt d<\pi/2$, the same differential inequality uses the
 elementary bound and the preceding error bound as its initial value.
+
+\subsection{Using the third moment of the largest summand}
+\label{sec:split-reference}
+The distinguished third moment $b$ can improve the forcing bound.
+Write
+\[
+ w=d^{3/2},\quad e=b-w,\quad R=\tau-w,\quad
+ e_R=L-b-R,\quad E=L-\tau=e+e_R,\quad
+ \delta=Lw-b\tau.
+\]
+For an actual array, $w,e,R,e_R$ are nonnegative. Suppose a common
+scalar estimate has the form
+$|\E T_x(W_i)|^2\le(\rho_i-1)\{Q+\lambda(\rho_i-1)\}$,
+where $Q>0$ and $\lambda\ge0$. Applying Cauchy--Schwarz only to the
+remaining summands gives the moment factor
+\begin{equation}\label{eq:split-reference}
+ S_Q=\sqrt{e(Qw+\lambda e)}
+       +\sqrt{e_R(QR+\lambda e_R)}.
+\end{equation}
+This bounds the forcing term in \eqref{eq:current-reference-identity} by
+\[
+ \left|\sum_i r_i(t)\prod_{j\ne i}f_j(t)\right|
+ \le\frac{t^2D_{\rm del}(t)}2 S_Q.
+\]
+The same multiplier applies to the convex weight factor $S_P$ below.
+Put $A=Qw+\lambda e$, $B=QR+\lambda e_R$, and
+$G^2=E(Q\tau+\lambda E)$. The identities
+\[
+ G^2-S_Q^2=(\sqrt{eB}-\sqrt{e_RA})^2,\qquad
+ eB-e_RA=-Q\delta
+\]
+and $(\sqrt{eB}+\sqrt{e_RA})^2\le G^2$ imply, when $\delta>0$,
+\begin{equation}\label{eq:reference-defect}
+ S_Q\le G\sqrt{1-
+       \left\{\frac{\delta}{E(\tau+(\lambda/Q)E)}\right\}^2}.
+\end{equation}
+Zero forcing is treated directly, without division.
+
+For the convex weight bound, set $q=q_{\rm ref}$, $\lambda=9/8$,
+$q_j=q(tw^{1/3})$, and $F_R=F_t(w,R)$. The corresponding factor is
+\begin{equation}\label{eq:split-packed-reference}
+ S_P=\sqrt{e(q_jw+\lambda e)}
+       +\sqrt{e_R(F_R+\lambda e_R)}.
+\end{equation}
+Since the largest weight $w$ is attained,
+$F_t(w,\tau)=wq_j+F_R$. Apply the same identity with
+$A=q_jw+\lambda e$ and $B=F_R+\lambda e_R$. Monotonicity of $q$
+gives $F_R\le q_jR$, hence
+$eB-e_RA\le-q_j\delta$ when $\delta\ge0$. As $q_j\ge8/3$, this proves
+\begin{equation}\label{eq:packed-reference-defect}
+ S_P\le
+ \sqrt{E\{F_t(w,\tau)+\tfrac98E\}}\,
+ \sqrt{1-\left\{\frac{\delta}{E(\tau+27E/64)}\right\}^2}
+ \qquad(\delta\ge0).
+\end{equation}
+The same last factor applies to \eqref{eq:reference-defect} whenever
+$\lambda/Q\le27/64$. The elementary estimate has $\lambda/Q=3/8$;
+the scalar-table estimates used with this factor satisfy the displayed
+inequality by exact comparison of their coefficients.
+
+We next give the interval bounds used to maximize
+\eqref{eq:split-reference} and \eqref{eq:split-packed-reference}.
+For the convex weight bounds, assume $t\sqrt{d_+}\le1$.
+The generic split bound applies wherever its scalar inequality holds.
+For a parameter box, choose
+$w_-\le d_-^{3/2}$ and $w_+\ge d_+^{3/2}$, and put
+$M=L_+$ and $a=\tau_-$. Suppose
+\begin{equation}\label{eq:reference-endpoint-condition}
+             a-w_+\ge\frac{15}{23}(M-b_-).
+\end{equation}
+Both split factors increase with $L$. With $w,b$ fixed, increase $L$
+to $M$ and then decrease $\tau$ to $a$. To justify the second step,
+put $H=M-b$ and differentiate the squared remainder term with respect
+to $R$:
+\[
+ \frac{d}{dR}\{(H-R)[QR+\lambda(H-R)]\}
+       =Q(e_R-R)-2\lambda e_R\le0\quad(R\ge H/2).
+\]
+For the weight bound, $F_t(w,R)\ge8R/3$ and
+$0\le\partial_R F_t(w,R)<29/4$ on each interval between consecutive
+multiples of $w$. Thus
+\[
+ \frac{d}{dR}\{(H-R)[F_t(w,R)+\tfrac98(H-R)]\}
+       \le5e_R-\frac83R\le0\quad(R\ge15H/23).
+\]
+The function $F_t(w,R)$ is continuous at the joins. Condition
+\eqref{eq:reference-endpoint-condition} therefore proves
+\[
+ S_Q(L,\tau,w,b)\le S_Q(M,a,w,b),\qquad
+ S_P(L,\tau,w,b)\le S_P(M,a,w,b).
+\]
+All moments in these expressions remain nonnegative along the
+comparison; the endpoints are used only to bound the algebraic factors.
+Set
+\[
+ E_*=M-a,\qquad \delta_*=Mw_--b_+a,\qquad
+ D_*=E_*(a+27E_*/64).
+\]
+For $S_P$, and for $S_Q$ with $\lambda/Q\le27/64$, suppose
+$0<\delta_*\le D_*$. Any rational $\eta\in(0,1]$ satisfying
+$\eta^2+(\delta_*/D_*)^2\ge1$ gives
+\[
+ \begin{aligned}
+ S_Q(L,\tau,w,b)&\le\eta\sqrt{E_*(Qa+\lambda E_*)},\\
+ S_P(L,\tau,w,b)&\le\eta\sqrt{E_*\{F_t(w,a)+9E_*/8\}}.
+ \end{aligned}
+\]
+A larger weight cap can replace $w$ in $F_t(w,a)$ wherever that
+function is defined. Under the same coefficient-ratio restriction
+for $S_Q$, a direct bound on the whole box is also available: use
+$\delta_*=L_-w_--b_+\tau_+$ and
+$D_*=(L_+-\tau_-)\{\tau_++27(L_+-\tau_-)/64\}$
+in the same test, without requiring
+\eqref{eq:reference-endpoint-condition}.
+
+There is a less restrictive endpoint condition when the remaining
+weight is smaller than $w$ throughout the box. Write
+$R_-=a-w_+$, $R_+=\tau_+-w_-$, and take
+$0<W_0\le d_+^{3/2}$. If
+\begin{equation}\label{eq:single-remainder-condition}
+ 0<R_-\le R_+<w_-,\qquad
+ R_+\le(19/25)^3W_0,\qquad
+ R_-\ge\frac{23}{55}(M-b_-),
+\end{equation}
+then the same endpoint comparison holds for $S_P$.
+Indeed $F_t(w,R)=f_t(R)$ throughout the comparison, and
+$tR^{1/3}\le19/25$. The derivative bound $f_t'(R)<25/6$ gives
+\[
+ \frac{d}{dR}\{e_R[f_t(R)+\tfrac98e_R]\}
+ \le\frac{23}{12}e_R-\frac83R\le0.
+\]
+This condition applies to the weight bound alone.
+
+Both derivative constants follow from exact rational
+bounds. The nonnegative even coefficients of $q$ make
+$g(x)=q(x)+xq'(x)/3$ increasing, and direct differentiation gives
+\[
+ g(x)=
+ \frac{8\sin^3x\{2x(1+\cos^2x)-\sin x\cos x\}}
+      {9x^4\cos^3x}.
+\]
+Let $s_-$ and $s_+$ be the sine polynomials through degrees seven
+and nine, and let $c_-$ and $c_+$ be the cosine polynomials through
+degrees ten and twelve. Alternating-series bounds give
+\[
+ g(x)\le
+ \frac{8s_+(x)^3\{2x(1+c_+(x)^2)-s_-(x)c_-(x)\}}
+      {9x^4c_-(x)^3}.
+\]
+At $x=10001/10000$ this rational expression is less than $29/4$;
+at $x=19/25$ it is less than $25/6$. Monotonicity gives the bounds
+on the full intervals, including $g(0)=8/3$.
+
+\subsection{A quantitative bound for the convex weight maximum}
+\label{sec:weight-loss}
+The weight maximum and the Cauchy--Schwarz maximum need not occur at
+the same distinguished weight. We bound their combined effect.
+Assume one of the endpoint conditions above applies to $S_P$, and
+put $E=M-a>0$ and $\lambda=9/8$. Let $W\ge d_+^{3/2}$ be the weight
+cap used in the interval evaluation. Choose $c,W_0$ such that
+\[
+ b_+a/M<c<W_0\le W,
+\]
+and suppose $\lfloor a/u\rfloor=k\ge1$ on $(c,W_0)$.
+Choose $d_0>\gamma\ge0$ with
+\[
+ u^{2/3}\ge d_0>\gamma\ge(a-ku)^{2/3}
+                \qquad(c\le u\le W_0).
+\]
+The coefficient expansion is
+\[
+ q(x)=\sum_{n\ge0}q_nx^{2n},\qquad
+ q_0=\frac83,\quad q_1=\frac89,\quad q_2=\frac8{15},
+ \quad q_3=\frac{736}{2835},\qquad q_n\ge0.
+\]
+Consequently, for any finite $N\ge1$,
+\[
+ \frac{d}{du}F_t(u,a)
+ =k\{f_t'(u)-f_t'(a-ku)\}
+ \ge k\sum_{n=1}^Nq_n(1+2n/3)(d_0^n-\gamma^n)t^{2n}.
+\]
+Integrate from $c$ to $W_0$ and use monotonicity in the cap beyond
+$W_0$. The endpoint joins are covered by continuity.
+Take a frequency interval $[l,r]$ satisfying
+\[
+ 0\le l\le r,\qquad r\sqrt{d_+}\le1,\qquad
+ rW^{1/3}\le10001/10000.
+\]
+These conditions also keep the relevant cosine factors positive.
+Choose $\bar q\ge q(rW^{1/3})$ and set
+\begin{align*}
+ A&=\min\{(29/4)a+\lambda E,\ a\bar q+\lambda E\},\\
+ P_N(y)&=\frac{k(W_0-c)}A
+       \sum_{n=1}^Nq_n(1+2n/3)(d_0^n-\gamma^n)y^n,\\
+ H&=\left\{\frac{Mc-b_+a}{E(a+27E/64)}\right\}^2.
+\end{align*}
+The derivative bound $g<29/4$ and the bound $\bar q$ each give an
+upper bound for $F_t(W,a)/a$, which justifies the minimum defining $A$.
+Require also $H\le1$. Since
+$E\{F_t(W,a)+\lambda E\}\le EA$, the integrated inequality gives,
+for $w\le c$,
+\[
+ S_P(M,a,w,b)^2
+ \le \{1-P_N(t^2)\}\,E\{F_t(W,a)+\lambda E\}.
+\]
+For $w\ge c$, the defect is at least $Mc-b_+a>0$, and
+\eqref{eq:packed-reference-defect} gives the same bound with $H$
+in place of $P_N(t^2)$. Thus throughout the box and frequency cell,
+\begin{equation}\label{eq:weight-loss}
+ S_P(L,\tau,w,b)
+ \le
+ \left(1-\frac12\min\{P_N(l^2),H\}\right)
+       \sqrt{E\{F_t(W,a)+\lambda E\}}.
+\end{equation}
+Here we used the nonnegative coefficients of $P_N$ and
+$\sqrt{1-x}\le1-x/2$ for $0\le x\le1$.
+Several valid choices of $c,W_0,d_0,\gamma$ may be used: the largest
+of their lower bounds for the loss remains valid.
 
 \subsection{Bounds for the cosine product}
 \begin{lemma}\label{lem:current-maximum}
@@ -1234,123 +1360,17 @@ The calculation takes the minimum of the applicable error bounds and
 uses \eqref{eq:ode-comparison} wherever the cosine comparison does
 not apply.
 
-\subsection{A scalar inequality for the reference error}\label{sec:current-energy-cert}
-To prove \eqref{eq:current-energy}, for $x>0$ set
-\[
- a_x=\frac{2x-x\sec x-\sin x}{x^2},\quad
- U_x(w)=T_x(w)-a_x(w^2-1),\quad
- V_x(y)=\frac{x^2\cos x}{2}U_x(y).
-\]
-Writing $s=\sin x$, $c=\cos x$,
-$A=(x+sc)/2$, $B=s^2$ and $D=x^2+2xsc$, one has
-\[
- V_x(y)=(\ii yc+s)e^{\ii xy}-\ii y+A(y^2-1).
-\]
-Set $q_v=2B^2/3$, $r_v=2BD/3-4B^2/9$,
-$\lambda_v=\lambda x^4c^2/4$, with $\lambda=9/8$.
-We verify the scalar inequality
-\begin{equation}\label{eq:current-energy-gap}
- \mathcal D_x(y):=h(y)\{q_v+(r_v/2)(y^2-1)+\lambda_vh(y)\}
-                         -|V_x(y)|^2\ge0\qquad(y\ge0).
-\end{equation}
-The value and first three derivatives at $y=1$ vanish.  This exact cancellation
-is removed before interval evaluation.
-
-Define
-\[
- E_n(\ii v)=\sum_{m\ge0}\frac{(\ii v)^m}{(m+n)!}
-       =\frac1{(n-1)!}\int_0^1(1-u)^{n-1}e^{\ii vu}\,du.
-\]
-With $z=y-1$, the regular quotient is
-\[
- \frac{\mathcal D_x(y)}{(y-1)^4}
- =\lambda_v(y+1/2)^2+r_v(y/2+5/4)-A^2
-                  -\Re\sum_{n=1}^4c_nE_n(\ii xz),
-\]
-where
-\begin{align*}
- c_4&=-2x^4,&
- c_3&=2x^4+2\ii x^3(1+c^2),\\
- c_2&=x^2(4Asc+2c^2)-2\ii x^2\{A(1+2c^2)-sc\},&
- c_1&=-2xAc^2-2\ii xAsc.
-\end{align*}
-These coefficients follow by expanding $|V_x|^2$ and subtracting its
-Taylor polynomial of degree three at $y=1$.
-The degree-$K$ Taylor polynomial for $E_n(\ii v)$ has error at most
-$\max|v|^{K+1}/(n+K+1)!$, by its integral representation.
-
-For cells touching $x=0$, remove the factor $x^4$ as well.  Put
-$S=\sinc x$, $u=\sinc(2x)=Sc$, $a=(1+u)/2$,
-\[
- R=\tfrac23S^2(1+2u)-\tfrac49S^4,\qquad
- K_0=-uS^2-4x^2[\Re E_3(2\ii x)]^2.
-\]
-Then the analytic quotient $\mathcal H=\mathcal D/[x^4(y-1)^4]$ is
-\begin{align}
- \mathcal H(x,y)={}&\tfrac\lambda4c^2(y+1/2)^2+R(y/2+5/4)+K_0
-       -2au(z+2)\Re E_2(\ii xz)\notag\\
- &-2\{ac^2z^2+[a(1+2c^2)-u]z+1\}\Re E_3(\ii xz)
-       +2\{c^2z^2+(1+c^2)z+1\}\Re E_4(\ii xz).
-       \label{eq:current-energy-zero}
-\end{align}
-For example,
-$\Re E_1(\ii v)=1-v^2\Re E_3(\ii v)$ and
-$\Im E_n(\ii v)=v\Re E_{n+1}(\ii v)$ for $n=1,2,3$ give this formula
-from the preceding quotient.  The remaining constant cancellation is
-\[
- (uc^2-a^2)/x^2=-uS^2-(1-u)^2/(4x^2)
-              =-uS^2-4x^2[\Re E_3(2\ii x)]^2.
-\]
-At zero,
-\[
- \mathcal H(0,y)=(4y+1)/144+(\lambda-1)(y+1/2)^2/4>0.
-\]
-
-The recorded scalar partitions cover $0\le x\le1/2$, $0\le y\le48$
-using \eqref{eq:current-energy-zero}, and $1/2\le x\le1$,
-$0\le y\le16$ using the positive-frequency quotient.  Every accepted
-rectangle has an outward nonnegative lower bound; all rectangle joins
-are exact.  There are analytic infinite tails.  On $0\le x\le1/2$,
-\[
- |U_x(y)|\le P(y):=y^3+\tfrac{20}{21}y^2+\tfrac87y+\tfrac4{21}.
-\]
-For $x>0$ this follows by writing
-$V=(\ii yc+s)(e^{\ii xy}-1-\ii xy)+(A-xc)y^2+s-A+\ii y(c-1+xs)$,
-using $c\ge7/8$, $|e^{\ii v}-1-\ii v|\le v^2/2$,
-$0\le A-xc\le x^3/3$, $0\le s-A\le x^3/6$, and
-$0\le c-1+xs\le x^2/2$.  At zero it follows directly.
-For $y\ge1$, the unscaled gap is at least $\lambda h(y)^2-P(y)^2$.
-At $y=48+z$ its exact coefficients, in increasing order, are
-\[
- \frac{51794446417}{288},\quad\frac{354649842}{7},\quad
- \frac{28964396957}{7056},\quad\frac{181934075}{1176},\quad
- \frac{43072585}{14112},\quad\frac{5161}{168},\quad\frac18.
-\]
-They are positive.  On $1/2\le x\le1$, use $A\le3/4$ and
-$x^4\cos^2x/4>1/100$ to obtain
-\[
- \mathcal D_x(y)\ge\frac1{100}(y-1)^4(y+1/2)^2
-                            -(3y^2/4+2y+1)^2.
-\]
-At $y=16+z$ the coefficients are
-\[
- \frac{1395225}{16},\quad41760,\quad\frac{60985}{8},\quad
- \frac{14097}{20},\quad\frac{1773}{50},\quad\frac{93}{100},\quad\frac1{100},
-\]
-again positive.  These tails and the compact certificates prove
-\eqref{eq:current-energy-gap} for all $y\ge0$; parity supplies real $w$.
-
-Finally, divide the unscaled gap by $h$ at its continuous value at one.
-Weighted Cauchy--Schwarz gives
-\[
- |\E U_x(W)|^2\le\E h(Y)\,\E\frac{|U_x(W)|^2}{h(Y)}
- \le(\rho-1)\{q_{\rm ref}(x)+\lambda(\rho-1)\}.
-\]
-Since $\E U_x=\E T_x$, the scalar enclosures and the analytic tails
-prove \eqref{eq:current-energy}. The integrand
-$|U_x(w)|^2/h(|w|)$ grows at most linearly at positive $x$ and
-cubically at $x=0$, so the third absolute moment suffices.
-If $\rho=1$, $|W|=1$ almost surely and the forcing is zero.
+The uniform factor from Section~\ref{sec:split-reference} can be
+applied to a stored radius when it bounds every forcing candidate
+used to construct that radius. This follows by induction from zero
+through the nonnegative, positively homogeneous operations in
+\eqref{eq:current-radius-recursion}. The factor in
+\eqref{eq:weight-loss} varies with the frequency cell and bounds
+only the convex weight candidate. We apply it to that forcing
+candidate and evaluate the recurrence with the new source minima.
+In both cases the signed center $C_v-g$ is given by
+\eqref{eq:current-center-box}; the contraction multiplies only the
+radius of the error about that center.
 
 \section{Smoothing and numerical integration}\label{sec:smoothing}
 
@@ -1501,15 +1521,34 @@ is increasing in $z$.  Hence an eligible cell uses
 $\min\{C_j,\mathcal N(J_{j,I})\}$; the first and all ineligible
 cells keep $C_j$.
 
+The discrepancy and characteristic-function bounds can also be used
+together. Write $D=(f_S-g)/L$, and suppose $|D|\le R$ and $|f_S|\le r$.
+For arbitrary complex numbers $k,h$,
+\begin{equation}\label{eq:two-disk-support}
+ \Re(kD)
+ =\Re((k-h)D)+\frac{\Re(hf_S)-g\Re h}{L}
+ \le R|k-h|+\frac{r|h|-g\Re h}{L}.
+\end{equation}
+Use $k=k_T(t)e^{-\ii xt}$ and choose a fixed rational complex $h$
+on each closed frequency--threshold rectangle. Interval evaluation
+of the right side, with $\mathcal N$ applied to its signed numerator,
+then gives a bound for the whole rectangle. Multiplying by twice its
+frequency width bounds its contribution to the integral. The choices
+$h=0$ and $h=k$ explain the two individual modulus bounds; the
+calculation also uses intermediate values. Subdividing frequency or
+threshold intervals is valid when all child intervals are included.
+
+Let $B_{j,I}$ denote the minimum of the discrepancy bound, the signed
+reference bound, and the applicable bounds from
+\eqref{eq:two-disk-support}, each integrated over the full cell.
+The first cell uses $B_{0,I}=C_0$.
 Let $c$ index the chosen smoothing parameters and their frequency grids,
 and let $\gamma_{c,k,I}$ be an upper bound for $\Gamma$ on $I$ at
 cutoff $k$. The resulting bound is
 \[
- U_{c,k,I}=\sum_{j<k}\min\{C_{c,j},\mathcal N(J_{c,j,I})\}
+ U_{c,k,I}=\sum_{j<k}B_{c,j,I}
       +\mathcal N\left(\sum_{j\ge k}A_{c,j}+H_c+\gamma_{c,k,I}\right).
 \]
-The minimum in this formula means $C_{c,j}$ on the first cell and
-wherever the reference bound does not apply.
 For the finite partition of $[-X,X]$, the bound is
 \begin{equation}\label{eq:current-threshold-cover}
  \max\left\{\max_I\min_{c,k}U_{c,k,I},\frac1{L_{lo}(1+X^2)}\right\}.
@@ -1518,10 +1557,14 @@ Cantelli bounds both exterior tails by $1/(1+X^2)$.  Reflection gives
 the other Kolmogorov discrepancy: it preserves the moment box, real
 reference function and error bound. Its left-limit convention at atoms does
 not change the supremum against continuous $\Phi$.
-The central calculation uses $X=2$ and the 128 closed threshold
-cells of width $1/32$, and also takes the minimum with the bound
-uniform in $x$ obtained from \eqref{eq:current-cutoff}. For $X=2$ we
-can improve the exterior numerator to
+The threshold partitions contain either 128 cells of width $1/32$
+on $[-2,2]$, or 138 cells of that width on $[-69/32,69/32]$.
+A 144-cell partition of the latter interval divides each of
+$[-15/32,-14/32]$ and $[-14/32,-13/32]$ into four equal parts.
+The exact endpoints and the chosen partition are recorded for each
+calculation. We also take the minimum with the bound uniform in $x$
+obtained from \eqref{eq:current-cutoff}. For $X=2$ the exterior
+numerator can be bounded by
 \begin{equation}\label{eq:normal-tail-cantelli}
  \sup_{|x|\ge2}|\Prob(S\le x)-\Phi(x)|
  \le \frac15-(1-\Phi(2))<0.17724986805182083.
@@ -1685,16 +1728,15 @@ $\max_{I\in\mathcal P}U(I)$ bounds any complete closed partition
 $\mathcal P$ of that interval. During refinement, a parent is replaced
 only after both children have bounds; each child can also use the
 parent's bound. Thus stopping refinement at any stage retains coverage.
-The signed calculation uses subdivisions of depth at most six,
-with at most 127 complete slice evaluations. For each box, the
-calculation evaluates a finite list of smoothing bounds and may stop
+For each box, the calculation evaluates a finite list of smoothing
+bounds and may stop
 once one gives the required upper bound. The stored evaluator
 parameters specify this stopping rule and hence which bound is returned.
 
 Each smoothing calculation fixes $T>0$ and $0<s<1$. Its stored
 binary64 parameters are interpreted as exact dyadic rationals.
 The meshes divide $[0,Ts]$ and $[Ts,T]$ into $N$ intervals each, with
-$N\in\{512,1024,2048\}$ as specified in the record. The cutoffs in
+the positive integer $N$ specified in the record. The cutoffs in
 the first range are $Ts\,k/32$, $k=24,\ldots,32$.
 Parameter-dependent choices of $T,s$, and minima over several complete
 smoothing bounds, are permitted by the smoothing inequality. They
@@ -1719,7 +1761,7 @@ Closed $L$ intervals & \BandCount\\
 Partition nodes & \NodeCount\\
 Accepted leaves & \AcceptedCount\\
 Infeasible leaves & \InfeasibleCount\\
-Largest upper bound for $\Delta/L$ & $\RecordedUpper\ldots$\\
+Largest upper bound for $\Delta/L$ & $\approx\RecordedUpper$\\
 Upper bound for $L\le L_-$ & $<\SmallUpper$\\
 Upper bound for $L\ge L_+$ & $<\LargeUpper$\\
 \bottomrule
@@ -1731,10 +1773,17 @@ that were reproduced in separate evaluations with the same arithmetic
 routines. The other \SharedBoundCount\ leaves carry a valid upper
 bound for their entire containing $L$ interval. A containing-interval
 bound is retained as such when checking an individual leaf.
+The table counts the outer moment trees. Some accepted leaves carry a
+further finite tree in $b$ or $d$, with fixed numerical bounds on its
+closed subdomains and moment inequalities excluding its infeasible
+subdomains. These nested trees are checked in full; their nodes are
+not added to the outer counts. Each numerical record specifies the
+smoothing parameters, threshold partition, and applicable forcing
+bounds used in its evaluation.
 The largest finite
 upper endpoint, interpreted exactly, is
 \begin{equation}\label{eq:finite-maximum}
- U_* = \ExactUpper < \frac{8999}{20000}.
+ U_* = \ExactUpper < \UpperBound.
 \end{equation}
 Both analytic complements are smaller than $U_*$. The interval evaluations
 therefore give $\Delta/L\le U_*$ for every array. Taking the supremum gives
@@ -1809,6 +1858,223 @@ records for every cutoff used in the finite cover. The scalar guide,
 separates checks of stored enclosures from their numerical reevaluation.
 
 \clearpage
+\appendix
+\section{The scalar majorant for the imaginary error}\label{app:odd-majorant}
+To verify \eqref{eq:current-J-majorant}, set $z=xy$, $q=1+x^2/3$,
+and
+\[
+ R(x,z)=\frac{\cos z+x^2\sinc z-\cos x-x^2\sinc x}{z^2-x^2},
+\]
+continued across $z=x$.  Multiplication of the difference in
+\eqref{eq:current-J-majorant} by $x(z+x/2)$ gives
+\[
+ \mathcal L(x,z)=x(z+x/2)\left\{J_x(1)
+       +\frac{J_x'(1)}{2x^2}(z^2-x^2)\right\}
+       +\frac{(z-x)^2(z+x/2)^2}{4}
+       -z^2(z+x)^2R(x,z)^2.
+\]
+It has a double zero at $z=x$.  Define
+\[
+ w_n(u)=\frac1{(2n)!}+\frac{u}{(2n+1)!},\qquad
+ S_n(x,z)=\sum_{j=0}^{n-1}x^{2j}z^{2(n-1-j)}.
+\]
+For $r=m+n$, the polynomial
+\[
+ Q_{mn}(x,z)=\frac{
+ z^2(z+x)^2S_mS_n
+ -\frac{4mn}{9}x^{2r-3}(z+x/2)
+        \{(5-3r)x^2+(3r+1)z^2\}}{(z-x)^2}
+\]
+is well defined by exact division.  Expansion and collection of terms give
+\begin{equation}\label{eq:current-odd-series}
+ \frac{\mathcal L(x,z)}{(z-x)^2}
+ =\frac{q^2x(x+4z)}{144}
+   -\frac{(q^2-1)(z+x/2)^2}{4}
+   +\sum_{r\ge3}(-1)^{r+1}
+       \sum_{m=1}^{r-1}w_m(x^2)w_{r-m}(x^2)Q_{m,r-m}(x,z).
+\end{equation}
+This identity also defines the removable diagonal.  Each $Q_{mn}$ is
+homogeneous of degree $2r-2$, has positive rational coefficients, and
+$Q_{mn}(1,1)\le8mnr^2$.  One way to check these assertions is to put
+$x=1$.  The polynomial numerator is
+\[
+ N(z)-M(z)=z^2(z+1)^2S_m(1,z)S_n(1,z)
+ -\frac{4mn}{9}(z+1/2)\{5-3r+(3r+1)z^2\}.
+\]
+The constant and linear coefficients of its quotient by $(z-1)^2$ are
+$2mn(3r-5)/9$ and four times that value.  Higher coefficients are
+positive sums of coefficients of $N$.  Also
+$Q_{mn}(1,1)=\{N''(1)-M''(1)\}/2\le8mnr^2$.
+
+Truncate \eqref{eq:current-odd-series} at $r=24$ and write its polynomial
+uniquely as
+\[
+ x^2F_1(x^2,z^2)+z^4F_0(z^2)+xzG(x^2,z^2),
+\]
+assigning positive even powers of $x$ to the first term.  On
+$(x^2,z^2)\in[0,4]\times[0,49]$, exact tensor Bernstein conversion
+gives minimum coefficients $1/144$ for $F_1$, greater than $1/200$
+for $F_0$, and $1/36$ for $G$. These inequalities follow from
+\eqref{eq:current-odd-series} by the accompanying rational checker;
+its scalar certificate records the exact minima.
+The conversion itself uses, after scaling to $[0,1]^2$,
+\[
+ b_{ij}=\sum_{p\le i,\,q\le j}a_{pq}
+       \frac{\binom ip}{\binom{d_1}p}
+       \frac{\binom jq}{\binom{d_2}q}.
+\]
+Bernstein basis functions are nonnegative and sum to one.
+
+To control the omitted series, use $w_n(x^2)\le7/[3(2n)!]$ and
+\[
+ \sum_{m=1}^{r-1}\frac{m(r-m)}{(2m)!(2r-2m)!}
+       =\frac{2^{2r-5}}{(2r-2)!}.
+\]
+The positive order-$r$ term at $(x,z)=(2,7)$ is at most
+\[
+ B_r=\frac{49}{1764}\frac{r^2 196^r}{(2r-2)!}.
+\]
+It equals $4F_{1,r}+2401F_{0,r}+14G_r$, so each component is at most
+$B_r/4$.  For $r\ge25$, $B_{r+1}/B_r<1/10$; each absolute component
+tail is therefore at most $5B_{25}/18<1/1250$.  The rational checker
+verifies that each minimum minus this tail exceeds $1/250$.
+Thus $\mathcal L/(z-x)^2\ge(x^2+z^4+xz)/250\ge0$ on the rectangle.
+
+For $z\ge7$, the elementary bound $|A_x(y)-A_x(1)|\le2(x+1/x)$ gives
+\[
+ \frac{J_x(y)}{(x^2/4)h(y)}
+ \le\frac{16(1+x^2)^2z^2}{(z-x)^4(z+x/2)^2}
+ \le\frac{400}{(z-2)^4}\le\frac{16}{25}<1.
+\]
+The two tangent terms in \eqref{eq:current-J-majorant} are nonnegative
+there.  Indeed $J_x(1)\ge0$, while $J_x'(1)>0$: writing
+$k_0=2\sinc x-\cos x$ and
+$\ell_0=(2-x^2)\sinc x-3\cos x$ gives
+$J_x'(1)=2x^2k_0(4k_0-3\ell_0)/9$; $k_0>0$, and alternating Taylor
+bounds give $4k_0-3\ell_0\ge257/105$ on $[0,2]$.
+This proves the remaining spatial tail and completes
+\eqref{eq:current-J-majorant}.
+
+
+\section{The scalar bound for the cosine comparison}\label{sec:current-energy-cert}
+To prove \eqref{eq:current-energy}, for $x>0$ set
+\[
+ a_x=\frac{2x-x\sec x-\sin x}{x^2},\quad
+ U_x(w)=T_x(w)-a_x(w^2-1),\quad
+ V_x(y)=\frac{x^2\cos x}{2}U_x(y).
+\]
+Writing $s=\sin x$, $c=\cos x$,
+$A=(x+sc)/2$, $B=s^2$ and $D=x^2+2xsc$, one has
+\[
+ V_x(y)=(\ii yc+s)e^{\ii xy}-\ii y+A(y^2-1).
+\]
+Set $q_v=2B^2/3$, $r_v=2BD/3-4B^2/9$,
+$\lambda_v=\lambda x^4c^2/4$, with $\lambda=9/8$.
+We verify the scalar inequality
+\begin{equation}\label{eq:current-energy-gap}
+ \mathcal D_x(y):=h(y)\{q_v+(r_v/2)(y^2-1)+\lambda_vh(y)\}
+                         -|V_x(y)|^2\ge0\qquad(y\ge0).
+\end{equation}
+The value and first three derivatives at $y=1$ vanish.  This exact cancellation
+is removed before interval evaluation.
+
+Define
+\[
+ E_n(\ii v)=\sum_{m\ge0}\frac{(\ii v)^m}{(m+n)!}
+       =\frac1{(n-1)!}\int_0^1(1-u)^{n-1}e^{\ii vu}\,du.
+\]
+With $z=y-1$, the regular quotient is
+\[
+ \frac{\mathcal D_x(y)}{(y-1)^4}
+ =\lambda_v(y+1/2)^2+r_v(y/2+5/4)-A^2
+                  -\Re\sum_{n=1}^4c_nE_n(\ii xz),
+\]
+where
+\begin{align*}
+ c_4&=-2x^4,&
+ c_3&=2x^4+2\ii x^3(1+c^2),\\
+ c_2&=x^2(4Asc+2c^2)-2\ii x^2\{A(1+2c^2)-sc\},&
+ c_1&=-2xAc^2-2\ii xAsc.
+\end{align*}
+These coefficients follow by expanding $|V_x|^2$ and subtracting its
+Taylor polynomial of degree three at $y=1$.
+The degree-$K$ Taylor polynomial for $E_n(\ii v)$ has error at most
+$\max|v|^{K+1}/(n+K+1)!$, by its integral representation.
+
+For cells touching $x=0$, remove the factor $x^4$ as well.  Put
+$S=\sinc x$, $u=\sinc(2x)=Sc$, $a=(1+u)/2$,
+\[
+ R=\tfrac23S^2(1+2u)-\tfrac49S^4,\qquad
+ K_0=-uS^2-4x^2[\Re E_3(2\ii x)]^2.
+\]
+Then the analytic quotient $\mathcal H=\mathcal D/[x^4(y-1)^4]$ is
+\begin{align}
+ \mathcal H(x,y)={}&\tfrac\lambda4c^2(y+1/2)^2+R(y/2+5/4)+K_0
+       -2au(z+2)\Re E_2(\ii xz)\notag\\
+ &-2\{ac^2z^2+[a(1+2c^2)-u]z+1\}\Re E_3(\ii xz)
+       +2\{c^2z^2+(1+c^2)z+1\}\Re E_4(\ii xz).
+       \label{eq:current-energy-zero}
+\end{align}
+For example,
+$\Re E_1(\ii v)=1-v^2\Re E_3(\ii v)$ and
+$\Im E_n(\ii v)=v\Re E_{n+1}(\ii v)$ for $n=1,2,3$ give this formula
+from the preceding quotient.  The remaining constant cancellation is
+\[
+ (uc^2-a^2)/x^2=-uS^2-(1-u)^2/(4x^2)
+              =-uS^2-4x^2[\Re E_3(2\ii x)]^2.
+\]
+At zero,
+\[
+ \mathcal H(0,y)=(4y+1)/144+(\lambda-1)(y+1/2)^2/4>0.
+\]
+
+The recorded scalar partitions cover $0\le x\le1/2$, $0\le y\le48$
+using \eqref{eq:current-energy-zero}, and $1/2\le x\le1$,
+$0\le y\le16$ using the positive-frequency quotient.  Every accepted
+rectangle has an outward nonnegative lower bound; all rectangle joins
+are exact.  There are analytic infinite tails.  On $0\le x\le1/2$,
+\[
+ |U_x(y)|\le P(y):=y^3+\tfrac{20}{21}y^2+\tfrac87y+\tfrac4{21}.
+\]
+For $x>0$ this follows by writing
+$V=(\ii yc+s)(e^{\ii xy}-1-\ii xy)+(A-xc)y^2+s-A+\ii y(c-1+xs)$,
+using $c\ge7/8$, $|e^{\ii v}-1-\ii v|\le v^2/2$,
+$0\le A-xc\le x^3/3$, $0\le s-A\le x^3/6$, and
+$0\le c-1+xs\le x^2/2$.  At zero it follows directly.
+For $y\ge1$, the unscaled gap is at least $\lambda h(y)^2-P(y)^2$.
+At $y=48+z$ its exact coefficients, in increasing order, are
+\[
+ \frac{51794446417}{288},\quad\frac{354649842}{7},\quad
+ \frac{28964396957}{7056},\quad\frac{181934075}{1176},\quad
+ \frac{43072585}{14112},\quad\frac{5161}{168},\quad\frac18.
+\]
+They are positive.  On $1/2\le x\le1$, use $A\le3/4$ and
+$x^4\cos^2x/4>1/100$ to obtain
+\[
+ \mathcal D_x(y)\ge\frac1{100}(y-1)^4(y+1/2)^2
+                            -(3y^2/4+2y+1)^2.
+\]
+At $y=16+z$ the coefficients are
+\[
+ \frac{1395225}{16},\quad41760,\quad\frac{60985}{8},\quad
+ \frac{14097}{20},\quad\frac{1773}{50},\quad\frac{93}{100},\quad\frac1{100},
+\]
+again positive.  These tails and the compact certificates prove
+\eqref{eq:current-energy-gap} for all $y\ge0$; parity supplies real $w$.
+
+Finally, divide the unscaled gap by $h$ at its continuous value at one.
+Weighted Cauchy--Schwarz gives
+\[
+ |\E U_x(W)|^2\le\E h(Y)\,\E\frac{|U_x(W)|^2}{h(Y)}
+ \le(\rho-1)\{q_{\rm ref}(x)+\lambda(\rho-1)\}.
+\]
+Since $\E U_x=\E T_x$, the scalar enclosures and the analytic tails
+prove \eqref{eq:current-energy}. The integrand
+$|U_x(w)|^2/h(|w|)$ grows at most linearly at positive $x$ and
+cubically at $x=0$, so the third absolute moment suffices.
+If $\rho=1$, $|W|=1$ almost surely and the forcing is zero.
+
+
 \bibliographystyle{plainnat}
 \bibliography{refs}
 \end{document}

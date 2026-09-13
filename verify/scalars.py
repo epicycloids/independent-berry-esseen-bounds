@@ -30,7 +30,7 @@ def scalar_bounds(lower_endpoint, upper_endpoint):
         theta = rational(lo).union(rational(hi))
         kappa = (theta-theta.sin())/(3*theta*theta)
         assert kappa < rational('0.099162') and 3.99 < theta < 4
-        # The paper proves uniqueness of the Cantelli stationary point.
+    # Uniqueness is proved after eq:cantelli in paper/main.tex.
         def derivative(x):
             return (-x*x/2).exp()/(2*pi).sqrt() - 2*x/(1+x*x)**2
         lo, hi = Fraction('0.1'), Fraction('0.5')

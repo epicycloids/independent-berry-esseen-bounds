@@ -342,8 +342,7 @@ def self_check():
             if out["reason"]=="direct" and not direct>=0:
                 raise AssertionError("point enclosure failed")
             controls+=1
-    # A sharp-price decrement must produce an actual negative common-gap
-    # three-coordinate point, detecting a vacuous always-accept procedure.
+    # At the equal-diameter point below, check that val - rho/20 is negative.
     point=(Q(43,100),)*3+(Q(1),Q(1))
     val=exact_point_value("triangle_lower",point)
     p=Q(43,100);a=p*(1-p);rho=number(p*p+(1-p)**2)/number(3*a).sqrt()

@@ -15,7 +15,7 @@ upper-bound computation can be read independently of both.
 ## The unrestricted upper bound
 
 The [upper-bound paper](../paper/independent-berry-esseen.pdf) proves
-$C_{\mathrm{ind}}<0.44995$. It combines characteristic-function estimates
+$C_{\mathrm{ind}}<0.44988794$. It combines characteristic-function estimates
 and Prawitz smoothing with the zero-bias comparison developed by
 [Tyurin (2009)](https://arxiv.org/abs/0912.0726v1). The zero-bias
 transformation was introduced by
@@ -53,6 +53,14 @@ quadratic-majorant formula, using the methods of
 The remaining finite-dimensional inequalities are treated analytically
 and by interval arithmetic.
 
+The finite paper also derives necessary conditions for a maximum over
+the full independent class with one three-state coordinate and two
+two-state coordinates, when the threshold configurations are exactly
+$(0,0,1)$, $(0,1,0)$, and $(1,0,0)$, with only $(0,0,0)$ below.
+The two Bernoulli probabilities must agree; the remaining conditions
+express the masses as affine functions of total variance and give a
+quadratic inequality in that variance.
+
 Applying the two-summand theorem to a larger array requires bounds for
 both the change in third absolute moments under grouping and the error
 after convolution with the remaining sum. The finite-array paper derives
@@ -66,25 +74,44 @@ the computational inputs and verification commands.
 ## The sharp bound for small Lyapunov ratio
 
 The [small-Lyapunov paper](../paper/small-lyapunov/small-lyapunov.pdf) proves
-that there is a universal $L_0>0$ for which $\Delta\le C_{\mathrm E}L$
-whenever $0<L\le L_0$. The summands need not share a distribution, variance,
-or support. The proof is by compactness and supplies no numerical value
-of $L_0$.
+
+```math
+L\le\exp(-\exp(20004))\quad\Longrightarrow\quad
+\Delta\le C_{\mathrm E}L.
+```
+
+The summands may have different distributions, variances, and supports.
+The very small cutoff results from a conservative choice of constants in
+the proof.
 
 [He and Cheng (2026)](https://arxiv.org/abs/2609.06358v1) prove the sharp
 bound for all sufficiently large i.i.d. samples. The independent-array
 argument follows their combination of Fourier estimates, optimization
 over summand laws, and comparison near two-point distributions. Here $L$
-takes the place of sample size: adjoining zero summands changes the
-number of coordinates without changing $L$ or $\Delta$.
+measures smallness: adjoining zero summands changes the number of
+coordinates without changing $L$ or $\Delta$.
 
-Assuming violations with $L\to0$, the proof selects maximizing arrays
-and constrains their summand supports to small neighborhoods of a
-common-diameter Bernoulli configuration. A Bernoulli label records which
-neighborhood contains each summand. Conditional estimates for the
-remaining displacement reduce the inequality to the common-diameter
-theorem from the finite-array paper. No new numerical calculation is
-needed for this reduction.
+A hypothetical violation at small $L$ yields an attained maximizer after
+subtracting a penalty that increases with $L$. An explicit remainder
+estimate of [Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf)
+keeps its Lyapunov ratio below twice the original cutoff. Varying one
+summand at a time then bounds every support radius by $8L$.
+
+Fourier estimates select an approximate common spacing and give an explicit error
+for the sum after adding a uniform variable. The equality case of
+Esseen's lattice moment inequality and the variational equations confine
+every support to two narrow intervals, apart from small summands whose
+total variance is controlled.
+
+The local comparison theorem records which interval contains each
+summand with a Bernoulli label. Conditional estimates control the
+remaining displacement while permitting unequal probabilities and
+unequal spacings. At zero residual variance the array is a common-diameter Bernoulli
+sum. For small positive residual variance, a one-sided loss dominates
+the perturbation errors. For larger residual variance, a conditional
+Fourier estimate bounds interval probabilities on both sides of a
+threshold and improves the bound obtained by adding the uniform variable. These comparisons reduce the sharp
+inequality to the common-diameter theorem in the finite-array paper.
 
 ## Restrictions on extremizers
 
@@ -100,7 +127,37 @@ A maximizing representation can be chosen with at most three support
 points in each independent factor. For representations with this property,
 the variational equations force the Gaussian and jump terms to vanish
 and the factor support radii to tend to zero. If infinitely many factors
-are nonconstant, their sum is nonatomic. A condition on the finite support
-configurations that can complete to a maximizing threshold also excludes
-infinitely many exactly separated finite blocks. The paper defines the
-enlarged class and the separation condition and proves these assertions.
+are nonconstant, their sum is nonatomic. The paper also excludes infinitely
+many finite blocks whose support diameters are summable and whose distinct
+block sums are separated by at least twice the total diameter of all later
+blocks. The paper states the precise separation condition and proves these
+assertions.
+
+Further restrictions hold when the sum of third absolute moments,
+denoted by $\beta$, satisfies $\beta\le18481/25000$ at total variance
+one. Write $H_i$ for the diameter of the support of a nonconstant
+factor and $v_i$ for its variance. Then
+
+```math
+\sum_i\frac{v_i}{H_i^\gamma}<\infty
+\qquad(0<\gamma<\sqrt5-1).
+```
+
+In particular, $\sum_i\mathbb E|X_i|<\infty$. If all but finitely many
+factors have two states, the weighted-variance conclusion holds for
+$0<\gamma<\sqrt{21}-3$. The proof combines restrictions on the support
+shapes with grouping estimates and a lattice comparison that accounts
+for the changes in variance and third moments.
+
+These estimates also restrict the distribution function $F$ at a
+threshold $z$ where $F(z)-\Phi(z)=C_{\mathrm{ind}}\beta>0$. Under the
+same bound on $\beta$, a maximizing sum cannot satisfy
+$F(z+t)=F(z)+\phi(z)t+O(t^2)$ as $t\to0$ through both signs.
+For a sum with only finitely many three-state factors, even the
+one-sided expansion
+
+```math
+F(z)-F(z-h)=\phi(z)h+O(h^{1+\alpha}),\qquad h\downarrow0,
+```
+
+is impossible when $\alpha>(\sqrt{21}-3)/6$.

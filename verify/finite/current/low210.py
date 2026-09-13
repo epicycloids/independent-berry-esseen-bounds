@@ -42,22 +42,22 @@ def independently_evaluate(box):
     height0 = (b-a)*(h+4*a*b)/2
     height1 = w*w*(w+3*a-point(Q(3, 2)))
     scale = height0+height1
-    # Recover endpoints directly from the mass ratio, not via p,q,H_B.
+    # Recover the Bernoulli endpoint e from the mass ratio.
     e = d*height0/height1
     diameter = d+e
     resource_slope = (d*d+e*e)/diameter
     low = d*(1-resource_slope)/(w*(w+2*a-1))
     high = (a+low*w)/h
     middle = 1-low-high
-    # Raw support second moments, independent of the producer's reduced
-    # variance formula ab+low*w*(a+b+w).
+    # Compute the triple variance from its masses and support points.
+    # Its reduced form is a*b + low*w*(a+b+w).
     triple_var = low*(a+w)*(a+w)+middle*a*a+high*b*b
     bern_var = d*e
     variance = triple_var+bern_var
     bern_resource = d*e*resource_slope
     positive_cdf = (b*b*(2*b-point(Q(3, 2)))
                     -point(Q(3, 2))*triple_var-bern_resource)
-    # Expanded physical support-height difference, with no M(p) polynomial.
+    # Evaluate the contact-height difference in the endpoints d and e.
     height_difference = (point(Q(3, 2))*diameter*diameter
                          -e*e*e-3*d*d*e-2*d*d*d)
     contact = middle*scale-height_difference

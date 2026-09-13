@@ -1,0 +1,300 @@
+\section{Fourier estimates with numerical constants}\label{app:fourier}
+We use $\widehat\nu(t)=\int e^{itx}\nu(dx)$ and
+$\sinc u=\sin(u)/u$, with its continuous value at zero.
+This appendix supplies the quantitative versions of the signed
+smoothing and jitter arguments used in Sections~\ref{sec:jitter}
+and~\ref{sec:local}.
+
+\subsection{Signed smoothing and the low-frequency expansion}
+If $F$ is a probability CDF with finite first absolute moment and $G$
+is the CDF primitive of a finite signed measure of mass one and finite
+first absolute moment, with Lipschitz constant $M_G$, then
+\begin{equation}\label{eq:signed-smoothing}
+ \|F-G\|_\infty\le\frac14\int_{-A}^A
+       \frac{|\widehat F(t)-\widehat G(t)|}{|t|}\,dt+24M_G/A.
+\end{equation}
+Here $\widehat F$ and $\widehat G$ denote the transforms of their
+measures. This is the signed smoothing lemma of
+\citet[Lemma~2.1 and equation~(71)]{HeCheng2026}.
+Its proof uses the even density
+$k(x)=3\sinc(x/4)^4/(8\pi)$, whose transform is supported on
+$[-1,1]$. The bound $k(x)\le3\min(1,256/x^4)/(8\pi)$ gives
+$\E|Z|\le12/\pi<4$. With shift $a=16$, its one-sided tail
+$\varepsilon_k$ is below $1/8$, and
+$C_a=\E(16-Z)_+<18$.
+At a positive near-maximum of $F-G$, monotonicity of $F$ gives
+$(F-G)(x+y)\ge(F-G)(x)-M_Gy$ for $y\ge0$.
+Average with the shifted kernel; use $-\|F-G\|_\infty$ on its
+opposite tail. The negative branch uses the reflected shift.
+This bounds the norm by
+\[
+ \frac{\|(F-G)*k_A\|_\infty}{1-2\varepsilon_k}
+                    +\frac{C_aM_G}{A(1-2\varepsilon_k)}.
+\]
+Fourier inversion of the integrable CDF difference gives coefficients
+$1/[2\pi(1-2\varepsilon_k)]\le1/4$ and
+$C_a/(1-2\varepsilon_k)\le24$. Only $F$ needed monotonicity.
+In particular the weaker coefficients $1/\pi$ and $40$ are valid.
+
+Consider the variance-one row of Proposition~\ref{prop:jitter}.
+Write $v_i=\E X_i^2$, $\kappa=\sum\E X_i^3$, and
+$f_i(t)=\E e^{itX_i}$. For $|t|\le1/(64\ell)$,
+\[
+ |f_i(t)-1|\le v_it^2/2\le1/128,\quad
+ \sum_i\E X_i^4\le8\ell^2,\quad\sum_i v_i^2\le64\ell^2.
+\]
+Using $|\log(1+z)-z|\le|z|^2$ for $|z|\le1/2$ yields
+\[
+ \sum_i\log f_i(t)=-t^2/2+\kappa(it)^3/6+w(t),\qquad
+ |w(t)|\le(49/3)\ell^2t^4\le t^2/6.
+\]
+Thus the error against
+$\widehat\nu(t)=e^{-t^2/2}(1+\kappa(it)^3/6)$ is at most
+\begin{equation}\label{eq:log-error}
+ \ell^2e^{-t^2/3}\{(49/3)t^4+t^6/72\}.
+\end{equation}
+Multiplication by $\sinc(h\ell t/2)$ adds at most
+$(h^2\ell^2/24)(t^2+\ell|t|^5/6)e^{-t^2/2}$.
+The positive-frequency integrals after division by $t$ are at most
+$(591/8)\ell^2$ and $(13h^2/288)\ell^2$, respectively.
+For $h\le128\pi$ their sum is below $7500\ell^2$.
+The Gaussian comparison tail starting at $a=1/(64\ell)$ is at most
+\[
+ \ell^2\{64^2+64/3\}<4118\ell^2.
+\]
+Here use $\int_a^\infty e^{-t^2/2}dt/t\le a^{-2}$ and
+$\int_a^\infty t^2e^{-t^2/2}dt\le2/a$.
+The comparison CDF $\Phi(x)+\kappa(1-x^2)\phi(x)/6$ has
+Lipschitz constant below $1/2$, since
+$\|\phi'''\|_\infty\le2/\pi$ and $|\kappa|\le1/8$.
+Applying the weaker smoothing coefficients $1/\pi,40$, and
+Lemma~\ref{lem:period}, now proves \eqref{eq:jitter-error}.
+
+For the local calculation a smaller low-frequency bound is convenient.
+Put $m_{4,i}=\E X_i^4$ and
+$A_i=-v_it^2/2+\E X_i^3(it)^3/6$.
+On the same interval, $|A_i|\le(25/48)v_it^2<1/64$ and
+\[
+ |f_i(t)-e^{A_i}|\le m_{4,i}t^4/2.
+\]
+Symmetrization gives $|f_i(t)|\le e^{-v_it^2/3}$.
+Telescope the products; omitting an individual decay factor costs
+less than two. Since $\sum_i m_{4,i}\le8\ell^2$,
+\[
+ |\widehat F(t)-\widehat\nu(t)|
+       \le8\ell^2t^4e^{-t^2/3}+(\ell^2t^6/72)e^{-t^2/2}.
+\]
+Integrating over both signs gives less than $73\ell^2$.
+Using $|\sinc(h\ell t/2)-1|\le h^2\ell^2t^2/24$ and the actual
+product bound adds at most $h^2\ell^2/8$. Hence
+\begin{equation}\label{eq:small-low-frequency}
+ \int_{|t|\le1/(64\ell)}
+ \frac{|\sinc(h\ell t/2)\widehat F(t)-\widehat\nu(t)|}{|t|}\,dt
+                         \le(73+h^2/8)\ell^2.
+\end{equation}
+
+\subsection{The count estimate}
+\begin{lemma}\label{lem:count-estimate}
+For a sum $K$ of independent Bernoulli variables, put
+$\mu=\E K$ and $V=\Var K$. If $V\ge1/2$, then
+\begin{equation}\label{eq:count-estimate}
+ \left|\Pp(K=k)-\frac{\phi((k-\mu)/\sqrt V)}{\sqrt V}\right|
+                   \le6/V,\qquad
+ \sup_k\Pp(K=k)<1/\sqrt V.
+\end{equation}
+If the probabilities lie in $[\alpha,1-\alpha]$, let
+$\beta=\alpha(1-\alpha)$ and $\gamma=\phi(M/\sqrt\beta)$.
+For $m\ge144/(\beta\gamma^2)$ and $|k-\mu|\le M\sqrt m$,
+$\Pp(K=k)\ge\gamma/\sqrt m$.
+\end{lemma}
+\begin{proof}
+For $Z_i=B_i-p_i$ and $v_i=p_i(1-p_i)$, on $[-\pi,\pi]$,
+\[
+ |\E e^{itZ_i}|\le e^{-2v_i\sin^2(t/2)}
+              \le e^{-2v_it^2/\pi^2},\qquad
+ |\E e^{itZ_i}-e^{-v_it^2/2}|
+              \le v_i(|t|^3/6+t^4/32).
+\]
+Telescope, retaining the decay from $V-v_i\ge V/2$.
+The difference is at most
+$V(1/6+\pi/32)|t|^3e^{-Vt^2/\pi^2}$.
+Its integral divided by $2\pi$, plus the Gaussian tail, is at most
+$(\pi^3/12+\pi^4/64+1/\pi^2)/V<6/V$.
+Integrating the product modulus gives
+$\sqrt\pi/(2\sqrt{2V})<1/\sqrt V$.
+For the last assertion the error is at most half the central Gaussian
+term, and $V\le m/4$ supplies the stated factor.
+\end{proof}
+
+\subsection{Conditioning an independent product on a count}
+\begin{lemma}\label{lem:conditional-fourier}
+Let $(B_i,R_i)$ be independent pairs, with
+$B_i\sim\Bern(r_i)$, $r_i\in[a,1-a]$, $\E R_i=0$,
+$|R_i|\le d_0$. Allow additional independent centered $Z_j$ with
+$|Z_j|\le d_0$. Put
+\[
+ K=\sum_i B_i,\quad R=\sum_iR_i+\sum_jZ_j,\quad
+ \E K=k\in\Z,\quad V=\Var K\ge1000,\quad L=\Var R>0,
+\]
+ and assume $\Cov(K,R)=0$. Set $\beta=a(1-a)$.
+If $g$ is continuous and integrable, with integrable Fourier transform
+supported on $[-T,T]$, and $d_0T\le\beta/162$, then
+\begin{align}
+ &\sup_y|\E[g(R-y)\mid K=k]-\E g(\sqrt L Z-y)|\notag\\
+ &\qquad\le\frac{\|g\|_1}{\sqrt L}
+ \left\{\frac{32}{\sqrt V}+\frac{8d_0}{\sqrt L}
+                 +2T\sqrt{VL}e^{-\beta m/162}\right\},
+ \qquad Z\sim N(0,1).                                  \label{eq:conditional-fourier-error}
+\end{align}
+\end{lemma}
+\begin{proof}
+Write $\chi(s,t)=\E e^{is(K-k)+itR}$.
+For $|s|\le1/4$, $|t|\le T$, each centered individual phase $X$
+is bounded by $1/2$. If $v=\E X^2$ and $b=\E|X|^3$,
+symmetrization gives $|\E e^{iX}|\le e^{-v/3}$, and
+$v^2\le b/2$ gives $|\E e^{iX}-e^{-v/2}|<b/4$.
+The total phase variance is exactly $Vs^2+Lt^2$, by the zero covariance.
+The third absolute moments sum to at most
+$4(V|s|^3+d_0L|t|^3)$. Telescoping therefore gives
+\[
+ |\chi(s,t)-e^{-Vs^2/2-Lt^2/2}|
+ \le2(V|s|^3+d_0L|t|^3)e^{-(Vs^2+Lt^2)/3}.
+\]
+Its double integral is at most
+$56(VL)^{-1/2}(V^{-1/2}+d_0L^{-1/2})$;
+use $\int e^{-u^2/3}du=\sqrt{3\pi}$,
+$\int|u|^3e^{-u^2/3}du=9$.
+For $1/4\le|s|\le\pi$, a Bernoulli factor is at most
+$e^{-2\beta/81}\le1-\beta/81$ because $\sin(1/8)>1/9$.
+The residual changes it by at most $Td_0\le\beta/162$, giving
+$|\chi(s,t)|\le e^{-\beta m/162}$.
+Its double integral is at most $4\pi T e^{-\beta m/162}$.
+The omitted Gaussian count tail has integral at most
+$8\sqrt{2\pi}(V\sqrt L)^{-1}e^{-V/32}$.
+
+Fourier inversion in the count and residual uses
+$|\widehat g|\le\|g\|_1$. By Lemma~\ref{lem:count-estimate},
+$q=\Pp(K=k)$ differs from $q_0=(2\pi V)^{-1/2}$ by at most $6/V$;
+$V\ge1000>288\pi$ ensures $q\ge q_0/2$.
+Division by $q$ bounds the three preceding errors by
+\[
+ \frac{8\|g\|_1}{\sqrt L}(V^{-1/2}+d_0L^{-1/2}),\quad
+ 2\|g\|_1T\sqrt V e^{-\beta m/162},\quad
+ \frac{3\|g\|_1}{\sqrt{VL}}e^{-V/32}.
+\]
+Replacing $q_0/q$ by one in the Gaussian expectation costs at most
+$12\|g\|_1/\sqrt{VL}$. Enlarge $8+3+12$ to $32$.
+The factors involving $y$ have modulus one, proving uniformity.
+\end{proof}
+
+\begin{lemma}[An interval minorant]\label{lem:minorant}
+For an interval $(a,b)$ put $w_0=(a+b)/2$, $d=(b-a)/2$.
+Fix $L_0>0$, $C_0\ge0$, and choose
+\[
+ A_g\ge C_0+(|w_0|+d/2)/\sqrt{L_0},\quad
+ \omega=(2/d)e^{A_g^2/6},\quad T=4\omega.
+\]
+Then
+\[
+ g(w)=\left(1-\frac{(w-w_0)^2}{d^2}\right)
+                      \sinc\bigl(\omega(w-w_0)\bigr)^4
+\]
+is at most $\ind_{(a,b)}$, has integrable Fourier transform supported
+on $[-T,T]$, and satisfies
+\[
+ \|g\|_1\le4/\omega,\qquad
+ \E g(\sqrt L Z-y)\ge\frac{\phi(A_g)}{4\omega\sqrt L}
+            \quad(L\ge L_0,\ |y|\le C_0\sqrt L).
+\]
+If the bracket in \eqref{eq:conditional-fourier-error} is at most
+$\phi(A_g)/32$, the corresponding conditional interval probability
+is at least $\phi(A_g)/(8\omega\sqrt L)$.
+\end{lemma}
+\begin{proof}
+On $|w-w_0|\le1/\omega$, the quadratic factor is at least $3/4$,
+$\sinc\ge5/6$, and hence $g\ge1/4$. Its Gaussian density there
+is at least $\phi(A_g)/\sqrt L$.
+The negative part has integral at most $2/(d^3\omega^4)$, with
+density at most $\phz/\sqrt L$. Since
+$\omega^3=8\phz/(d^3\phi(A_g))$, subtraction leaves the asserted
+lower bound. The integrals of
+$\min(1,|\omega s|^{-4})$ and
+$s^2\min(1,|\omega s|^{-4})$ are $8/(3\omega)$ and
+$8/(3\omega^3)$; $\omega d\ge2$ proves the $L^1$ bound.
+The transform of the fourth power of sinc is a compactly supported
+cubic spline. Multiplication by the quadratic differentiates it twice,
+leaving an integrable transform on the same support. The final assertion
+follows from Lemma~\ref{lem:conditional-fourier}.
+\end{proof}
+
+\subsection{Jitter on the actual count lattice}
+\citet[Lemma~A.4]{HeCheng2026} prove the iid jitter estimate.
+We use the cancellation $\sum_i v_i a_i=0$ to control unequal gaps.
+Use the normalization of Section~\ref{sec:local}, and let $f_i$ include
+all original coordinate characteristic functions. Put
+\[
+ g(t)=\sum_i(1-|f_i(t)|^2),\qquad g_0(t)=2V(1-\cos t).
+\]
+For $\max|a_i|,\eps_0\le1/4$,
+\begin{align}
+ |g-g_0|&\le\Lambda t^2,\notag\\
+ |g'-g_0'|&\le\Lambda(2|t|+2t^2),\notag\\
+ |g''-g_0''|&\le\Lambda(2+8|t|+4t^2).                    \label{eq:resonance-derivatives}
+\end{align}
+To prove these bounds, couple each actual symmetrized difference with
+$D_0=B_i-B_i'$, writing it as $D_0+E$, where
+$E=a_iD_0+U_i-U_i'$. For an extra coordinate use $D_0=0$.
+All interpolation points lie in $[-2,2]$, and
+$\sum\E E^2=2\Lambda$.
+Taylor-expand $1-\cos(td)$, $d\sin(td)$, and $d^2\cos(td)$ in $d$.
+The terms involving $U$ vanish conditionally to first order, and the
+remaining first-order terms cancel by $\sum_i v_i a_i=0$.
+The second derivatives give exactly \eqref{eq:resonance-derivatives}.
+
+If $T\ge10$ and $\xi(T+1)^2\le1/56$, each interval
+$I_j=[2\pi j-1/4,2\pi j+1/4]$ meeting $[-T,T]$ has a unique
+minimum $t_j$ of $g$, with
+\[
+ |t_j-2\pi j|\le4\Lambda(T+1)^2/V,\qquad
+ \left|\prod_i f_i(t)\right|\le e^{-V(t-t_j)^2/4}\quad(t\in I_j).
+\]
+Indeed $g''\ge27V/16\ge V$ there, and the endpoint derivatives
+have opposite signs: their reference magnitudes exceed $V/3$ while
+the errors are at most $V/14$.
+Outside these intervals $g\ge V/25$, giving product modulus
+at most $e^{-V/50}$.
+For $j\ne0$, the raw jitter multiplier $\sinc(t/2)$ vanishes at
+$2\pi j$ and has Lipschitz constant at most $1/4$.
+Using $|t|\ge5|j|$, integrate its linear bound against the displayed
+Gaussian and sum the harmonic series. The result over both signs is
+\begin{equation}\label{eq:resonance-integral}
+ \sum_{j\ne0}\int_{I_j\cap[-T,T]}
+       \frac{|\sinc(t/2)\prod_i f_i(t)|}{|t|}\,dt
+ \le(1+\log T)\left\{\frac2{5V}
+        +\frac{4\sqrt\pi}{5}\frac{\Lambda(T+1)^2}{V\sqrt V}\right\}.
+\end{equation}
+For $j\ge1$ the summand is at most
+$1/(5jV)+\sqrt\pi|t_j-2\pi j|/(10j\sqrt V)$.
+
+We now verify \eqref{eq:local-jitter}. Standardize by $B$ and put
+$d=T_X/B^2\in[1/4,2]$. The Lyapunov ratio is $d/B$, and the
+support bounds satisfy the hypotheses of
+\eqref{eq:small-low-frequency}. Raw frequencies $|u|\le1/128$
+lie in that estimate's range; raw jitter width one corresponds to
+$h=1/d\le4$. Its integral is at most $300/B^2$, and after
+\eqref{eq:signed-smoothing} and multiplication by $\sqrt m$ it
+costs at most $400/\sqrt m$.
+Equation~\eqref{eq:resonance-integral} costs at most
+$(1+\log T)\{m^{-1/2}+\xi(T+1)^2\}$ in this normalization.
+Between raw frequencies $1/128$ and $1/4$, the product is bounded
+by $e^{-B^2u^2/3}$. Outside the resonance intervals it is bounded by
+$e^{-V/50}$. The Gaussian comparison tail beginning at $B/128$ is
+at most
+\[
+             (32854/B^2+1/192)e^{-B^2/32768}.
+\]
+Their total contribution after smoothing and scaling is below
+$60000(1+\log T)\sqrt m e^{-m/262144}$, using $V\ge3m/16$.
+Finally the cutoff $BT$ costs at most $24\sqrt m/(BT)<56/T$;
+the standardized signed comparison has Lipschitz constant below one.
+These are exactly the terms of \eqref{eq:local-error}.

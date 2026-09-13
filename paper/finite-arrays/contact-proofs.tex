@@ -79,7 +79,7 @@ Scale & Definition and conversion\\
 Contact scale &
 Divide the variance-one supports by
 $K=R_{\rm normalized}+z\phi(z)/(3C)$.
-Then $V=K^{-2}$ and $\tau=CK^3=C/V^{3/2}$.
+Then $V=K^{-2}$, $\tau=CK^3=C/V^{3/2}$, and the contact slope is $\sigma=\phi(z)/(CK^2)$.
 After division by $\tau$, the cubic majorant has quadratic coefficient
 $-3/2$.\\[4pt]
 Unit-span scale &
@@ -293,8 +293,12 @@ Taylor polynomial is a lower bound for $\exp(-x)$ for all $x\ge 0$, giving
 
 The final exact slack is $117914549/161061273600>0$.
 
-The raw contact normalizations used in the contact systems have
-$G>1/2$, $\sqrt{V}<2$, and $\sigma \sqrt{V}=G \phi(z)$. Therefore
+By the contact-scale definition, $\sigma=\phi(z)/(CK^2)$.
+Since $C<227/500$ and $K<8/5$,
+\[
+ \sigma>\frac{9/50}{(227/500)(8/5)^2}>\frac9{200}.
+\]
+Thus
 
 \[
  \boxed{\sigma>9/200.}
@@ -455,7 +459,7 @@ the middle/high representation.
 
 \paragraph{Exact data for the five remaining configurations}
 
-When the selected representation uses the middle triple point, write the physical triple support as $-a,c,b$.
+When the selected representation uses the middle triple point, write the triple support as $-a,c,b$.
 Its two nonselected minima satisfy
 
 \[
@@ -861,7 +865,8 @@ coordinate index. The rectangle condition is
 The inequality is strict because a collision between a corner sum and
 the selected middle-middle sum would give a second representation of the threshold.
 
-Each coordinate has variance $1/2$. Writing its middle mass as $m$,
+Before division by $K$, each coordinate has variance $1/2$.
+Writing its middle mass as $m$,
 centering and the exact variance formula give
 
 \[
@@ -2111,7 +2116,7 @@ Since the support stays fixed, the collided closed event presents no
 differentiability issue.
 
 Let $\gamma=\int |x|^3 \eta(dx)$ and let $L$ be the corresponding CDF
-derivative. The levels $(1,q,q)$ and physical gaps $Ku,K(a+b)$ give
+derivative. The levels $(1,q,q)$ and gaps $Ku,K(a+b)$ give
 
 \[
  \boxed{\quad L=\frac{p}{K^2u h}>0.\quad}
@@ -2518,8 +2523,7 @@ The contact values give
 \tag{C.16.4}\label{contact:collision-210-contact-reduction-4}
 \]
 
-The height bounds in \eqref{contact:collision-210-contact-reduction-4} follow from \eqref{contact:collision-210-contact-reduction-1}. They also bound the supports
-without using any infinite-profile radius theorem. If $b\ge 5/2$, then
+The height bounds in \eqref{contact:collision-210-contact-reduction-4} follow from \eqref{contact:collision-210-contact-reduction-1}. They also bound the supports. If $b\ge 5/2$, then
 $g_b(-t)$ increases for $t\ge 0$, since its derivative is
 $3[(t-1/2)^2+b(b-1)-1/4]>0$. Hence
 $G\ge B_0\ge 175/8>20$, impossible. Since $b\ge 1$,
@@ -2565,14 +2569,14 @@ The denominator $A\ge 1$ throughout the whole parameter domain.
 Define the nonnegative selected-contact slopes
 
 \[
- H_\ell=3\{t^2-t+b(b-1)\},\qquad
+ H_{\ell}=3\{t^2-t+b(b-1)\},\qquad
  H_m=3\{b(b-1)+c-c|c|\}.
 \]
 
 Averaging the triple dual derivative gives
 
 \[
- \boxed{\quad \sigma=\ell H_\ell+mH_m>0.\quad}
+ \boxed{\quad \sigma=\ell H_{\ell}+mH_m>0.\quad}
 \tag{C.16.8}\label{contact:collision-210-contact-reduction-8}
 \]
 
@@ -2591,7 +2595,7 @@ Using the Bernoulli derivative
 $f'_B(Ke)/(CK^2)=3e(k_B-1)-\sigma$ and \eqref{contact:collision-210-contact-reduction-8}, this is
 
 \[
- \boxed{\quad q\ell H_\ell-pmH_m-3pq h(1-k_B)=0.\quad}
+ \boxed{\quad q\ell H_{\ell}-pmH_m-3pq h(1-k_B)=0.\quad}
 \tag{C.16.9}\label{contact:collision-210-contact-reduction-9}
 \]
 
@@ -2695,8 +2699,6 @@ second-order condition is
 \tag{C.16.17}\label{contact:collision-210-contact-reduction-17}
 \]
 
-All probabilities in these formulas are the actual marginal probabilities;
-they have not been relaxed to independent deletion-CDF parameters.
 \subsection{Lower-gap collision: elimination of the middle mass}\label{contact:collision-210-mass-elimination}
 Continue with the supports divided by $K$ in Section~\ref{contact:collision-210-contact-reduction}.
 
@@ -2711,23 +2713,23 @@ Retain the previous notation
  \ell=(b-mv)/A,\quad r=(t-mh)/A,
 \]
 
-with $H_t,H_m\ge 0$, $\sigma=\ell H_t+m H_m>0$, and Bernoulli probabilities
+with $H_{\ell},H_m\ge 0$, $\sigma=\ell H_{\ell}+m H_m>0$, and Bernoulli probabilities
 $q,p>0$. The collision support equation is
 
 \[
- q\ell H_t-pmH_m-3pq h\{1-h(p^2+q^2)\}=0.
+ q\ell H_{\ell}-pmH_m-3pq h\{1-h(p^2+q^2)\}=0.
 \]
 
 Substitution of $\ell$ makes it affine in $m$, and gives exactly
 
 \[
  \boxed{
- m=\frac{q b H_t-3A p q h\{1-h(p^2+q^2)\}}
-           {qvH_t+A pH_m}.}
+ m=\frac{q b H_{\ell}-3A p q h\{1-h(p^2+q^2)\}}
+           {qvH_{\ell}+A pH_m}.}
 \tag{C.17.1}\label{contact:collision-210-mass-elimination-1}
 \]
 
-The denominator $L=qvH_t+A pH_m$ is strictly positive: every coefficient
+The denominator $L=qvH_{\ell}+A pH_m$ is strictly positive: every coefficient
 is positive, both slopes are nonnegative, and $\sigma>0$ excludes their
 simultaneous vanishing. Thus there is no additional zero-denominator
 collision case to retain.
@@ -2735,18 +2737,18 @@ collision case to retain.
 Let $N=G_c$, $P=G-G_c$, $W=P^2+N^2$, so $q=N/G$, $p=P/G$. Define
 
 \[
- \Delta=G^3(NvH_t+A PH_m)=G^4 L,
+ \mathcal D=G^3(NvH_{\ell}+A PH_m)=G^4 L,
 \]
 \[
- M=N bH_tG^3-3A PN hG^2+3A PN h^2W.
+ M=N bH_{\ell}G^3-3A PN hG^2+3A PN h^2W.
 \tag{C.17.2}\label{contact:collision-210-mass-elimination-2}
 \]
 
-Then $m=M/\Delta$. The four natural mass conditions become polynomial:
+Then $m=M/\mathcal D$. The four natural mass conditions become polynomial:
 
 \[
- M>0,\quad\Delta-M>0,\quad
- b\Delta-vM>0,\quad t\Delta-hM>0.
+ M>0,\quad\mathcal D-M>0,\quad
+ b\mathcal D-vM>0,\quad t\mathcal D-hM>0.
 \tag{C.17.3}\label{contact:collision-210-mass-elimination-3}
 \]
 
@@ -2770,20 +2772,8 @@ The Bernoulli variance bound gives
 As $h<A=t+b<6$, this yields
 $p,q>pq>13/18432$. Moreover $A\ge 1$.
 
-There is also a uniform selected-slope bound. With normalized variance
-one, $D=C R_{\mathrm{normalized}}>49/(120 \sqrt{2})>1/5$. Cantelli's inequality gives
-$|z|<2$: for $z\le -2$, the actual CDF is at most $1/5$; for $z\ge 2$, the
-normal upper tail is at most $1/5$. Either would contradict $D>1/5$.
-The elementary estimates $\pi<22/7$ and $e<11/4$ imply
-
-\[
- 2\pi e^4<\frac{44}{7}\left(\frac{11}{4}\right)^4<400,
- \qquad\phi(2)>1/20.
-\]
-
-Therefore the actual density equation, $\sigma \sqrt{V}=G \phi(z)$, and
-$G>1/2$, $\sqrt{V}<2$ give $\sigma>1/80$.
-Since $\ell,m<1$, one has $H_t+H_m\ge \sigma$, and hence
+By \eqref{contact:fixed-c2-threshold-collar-2}, $\sigma>9/200>1/80$.
+Since $\ell,m<1$, one has $H_{\ell}+H_m\ge \sigma$, and hence
 
 \[
  L>\frac{13}{18432}\frac{25}{672}\frac1{80}.
@@ -2792,7 +2782,7 @@ Since $\ell,m<1$, one has $H_t+H_m\ge \sigma$, and hence
 Multiplication by $G^4>1/16$ proves the explicit bound
 
 \[
- \boxed{\Delta>\frac{65}{3170893824}>\frac1{50000000}.}
+ \boxed{\mathcal D>\frac{65}{3170893824}>\frac1{50000000}.}
 \tag{C.17.5}\label{contact:collision-210-mass-elimination-5}
 \]
 
@@ -2800,7 +2790,7 @@ The final comparison has exact numerator slack
 $65\,50000000-3170893824=79106176$. Thus the eliminated mass is a smooth
 rational function on an open neighborhood of every candidate in the
 compact support charts. In interval arithmetic, \eqref{contact:collision-210-mass-elimination-5} is only a necessary
-test; division is permitted only if the direct enclosure of $\Delta$ is
+test; division is permitted only if the direct enclosure of $\mathcal D$ is
 positive on the whole current box.
 
 \paragraph{The two three-parameter support charts}
@@ -2827,27 +2817,27 @@ The following formulas permit denominator-free evaluation before any
 normal function. Define
 
 \[
- L_*=b\Delta-vM,\quad H_*=t\Delta-hM,
- \quad S_*=L_*H_t+A MH_m,
+ L_*=b\mathcal D-vM,\quad H_*=t\mathcal D-hM,
+ \quad S_*=L_*H_{\ell}+A MH_m,
  \quad O=cN-tP,
 \]
 \[
- V_*=(tb\Delta-Mhv)G^2+\Delta PN h^2,
+ V_*=(tb\mathcal D-Mhv)G^2+\mathcal D PN h^2,
 \]
 \[
  R_*=(L_*t^3+A M|c|^3+H_*b^3)G^4
-                 +A\Delta PN h^3W,
+                 +A\mathcal D PN h^3W,
 \quad F_*=GL_*+A MN.
 \]
 
 Then the actual quantities are
 
 \[
- V=\frac{V_*}{\Delta G^2},\quad
- R=\frac{R_*}{A\Delta G^4},\quad
- \sigma=\frac{S_*}{A\Delta},\quad
- F=\frac{F_*}{A\Delta G},\quad
- z=O\sqrt{\Delta/V_*}.
+ V=\frac{V_*}{\mathcal D G^2},\quad
+ R=\frac{R_*}{A\mathcal D G^4},\quad
+ \sigma=\frac{S_*}{A\mathcal D},\quad
+ F=\frac{F_*}{A\mathcal D G},\quad
+ z=O\sqrt{\mathcal D/V_*}.
 \tag{C.17.6}\label{contact:collision-210-mass-elimination-6}
 \]
 
@@ -2855,29 +2845,28 @@ The retained Bernoulli height, scale, squared density and CDF equations
 are, respectively,
 
 \[
- A\Delta h(N-P)\{h^2(N-P)^2-3hG^2/2\}
+ A\mathcal D h(N-P)\{h^2(N-P)^2-3hG^2/2\}
                   -S_*hG^3+A MG^4=0,
 \]
 \[
  3(AG^2V_*-R_*)-S_*OG^3=0,
 \]
 \[
- S_*^2V_*-A^2\Delta^3G^4\phi(z)^2=0,
+ S_*^2V_*-A^2\mathcal D^3G^4\phi(z)^2=0,
 \]
 \[
- G^4\{F_*-A\Delta G\Phi(z)\}-R_*=0.
+ G^4\{F_*-A\mathcal D G\Phi(z)\}-R_*=0.
 \tag{C.17.7}\label{contact:collision-210-mass-elimination-7}
 \]
 
 Each clearing factor is positive at every candidate. In particular the
 two equations preceding the normal functions are exact polynomial
-equations in the three support parameters on either sign chart. No
-resultant or Groebner calculation is needed for this dimension reduction.
+equations in the three support parameters on either sign chart.
 
 The ratio test is
-$(49/120)^2 \Delta^3 G^8\le V_*^3<(227/500)^2 \Delta^3 G^8$.
+$(49/120)^2 \mathcal D^3 G^8\le V_*^3<(227/500)^2 \mathcal D^3 G^8$.
 The added width tests are
-$3bh \Delta G^2>V_*$ and $3tv \Delta G^2>V_*$.
+$3bh \mathcal D G^2>V_*$ and $3tv \mathcal D G^2>V_*$.
 \subsection{Lower-gap collision: direct necessary equations}\label{contact:collision-210-raw-law-replay}
 Use the contact scale of Section~\ref{contact:collision-210-contact-reduction}.
 
@@ -3418,7 +3407,7 @@ atom have mass $r_2>0$, and put $q=1-r_2$.
 \paragraph{The first triple forces a substantially negative threshold}
 
 The first coordinate's deletion levels are $(1,q,q)$. If its successive
-physical support gaps are $u,v>0$, its actual centered unit-variance
+support gaps are $u,v>0$, its actual centered unit-variance
 CDF derivative is
 
 \[
@@ -3531,7 +3520,7 @@ this same $T$. Their half difference $a=(\rho_1-\rho_2)/2$ therefore satisfies
 \subsection{Three representations: contact and variance equations}\label{contact:three-owner-321-contact-reduction}
 
 
-\paragraph{One exact five-cube and a uniform variance bound}
+\paragraph{Unit-span coordinates}
 
 Translations and a common positive scale put the raw supports and selected
 raw threshold into the form
@@ -3542,77 +3531,34 @@ raw threshold into the form
 \tag{C.23.1}\label{contact:three-owner-321-contact-reduction-1}
 \]
 
-Parameterize the two independent probability vectors by
-
-\[
- p_1=m,\quad p_2=(1-m)r,\quad p_0=(1-m)(1-r),
-\]
-\[
- q_1=n,\quad q_2=(1-n)t,\quad q_0=(1-n)(1-t).
-\tag{C.23.2}\label{contact:three-owner-321-contact-reduction-2}
-\]
-
-The single parameter cube is $(s,m,r,n,t) \in [0,1]^5$. Strict positivity of
-all six probabilities is a necessary condition. The two means are $\mu,\nu$;
-write centered raw support vectors $x,y$, variances $v_1,v_2$, third absolute moments
-$r_1,r_2$, and signed second moments
+Let $p=(p_0,p_1,p_2)$ and $q=(q_0,q_1,q_2)$ be the positive
+probability vectors of the two laws, with means $\mu,\nu$.
+Put $m=p_1$ and $n=q_1$. Write
+$x,y$ for their centered support vectors, $v_i,r_i$ for their
+variances and third absolute moments, and
 $M_1=\sum_jp_jx_j|x_j|$, $M_2=\sum_jq_jy_j|y_j|$. Set
 
 \[
  V=v_1+v_2,\qquad R=r_1+r_2,\qquad o=1-\mu-\nu,
  \qquad z=o/\sqrt V.
-\tag{C.23.3}\label{contact:three-owner-321-contact-reduction-3}
+\tag{C.23.2}\label{contact:three-owner-321-contact-reduction-3}
 \]
 
-The fixed-two-coordinate bounds imply every normalized support point has
-absolute value less than four. For this bound, let $\widehat X_1,\widehat X_2$
-be the centered raw laws rescaled to total variance one. Their global
-majorants are
-
-\[
- f_i(u)=C|u|^3-Au^2-B_i u+D_i,
- \quad A=(3D+z\phi(z))/2,
- \quad B_i=3C\E[\widehat X_i|\widehat X_i|]+\phi(z).
-\]
-
-The already proved bounds $D<11/20$, $|z \phi(z)|<49/200$, and
-$C<227/500$ give $A<19/20$ and $|B_i|<881/500$. Global majorization
-gives $D_i=f_i(0)\ge 0$; a support contact has $f_i(u)\le 1$. Since $C\ge49/120$,
-at $w=|u|\ge 4$ it would follow that
-
-\[
- 1>\frac{49}{120}w^3-\frac{19}{20}w^2-\frac{881}{500}w>1.
-\]
-
-The last cubic exceeds one at four and increases thereafter. This contradiction
-proves the support bound. The common normalized span in \eqref{contact:three-owner-321-contact-reduction-1} is $1/\sqrt{V}<8$.
-Consequently the raw quantities satisfy
-
-\[
- \boxed{V>1/64,\qquad R>1/725.}
-\tag{C.23.4}\label{contact:three-owner-321-contact-reduction-4}
-\]
-
-The third-moment bound follows from $R\ge V^{3/2}/\sqrt{2}$ and
-$512 \sqrt{2}<725$. These bounds avoid any division by a vanishing raw variance
-or sum of third absolute moments in the compact certificate. Both coordinate variance fractions
-also exceed $13/200$, by the dominant-coordinate theorem.
-
-\paragraph{Actual event, ratio, and global contact equations}
+\paragraph{Event and contact equations}
 
 The event probability is the actual six-cell sum
 
 \[
  F=1-p_1q_2-p_2(q_1+q_2),\qquad D=F-\Phi(z)>0,
  \qquad C=D V^{3/2}/R.
-\tag{C.23.5}\label{contact:three-owner-321-contact-reduction-5}
+\tag{C.23.3}\label{contact:three-owner-321-contact-reduction-5}
 \]
 
 Thus require
 
 \[
  (49/120)^2R^2\le D^2V^3<(227/500)^2R^2.
-\tag{C.23.6}\label{contact:three-owner-321-contact-reduction-6}
+\tag{C.23.4}\label{contact:three-owner-321-contact-reduction-6}
 \]
 
 For the two coordinates the actual deletion levels are respectively
@@ -3620,7 +3566,7 @@ For the two coordinates the actual deletion levels are respectively
 \[
  H_1=(1,q_0+q_1,q_0),\qquad
  H_2=(1,p_0+p_1,p_0).
-\tag{C.23.7}\label{contact:three-owner-321-contact-reduction-7}
+\tag{C.23.5}\label{contact:three-owner-321-contact-reduction-7}
 \]
 
 Write $L=3D+z \phi(z)$. After multiplication by the positive factor $2VR$,
@@ -3632,7 +3578,7 @@ coordinate $i$ is
  2VD(|u|^3-r_i)-LR(u^2-v_i)
  -(6VDM_i+2\sqrt V\phi(z)R)u+2VR(F-H_i(u))=0.
  }
-\tag{C.23.8}\label{contact:three-owner-321-contact-reduction-8}
+\tag{C.23.6}\label{contact:three-owner-321-contact-reduction-8}
 \]
 
 Indeed the unscaled dual price is $D/R$, its quadratic coefficient is
@@ -3640,34 +3586,7 @@ $L/(2V)$, its linear coefficient is $3DM_i/R+\phi(z)/\sqrt{V}$, and averaging
 the majorant over the coordinate determines its constant. This proves \eqref{contact:three-owner-321-contact-reduction-8}
 directly and preserves the actual centered moments.
 
-The same positive multiplier applied to its raw support derivative gives
-
-\[
- S_i(u)=6VD(u|u|-M_i)-2LRu-2\sqrt V\phi(z)R.
-\tag{C.23.9}\label{contact:three-owner-321-contact-reduction-9}
-\]
-
-Each selected contact satisfies $S_i(u)\le 0$. Moving the two support points
-of each representation by opposite amounts preserves all three raw collision sums.
-The resulting gradient pairings are
-
-\[
- \boxed{p_i S_1(x_i)=q_{2-i}S_2(y_{2-i}),\qquad i=0,1,2.}
-\tag{C.23.10}\label{contact:three-owner-321-contact-reduction-10}
-\]
-
-These are necessary even though none of the six support contacts is a smooth
-minimum. Equations \eqref{contact:three-owner-321-contact-reduction-8}--\eqref{contact:three-owner-321-contact-reduction-10} are deliberately redundant; this improves
-outward rejection without adding assumptions.
-
-The nonnegative constants of the two global majorants give two further tests:
-
-\[
- 2VRF-2VD r_i+LRv_i\geq0.
-\tag{C.23.11}\label{contact:three-owner-321-contact-reduction-11}
-\]
-
-\paragraph{The original full variance Hessian}
+\paragraph{Variance Hessian}
 
 For the two centered signed mass vectors, use
 
@@ -3695,7 +3614,7 @@ Put
 \]
 \[
  H_{12}=RV^2M_0+\frac32DVT(\rho_1+\rho_2)-WT^2.
-\tag{C.23.12}\label{contact:three-owner-321-contact-reduction-12}
+\tag{C.23.7}\label{contact:three-owner-321-contact-reduction-12}
 \]
 
 The necessary conditions from the original variance Hessian are
@@ -3703,7 +3622,7 @@ The necessary conditions from the original variance Hessian are
 \[
  \boxed{N_1\geq0,\quad N_2\geq0,\quad
  N_1N_2-H_{12}^2\geq0.}
-\tag{C.23.13}\label{contact:three-owner-321-contact-reduction-13}
+\tag{C.23.8}\label{contact:three-owner-321-contact-reduction-13}
 \]
 
 To verify the normalization, start with the independent unnormalized Hessian
@@ -3713,37 +3632,12 @@ replace its $G$ by $R/D$, and multiply all matrix entries by $D>0$.
 The raw support scale need not equal $K$ for that calculation. Formula \eqref{contact:three-owner-321-contact-reduction-12}
 uses the actual $\phi'''(z)=(3z-z^3)\phi(z)$.
 
-In particular \eqref{contact:three-owner-321-contact-reduction-13} is effective at coalescing-support faces: as $s$ tends to
-zero or one, $T$ tends to zero while $M_0$ tends to one. The positive bounds
-\eqref{contact:three-owner-321-contact-reduction-4} prevent the off-diagonal term $RV^2M_0$ from disappearing. No division by
-$s$ or $1-s$ has been introduced.
-
-\paragraph{Further unconditional necessary tests}
-
-The actual canonical variance widths are
-
-\[
- W_1=\min\{(1-\mu)s,\mu(1-s)\},\qquad
- W_2=\min\{(1-\nu)(1-s),\nu s\}.
-\]
-
-Lemma~\ref{lem:mixture-width} requires $3(W_1+W_2)>V$ at a violating
-candidate. The three excluded cells $(1,2),(2,1),(2,2)$ have raw gaps
-$s,1-s,1$ and masses $p_1q_2,p_2q_1,p_2q_2$. Maximizing the threshold gives
-
-\[
- 25(p_iq_j)^2V<4\Delta_{ij}^2
-\tag{C.23.14}\label{contact:three-owner-321-contact-reduction-14}
-\]
-
-for those three pairs.
 \subsection{Three representations: the gap product}\label{contact:three-owner-321-gap-collar}
 Use the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
 
 
 
-At a genuine attained violating fixed-two-coordinate three-representation $321$
-maximum, retain the notation
+In the three-representation $321$ case, retain the notation
 
 \[
  T=s(1-s),\quad L=1-T,\quad
@@ -3913,7 +3807,7 @@ As $\eta_1+\eta_2=(LV-B_0)/T$, \eqref{contact:three-owner-321-variance-upper-4} 
 \]
 
 This eliminates both third-moment slopes and their difference from this part of
-the Hessian. The identity uses the true independent convolution levels.
+the Hessian.
 
 \paragraph{Maximize the remaining quadratic in the two means}
 
@@ -3992,6 +3886,9 @@ If $V\ge 3/10$, \eqref{contact:three-owner-321-variance-upper-10} gives
 \[
  T^2>{27\over740}>{361\over10000}.
 \]
+Hence $T>19/100$, so
+\eqref{contact:three-owner-321-variance-upper-9} contradicts
+$V\ge3/10$. Therefore $V<3/10$.
 
 As a convenient weaker consequence of \eqref{contact:three-owner-321-variance-upper-1},
 $\kappa\,V>37/50$, since $(37/50)^2\,(3/10)<(49/120)^2$.
@@ -4060,9 +3957,9 @@ and $-3y^2/2$ are nonpositive. It follows that
 \tag{C.26.4}\label{contact:three-owner-321-joint-mean-bound-4}
 \]
 
-For $z\ge 0$, the same inequality follows directly from $J\ge 3D>3dmin$
+For $z\ge 0$, the same inequality follows directly from $J\ge 3D>3d_{\min}$
 and $B_0/L\le M(T)$. Thus \eqref{contact:three-owner-321-joint-mean-bound-4} holds for every candidate with $V\ge 1/4$.
-In particular, since $3dmin/2>3/7$,
+In particular, since $3d_{\min}/2>3/7$,
 
 \[
  4V^2-3M(T)V+(3/7)g<0.
@@ -4293,8 +4190,8 @@ this calculation refer to those scaled supports. Thus
 \tag{C.28.1}\label{contact:two-owner-321-contact-reduction-1}
 \]
 
-The two coordinate variance fractions exceed $13/200$. Define the cubic
-potential
+The two coordinate variance fractions exceed $13/200$. Define the piecewise cubic
+function
 
 \[
  P_\beta(x)=|x|^3-\frac32x^2-3\beta x.
@@ -4361,103 +4258,6 @@ Finally $e>t+b-a>t$, so $o=e-t>0$. We have proved
 The strict span ordering also implies $-a<d<e$; it need not be imposed by
 a separate chart. Set $h=t+c=e-d>0$, $v=b-c>0$.
 
-The first high contact has actual deletion level $\ell_2$; the second low
-contact has level one. Define
-
-\[
- g_b(x)=P_{b(b-1)}(x)-P_{b(b-1)}(b),\qquad
- G=g_b(-t),\quad g=g_b(c),
-\]
-\[
- U_a(x)=P_{a(1-a)}(-a)-P_{a(1-a)}(x)
- =a^2(3/2-2a)-|x|^3+\frac32x^2+3a(1-a)x.
-\tag{C.28.4}\label{contact:two-owner-321-contact-reduction-4}
-\]
-
-The actual deletion levels of the closed $321$ event are
-$(1,1-r_2,\ell_2)$ and $(1,1-r_1,\ell_1)$. Subtracting the contacts at the
-respective nonselected minima determines all probabilities:
-
-\[
- (\ell_1,m_1,r_1)
- =(1-\tau U_a(e),\ \tau[U_a(e)-U_a(d)],\ \tau U_a(d)),
-\]
-\[
- (\ell_2,m_2,r_2)
- =(1-\tau G,\ \tau g,\ \tau[G-g]).
-\tag{C.28.5}\label{contact:two-owner-321-contact-reduction-5}
-\]
-
-Consequently a genuine candidate requires
-$U_a(e)>U_a(d)>0$ and $G>g>0$. First-coordinate centering is exactly
-
-\[
- t=\tau\{hU_a(e)+vU_a(d)\}.
-\]
-
-Its denominator is strictly positive, so set
-
-\[
- \boxed{\tau=\frac{t}{hU_a(e)+vU_a(d)}.}
-\tag{C.28.6}\label{contact:two-owner-321-contact-reduction-6}
-\]
-
-The second-coordinate centering equation is retained as the first residual:
-
-\[
- \boxed{\tau\{(a+e)G-hg\}-a=0.}
-\tag{C.28.7}\label{contact:two-owner-321-contact-reduction-7}
-\]
-
-Define the nonnegative selected slope magnitudes
-
-\[
- H_t=3[t^2-t+b(b-1)],\qquad
- H_c=3[b(b-1)+c-c|c|],
-\]
-\[
- H_d=3[a(1-a)+d-d|d|],\qquad
- H_e=3[a(1-a)+e-e^2].
-\]
-
-Collision-preserving support variations give the two further residuals
-
-\[
- \boxed{\ell_1H_t-r_2H_e=0,\qquad m_1H_c-m_2H_d=0.}
-\tag{C.28.8}\label{contact:two-owner-321-contact-reduction-8}
-\]
-
-Put $\sigma=\ell_1 H_t+m_1 H_c>0$. By \eqref{contact:two-owner-321-contact-reduction-8} it also equals
-$m_2 H_d+r_2 H_e$.
-
-There is a useful additional global-majorant constraint. The unused maximal
-cell $(2,0)$ creates a deletion jump at $y_*=o-b$, with
-$-a<y_*<d$. At that point the second deletion CDF is still one. Its majorant
-is $1-\tau U_a$, so
-
-\[
- \boxed{U_a(o-b)\leq0.}
-\tag{C.28.9}\label{contact:two-owner-321-contact-reduction-9}
-\]
-
-The corresponding first-coordinate deletion jump lies above $b$. Its
-majorant bound follows automatically from increase of $P_{b(b-1)}$ to the
-right of the positive minimum.
-
-A single closed five-cube covers \eqref{contact:two-owner-321-contact-reduction-3}, with strict conditions retained as
-rejection tests. For $(k_1,\ldots ,k_5) \in [0,1]^5$, take
-
-\[
- a=\frac{1+k_1}{2},\quad t=ak_2,\quad
- b=B(t)+(2-t-B(t))k_3,\quad e=B(a)k_4,
- \quad c=-t+(t+b)k_5.
-\tag{C.28.10}\label{contact:two-owner-321-contact-reduction-10}
-\]
-
-All valid adjacent-representation parameters have a preimage. The cube contains
-extraneous parameters, including failures of $a+e>t+b$; they are rejected
-by necessary tests. Transposition covers the other adjacent representation pair.
-
 \paragraph{Endpoint representations}
 
 Now the representations are $(0,2),(2,0)$ and the unused middle-middle cell lies
@@ -4473,123 +4273,18 @@ are negative smooth minima. A positive smooth minimum would force a positive der
 \]
 \[
  o=b_2-t_1=b_1-t_2>-a_1-a_2.
-\tag{C.28.11}\label{contact:two-owner-321-contact-reduction-11}
+\tag{C.28.4}\label{contact:two-owner-321-contact-reduction-11}
 \]
 
-Put $u_i=t_i-a_i$, $v_i=a_i+b_i$, and define
-
+\paragraph{Variance Hessian}
+For either threshold geometry, take arbitrary positive mass vectors
+$(\ell_i,m_i,r_i)$ on its centered supports. Let $v_i$ and $R_i$
+be their variances and third absolute moments, and put
 \[
- E_i=u_i^2(t_i+2a_i-3/2)>0,\qquad U_i=U_{a_i}(b_i)>0.
-\tag{C.28.12}\label{contact:two-owner-321-contact-reduction-12}
+ V=v_1+v_2,\qquad R=R_1+R_2,\qquad z=o/\sqrt V,\qquad
+ F=1-m_1r_2-r_1(m_2+r_2).
 \]
-
-Subtraction of the actual contact levels gives
-
-\[
- (\ell_1,m_1,r_1)
- =(1-\tau(E_2+U_2),\ \tau U_2,\ \tau E_2),
-\]
-\[
- (\ell_2,m_2,r_2)
- =(1-\tau(E_1+U_1),\ \tau U_1,\ \tau E_1).
-\tag{C.28.13}\label{contact:two-owner-321-contact-reduction-13}
-\]
-
-The identity defining $E_i$ is the exact factorization
-$P_{a_i(1-a_i)}(-t_i)-P_{a_i(1-a_i)}(-a_i)=E_i$.
-First-coordinate centering therefore eliminates the positive parameter
-
-\[
- \boxed{\tau=\frac{t_1}{U_2u_1+E_2A},}
-\tag{C.28.14}\label{contact:two-owner-321-contact-reduction-14}
-\]
-
-and the retained second centering residual is
-
-\[
- \boxed{\tau(U_1u_2+E_1A)-t_2=0.}
-\tag{C.28.15}\label{contact:two-owner-321-contact-reduction-15}
-\]
-
-Let
-
-\[
- H_{t_i}=3u_i(t_i+a_i-1)>0,\qquad
- H_{b_i}=3[a_i(1-a_i)+b_i-b_i^2].
-\]
-
-The two actual representation pairings are
-
-\[
- \boxed{\ell_1H_{t_1}-r_2H_{b_2}=0,\qquad
- r_1H_{b_1}-\ell_2H_{t_2}=0.}
-\tag{C.28.16}\label{contact:two-owner-321-contact-reduction-16}
-\]
-
-Set $\sigma=\ell_1 H_{t_1}+r_1 H_{b_1}>0$. Equations \eqref{contact:two-owner-321-contact-reduction-16} equate it with
-the corresponding sum for the second coordinate. They also imply the two
-high slope magnitudes are strictly positive.
-
-The unused middle-middle cell produces deletion jumps at $o+a_2$ and
-$o+a_1$, strictly between the respective middle and high support points.
-Immediately at each jump the relevant deletion level still equals its
-nonselected middle contact level. Global majorization therefore requires
-
-\[
- \boxed{U_{a_1}(o+a_2)\leq0,\qquad U_{a_2}(o+a_1)\leq0.}
-\tag{C.28.17}\label{contact:two-owner-321-contact-reduction-17}
-\]
-
-A single closed five-cube covers all of \eqref{contact:two-owner-321-contact-reduction-11}:
-
-\[
- a_1=(1+k_1)/2,\quad a_2=(1+k_2)/2,
-\quad t_1=a_1+(4-a_1)k_3,\quad t_2=a_2+(4-a_2)k_4,
-\]
-\[
- b_1=B(a_1)k_5,\qquad b_2=t_1+b_1-t_2.
-\tag{C.28.18}\label{contact:two-owner-321-contact-reduction-18}
-\]
-
-The necessary tests retain $0<b_2\le B(a_2)$ and the unused middle-cell
-inequality in \eqref{contact:two-owner-321-contact-reduction-11}. The denominator in \eqref{contact:two-owner-321-contact-reduction-14} is positive at a genuine
-candidate. A numerical evaluator may divide by it only when its enclosure
-is positive on the complete box.
-
-\paragraph{Three common residuals and the original full Hessian}
-
-For either family, use the probabilities just derived to sum raw centered
-variances $v_i$, third absolute moments $r_i$, and totals $V,R$. Let
-
-\[
- F=\ell_1+m_1(\ell_2+m_2)+r_1\ell_2
-   =1-m_1r_2-r_1(m_2+r_2),\qquad z=o/\sqrt V.
-\]
-
-The common scale, density and actual-CDF equations are
-
-\[
- \boxed{3(V-R)-\sigma o=0,\quad
- \tau\sigma\sqrt V-\phi(z)=0,\quad
- F-\Phi(z)-\tau R=0.}
-\tag{C.28.19}\label{contact:two-owner-321-contact-reduction-19}
-\]
-
-Together with \eqref{contact:two-owner-321-contact-reduction-7},\eqref{contact:two-owner-321-contact-reduction-8}, or respectively \eqref{contact:two-owner-321-contact-reduction-15},\eqref{contact:two-owner-321-contact-reduction-16}, these give six necessary
-equations on each five-cube. The first equation follows from the definition
-of $K$, the second from $\E f_i'(X_i)=-\phi(z)$, and the third from the actual
-ratio $C=\tau V^{3/2}$.
-
-The strict ratio tests are
-
-\[
- (49/120)^2\le \tau^2V^3<(227/500)^2.
-\tag{C.28.20}\label{contact:two-owner-321-contact-reduction-20}
-\]
-
-Also $\tau R>49/(120 \sqrt{2})$ follows from \eqref{contact:two-owner-321-contact-reduction-20} and the two-coordinate
-moment bound $R\ge V^{3/2}/\sqrt{2}$. This is a necessary discrepancy lower
-bound, not an additional variational assumption.
+At the attained ratio, $\tau=C/V^{3/2}$ and $D=F-\Phi(z)=\tau R$.
 
 The full variance Hessian can be evaluated in the original signed-mass
 basis. For each support vector $(x_0,x_1,x_2)$, set
@@ -4616,21 +4311,12 @@ Necessary second-order conditions are
 
 \[
  N_1\geq0,\qquad N_2\geq0,\qquad N_1N_2-Q^2\geq0.
-\tag{C.28.21}\label{contact:two-owner-321-contact-reduction-21}
+\tag{C.28.5}\label{contact:two-owner-321-contact-reduction-21}
 \]
 
 These are the already derived original Hessian entries multiplied by the
 positive scalar $\tau$, with the actual normal derivative
 $\phi'''(z)=(3z-z^3)\phi(z)$.
-
-Finally retain the canonical mixture-width exclusion, both variance-fraction
-bounds, and the three excluded-cell atom-gap inequalities. In the adjacent
-case the excluded cells $(1,2),(2,1),(2,2)$ have gaps $h,v,A_1$; in the
-endpoint case their gaps are $u_1,u_2,A$. Each satisfies
-the inequality $25p_*^2V<4\delta_*^2$, where $p_*$ is the atom's
-probability and $\delta_*$ its raw gap. These tests and
-\eqref{contact:two-owner-321-contact-reduction-9},\eqref{contact:two-owner-321-contact-reduction-17} are
-inequalities; they need not enter the full-box derivative system.
 
 \subsection{Adjacent representations: scalar exclusion}\label{contact:adjacent-owner-321-scalar-reduction}
 
@@ -5137,7 +4823,7 @@ the exact equation
 \]
 
 In the open region $u>0$, equation \eqref{contact:two-triple-collision-221-reduction-9} can eliminate the last free mass:
-$m_1=(A_1 g_e(d)/G-b)/u$. The five-cube formulation retains $m_1$ and
+$m_1=(A_1 g_e(d)/G-b)/u$. The five-parameter box retains $m_1$ and
 \eqref{contact:two-triple-collision-221-reduction-9}, avoiding a division whose denominator vanishes on the coalescing-support
 face. This is a numerical choice, not an extra mathematical degree of freedom
 in an actual solution.
@@ -5755,7 +5441,7 @@ and $e=d+v\ge d+h>2d\ge 1$. Since $x(x-1)$ increases for $x\ge 1$,
  H_d=3\{e(e-1)+d-d^2\}>3d(3d-1).
 \]
 
-But \eqref{contact:two-triple-221-fixed-moment-support-hessian-1} and \eqref{contact:two-triple-221-fixed-moment-support-hessian-9} also give $L(d)\ge 2Z/m_2=2Hd/u$, so
+But \eqref{contact:two-triple-221-fixed-moment-support-hessian-1} and \eqref{contact:two-triple-221-fixed-moment-support-hessian-9} also give $L(d)\ge 2Z/m_2=2H_d/u$, so
 
 \[
  6d-3>8d(3d-1).
@@ -5860,7 +5546,7 @@ The second upper bound in \eqref{contact:two-triple-221-negative-middle-location
  Q>1+{u\over v}-{u\over v}{305\over648}>1>{u\over v}.
 \]
 
-Again \eqref{contact:two-triple-221-negative-middle-location-2} is strictly below $L(d)-2Hd/v=3-6e<0$.
+Again \eqref{contact:two-triple-221-negative-middle-location-2} is strictly below $L(d)-2H_d/v=3-6e<0$.
 This excludes every $d\ge 1/8$. Combining the two ranges proves
 
 \[

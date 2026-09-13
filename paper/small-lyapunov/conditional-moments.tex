@@ -1,0 +1,164 @@
+\section{Conditional moments and the one-sided comparison}
+\label{app:conditional}
+This appendix proves the estimates used in
+Section~\ref{sec:local}. All conditioning is on the actual Bernoulli
+count. Dependence between a label and its residual is preserved.
+
+\subsection{Exponential tilting and projection}
+Retain $p_i\in[1/4,3/4]$, $v_i=p_i(1-p_i)$,
+$\sum_i v_i a_i=0$, and $\Lambda_A=\sum_i v_i a_i^2$.
+Suppose $m\ge10^{12}$ and $|k-\mu|\le6\sqrt m$.
+Tilt by $e^{\theta K_0}$ so that the count mean is $k$, putting
+\[
+ r_i=\frac{p_i e^\theta}{1-p_i+p_i e^\theta},\quad
+ w_i=r_i(1-r_i),\quad V_\theta=\sum_i w_i.
+\]
+For $|\theta|\le\log2$, $r_i\in[1/8,7/8]$ and $w_i\ge7/64>1/10$.
+The count mean changes by more than $6\sqrt m$ in both directions
+before that boundary, so the tilt exists and
+\begin{equation}\label{eq:tilt-quantities}
+ |\theta|\le60/\sqrt m,\quad |w_i/v_i-1|\le2|\theta|,
+       \quad |r_i-p_i-\theta v_i|\le\theta^2v_i.
+\end{equation}
+The conditional law given $K_0=k$ is unchanged. Define
+\[
+ c_\theta=\frac{\sum_iw_i a_i}{V_\theta},\quad b_i=a_i-c_\theta,
+ \quad L=\sum_i b_i(B_i-r_i),\quad Q=\sum_i b_i^2,
+ \quad Q_\theta=\sum_iw_i b_i^2.
+\]
+On the count event, $A=m_k^0+L$, where
+\begin{equation}\label{eq:tilted-gap-data}
+ |m_k^0|=\left|\sum_i a_i(r_i-p_i)\right|
+      \le1800\sqrt{\Lambda_A}/\sqrt m,\quad
+ |Q_\theta-\Lambda_A|\le180\Lambda_A/\sqrt m,
+ \quad Q\le16\Lambda_A.
+\end{equation}
+For the second bound expand
+$Q_\theta=\sum_iw_i a_i^2-(\sum_iw_i a_i)^2/V_\theta$.
+The errors are at most $2|\theta|\Lambda_A$ and
+$8\theta^2\Lambda_A$, together at most $3|\theta|\Lambda_A$.
+Also $\Lambda_A/2\le Q_\theta\le3\Lambda_A/2$; using
+$w_i\ge7/64$ proves the last bound. If $\Lambda_A=0$, all the
+gap estimates are immediate, so suppose it is positive.
+
+\subsection{Fourier moments with their residual factors}
+For $|t|\le1/4$, put
+$z_i(t)=r_ie^{it}/(1-r_i+r_ie^{it})$.
+The first centered complex cumulant is $c_{i,1}=z_i-r_i$; the next
+three are
+\[
+ c_{i,2}=z_i(1-z_i),\quad
+ c_{i,3}=z_i(1-z_i)(1-2z_i),\quad
+ c_{i,4}=z_i(1-z_i)(1-6z_i(1-z_i)).
+\]
+Both $z_i$ and $1-z_i$ have modulus at most two. Differentiation gives
+\[
+ |c_{i,1}-iw_it|\le10t^2,\quad |c_{i,2}-w_i|\le20|t|,
+ \quad |c_{i,3}|\le20,\quad |c_{i,4}|\le100.
+\]
+For $M_j=\sum_i b_i^jc_{i,j}$, the exact cancellation
+$\sum_iw_i b_i=0$ yields
+\begin{gather}
+ |M_1|\le10\sqrt{mQ}t^2,\quad
+ |M_2-Q_\theta|\le20Q|t|,\quad |M_2|\le6Q,\notag\\
+ |M_3|\le20Q^{3/2},\qquad |M_4|\le100Q^2.              \label{eq:complex-moments}
+\end{gather}
+The tilted count transform $F_\theta$ satisfies
+$|F_\theta(t)|\le e^{-mt^2/50}$ on $[-\pi,\pi]$.
+Lemma~\ref{lem:count-estimate} gives
+$\Pp_\theta(K_0=k)\ge1/(3\sqrt m)$.
+After division by this probability, upper bounds for the Gaussian
+integrals of powers $0,1,2,4,8$ are respectively
+\begin{equation}\label{eq:gaussian-moment-table}
+             7,\quad25m^{-1/2},\quad175m^{-1},\quad
+                          13125m^{-2},\quad3\cdot10^8m^{-4}.
+\end{equation}
+These follow by scaling $t\sqrt m$ in
+$(2\pi)^{-1}\int e^{-mt^2/50}|t|^jdt$.
+On $1/4\le|t|\le\pi$, expand the moment before factoring the
+product. A term of degree $j\le4$ removes at most four Bernoulli
+factors; the remaining product is at most $e^{-m/810}$.
+The conditional tail contribution is therefore at most
+$3m^{(j+1)/2}Q^{j/2}e^{-m/810}$.
+For $j=1,2,4$ and $m\ge10^8$, these are at most
+$\sqrt Q/\sqrt m$, $Q/\sqrt m$, and $Q^2$.
+For instance $e^{-m/810}\le10^{18}/m^5$ reduces the verification
+to decreasing powers of $m$.
+
+The first, second, and fourth moment numerators are exactly
+\[
+ F_\theta M_1,\quad F_\theta(M_1^2+M_2),\quad
+ F_\theta(M_1^4+6M_1^2M_2+3M_2^2+4M_1M_3+M_4).
+\]
+Equations \eqref{eq:complex-moments}--\eqref{eq:gaussian-moment-table},
+with the tails just bounded, imply
+\begin{equation}\label{eq:projected-moments}
+ \begin{gathered}
+ |\E(L\mid K_0=k)|\le2000\sqrt Q/\sqrt m,\\
+ |\Var(L\mid K_0=k)-Q_\theta|\le2000Q/\sqrt m,
+ \qquad \E(L^4\mid K_0=k)\le2000Q^2.
+ \end{gathered}
+\end{equation}
+Here is numerical detail for these enlargements.
+The mean's central coefficient is $1750$.
+The second moment errors are at most
+$500Q/\sqrt m+1312500Q/m+2Q/\sqrt m$,
+and the squared mean costs at most $4\cdot10^6Q/m$.
+The five fourth-moment central coefficients, in the displayed order,
+are at most
+\[
+ 3\cdot10^{12}/m^2,\quad47250000/m,\quad756,\quad
+                         140000/\sqrt m,\quad700,
+\]
+all multiplying $Q^2$. Their sum and the tail are below $2000Q^2$.
+Centering raises the fourth-moment bound to $20000Q^2$.
+Combining \eqref{eq:tilted-gap-data} and
+\eqref{eq:projected-moments} proves
+\eqref{eq:conditional-mean}--\eqref{eq:conditional-gap}.
+
+For completeness, the relative label estimate
+\eqref{eq:conditional-label} also follows numerically.
+Under the tilt, deleting a Bernoulli changes count variance by at most
+$1/4$ and displaces the new threshold from its mean by at most one.
+The Gaussian mass ratio has logarithm bounded by $1/V_\theta$.
+The $6/V$ errors and a lower bound by half the centered Gaussian mass
+then give a deleted-count ratio error at most
+\[
+ 4/V_\theta+28/(\phz\sqrt{V_\theta})\le300/\sqrt m.
+\]
+Each tilted label probability differs relatively from its original
+probability by at most $2|\theta|\le120/\sqrt m$.
+Multiplication gives $500/\sqrt m$ for $m\ge10^{12}$.
+This is a relative bound, so arbitrarily small within-cluster noise
+variances remain controlled after conditioning.
+
+\subsection{Proof of the one-sided loss}
+We prove \eqref{eq:one-sided}, following the clipping method of
+\citet[Lemma~3.2 and equation~(83)]{HeCheng2026}.
+First suppose $V_0$ is centered and $|V_0|\le a=1/10$.
+For $u\ge0$, $\E(V_0)_+\le u+a\Pp(V_0>u)$ and
+$f(u)\ge3u/4$ give
+$\Pp(V_0>u)+f(u)\ge3\E|V_0|/8$.
+If $u=-r$, $0<r\le a$, put $t=\Pp(V_0>-r)$.
+Centering gives $0\le at-r(1-t)$, hence $r\le2at$.
+Also $\E|V_0|=2\E(V_0)_+\le2at$, so
+$t+f(-r)\ge t-5r/4\ge3t/4\ge3\E|V_0|/8$.
+For $a<r\le13/20$, the probability is one and
+$1+f(-r)\ge3/16\ge3\E|V_0|/8$.
+
+For general centered $Y$, clip at $1/20$, obtaining $T$, and put
+$b=\E T$, $V_0=T-b$, $M_4=\E Y^4$.
+Then
+\[
+ |b|\le8000M_4,\quad\Pp(T\ne Y)\le160000M_4,\quad
+                  \E|V_0|\ge\E|Y|-16000M_4.
+\]
+If $M_4\le1/160000$, then $|b|\le1/20$,
+$|V_0|\le1/10$, and $|u-b|\le13/20$.
+Apply the bounded case at $u-b$, and compare $f(u-b)$ with $f(u)$.
+The total error coefficient is
+$(3/8)16000+160000+(5/4)8000=176000$.
+This proves the first inequality in \eqref{eq:one-sided}.
+Apply it to $-Y$ and $-f(-\,\cdot\,)$ for the second.
+All events in this proof are strict; atoms at the threshold are included
+with the conventions needed in \eqref{eq:layers}.

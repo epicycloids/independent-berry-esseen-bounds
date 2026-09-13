@@ -8,7 +8,12 @@ for variable in ('OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUM
 from check_saved import ROOT,canonical,load_inputs,load_band,require,validate_band
 
 class Evaluator:
-    def __init__(self):self.factories={}
+    def __init__(self):self.factories={};self.fixed=None
+    def proof(self,record,lo,hi):
+        if self.fixed is None:
+            from fixed_moment import Evaluator as Fixed
+            self.fixed=Fixed()
+        return self.fixed(record,lo,hi)
     def __call__(self,descriptor,lo,hi,box,method):
         from flint import arb,ctx
         from interval_bounds import al,au
@@ -48,6 +53,10 @@ def replay_band(index,first=0,count=None):
     validate_band(band,cover['evaluators']);leaves=band['leaves'];last=len(leaves) if count is None else min(len(leaves),first+count)
     require(0<=first<last<=len(leaves),'Empty or invalid leaf range');evaluate=Evaluator()
     for leaf in leaves[first:last]:
+        if 'proof' in leaf:
+            from moment_proofs import validate
+            validate(leaf['proof'],band['Llo'],band['Lhi'],evaluate.proof)
+            continue
         value=evaluate(cover['evaluators'][leaf['evaluator']],band['Llo'],band['Lhi'],tuple(leaf['box']),band['method'])
         if leaf['bound_kind']=='leaf':require(value==leaf['upper'],'Fresh numerical leaf value differs')
         else:require(Fraction(value)<=Fraction(leaf['upper']),'Fresh value exceeds containing-band cap')

@@ -1,11 +1,12 @@
 cff-version: 1.2.0
 message: >-
   Cite an individual manuscript by Logan Bell, its title, and its date
-  (11 September 2026). Include collection version 0.4.0 to identify the
+  (13 September 2026). Include collection version 0.5.0 to identify the
   files used, or cite this collection using the metadata below.
 title: >-
   The Berry–Esseen constant for independent summands
-version: 0.4.0
+version: 0.5.0
+date-released: 2026-09-13
 repository-code: https://github.com/epicycloids/independent-berry-esseen-bounds
 type: software
 authors:

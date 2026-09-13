@@ -60,7 +60,9 @@ def support_hessian(case,state):
 
 
 def negative_geometry(state):
-    """Separate implementation of the accepted analytic location lemma."""
+    """Apply the negative-chart bounds in paper/finite-arrays/contact-proofs.tex,
+    (C.34.11) and (C.35.4)--(C.35.6).
+    """
     q=arithmetic().q
     put,get=state.meet,state.get
     put('d',hi=Q(-1,2))

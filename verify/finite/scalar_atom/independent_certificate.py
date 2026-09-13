@@ -146,7 +146,6 @@ def global_order_peak(m: int, t: arb) -> arb:
         )
 
     # The maximum of sqrt(nu) exp(-ell*nu/2) over nu>0 occurs at nu=1/ell.
-    # This algebraic form is inclusion-equivalent but was derived independently.
     c = 1 - t * t
     lower_order = 2 * m - 2
     log_peak = (

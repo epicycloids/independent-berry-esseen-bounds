@@ -45,7 +45,7 @@
   "source_sha256": {
     "verify/finite/common_diameter/singleton_certificate.py": "e73a21bb436906492080580e720a07bb483693f2ff91a56001a5828303764253",
     "verify/finite/scalar_atom/compact_certificate.py": "35410ea2f44560967980d836834cf856c4ec088b9c318d2d17e7c207ca53b75f",
-    "verify/finite/scalar_atom/independent_certificate.py": "06734d31fa697b0bc4deba324c3def37b97f6b511f1c2ce5ac34b77128c093b9",
+    "verify/finite/scalar_atom/independent_certificate.py": "4485583a610f80ed3da4532ace33e6128598b242328bc5ec2a07f1ca3209c246",
     "verify/finite/support_odds/exact_certificate.py": "22da22abf118a2552120c330e9c5070355e664a225984bdbf11c5d31d3dddb15",
     "verify/finite/support_odds/failure_controls.py": "19a2416554cd0120fa188a490ac7dbbe54edf122c5ee7d647284ff1b645ab151",
     "verify/finite/support_odds/independent_certificate.py": "a29990f5750b314e9b1a187db3bae94ccad1dee9ce5c87543a0477bfe93754bf"

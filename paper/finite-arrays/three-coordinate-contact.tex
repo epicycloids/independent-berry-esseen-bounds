@@ -1,0 +1,263 @@
+\section{Necessary equations at a three-coordinate threshold}
+\label{sec:triangular-contact}
+
+We derive necessary conditions for a maximum of the ratio over all
+independent arrays when three coordinates have the threshold pattern
+described below.
+
+Let the first coordinate have three ordered states, and let the other
+two coordinates have two states each. Number states from zero. Suppose
+the configurations attaining a selected closed threshold are exactly
+\begin{equation}\label{eq:triangle-configurations}
+                    (0,0,1),\qquad(0,1,0),\qquad(1,0,0).
+\end{equation}
+The configuration $(0,0,0)$ lies strictly below the threshold and all
+other configurations lie strictly above it. Equality of the three sums
+in \eqref{eq:triangle-configurations} forces the two two-point diameters
+to equal the lower gap of the three-point law. The upper gap of that
+law is unrestricted. Thus the common-diameter theorem does not apply.
+
+\begin{proposition}[Equal probabilities at a triangular threshold]
+\label{prop:triangle-equal-probabilities}
+At an attained ratio maximum $C>0$ with the configuration
+\eqref{eq:triangle-configurations}, the two two-point coordinates have
+equal upper-state probabilities.
+\end{proposition}
+\begin{proof}
+Write their common diameter as $d$, their upper probabilities as
+$p_1,p_2$, and the triple gaps as $u=d,v>0$. Its signed probability
+measure
+\[
+ \eta_X=\frac1{uv}\left\{
+ \frac{v}{u+v}\delta_{x_0}-\delta_{x_1}
+                  +\frac{u}{u+v}\delta_{x_2}\right\}
+\]
+has mass and first moment zero and second moment one. Hold
+$s=p_1+p_2$ fixed. If $p_1\ne p_2$, their product $t=p_1p_2$ is a
+two-sided local parameter, and the raw pair-sum probabilities are
+$(1-s+t,s-2t,t)$ at $0,d,2d$. Its derivative per unit variance is
+$\eta_B=(\delta_0-2\delta_d+\delta_{2d})/(2d^2)$.
+Transfer variance $\lambda$ to the triple and $-\lambda$ to the
+independent pair. The mean and total variance $V$ are fixed, and the
+three original laws remain probability laws for both signs of small
+$\lambda$. For the threshold in \eqref{eq:triangle-configurations},
+the mixed event coefficient is
+\[
+ g=-\frac{1+v/(u+v)}{2d^2uv}<0,
+ \qquad F(\lambda)=F(0)+L\lambda-g\lambda^2.
+\]
+Indeed the second differences of its three rows at pair sums $0,d,2d$
+are $-1,1,0$.
+
+Put $W=p_1(1-p_1)+p_2(1-p_2)$. At fixed $s$, expansion of the two
+original third absolute moments gives
+\[
+ d^{-3}\sum_{j=1}^2\E|Y_j|^3
+             =-W^2+(3-4s+2s^2)W+\text{constant}(s).
+\]
+Their second derivative with respect to pair variance is $-2/d$;
+the triple's third absolute moment is affine. The selected deficit
+$CR(\lambda)V^{-3/2}+\Phi(y/\sqrt V)-F(\lambda)$ therefore has
+second derivative $2g-2C/(dV^{3/2})<0$. It cannot have a local minimum
+at the attained law. Thus $p_1=p_2$.
+\end{proof}
+
+Normalize the original total variance to one, write its third-moment
+sum as $R$, and let $z$ be the selected threshold. For a hypothetical
+maximum $C>\be$, put
+\[
+ K=R+\frac{z\phi(z)}{3C}>0.
+\]
+Positivity follows from $R\ge1/\sqrt3$, $|z\phi(z)|<1/4$, and
+$C>2/5$. Measure the three original coordinates in units of $K$:
+\begin{equation}\label{eq:triangle-normalized-law}
+ X/K\in\{-a,c,b\},\quad \Pp(X/K=-a,c,b)=(l,m,r),
+ \qquad Y_j/K=g(B_p-p),\quad j=1,2,
+\end{equation}
+where $a,b>0$, $-a<c<b$, $l,m,r>0$, $q=1-p$, and
+$g=a+c>0$. Put $v=b-c>0$, $h=a+b=g+v$, and $\rho=p^2+q^2$.
+The letters $Q,B_3,y$ below denote total variance, additive third moment,
+and threshold in these units; they are not variance-one quantities.
+
+\begin{theorem}[Necessary contact equations for the triangular threshold]
+\label{thm:triangle-projection}
+Suppose \eqref{eq:triangle-normalized-law} attains the full independent
+ratio maximum $C>\be$ at \eqref{eq:triangle-configurations}. Define
+\begin{align}
+ P_b(x)&=|x|^3-\tfrac32x^2-3b(b-1)x+b^2(2b-\tfrac32),
+                                                        \label{eq:triangle-polynomial}\\
+ A_0&=P_b(-a),\quad A_1=P_b(c),\quad
+ H_0=3\{b(b-1)+a(a-1)\},\quad
+ H_1=3\{b(b-1)+c-c|c|\}.\notag
+\end{align}
+Then $b\ge1$, $A_0>A_1>0$, $H_0,H_1\ge0$, and the probabilities
+and contact multiplier are determined by the support geometry:
+\begin{equation}\label{eq:triangle-heights}
+ p=\frac{A_0-A_1}{A_0+A_1},\qquad
+ q=\frac{2A_1}{A_0+A_1},\qquad
+ \tau=\frac{4A_1}{(A_0+A_1)^2}=CK^3.
+\end{equation}
+For fixed $a,c,b$, define the following affine functions of $Q$:
+\begin{align}
+ m(Q)&=\frac{ab+2pqg^2-Q}{gv},&
+ l(Q)&=\frac{b-m(Q)v}{h},&
+ r(Q)&=\frac{a-m(Q)g}{h},\label{eq:triangle-affine-masses}\\
+ \sigma(Q)&=l(Q)H_0+m(Q)H_1,\notag\\
+ B_3(Q)&=l(Q)a^3+m(Q)|c|^3+r(Q)b^3+2pq\rho g^3,
+ &y&=c-2pg.\notag
+\end{align}
+The original variance $Q>0$ satisfies
+\begin{align}
+ B_3(Q)+y\sigma(Q)/3&=Q,                       \label{eq:triangle-normalization}\\
+ \tau\sigma(Q)\sqrt Q&=\phi(y/\sqrt Q),        \label{eq:triangle-density}\\
+ l(Q)(1-p^2)+m(Q)q^2-\Phi(y/\sqrt Q)&=\tau B_3(Q),
+                                                        \label{eq:triangle-ratio}\\
+ l(Q)p+m(Q)q&=\tau\{\sigma(Q)g+\tfrac32(1-2p)g^2
+                                      -(1-2p)^3g^3\}. \label{eq:triangle-Bernoulli-contact}
+\end{align}
+All three masses and $\sigma(Q)$ must be strictly positive, and
+$C=\tau Q^{3/2}>\be$.
+
+There is a further quadratic inequality in this same original variance.
+Set
+\begin{align*}
+ \gamma&=h+g-3a+\frac{2a^3}{gh}
+                         -\frac{2(-c)_+^3}{gv},\\
+ \gamma'&=1-\frac{2a^3}{gh^2}
+                         +\frac{2(-c)_+^3}{gv^2},\qquad
+ T=\frac{3h^2v^2(\gamma')^2}{2b-1}.
+\end{align*}
+Then
+\begin{equation}\label{eq:triangle-Schur}
+ (12\gamma-15)Q^2+y(y^2+2Q)\sigma(Q)+TQr(Q)\le0.
+\end{equation}
+Equations \eqref{eq:triangle-affine-masses}--\eqref{eq:triangle-Schur}
+retain both signs of $c$, including $c=0$.
+\end{theorem}
+
+\begin{proof}
+The contamination argument of Lemma~\ref{lem:full-law-contacts} applies
+to each coordinate with the other two held fixed. After division by
+$CK^3$, the triple's piecewise cubic majorant has quadratic coefficient $-3/2$.
+Its highest contact is unselected and has deletion value zero, so it
+is a smooth minimum. Its value and derivative determine
+\eqref{eq:triangle-polynomial}. Global nonnegativity at $-b$ gives
+$P_b(-b)=6b^2(b-1)\ge0$, hence $b\ge1$.
+At the two selected contacts monotonicity from the left gives
+$P_b'(-a),P_b'(c)\le0$. Their actual deletion values are
+$1-p^2,q^2$. Solving $\tau A_0=1-p^2$, $\tau A_1=q^2$ proves
+\eqref{eq:triangle-heights}.
+
+Centering and variance give $l=(b-mv)/h$, $r=(a-mg)/h$, and
+$Q=ab-mgv+2pqg^2$, proving \eqref{eq:triangle-affine-masses}.
+The linear coefficient of the marginal contact majorant gives
+$\sigma=\phi(z)/(CK^2)=lH_0+mH_1$. Its mean identity, the definition
+of $K$, and the actual event probability prove
+\eqref{eq:triangle-normalization}--\eqref{eq:triangle-ratio}.
+The two deletion values for either Bernoulli coordinate are
+$l+mq,lq$. Their difference, inserted in the same contact identity,
+is \eqref{eq:triangle-Bernoulli-contact}.
+
+For clarity, the affine equation \eqref{eq:triangle-normalization}
+is also the support stationarity equation for the common lower gap;
+it is not an extra independent condition. Vary the raw lower gap $g$
+of the triple and both Bernoullis, keeping the triple's raw outer
+span $h$ and all masses fixed. The three threshold configurations
+remain equal and all other comparisons remain strict. Differentiation
+and recentering give
+\[
+ lH_0=2p\{\sigma+3qg(1-\rho g)\}.
+\]
+Direct substitution of the original moments gives exactly
+\[
+ B_3-Q+y\sigma/3
+ =\frac g3\bigl[lH_0-2p\sigma-6pqg(1-\rho g)\bigr].
+\]
+
+We derive \eqref{eq:triangle-Schur} from a two-dimensional family of
+original laws. Work in the fixed contact units. Keep the triple's
+raw lower supports $0,g$, its raw mean $a$, and both Bernoulli laws
+fixed. Vary its highest raw support $H$ and the total variance $V$.
+With $V_B=2pqg^2$ set
+\[
+ A(V)=V-V_B+a^2-ga,\quad
+ r(V,H)=\frac{A(V)}{H(H-g)},\quad
+ m(V,H)=\frac{a-Hr(V,H)}g,\quad l=1-m-r.
+\]
+These probabilities are positive in a two-sided neighborhood of
+$(V,H)=(Q,h)$. The centered threshold $y$ is fixed. Its deletion
+values $d_0=1-p^2,d_1=q^2,d_2=0$ remain fixed because the moving
+highest state occurs in no selected configuration. The actual event
+and third-moment sum have the forms
+\[
+ F(V,H)=F_0+A(V)f(H),\quad R(V,H)=R_0+A(V)\gamma(H),
+\]
+where
+\[
+ f(H)=\frac{d_0-d_2}{gH}+\frac{d_2-d_1}{g(H-g)},\quad
+ \gamma(H)=H+g-3a+\frac{2a^3}{gH}
+                       -\frac{2(a-g)_+^3}{g(H-g)}.
+\]
+Here $F_0$ and $R_0$ are independent of $V,H$. The objective
+\[
+ J(V,H)=F(V,H)-\Phi(y/\sqrt V)-CR(V,H)V^{-3/2}
+\]
+has zero gradient and negative semidefinite Hessian at the original
+law. Differentiation, using $C/Q^{3/2}=\tau$,
+$\phi(y/\sqrt Q)=\tau\sigma\sqrt Q$, and
+$B_3=Q-y\sigma/3$, gives
+\[
+ J_{VV}=\frac{\tau}{4Q^3}
+       \{(12\gamma-15)Q^2+\sigma y(y^2+2Q)\},\quad
+ J_{VH}=\frac{3\tau A(Q)\gamma'}{2Q},\quad
+ J_{HH}=-3\tau r(Q)(2b-1)<0.
+\]
+In computing $J_{VH}$, differentiate both $R(V,H)$ and
+$V^{-3/2}$. The last entry also
+follows by evaluating the contact majorant on the moving highest
+state: its gap has value and derivative zero and second derivative
+$3\tau(2b-1)$. Since $A(Q)=r(Q)hv$, the Schur inequality
+$J_{VV}-J_{VH}^2/J_{HH}\le0$ is exactly
+\eqref{eq:triangle-Schur}.
+\end{proof}
+
+\subsection{Finite scalar tests and their boundary cases}
+\label{subsec:triangle-interval}
+Write
+$\sigma(Q)=s_1Q+s_0$, $B_3(Q)=b_1Q+b_0$. The normalization is
+\[
+              n_1Q+n_0=0,\qquad
+ n_1=b_1+ys_1/3-1,\quad n_0=b_0+ys_0/3.
+\]
+If $n_1\ne0$, only $Q=-n_0/n_1$ is possible. If $n_1=0\ne n_0$,
+the geometry is impossible. If both vanish, retain the full interval
+of possible original variances.
+
+For any proved upper bound $C_+$ on the independent constant, this
+interval is the intersection of
+\[
+ ((\be/\tau)^{2/3},(C_+/\tau)^{2/3}]
+ \quad\text{with}\quad
+ \{Q:l(Q)>0, m(Q)>0, r(Q)>0, \sigma(Q)>0\}.
+\]
+All mass and slope conditions are open. On this interval the density
+equation is equivalent, with its sign retained, to
+\begin{equation}\label{eq:triangle-density-squared}
+       2\pi\tau^2 Q(s_1Q+s_0)^2 e^{y^2/Q}=1.
+\end{equation}
+The logarithmic derivative of its left side has positive denominator
+$Q^2(s_1Q+s_0)$ and numerator
+\[
+          3s_1Q^2+(s_0-s_1y^2)Q-s_0y^2.
+\]
+Thus endpoints and at most two interior critical points determine its
+range on each interval. The Schur expression
+\eqref{eq:triangle-Schur} is a quadratic polynomial in $Q$ and cuts
+the interval into at most two intervals, possibly with isolated points.
+Linear and constant polynomials are retained, as are a repeated root
+and an identically zero polynomial. Endpoint values in the density
+test are one-sided limits; equality only at an excluded endpoint is
+not admissible. An isolated retained root is tested directly.
+
+These tests can exclude a support geometry before the remaining
+contact equations are solved.

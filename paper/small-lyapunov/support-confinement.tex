@@ -1,0 +1,497 @@
+\section{Quantitative confinement of the original supports}
+\label{app:confinement}
+This appendix proves Proposition~\ref{prop:reduction}. Its first two
+lemmas turn a small lattice-moment deficit and a small smoothing loss
+into explicit distances. The remaining argument applies them to the
+contact equations and records the constants needed for the theorem.
+
+\subsection{The deficit in Esseen's moment inequality}
+We use a variance-weighted decomposition to quantify the deficit;
+compare \citet[Lemma~A.9]{HeCheng2026} for stability of a single lattice law.
+Put $c=\ce$, $p=\pe$, and $\tau=\te$ within this subsection.
+Let $Y$ be centered, nondegenerate, and supported on a translate of
+$h\Z$. Its oriented deficit is
+\[
+ \delta_Y=\frac{c\E|Y|^3-\E Y^3-3h\E Y^2}{h\E Y^2}.
+\]
+Write $P_-$ for the law of $-Y$ on $(0,\infty)$, $P_+$ for the
+law of $Y$ there, and $m=\E Y_+=\E Y_->0$.
+The centered two-point law $P_{u,v}$ at $-u,v$ has masses
+$v/(u+v),u/(u+v)$. Direct integration gives
+\[
+ \Law(Y)=\Pp(Y=0)\delta_0+\int P_{u,v}\,\lambda(du,dv),
+ \qquad\lambda(du,dv)=\frac{u+v}{m}P_-(du)P_+(dv).
+\]
+Its variance-weighted mixing measure
+$\omega(du,dv)=uv\lambda(du,dv)/\E Y^2$ is a probability measure.
+Set $n=(u+v)/h\in\{1,2,\ldots\}$ and $a=u/(u+v)$.
+The identity
+\[
+ c\{a^2+(1-a)^2\}-(1-2a)=3+2c(a-p)^2
+\]
+gives the exact formula
+\begin{equation}\label{eq:lattice-deficit}
+ \delta_Y=\int\{3(n-1)+2cn(a-p)^2\}\,d\omega.
+\end{equation}
+This proves the oriented inequality and, by reflection, Esseen's
+inequality \eqref{eq:esseen-moment}, including its equality case.
+
+If $\delta_Y<3$, some component has $n=1$. Its two points are the
+unique nearest lattice points straddling zero, say $-ah,(1-a)h$;
+in particular this translate does not contain zero. Its variance
+weight is at least $1-\delta_Y/3$. Every other component has variance
+at least $h^2a(1-a)$, so this variance weight is at most its ordinary
+mixture mass. Thus, for a centered law $Q$,
+\begin{gather}
+ \Law(Y)=(1-r_Y)\Law(h(B_a-a))+r_YQ,\quad r_Y\le\delta_Y/3,\notag\\
+ |a-p|\le\sqrt{\frac{\delta_Y}{2c(1-\delta_Y/3)}},\quad
+ h^2a(1-a)\le\E Y^2\le\frac{h^2a(1-a)}{1-\delta_Y/3}.   \label{eq:nearest-law}
+\end{gather}
+If $|Y|\le M$, coupling the mixture and then the two Bernoulli laws
+bounds their Wasserstein distance by
+\[
+ W_1(\Law(Y),\Law(h(B_p-p)))
+ \le\frac{2M}{3}\delta_Y
+       +2h\sqrt{\frac{\delta_Y}{2c(1-\delta_Y/3)}}.
+\]
+Here $W_1$ is the infimum of $\E|Y-Z|$ over couplings.
+
+For a collection of centered $h$-lattice variables, use one common
+orientation and set
+\[
+ V=\sum_i\E Y_i^2,\quad B=\sum_i\E|Y_i|^3,\quad
+ K=\sum_i\E Y_i^3,\quad \Delta_L=(cB-K-3hV)/(hV).
+\]
+Degenerate coordinates have zero variance weight. Applying the preceding
+bound on $\delta_{Y_i}\le1$, the crude bound $M+h$ on its complement,
+and Cauchy--Schwarz gives
+\begin{equation}\label{eq:lattice-W1}
+ \frac1V\sum_i\E Y_i^2 W_1(\Law(Y_i),\Law(h(B_p-p)))
+ \le(5M/3+h)\Delta_L+h\sqrt{3/c}\sqrt{\Delta_L}.
+\end{equation}
+There are also useful moment-ratio estimates. Put
+\[
+ a_D=\sqrt{(1+D/3)D/(2c)},\quad
+ b_D=\tau D/3+D/c+(2/c)a_D,\quad k_D=D/(3c)+2a_D.
+\]
+If $\Delta_L\le D$, then
+\begin{equation}\label{eq:lattice-ratios}
+ \left|\frac B{hV}-\tau\right|\le b_D,\qquad
+ \left|\frac K{hV}-\frac1c\right|\le k_D,\qquad \frac B{hV}\ge\frac12.
+\end{equation}
+Indeed \eqref{eq:lattice-deficit} gives
+$\E_\omega(n-1)\le D/3$,
+$\E_\omega[n(a-p)^2]\le D/(2c)$, and
+$|\E_\omega[n(a-p)]|\le a_D$.
+Expand $n\{a^2+(1-a)^2\}$ and $n(1-2a)$ about $p$.
+The last inequality follows directly from $n\ge1$.
+All these formulas allow arbitrary variance weights, so they also hold
+when each sum is multiplied by a common positive factor.
+
+\subsection{Rounding at an approximate period}
+For the selected array put $Y_i=X_i/\ell$.
+Then $|Y_i|\le8$, $\E Y_i^2\le9$, and
+\[
+ \ell^2\sum_i\E Y_i^2=\ell^2\sum_i\E|Y_i|^3=1.
+\]
+At a nonzero frequency $u$, take the phase of
+$\E e^{iuY_i}$, using any phase if the expectation vanishes.
+Round $Y_i$ to the nearest point of the corresponding lattice of span
+$h=2\pi/|u|$ and then center the rounded variable, calling it $Q_i$.
+The inequality $|v|\le(\pi/2)|e^{iv}-1|$ for $|v|\le\pi$ gives
+\begin{equation}\label{eq:rounding}
+ e:=\ell^2\sum_i\E|Y_i-Q_i|^2\le h^2g(u)/8,\qquad |Q_i|\le8+h.
+\end{equation}
+In detail the uncentered squared rounding error is at most
+$(h^2/16)\E|e^{iuY_i}-e^{i\theta_i}|^2
+=(h^2/8)(1-|\E e^{iuY_i}|)$, which is no larger than the expression
+using $1-|\E e^{iuY_i}|^2$. Centering decreases that error.
+If $M=8+h$, Cauchy--Schwarz yields
+\begin{align}
+ \ell^2\sum_i|\E Q_i^2-\E Y_i^2|&\le2\sqrt e+e,\notag\\
+ \ell^2\sum_i|\E|Q_i|^3-\E|Y_i|^3|,\quad
+ \ell^2\sum_i|\E Q_i^3-\E Y_i^3|
+                &\le(3M/2)\sqrt e(2+\sqrt e).           \label{eq:rounding-moments}
+\end{align}
+For the cubic bounds use
+$||x|^3-|y|^3|,|x^3-y^3|\le(3M/2)|x-y|(|x|+|y|)$.
+These bounds depend on total variance, not on the number of coordinates.
+
+\subsection{Comparing two small smoothing losses}
+\begin{lemma}\label{lem:support-spacing}
+Let $F$ be the CDF of a finite positive measure and let
+$J=F*\operatorname{Unif}[-h/2,h/2]$, $h>0$.
+Suppose $J(x)$ differs from an affine function of slope $q>0$ by at
+most $\varepsilon$ on $[-D_0-2h,3h]$.
+Put $H(a)=J(a+h/2)-F(a)$. If $0\le d\le D_0$ and
+$H(0),H(-d)\le s$, then, for $0<r_0\le h/4$ and
+$K_0=\lceil D_0/h\rceil$,
+\begin{equation}\label{eq:spacing-bound}
+ \dist(d,h\Z)\le3r_0+
+ \frac{4s+(5+4K_0)\varepsilon+4K_0h\varepsilon/r_0}{q}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+For the measure $\nu$ of $F$, write
+\[
+ w_a(t)=(1-(t-a)/h)\ind_{(a,a+h)}(t),\qquad
+ H(a)=\int w_a(t)\nu(dt)\ge0.
+\]
+For $0<d<h$, define the nonnegative trapezoid
+\[
+ T_d(t)=\frac1h\int_{h/2-d}^{h/2-d/2}
+                  \ind_{\{|x-t|<h/2\}}\,dx.
+\]
+Its integral against $\nu$ equals $J(h/2-d/2)-J(h/2-d)$.
+Splitting at $-d,-d/2,0,h-d,h-d/2,h$ gives the pointwise bound
+\[
+ \min\{1,2(h-d)/d\}\,T_d(t)\le w_0(t)+w_{-d}(t).
+\]
+Integrating and applying the affine approximation to the two $J$ values gives
+\begin{equation}\label{eq:two-shifts}
+       q\min(d/2,h-d)\le H(0)+H(-d)+2\varepsilon.
+\end{equation}
+The pointwise bound also holds at the endpoints, with the open intervals
+in $w_a$, so atoms require no continuity assumption on $F$.
+
+To transfer over several periods, let
+$\overline H_{r_0}(a)=r_0^{-1}\int_a^{a+r_0}H(t)dt$.
+Integrating the definition of the uniform convolution gives
+\begin{align*}
+ \overline H_{r_0}(a+h)-\overline H_{r_0}(a)
+ ={}&r_0^{-1}\int_a^{a+r_0}[J(t+3h/2)-J(t+h/2)]dt\\
+ &-(h/r_0)[J(a+r_0+h/2)-J(a+h/2)].
+\end{align*}
+The affine terms cancel, so its magnitude is at most
+$2\varepsilon(1+h/r_0)$.
+Moreover
+$H(a+t)\le H(a)+(t/h)\nu((a+t,a+t+h))$ and the mass is at most
+$2(qh+\varepsilon)$, by the affine bound on $J$. Hence
+$\overline H_{r_0}(a)\le H(a)+qr_0+\varepsilon r_0/h$.
+Write $d=kh+d_0$, $0\le d_0<h$. Transfer from $-d$ to $-d_0$
+using the preceding difference bound. If $d_0$ is within $2r_0$
+of an endpoint, the conclusion is immediate. Otherwise choose a point
+in the averaging interval where $H$ is at most its average and apply
+\eqref{eq:two-shifts}, using $H(0)\le s$.
+The threshold displacement is at most $r_0$; the resulting bound is
+\eqref{eq:spacing-bound}. All arguments of $J$ stay in the stated window.
+\end{proof}
+
+\subsection{The scale and the maximizing threshold}
+We prove Proposition~\ref{prop:reduction}. Retain the notation of
+Section~\ref{sec:selection} for the actual selected maximizer.
+For scaled coordinates write
+\[
+ Y_i=X_i/\ell,\quad v_i=\E Y_i^2,\quad M_i=\E[Y_i|Y_i|],
+ \quad\theta=\ell^{-1}\sum_i\E X_i^3,\quad |\theta|\le1.
+\]
+Let $\rho,r,T,\eps,h$ be as in Proposition~\ref{prop:jitter}.
+We give the error quantities explicitly so their later specialization
+requires no unspecified constants:
+\begin{equation}\label{eq:confinement-errors}
+\begin{gathered}
+\begin{aligned}
+ u&=\rho+\ell/2,& D&=16u+256r,\\
+ H_h&=72r+5b_D,& Z^2&=10(u+18r),\\
+ S_0&=2\rho+18r+460\ell^2,&
+ A_0&=2\rho+24\{4\ell^2+(Z+32\ell)^2/2+\ell/5\},\\
+ \gamma&=300\sqrt{A_0}+11S_0+131A_0,&
+ W_0&=21D+3\sqrt D+42r,
+\end{aligned}\\
+\begin{aligned}
+ E_P&=14000(u+18r+\eta)+1100Z^2+4000\ell+4000\ell^2+1100\eta,\\
+ E_{\rm end}&=E_P+6100\gamma+700\gamma^2+500H_h.
+\end{aligned}
+\end{gathered}
+\end{equation}
+Here $a_D,b_D,k_D$ are those in \eqref{eq:lattice-ratios}.
+The proof below uses only
+\begin{equation}\label{eq:confinement-gates}
+ \begin{gathered}
+ r\le10^{-6},\quad D\le10^{-3},\quad A_0\le9/64,\quad
+ \gamma\le1/100,\\
+ E_P\le10^{-4},\quad E_{\rm end}\le1/2000,\quad W_0\le1/4.
+ \end{gathered}
+\end{equation}
+These will follow from \eqref{eq:reduction-parameters} at the end.
+
+The case $h=0$ would give $R\le\phz/6+\rho<\be$ by
+\eqref{eq:jitter}, so $h>0$. Initially $h\le128\pi<404$ and
+$g(2\pi/h)\le r^2/4$. Equations
+\eqref{eq:rounding}--\eqref{eq:rounding-moments} give
+$\sqrt e\le101r$, $|Q_i|\le412$.
+If $V_Q=\ell^2\sum\E Q_i^2$ and
+$B_Q=\ell^2\sum\E|Q_i|^3$, then
+$V_Q\ge1-202r$ and $B_Q\le1+125000r$.
+Since $B_Q/(hV_Q)\ge1/2$, it follows that
+\[
+ h\le2(1+125000r)/(1-202r)<5/2.
+\]
+Apply the same rounding bounds with this improved span. Writing
+$K_Q=\ell^2\sum\E Q_i^3$, we obtain
+\begin{equation}\label{eq:rounded-data}
+ \sqrt e\le r,\quad|V_Q-1|\le3r,\quad
+ |B_Q-1|\le32r,\quad|K_Q-\theta|\le32r.
+\end{equation}
+The lattice inequality in either orientation implies
+\begin{equation}\label{eq:span-envelope}
+                3h+|\theta|\le c+256r.
+\end{equation}
+The moment-error allowance is $[32(c+1)+9h]r<256r$.
+
+Unsmoothing at the actual threshold $z$, with shift $h\ell/2$, gives
+\begin{equation}\label{eq:global-envelope}
+ R\le\phi(z)\{h/2+\theta(1-z^2)/6\}+u.
+\end{equation}
+The Gaussian increment has error at most $\phz h^2\ell^2/8$,
+and the skew correction adds at most $h\ell^2/18$;
+together they are below $\ell^2/2$.
+Since $\phi(z)$ and $|(1-z^2)\phi(z)|$ are at most $\phz$,
+\begin{equation}\label{eq:near-max-envelope}
+ 3h+|\theta|>c-16u,\qquad R\le\be+u+18r.
+\end{equation}
+It follows that $h>3/2$. Orient the rounded variables by
+$\operatorname{sign}\theta$, arbitrarily if $\theta=0$.
+Equations \eqref{eq:rounded-data}--\eqref{eq:near-max-envelope}
+bound their aggregate lattice deficit by $D$, its denominator
+$hV_Q$ being greater than one. The moment-ratio estimates yield
+\begin{equation}\label{eq:near-esseen}
+ |h-\he|\le H_h,\qquad
+ \bigl||\theta|-1/\sqrt{10}\bigr|\le34r+3k_D+H_h/6.
+\end{equation}
+For $D\le10^{-3}$,
+$a_D\le\sqrt D/3$,
+$b_D\le D/2+\sqrt D/9$, and
+$k_D\le D/18+2\sqrt D/3$.
+Thus $H_h<1/40$ and the second error is below $1/10$.
+Since $31/16<\he<41/21$, this proves
+\begin{equation}\label{eq:span-range}
+                  19/10<h<2,\qquad|\theta|>1/5.
+\end{equation}
+If $\theta<0$, the envelope in \eqref{eq:global-envelope} has its
+maximum at zero because $h>|\theta|$; it would imply
+$|\theta|<128r+8u=D/2$, a contradiction. Hence $\theta>0$.
+Finally
+$\be<(\be+18r)e^{-z^2/2}+u$, so
+\begin{equation}\label{eq:threshold-bound}
+           |z|\le Z,\qquad0\le K-\be\le u+18r+\eta.
+\end{equation}
+For this last bound use $-\log(1-x)\le2x$ for $x\le1/2$.
+
+\subsection{Deletion with the same period and the support spacing}
+Deleting coordinate $i$ subtracts at most $\ell^2$ from $g$.
+Thus its high-frequency product bound is at most $e^{1/2}<2$ times
+the full-row bound. Keep the original $h$ for every deletion.
+Write $\sigma_i^2=1-s_i\ge3/4$, $\kappa_- =\sum_{j\ne i}\E X_j^3$,
+let $J_i$ be the CDF of that deletion plus the same jitter, and put
+\[
+ G_i^*(x)=\Phi(x/\sigma_i)
+       +\frac{\kappa_-}{6\sigma_i^3}(1-(x/\sigma_i)^2)\phi(x/\sigma_i).
+\]
+The logarithmic remainder in Appendix~\ref{app:fourier} remains
+$(49/3)\ell^2t^4$. The low-frequency error is bounded by
+$\ell^2e^{-t^2/5}\{(49/3)t^4+t^6/72\}$, whose positive integral
+is below $206\ell^2$. The jitter-factor error is below $\ell^2$.
+For $a=\delta/\ell$, the Gaussian comparison tail is at most
+$4/(3a^2)+\ell/(2a)<5500\ell^2$; use
+$\int_a^\infty t^2e^{-3t^2/8}dt\le3/a$.
+Also $G_i^*$ is Lipschitz with constant below $1/2$.
+The weaker signed smoothing bound therefore gives
+\begin{equation}\label{eq:deleted-jitter}
+ \|J_i-G_i^*\|_\infty
+ \le6000\ell^2+24r\ell/\delta^2
+       +2\log(T/\delta)e^{-\eps^2/(2\ell^2)}+20\ell/T
+ \le2\rho\ell.
+\end{equation}
+The last inequality uses the four allocations in
+\eqref{eq:jitter-parameters}.
+
+At any original support point $y=\ell t$, the contact equality and
+\eqref{eq:gaussian-global} give
+\begin{equation}\label{eq:contact-flat}
+ |G_i(z-y)-\Phi((z-y)/\sigma_i)-R\ell|\le450\ell^3.
+\end{equation}
+For the constant, $|t|\le8$, $v_i,|M_i|\le9$,
+$\E|Y_i|^3\le27$, and $K\le23/50$.
+The Gaussian remainder contributes less than $51\ell^3$,
+the quadratic $K$ term less than $51\ell^3$, and the remaining
+cubic, moment, and linear terms less than $348\ell^3$.
+Equations \eqref{eq:span-envelope}, \eqref{eq:deleted-jitter}, and
+\eqref{eq:contact-flat} then imply
+\begin{equation}\label{eq:smoothing-loss}
+ 0\le[J_i(z-y+h\ell/2)-G_i(z-y)]/\ell\le S_0.
+\end{equation}
+The scale corrections cost at most $10\ell^2$ after division by
+$\ell$: use $\sigma_i^{-1}-1\le s_i$,
+$\sigma_i^{-3}-1\le3s_i$, and
+$|\kappa_-/\ell|\le\theta+27\ell^2$.
+
+Fix a support point $x$. The function
+$\ell^{-1}J_i(z-x+\ell a)$ differs from an affine function of slope
+$\phz$ by at most $A_0$ on $[-16-2h,3h]$.
+Indeed $|a|\le24$, $|z-x+\ell a|\le Z+32\ell$, and
+\[
+                 |(G_i^*)'(w)-\phz|\le4\ell^2+w^2/2+\ell/5.
+\]
+Integrate and use \eqref{eq:deleted-jitter}.
+Apply Lemma~\ref{lem:support-spacing} to the scaled positive measure,
+using \eqref{eq:smoothing-loss}, $q=\phz$, $K_0\le11$, and
+$r_0=\sqrt{A_0}\le h/4$. Its bound is at most
+$3\sqrt{A_0}+(8/3)(4S_0+49A_0+110\sqrt{A_0})<\gamma$.
+Thus for every pair of support points of each original coordinate,
+\begin{equation}\label{eq:arithmetic-spacing}
+                   \dist((y-x)/\ell,h\Z)\le\gamma.
+\end{equation}
+
+\subsection{The support polynomial and the two classes}
+Define
+\[
+ P_i(t)=t^3-c|t|^3+(3c/2)t^2+3(cM_i-v_i)t.
+\]
+Every point of the full scaled support satisfies
+\begin{equation}\label{eq:support-polynomial}
+                             P_i(t)\ge-E_P.
+\end{equation}
+To verify this with constants, divide \eqref{eq:deletion} by
+$\phz\ell^3/6$ and use \eqref{eq:gaussian-local}.
+Its Taylor remainder divided by $\ell^3$ is below $224\ell$.
+Furthermore $|\phi''(z)+\phz|\le(3/2)\phz Z^2$,
+since $\|\phi''''\|_\infty\le3\phz$ and $\phi'''(0)=0$.
+The respective error bounds are
+\[
+ 13184(K-\be),\quad1092Z^2,\quad3584\ell,\quad
+                         3500\ell^2,\quad1008\eta.
+\]
+For the first, use
+$|-|t|^3+(3/2)t^2+3M_it|\le824$ and $6/\phz<16$.
+The last two come from $6R\ell s_i^2+\eta b_i+4\eta\ell s_i$.
+Equation~\eqref{eq:threshold-bound} makes their sum at most $E_P$.
+
+For a nondegenerate coordinate let $-a,b$ be its support extremes.
+Centering gives $v_i\le ab$ and $|M_i|\le v_i$.
+If $a,b\ge1/100$, divide the endpoint inequalities by $a,b$ and
+add. The linear terms cancel, giving
+\[
+ (c+1)a^2+(c-1)b^2\le(3c/2)(a+b)+E_P(a+b)/(ab).
+\]
+The left side is at least $3(a+b)^2$, because
+$(c^2-1)/(2c)=3$. Therefore
+$a+b\le c/2+E_P/(3ab)\le25/8+1/3<7/2$.
+If $a<1/100$ and $a+b\ge7/2$, then $b>3.49$ and
+\[
+ P_i(b)\le b^2[-(c-1)b+3c/2+3(c-1)a]<-1,
+\]
+contradicting \eqref{eq:support-polynomial}. If $b<1/100$, use
+$P_i(-a)\le a^2[-(c+1)a+3c/2+3(c+1)b]<-1$.
+Every support diameter is consequently below $7/2$.
+
+Partition coordinates according as their scaled support diameter is
+less than $h/2$ or at least $h/2$. In the first class,
+\eqref{eq:arithmetic-spacing} implies diameter at most $\gamma$,
+so centering gives $|Y_i|\le\gamma$.
+In the second class the diameter differs from $h$ by at most $\gamma$:
+zero and two multiples are excluded by \eqref{eq:span-range} and
+the diameter bound. Every support point lies within $2\gamma$ of
+an extreme. Split at the midpoint, use its upper-cluster indicator
+$B_i$, and take conditional means. This gives exactly
+\begin{equation}\label{eq:cluster-representation}
+ Y_i=h_i(B_i-p_i)+U_i,\quad\E(U_i\mid B_i)=0,\quad
+ |h_i-h|\le5\gamma,\quad |U_i|\le2\gamma.
+\end{equation}
+Both cluster probabilities are positive, because both extremes are
+support points and the clusters are separated.
+
+We next bound those probabilities away from zero and one.
+On $[-8,8]$, $|P_i'|<1800$. Moving an extreme to its cluster mean
+costs at most $3600\gamma$. Conditional centering gives
+$|M_i-M_i^0|\le\E U_i^2\le4\gamma^2$ and
+$v_i-v_i^0=\E U_i^2\le4\gamma^2$, where the superscript denotes
+the pure two-point law. The first bound uses the Lipschitz derivative
+of $x|x|$ and also holds if a cluster crosses zero.
+Their polynomial contribution is below $700\gamma^2$.
+At a pure-law endpoint the polynomial is
+$h_i^3C_3(p_i)+h_i^2C_2(p_i)$, with $|C_3|<29$, $|C_2|<75/8$.
+Its gap derivative for gaps at most $9/4$ is below $500$.
+Thus moving to the ideal gap $\he$ leaves both endpoint values at
+least $-E_{\rm end}$.
+
+Put $t_0=3\sqrt{10}/2$. At its upper and lower endpoints those
+ideal-gap values are
+\[
+ \he^3(1-p)^2A(p),\qquad\he^3p^2B(p),
+\]
+where
+\begin{align*}
+ A(p)&=t_0-(c-1)+4(c-1)p-6cp^2,\\
+ B(p)&=t_0-3(c-1)+(8c-4)p-6cp^2.
+\end{align*}
+For $p\le1/4$, $B$ is increasing and
+$B(p)\le(\sqrt{10}-17)/8<-1$.
+If $p\in[1/100,1/4]$, the lower endpoint is below
+$-6/10000<-1/2000$, since $\he^3>6$.
+For $p\le1/100$, use $A(0)=-\pe<-2/5$, $A'\le21$, so
+$A(p)<-19/100$. For $p\ge3/4$, $A$ is decreasing and
+$A(p)\le(\sqrt{10}-49)/8<-5$, excluding $[3/4,99/100]$.
+For $p\ge99/100$, $B(1)<-2$ and $|B'|\le46$ give $B(p)<-1$.
+In view of $E_{\rm end}\le1/2000$, all these cases are impossible.
+Hence every two-cluster probability lies in $[1/4,3/4]$.
+
+\subsection{The extra coordinates and the parameter check}
+Lattice stability and the rounding coupling give
+\begin{equation}\label{eq:original-W1}
+ \sum_i\ell^2v_i W_1(\Law(Y_i),\Law(h(B_{\pe}-\pe)))\le W_0.
+\end{equation}
+For the rounded variables \eqref{eq:lattice-W1} is at most
+$(1+3r)(20D+2\sqrt D)\le21D+3\sqrt D$.
+The change of variance weights has total absolute mass at most $3r$,
+and the distances are at most $13$, costing $39r$.
+The original variance-weighted rounding distance is at most $3r$,
+by $v_i\le9$ and the squared error bound $e\le r^2$.
+This proves \eqref{eq:original-W1} with the $42r$ allowance in $W_0$.
+
+The target law has absolute first moment
+$2h\pe\qe>9/10$. On the small-diameter class $|Y_i|\le\gamma$.
+Its total original variance $V_s$ is therefore at most
+$W_0/(9/10-\gamma)\le2W_0$.
+Each remaining coordinate has scaled variance between $1/2$ and $2$,
+by \eqref{eq:span-range}, \eqref{eq:cluster-representation}, and
+$p_i\in[1/4,3/4]$. Their number $m$ satisfies
+\begin{equation}\label{eq:core-count}
+ \frac{1-2W_0}{2\ell^2}\le m\le\frac2{\ell^2},
+                         \qquad m\ge1/(4\ell^2).
+\end{equation}
+Calling the small scaled coordinates $Z_j$,
+\[
+ \frac{\sum_j\Var Z_j}{mh^2}
+       \le\frac{4W_0}{h^2(1-2W_0)}<3W_0.
+\]
+The relative gap errors in \eqref{eq:cluster-representation} are
+below $3\gamma$, the residuals satisfy $|U_i|/h<2\gamma$, and
+$|Z_j|/h<\gamma$.
+Thus the conclusion follows once $3\gamma,3W_0\le\lambda$ and
+$\ell\le1/(2\sqrt N)$.
+
+We finish by checking these conditions and
+\eqref{eq:confinement-gates}. From \eqref{eq:jitter-parameters},
+$\ell\le\rho/48000$ and $r=\rho/196608$. For $\rho\le10^{-6}$,
+\begin{gather*}
+ D\le17\rho,\quad Z^2\le20\rho,\quad
+ H_h\le43\rho+3\sqrt\rho,\quad S_0\le3\rho,\quad A_0\le500\rho,\\
+ \gamma\le7000\sqrt\rho,\quad W_0\le14\sqrt\rho,
+             \quad E_P\le51000\rho+15100\eta.
+\end{gather*}
+For $\rho\le10^{-12}$ these imply
+\[
+ E_{\rm end}\le5\cdot10^7\sqrt\rho+2\cdot10^4\eta.
+\]
+Before enlargement its $\rho$ and $\sqrt\rho$ coefficients are
+at most $34300072500$ and $42701500$, which proves this last bound.
+Substitute $\rho=10^{-26}\lambda^2$, $\eta=10^{-10}\lambda$:
+\[
+ E_{\rm end}\le7\cdot10^{-6}\lambda<1/2000,\quad
+ \gamma\le7\cdot10^{-10}\lambda,\quad
+ W_0\le1.4\cdot10^{-12}\lambda.
+\]
+All the stated conditions follow, including $E_P\le10^{-4}$.
+The representations and the variance estimates concern the original
+coordinates throughout, proving Proposition~\ref{prop:reduction}.

@@ -1,0 +1,299 @@
+\section{An exact comparison near a common diameter}\label{sec:local}
+\begin{theorem}[Explicit independent local comparison]\label{thm:local}
+Set
+\begin{equation}\label{eq:local-constants}
+ \mathcal A=e^{10000},\qquad\lambda=e^{-\mathcal A},
+                   \qquad N=\lceil e^{\mathcal A}\rceil.
+\end{equation}
+Every independent array of the form
+\eqref{eq:clusters}--\eqref{eq:extra-bounds}, with $m\ge N$, has
+$\mathcal R\le\be$. Its ratio uses the total variance and the sum
+of third absolute moments of all the original coordinates.
+\end{theorem}
+
+We follow the two residual regimes of
+\citet[Section~3]{HeCheng2026}. The estimates below are uniform in
+unequal probabilities, unequal gaps, and the additional coordinates.
+
+\subsection{Normalization and conditional estimates}
+Put $v_i=p_i(1-p_i)$ and define the variance-weighted mean gap
+\[
+ \bar h=\frac{\sum_i v_i h_i}{\sum_i v_i}.
+\]
+Then $(1-\lambda)h\le\bar h\le(1+\lambda)h$.
+Divide every coordinate by $\bar h$, retaining $h_i,U_i,Z_j$ for the
+rescaled gaps and residuals. Write
+\begin{gather*}
+ V=\sum_i v_i,\quad\mu=\sum_i p_i,
+ \quad h_i=1+a_i,\quad\sum_i v_i a_i=0,\\
+ K_0=\sum_iB_i,\quad A=\sum_i a_i(B_i-p_i),\quad
+ U=\sum_iU_i+\sum_j Z_j,\quad W=A+U,\quad S=K_0+W,\\
+ \Lambda_A=\sum_i v_i a_i^2,\quad
+ \Lambda_U=\sum_i\E U_i^2+\sum_j\E Z_j^2,\quad
+ \Lambda=\Lambda_A+\Lambda_U,\quad B^2=V+\Lambda.
+\end{gather*}
+The uncentered sum $S$ has mean $\mu$, and $\Cov(K_0,W)=0$.
+Put $\eps_0=\max(\max_i\|U_i\|_\infty,\max_j\|Z_j\|_\infty)$,
+with an empty maximum zero, and $\xi=\Lambda/V$.
+The hypotheses imply
+\begin{equation}\label{eq:local-domains}
+ 3m/16\le V\le m/4,\quad\max_i|a_i|\le3\lambda,\quad
+ \eps_0\le2\lambda,\quad\xi\le8\lambda,\quad\Lambda\le2\lambda m.
+\end{equation}
+For example the upper bound before enlargement is
+$\xi\le[\lambda+(7/4)\lambda^2]/[(3/16)(1-\lambda)^2]$.
+
+Let $T_X$ and $\kappa$ be the total absolute and signed third central
+moments of the original array. Its reference Bernoulli moments are
+\[
+ T_0=\sum_i v_i(p_i^2+(1-p_i)^2),\qquad
+ \kappa_0=\sum_i v_i(1-2p_i).
+\]
+Conditional centering gives
+\begin{align}
+ |T_X-T_0|,\ |\kappa-\kappa_0|
+      &\le2\sqrt{m\Lambda_A}+4\Lambda,                  \label{eq:moment-budget}\\
+ T_X\ge V/3,\quad1/4\le T_X/B^2&\le2,\quad
+ B^2\le m,\quad B/2\le P:=B^3/T_X\le4B.                \label{eq:prefactor}
+\end{align}
+Indeed $|(1+a)^3-1|\le4|a|$ and
+$\sum v_i|a_i|\le\sqrt{V\Lambda_A}$.
+Within each cluster the sign is fixed: its unperturbed magnitude is
+at least $7/32>\eps_0$. Expanding the cubic changes either third
+moment by at most $4\E U_i^2$, since the linear term vanishes.
+An extra coordinate contributes at most $\eps_0\E Z_j^2$.
+Jensen gives $T_X\ge(7/8)^3T_0\ge343V/1024>V/3$.
+Every original coordinate has absolute value at most two, so
+$T_X\le2B^2$, proving \eqref{eq:prefactor}.
+
+For $m\ge10^{12}$ and $|k-\mu|\le6\sqrt m$,
+Appendix~\ref{app:conditional} proves
+\begin{align}
+ |m_k|:=|\E(A\mid K_0=k)|&\le10^4\sqrt{\Lambda_A}/\sqrt m,
+                                                        \label{eq:conditional-mean}\\
+ |\Var(A\mid K_0=k)-\Lambda_A|&\le40000\Lambda_A/\sqrt m,\notag\\
+ \E[(A-m_k)^4\mid K_0=k]&\le10^7\Lambda_A^2.             \label{eq:conditional-gap}
+\end{align}
+It also proves the relative label bound
+\begin{equation}\label{eq:conditional-label}
+ \left|\frac{\Pp(B_i=b\mid K_0=k)}{\Pp(B_i=b)}-1\right|
+                         \le500/\sqrt m\qquad(b=0,1).
+\end{equation}
+For $\Lambda>0$ define
+\begin{equation}\label{eq:DH}
+ D=\Lambda^2+\eps_0^2\Lambda_U,\qquad
+ H=\max\left\{\sqrt{\Lambda_A},
+                   \frac\Lambda{\sqrt{\Lambda+\eps_0^2}}\right\}.
+\end{equation}
+Then, in the same count range,
+\begin{gather}
+ \E(W\mid K_0=k)=m_k,\quad
+ \Lambda/2\le\Var(W\mid K_0=k)\le2\Lambda,\notag\\
+ \E[(W-m_k)^4\mid K_0=k]\le10^8D,\quad
+ \E(|W-m_k|\mid K_0=k)\ge H/30000,                       \label{eq:full-conditional}\\
+ \E(W^4\mid K_0=k)\le10^9D,\qquad\E W^4\le400D.\notag
+\end{gather}
+To see the extension, condition first on all labels. The noise then
+has variance $T_{\mathbf b}\le4\Lambda_U$ and fourth moment at most
+$3T_{\mathbf b}^2+\eps_0^2T_{\mathbf b}$.
+Its mean given $K_0$ is zero, and \eqref{eq:conditional-label}
+compares its variance to $\Lambda_U$. Combine these facts with
+\eqref{eq:conditional-gap} and $|x+y|^4\le8(|x|^4+|y|^4)$.
+Interpolation $\E|Y|\ge(\E Y^2)^{3/2}/(\E Y^4)^{1/2}$ supplies
+the second term in $H$. Conditional Jensen given the labels supplies
+the first from $A-m_k$. In particular $|m_k|\le10^4H/\sqrt m$
+uniformly, even when $\Lambda_A$ is much smaller than $\eps_0^2/m$.
+Finally $\max a_i^2\le16\Lambda_A/3$ gives
+$\E A^4\le9\Lambda_A^2$, and hence the unconditional bound.
+
+\subsection{Uniform approximation and central thresholds}
+Let $J$ be the CDF of $S$ plus an independent uniform variable on
+$[-1/2,1/2]$. If $T\ge10$ and $\xi(T+1)^2\le1/56$, put
+\begin{align}
+ E_m(T)={}&\frac{401(1+\log T)}{\sqrt m}
+       +(1+\log T)\xi(T+1)^2\notag\\
+       &+60000(1+\log T)\sqrt m\,e^{-m/262144}+56/T.       \label{eq:local-error}
+\end{align}
+Appendix~\ref{app:fourier} proves, for $z=(x-\mu)/B$,
+\begin{equation}\label{eq:local-jitter}
+ \sqrt m\left\|J(x)-\Phi(z)
+             -\frac\kappa{6B^3}(1-z^2)\phi(z)\right\|_\infty\le E_m(T).
+\end{equation}
+The expansion includes the third moments of the additional coordinates.
+
+Fix
+\[
+ a_0=e^{1000},\quad\mathcal C=e^{1004},\quad\mathcal B=e^{1006},
+ \quad q=e^{-\mathcal C},\quad T=e^{\mathcal B}.
+\]
+The inequalities $\mathcal A>100\mathcal B$,
+$\mathcal B>7\mathcal C$, and $\mathcal C>50a_0$ imply, for every
+$m\ge N$,
+\begin{equation}\label{eq:local-numerical}
+ \xi(T+1)^2<1/56,\quad E_m(T)<q/1000,\quad
+ m^{-1/2}<q/1000,\quad200\lambda<q/1000.
+\end{equation}
+For a direct check, the four terms in \eqref{eq:local-error} are at most
+\[
+ 802\mathcal B e^{-\mathcal A/2},\quad
+ 64\mathcal B e^{-\mathcal A+2\mathcal B},\quad
+ 240000\mathcal B(262144)^2e^{-3\mathcal A/2},\quad56e^{-\mathcal B}.
+\]
+Each is below $q/4000$. The third uses $e^{-x}\le2/x^2$, so this
+verification places no upper bound on $m$.
+
+Shift the jitter by $\pm1/2$. Either normalized signed discrepancy is
+at most
+\begin{equation}\label{eq:local-envelope}
+ \phi(z)\left\{\frac{B^2}{2T_X}
+      +\frac{|\kappa|}{6T_X}|1-z^2|\right\}+4E_m(T)+m^{-1/2}.
+\end{equation}
+The normalized Taylor error is at most $1/(4B)<m^{-1/2}$, using
+$\|\phi'\|_\infty<1/4$,
+$\|((1-z^2)\phi(z))'\|_\infty<5/4$, and \eqref{eq:prefactor}.
+The main term is at most $(3+z^2)\phi(z)$, below $1/100$ for
+$|z|\ge4$. Thus the full bound there is below $1/24$.
+
+\subsection{Small residual variance}\label{subsec:small-residual}
+Suppose $0<\Lambda\le e^{-1000}$. If $\Lambda=0$, the result is
+exactly \eqref{eq:finite-input}. We use a one-sided loss estimate:
+if $\E Y=0$, $\E Y^4\le1/160000$, $f(0)=0$, and
+$3/4\le f'\le5/4$ on $[-7/10,7/10]$, then for $|u|\le3/5$,
+\begin{align}
+ \Pp(Y>u)+f(u)&\ge\tfrac38\E|Y|-176000\E Y^4,\notag\\
+ \Pp(Y<u)-f(u)&\ge\tfrac38\E|Y|-176000\E Y^4.             \label{eq:one-sided}
+\end{align}
+This is the clipping argument of
+\citet[Lemma~3.2 and equation~(83)]{HeCheng2026}. Appendix~\ref{app:conditional}
+gives its proof with these constants and the stated threshold range.
+
+The count estimate in Appendix~\ref{app:fourier} gives
+\begin{equation}\label{eq:central-count}
+ b_k:=\Pp(K_0=k)\ge e^{-100}/\sqrt m
+                         \qquad(|k-\mu|\le6\sqrt m).
+\end{equation}
+Write a threshold with $|z|<4$ as $k+u$, $|u|\le1/2$, where $k$
+is a nearest integer. Then $|k-\mu|\le5\sqrt m$.
+For $f_k(u)=[\Phi((k-\mu+u)/B)-\Phi((k-\mu)/B)]/b_k$,
+we have $3/4\le f_k'\le5/4$ on $[-1,1]$.
+Indeed the relative count error is at most $18e^{100}/\sqrt m$,
+and the logarithm of the Gaussian density ratio is at most
+$100\xi+30/\sqrt m$; both are below $1/100$.
+
+The exact count decompositions are
+\begin{align}
+ F_S(k+u)&=F_{K_0}(k)-b_k\Pp(W>u\mid K_0=k)+e^+_{k,u},\notag\\
+ F_S^-(k+u)&=F_{K_0}(k-1)+b_k\Pp(W<u\mid K_0=k)+e^-_{k,u}.
+                                                        \label{eq:layers}
+\end{align}
+Each remainder is bounded in absolute value by
+\[
+ \sum_{j\ne k}b_j\Pp\{|W|\ge|j-k|-1/2\mid K_0=j\}
+                         \le2\cdot10^{11}D/\sqrt m.
+\]
+For $|j-k|\le\sqrt m$, use $b_j\le3/\sqrt m$,
+\eqref{eq:full-conditional}, and
+$\sum_{r\ne0}(|r|-1/2)^{-4}<40$.
+For more distant counts use $\E W^4\le400D$ and a denominator
+at least $m^2/16$.
+
+Apply \eqref{eq:one-sided} to $Y=W-m_k$ conditionally on $K_0=k$,
+using $f_k(v+m_k)-f_k(m_k)$ and $v=u-m_k$.
+The bounds above give $|m_k|<1/20$ and the required fourth-moment
+bound. Also $e^{-100}/5\le Pb_k\le5$.
+The resulting normalized loss is at least $e^{-120}H$.
+Its fourth-moment and leakage errors are below $10^{14}D$, and its
+conditional-mean error is at most $62500\sqrt{\Lambda_A}/\sqrt m$.
+
+Let $R_0=\mathcal R(B_1-p_1,\ldots,B_m-p_m)\le\be$.
+Equation~\eqref{eq:moment-budget} gives
+\[
+ \left|\frac{B^3/T_X}{V^{3/2}/T_0}-1\right|
+                  \le32\sqrt{\Lambda_A}/\sqrt m+96\Lambda/m.
+\]
+The normal variance change costs at most $\xi/8$ before multiplication
+by $P$. Combining these errors with \eqref{eq:layers}, either central
+normalized branch is at most
+\begin{equation}\label{eq:small-comparison}
+ R_0-e^{-120}H+e^{40}
+           \left\{D+\frac{\sqrt{\Lambda_A}+\Lambda}{\sqrt m}\right\}.
+\end{equation}
+The full definition of $H$ gives
+\[
+ D/H\le(\Lambda+\eps_0^2)^{3/2},\quad
+ \sqrt{\Lambda_A}/H\le1,\quad
+ \Lambda/H\le\sqrt{\Lambda+\eps_0^2}.
+\]
+Since $\eps_0\le e^{-1000}$ and $m\ge e^{1000}$, the error is below
+$e^{40}(3e^{-1500}+2e^{-500})H<e^{-120}H/2$.
+Thus the central comparison is strict for every positive residual
+variance. Finally $R_0\ge\phz/4>1/12$: apply the count estimate at
+an integer nearest $\mu$ and take half its jump. The bound $1/24$
+at distant thresholds is also below $R_0$.
+
+\subsection{Positive residual variance and interval mass}
+\label{subsec:large-residual}
+Suppose $\Lambda\ge e^{-1000}$ and $|z|\le4$.
+Choose all integers $|k-x|\le\max(1,\sqrt\Lambda)$. There are at
+least $\sqrt\Lambda$ of them, all within $6\sqrt m$ of $\mu$.
+Tilt the Bernoulli probabilities exponentially to make their count
+mean $k$, and project the gap residual off the count, as in
+Appendix~\ref{app:conditional}. On $K_0=k$ the residual is
+$m_k^0+R_k$, where under the tilted measure $R_k$ is a sum of
+independent centered pair residuals and additional coordinates, with
+\begin{equation}\label{eq:tilted-residual}
+ L:=\Var_\theta R_k\in[\Lambda/2,2\Lambda],\quad
+ \Var_\theta K_0\ge m/10,\quad |m_k^0|\le\sqrt\Lambda,
+ \quad\Cov_\theta(K_0,R_k)=0.
+\end{equation}
+Each residual summand is bounded by $8\lambda$.
+The within-cluster noise variances change relatively by at most
+$120/\sqrt m$ under the tilt; the extra coordinates do not change.
+Thus these assertions include their actual variances.
+
+Apply Lemmas~\ref{lem:conditional-fourier} and~\ref{lem:minorant}
+to both quarter-intervals $(1/4,1/2)$ and $(-1/2,-1/4)$, with
+\[
+ L_0=\tfrac12e^{-1000},\quad C_0=4+2e^{500},\quad A_g=4e^{500},
+ \quad\omega=16e^{A_g^2/6},\quad T_g=4\omega.
+\]
+The shift $y=x-k-m_k^0$ satisfies $|y|\le C_0\sqrt L$, and
+$A_g\ge C_0+(7/16)/\sqrt{L_0}$.
+The interval minorant has Gaussian expectation at least
+$\phi(A_g)/(4\omega\sqrt L)$.
+With $\beta=7/64$, the three terms in
+\eqref{eq:conditional-fourier-error} are at most
+\[
+ 128e^{-\mathcal A/2},\qquad128e^{500-\mathcal A},\qquad
+                         10^7e^{4a_0-\mathcal A}.
+\]
+Their sum is below $e^{-10a_0}<\phi(A_g)/32$, because
+$\phi(A_g)>e^{-9a_0}$, $\omega<e^{3a_0}$, and $T_g<e^{4a_0}$.
+Also $8\lambda T_g<\beta/162$.
+For the third term use $L\le m$, $e^{-x}\le2/x^2$, and $m\ge N$;
+this is uniform over all possible residual variances.
+
+Each conditional quarter-interval probability is at least
+$\phi(A_g)/(8\omega\sqrt L)$. Multiply by the count probabilities
+\eqref{eq:central-count} and sum over the chosen integers.
+Since $L\le2\Lambda$ and $\mathcal C>50a_0$, this gives
+\begin{equation}\label{eq:quarter-mass}
+ \Pp\{S-x\in(1/4,1/2)\},\quad
+ \Pp\{S-x\in(-1/2,-1/4)\}\ge q/\sqrt m.
+\end{equation}
+The two actual one-sided jitter losses therefore satisfy
+\[
+ J(x+1/2)-F_S(x)\ge q/(2\sqrt m),\qquad
+ F_S^-(x)-J(x-1/2)\ge q/(2\sqrt m).
+\]
+After multiplication by $P\ge B/2$, each loss exceeds $q/10$.
+Esseen's Bernoulli inequality gives $3V+|\kappa_0|\le\ce T_0$.
+Using \eqref{eq:moment-budget}, the main term of
+\eqref{eq:local-envelope} is consequently at most
+\[
+ \be+20\sqrt{\Lambda_A/m}+42\Lambda/m\le\be+200\lambda.
+\]
+Either central branch is below
+$\be-q/10+200\lambda+4E_m(T)+m^{-1/2}<\be-q/20$.
+The distant thresholds were already bounded by $1/24$.
+This completes the proof of Theorem~\ref{thm:local}.

@@ -14,7 +14,7 @@ class SavedCertificateTests(unittest.TestCase):
     def tearDownClass(cls):
         del cls.cover,cls.result,cls.band
     def test_exact_upper(self):
-        self.assertEqual(UPPER,Fraction(self.result['largest_recorded_upper']));self.assertLess(UPPER,Fraction('0.44995'))
+        self.assertEqual(UPPER,Fraction(self.result['largest_recorded_upper']));self.assertLess(UPPER,Fraction('0.44988794'))
     def test_complete_tree(self):
         local=validate_band(self.band,self.cover['evaluators']);self.assertEqual(local['accepted'],len(self.band['leaves']))
     def test_root_cannot_shrink(self):

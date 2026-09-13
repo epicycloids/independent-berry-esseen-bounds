@@ -13,7 +13,7 @@ from scalars import scalar_bounds
 ROOT=Path(__file__).resolve().parent.parent
 KERNEL=ROOT/'verify/kernel'
 sys.path.insert(0,str(KERNEL))
-UPPER=Fraction(8105578597689285,18014398509481984)
+UPPER=Fraction(8104460571768603,18014398509481984)
 CHOICES=((1.,0.),(1.02,-.02),(1.04,-.02))
 CUTOFFS=(.75,.78125,.8125,.84375,.875,.90625,.9375,.96875,1.)
 
@@ -56,7 +56,7 @@ def validate_evaluators(evaluators):
             require(value==dict(kind=value['kind'],N=512,stop_target=value['stop_target'],b_max_depth=6,b_max_evaluations=127,
                                coupling=False,cap_bucket=17,theta_denominator=32,threshold_domain=[-2,2],reference_cache_entries=16),
                     'Signed evaluator settings changed')
-            require(value['stop_target'] in ('0.450','0.44995'),'Unspecified signed early-return level')
+            require(value['stop_target'] in ('0.450','0.44995','0.4499'),'Unspecified signed early-return level')
         elif value['kind']=='quadratic':require(value['stop_target'] is None,'Quadratic formula has no stopping parameter')
         else:require(value['stop_target']=='0.448','Ceiling portfolio early-return level changed')
 
@@ -71,22 +71,34 @@ def validate_band(band,evaluators,callback=None):
         require(band['root']==root,'The canonical moment root was reduced')
         require(band['method'] in ('partition','uniform','variance'),'Unknown interval method')
         extra=band['extra_clips'];require(extra==sorted(set(extra)),'Repeated clipping location')
-        stack=[(tuple(root),'')];cursor=excluded=0;seen_extra=set();uppers=[];replayed=0;recipes=set()
+        clip_counts=band.get('additional_clip_counts',{p:1 for p in extra})
+        require(set(clip_counts)==set(extra) and all(type(n)is int and 1<=n<=3 for n in clip_counts.values()),
+                'Invalid repeated outward clipping count')
+        stack=[(tuple(root),'')];cursor=excluded=0;seen_extra=set();uppers=[];replayed=0;recipes=set();proof_count=0
         for code in band['tree']:
             require(stack,'Tree extends beyond its root');raw,path=stack.pop()
             box=core.feasible_clip(raw,hi) if band['method']=='partition' else raw
             if path in extra:
-                require(box is not None,'Redundant clipping at an empty node');box=core.feasible_clip(box,hi);seen_extra.add(path)
+                for _ in range(clip_counts[path]):
+                    require(box is not None,'Redundant clipping at an empty node');box=core.feasible_clip(box,hi)
+                seen_extra.add(path)
             if code=='X':require(box is None,'Excluded feasible moment box');excluded+=1;continue
             require(box is not None,'Accepted empty moment box')
             if code=='A':
                 require(cursor<len(band['leaves']),'Missing accepted leaf');leaf=band['leaves'][cursor]
                 require(leaf['path']==path and leaf['box']==list(box),'Accepted leaf differs from closed partition')
-                upper=finite(leaf['upper']);require(0<=upper<=UPPER,'Leaf exceeds current global upper bound')
+                from moment_proofs import exact,validate as validate_proof
+                upper=exact(leaf['upper']);require(0<=upper<=UPPER,'Leaf exceeds current global upper bound')
                 ident=leaf['evaluator'];require(ident in evaluators,'Missing evaluator');recipes.add(ident)
                 require(leaf['bound_kind'] in ('leaf','containing_band'),'Unknown upper-bound meaning')
                 require(type(leaf['arithmetic_replayed']) is bool and leaf['arithmetic_replayed']==(leaf['bound_kind']=='leaf'),'Reevaluation scope differs')
-                if callback is not None:
+                if 'proof' in leaf:
+                    proof=leaf['proof'];require(proof['box']==leaf['box'] and exact(proof['upper'])==upper,
+                                               'Nested moment proof differs from its original domain')
+                    proof_callback=None if callback is None else getattr(callback,'proof',None)
+                    require(callback is None or callable(proof_callback),'Missing fixed-recipe callback')
+                    validate_proof(proof,lo,hi,proof_callback);proof_count+=1
+                elif callback is not None:
                     value=callback(evaluators[ident],lo,hi,tuple(box),band['method'])
                     if leaf['bound_kind']=='leaf':require(value==leaf['upper'],'Numerical leaf value differs')
                     else:require(Fraction(value)<=upper,'Numerical leaf exceeds containing-band bound')
@@ -98,19 +110,20 @@ def validate_band(band,evaluators,callback=None):
         if band['method']!='partition':require(band['tree']=='A' and not extra,'Uniform bound has a subdivision')
         require(cursor>0,'Empty complete interval')
         require(band['weights']==sorted(set(band['weights'])) and band['weights'],'Missing interval coefficients')
-    return dict(nodes=len(band['tree']),accepted=cursor,infeasible=excluded,replayed_leaves=replayed,upper=max(uppers),evaluators=recipes)
+    return dict(nodes=len(band['tree']),accepted=cursor,infeasible=excluded,replayed_leaves=replayed,
+                complete_owner_proofs=proof_count,upper=max(uppers),evaluators=recipes)
 
 def validate_cover(cover,result,root=ROOT):
-    require(cover['schema']=='independent-be-cover-v4' and result['schema']=='independent-be-result-v4','Unsupported certificate schema')
+    require(cover['schema']=='independent-be-cover-v5' and result['schema']=='independent-be-result-v5','Unsupported certificate schema')
     require(result['status']=='interval-bound' and result['sharp_conjecture_resolved'] is False,'Wrong result class')
-    require(cover['comparison_target']==result['comparison_target']==result['upper_bound']=='0.44995','Wrong comparison target')
+    require(cover['comparison_target']==result['comparison_target']==result['upper_bound']=='0.44988794','Wrong comparison target')
     require(Fraction(cover['upper_fraction'])==Fraction(result['largest_recorded_upper_fraction'])==finite(result['largest_recorded_upper'])==UPPER,'Exact upper endpoint differs')
-    require(UPPER<Fraction('0.44995') and cover['geometry_precision_bits']==100,'Invalid upper or geometry precision')
+    require(UPPER<Fraction('0.44988794') and cover['geometry_precision_bits']==100,'Invalid upper or geometry precision')
     domain=cover['domain']
     for side in ('lower','upper'):
         require(finite(domain[side])==Fraction(domain[side+'_fraction']) and float.fromhex(domain[side+'_hex'])==domain[side],'Exact endpoint differs')
     require(domain['lower']==.0014 and domain['upper']==1.21,'Wrong finite L domain')
-    validate_evaluators(cover['evaluators']);counts=Counter(bands=0,nodes=0,accepted=0,infeasible=0);uppers=[];intervals=[];replayed=0
+    validate_evaluators(cover['evaluators']);counts=Counter(bands=0,nodes=0,accepted=0,infeasible=0);uppers=[];intervals=[];replayed=0;proofs=0
     with zipfile.ZipFile(root/cover['band_archive']) as bundle:
         require(set(bundle.namelist())=={r['file']for r in cover['bands']} and len(bundle.namelist())==len(cover['bands']),'Wrong interval archive members')
         for number,row in enumerate(cover['bands']):
@@ -119,18 +132,20 @@ def validate_cover(cover,result,root=ROOT):
             for key in ('nodes','accepted','infeasible'):require(local[key]==row[key],'Interval count differs');counts[key]+=local[key]
             require(local['upper']==Fraction(row['upper']) and row['interval']==[str(finite(band['Llo'])),str(finite(band['Lhi']))],'Interval bound or domain differs')
             require(set(band['weights'])<=cover['weight_sha256'].keys(),'Missing interval weight set')
-            intervals.append(tuple(map(Fraction,row['interval'])));uppers.append(local['upper']);replayed+=local['replayed_leaves']
+            intervals.append(tuple(map(Fraction,row['interval'])));uppers.append(local['upper']);replayed+=local['replayed_leaves'];proofs+=local['complete_owner_proofs']
     cursor=Fraction(domain['lower'])
     for lo,hi in sorted(intervals):
         require(Fraction(domain['lower'])<=lo<hi<=Fraction(domain['upper']) and lo<=cursor,'Finite closed union has a gap')
         cursor=max(cursor,hi)
     require(cursor==Fraction(domain['upper']) and max(uppers)==UPPER,'Incomplete global interval or wrong maximum')
     require(dict(counts)==result['counts'] and counts['bands']==1670,'Aggregate counts differ')
-    require(replayed==result['arithmetic_replayed_leaves']==141533 and counts['accepted']-replayed==result['containing_band_bound_leaves'],'Bound meanings differ')
+    require(replayed==result['arithmetic_replayed_leaves'] and counts['accepted']-replayed==result['containing_band_bound_leaves']
+            and proofs==result['complete_owner_proofs'],'Bound meanings differ')
     analytic=cover['analytic_complements']
     require(analytic['small_L']['endpoint']==domain['lower_fraction'] and analytic['large_L']['endpoint']==domain['upper_fraction'],'Analytic complements do not meet the cover')
     require(Fraction(analytic['small_L']['upper'])<UPPER and Fraction(analytic['large_L']['ratio_upper'])<UPPER,'Analytic complement exceeds global bound')
-    return dict(counts=dict(counts),largest_recorded_upper_fraction=str(UPPER),closed_domain=[domain['lower_fraction'],str(cursor)],arithmetic_replayed_leaves=replayed)
+    return dict(counts=dict(counts),largest_recorded_upper_fraction=str(UPPER),closed_domain=[domain['lower_fraction'],str(cursor)],
+                arithmetic_replayed_leaves=replayed,complete_owner_proofs=proofs)
 
 class CoefficientArchive:
     """A bounded cache of the indexed Gaussian archive shards."""
@@ -208,6 +223,18 @@ def validate_gaussian(cover,root=ROOT):
                 recipe=cover['evaluators'][leaf['evaluator']];hi=band['Lhi'];N=recipe['N']
                 bucket=17 if recipe['kind'].startswith('signed') else (20 if band['method']!='partition' else min(20,max(1,round(20*leaf['box'][-1]/hi))))
                 require(N in available and hi*bucket/20 in available[N],'An active leaf lacks its smoothing portfolio')
+                def proof_weights(proof):
+                    rule=proof['rule']
+                    if rule=='evaluation':
+                        r=proof['recipe'];require(r['N'] in available and hi*r['cap_bucket']/20 in available[r['N']],
+                                                 'A complete owner recipe lacks its smoothing portfolio')
+                    elif rule=='original_evaluation':
+                        r=proof['evaluator'];b=17 if r['kind'].startswith('signed') else min(20,max(1,round(20*proof['box'][-1]/hi)))
+                        require(r['N'] in available and hi*b/20 in available[r['N']],'An inherited proof lacks its smoothing portfolio')
+                    elif rule=='feasible_b':proof_weights(proof['proof'])
+                    elif rule=='cover':
+                        for child in proof['regions']:proof_weights(child['proof'])
+                if 'proof' in leaf:proof_weights(leaf['proof'])
     return dict(counts)
 
 def check(root=ROOT):

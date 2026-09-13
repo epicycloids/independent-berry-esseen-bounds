@@ -3,10 +3,13 @@
 The [paper](../../paper/finite-arrays/main.tex) proves a strict bound of
 49/120 for two arbitrary independent summands. It proves Esseen's bound
 for arrays consisting of at most three Bernoulli coordinates, or entirely
-of Bernoulli coordinates with a common support diameter, and a uniform
-3/80 deficit for arrays consisting of at most two Bernoulli coordinates. Its
+of Bernoulli coordinates with a common support diameter, and $C_{\mathrm E}L-\Delta>3/80$ for arrays of at most two Bernoulli
+coordinates with positive total variance. Here $L$ is the Lyapunov ratio
+and $\Delta$ is the normal-approximation error. Its
 [contact appendix](../../paper/finite-arrays/contact-proofs.tex) gives the
 case reductions and inequalities used by the computational proofs.
+A triple means a three-point summand and a pair a two-point summand.
+The appendix defines the support-index event labels used below.
 
 [current-results.json](current-results.json) identifies the current exact
 partitions, arithmetic definitions, receipt hashes, and recorded counts.
@@ -17,15 +20,15 @@ maximal-atom, and product-odds calculations are recorded in
 
 | Calculation | Completed arithmetic evidence |
 | --- | --- |
-| Two-Bernoulli deficit greater than 3/80 | 63,792 leaves covering the three stated roots, evaluated with separately arranged formulas at 320 bits. |
+| Two Bernoulli summands: $C_{\mathrm E}L-\Delta>3/80$ | 63,792 leaves covering the two unit parameter cubes and the support-endpoint unit square, evaluated with separately arranged formulas at 320 bits. |
 | Three Bernoulli coordinates, arbitrary diameters | Eight recipes, 2,624,314 nodes and 1,312,161 accepted leaves. The bounds were reevaluated at 320 bits, using the producer's mathematical formulas and a separate tree traversal. |
-| Triple/pair unique lower event | 15,081 independently evaluated leaves. |
-| Triple/pair unique low triangular event | 113,322 independently evaluated leaves. |
-| Triple/pair upper-gap collision | 113,154 independently evaluated leaves. |
-| Triple/pair lower-gap collision | 154,848 independently evaluated leaves. |
-| Two-triple asymmetric collision | 68,963 and 90,233 independently evaluated leaves in its two charts. The positive chart uses the signed divided-difference inequality proved in the appendix. |
+| Triple/pair `110`, unique representation (`lower110`) | 15,081 independently evaluated leaves. |
+| Triple/pair `210`, unique low/high representation (`low210`) | 113,322 independently evaluated leaves. |
+| Triple/pair `221`, upper-gap collision (`collision221`) | 113,154 independently evaluated leaves. |
+| Triple/pair `210`, lower-gap collision (`collision210`) | 154,848 independently evaluated leaves. |
+| Two triples `221` or `320`, two representations (`tt221_negative`, `tt221_positive`) | 68,963 and 90,233 independently evaluated leaves in its two charts. The positive chart uses the signed divided-difference inequality proved in the appendix. |
 | Equality at 49/120 | 427 lower-event leaves and 34,084 upper-gap-collision leaves satisfy strict negative rejection inequalities at 384 bits. |
-| Three- and two-representation triangular events | Complete fixed scalar grids, with direct independent evaluations at 320 bits. |
+| Two triples `321`, three or two representations (`three_owner321`, `adjacent_owner321`, `endpoint_owner321`) | Complete fixed scalar grids, with direct independent evaluations at 320 bits. |
 | Common-diameter curvature | 224,419 accepted boxes at 192 bits; the primary program was also rerun. |
 | Scalar maximal-atom inequality | 129,024 slabs; a separate coefficient-sum implementation checked them at 256 and 384 bits. |
 | Product-odds inequality | Exact Bernstein coefficients in the quadratic field Q(sqrt(5)), with a separate algebraic calculation. |
@@ -44,8 +47,8 @@ uv run --frozen python verify/finite/check.py
 
 The default checks hashes, exact tree geometry, leaf boxes, all eight
 Bernoulli recipes, and the complete scalar-grid index sets. It does not
-recompute numerical inequalities. It also rejects missing, repeated, and
-overlapping test partitions. These checks run in `./verify.sh --no-latex`.
+recompute numerical inequalities. It rejects missing leaves, repeated partition paths, and overlapping
+interiors; closed boxes may share boundary faces. These checks run in `./verify.sh --no-latex`.
 
 To recompute the frozen current finite inequalities, without creating or
 subdividing cells:

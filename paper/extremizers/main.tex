@@ -36,24 +36,33 @@ urlcolor=blue!45!black,pdftitle={Extremizers for the independent Berry-Esseen in
 \newcommand{\TV}{\mathrm{TV}}
 \title{Extremizers for the independent Berry--Esseen inequality}
 \author{Logan Bell}
-\date{11 September 2026}
+\date{13 September 2026\quad Version 0.5.0}
 \begin{document}
 \maketitle
 \begin{abstract}
 Suppose the optimal Berry--Esseen constant for arbitrary independent
 summands exceeds Esseen's constant. We prove that the supremum is attained
 in a class of countable independent convolutions with an infinitely
-divisible remainder, keeping the sum of third absolute moments as part of
-the representation. A maximizing representation can be chosen with
-three-point summands. Its Gaussian and L\'evy components vanish, and the
-supports of its independent summands shrink to zero. If infinitely many
+divisible remainder and an additive third-moment quantity attached to the
+representation. A maximizing representation can be chosen with
+summands having at most three support points. Its Gaussian and L\'evy
+components vanish, and the supports of its independent summands shrink
+to zero. If infinitely many
 summands are nonconstant, their sum is nonatomic. We also prove a rank
 condition on the finite support configurations that can complete to a
-maximizing threshold. This condition excludes representations by infinitely
-many separated finite blocks, without restrictions on their probabilities
-or cardinalities. The proofs use exact variations of the original laws;
-CDF discontinuities are retained throughout. The sharp inequality for
-all independent arrays remains open.
+maximizing threshold. This condition excludes infinitely many finite blocks
+satisfying a stated separation condition. For a maximizing representation
+with at most three support points per summand, total variance one, and
+additive third-moment quantity at most $18481/25000$, we prove
+$\sum_i\Var(X_i)/\diam(\supp X_i)^\gamma<\infty$ for
+$0<\gamma<\sqrt5-1$, where the sum runs over nonconstant coordinates.
+Consequently $\sum_i\E|X_i|<\infty$. If all but finitely many
+nonconstant summands have two support points, the exponent improves to
+$\sqrt{21}-3$. Under the same third-moment bound, the maximizing
+distribution function cannot satisfy
+$F(z+t)=F(z)+\phi(z)t+O(t^2)$ as $t\to0$ through both signs at a
+maximizing threshold $z$. The sharp inequality for all independent arrays
+remains open.
 \end{abstract}
 
 \section{Statements and notation}\label{sec:statements}
@@ -75,23 +84,22 @@ Berry--Esseen theorem gives $\ci<\infty$, and Esseen's two-point
 asymptotics give $\ci\ge\ce$ \cite{Esseen1956,Shevtsova2013}.
 
 We use the small-Lyapunov theorem proved in the companion manuscript
-\cite[Theorem~1.1]{BellSmall2026}: there is $\ell_0>0$ such that
+\cite[Theorem~1.1]{BellSmall2026}: with
+$\ell_0=\exp(-\exp(20004))$,
 \begin{equation}\label{eq:small-input}
  \sum_i\E|X_i|^3\le\ell_0
  \quad\Longrightarrow\quad
  \Delta(\textstyle\sum_iX_i)\le\ce\sum_i\E|X_i|^3.
 \end{equation}
-Its threshold is not numerical. That theorem adapts the uniform smoothing,
-contamination and local comparison methods of He and Cheng
-\cite{HeCheng2026} to nonidentically distributed arrays. Its finite input
+That theorem extends the uniform smoothing, contamination and local
+comparison methods of He and Cheng \cite{HeCheng2026} to
+nonidentically distributed arrays, with explicit constants. Its finite input
 is the common-diameter Bernoulli theorem of \cite{BellFinite2026}.
 The present paper concerns the remaining extremal problem at positive
 Lyapunov ratio.
 
 \begin{definition}\label{def:representation}
-An admissible representation consists of independent centered variables
-$X_1,X_2,\ldots$, an independent centered infinitely divisible variable
-$Y$, and a finite number
+An admissible representation is a decomposition of the form
 \begin{align}
  S&=\sum_{i\ge1}X_i+Y,\notag\\
  \log\E e^{itY}
@@ -101,8 +109,10 @@ $Y$, and a finite number
  \sum_i\Var(X_i)+a+\int y^2\nu(dy)&=1,\qquad
  \beta=\sum_i\E|X_i|^3+\int|y|^3\nu(dy)<\infty.         \label{eq:profile-moments}
 \end{align}
-Here $a\ge0$, the series converges in $L^2$, and $\nu$ is a L\'evy
-measure with finite second moment. The number $\beta$ is the additive
+Here the $X_i$ are independent centered variables, and $Y$ is a centered
+infinitely divisible variable independent of all $X_i$. The number $a$ is
+nonnegative, the series converges in $L^2$, and $\nu$ is a L\'evy measure
+with finite second moment. The number $\beta$ is the additive
 third-moment quantity of the representation. A representation is
 maximizing if $\beta>0$ and $\Delta(S)=\ci\beta$.
 \end{definition}
@@ -140,6 +150,53 @@ The function $F-\Phi$ is upper semicontinuous and tends to zero at both
 ends of the line, so a positive supremum on this branch is attained.
 The continuous normal CDF allows reflection to interchange the positive
 branch with the branch $\Phi(x)-\Pp(S<x)$.
+
+\begin{theorem}[Weighted variance of the original coordinates]
+\label{thm:weighted-variance}
+Suppose $\ci>\ce$, and let a maximizing representation as in
+Theorem~\ref{thm:structure} have
+$\beta\le18481/25000$. For each nonconstant coordinate put
+$H_i=\diam(\supp X_i)$ and $v_i=\Var(X_i)$. Then
+\[
+ \sum_i\frac{v_i}{H_i^\gamma}<\infty
+       \quad(0<\gamma<\sqrt5-1),\qquad
+                         \sum_i\E|X_i|<\infty .
+\]
+If all but finitely many nonconstant coordinates have two support points, the
+weighted-variance range improves to $0<\gamma<\sqrt{21}-3$.
+These statements concern the original independent coordinates.
+\end{theorem}
+
+\begin{corollary}[Regularity excluded at a maximizing threshold]
+\label{cor:weighted-regularity}
+Under the hypotheses of Theorem~\ref{thm:weighted-variance}, a threshold
+satisfying \eqref{eq:max-data} cannot obey
+\[
+             F(z+t)=F(z)+\phi(z)t+O(t^2)\qquad(t\to0)
+\]
+through both signs. If all but finitely many nonconstant coordinates
+have two support points, it cannot obey
+\[
+       F(z)-F(z-h)=\phi(z)h+O(h^{1+\alpha})\qquad(h\downarrow0)
+\]
+for any $\alpha>(\sqrt{21}-3)/6$.
+\end{corollary}
+
+The third-moment bound supplies the two strict curvature inequalities in
+Lemma~\ref{lem:weighted-scalar}; it is not a consequence of attainment.
+Write $W_s=\sum_i v_i/H_i^s$, summing over nonconstant coordinates.
+The proof first establishes $W_s<\infty$ for some $s>1$.
+Bounds on the number of coordinates above a variance threshold then
+permit more efficient grouping of the remaining coordinates. Gaussian
+and lattice comparisons turn the grouping estimates into
+$W_\gamma<\infty$ for every $0<\gamma<(3s+4)/(s+5)$.
+Iteration reaches every exponent below the positive fixed point
+$\sqrt5-1$. When all but finitely many nonconstant coordinates have
+two support points, grouping by the sign of the nonmodal displacement
+gives the map $(3s+12)/(s+9)$, whose positive fixed point is
+$\sqrt{21}-3$.
+Sections~\ref{sec:weighted-shape}--\ref{sec:weighted-iteration} give
+the full argument.
 
 There is also a restriction on support configurations. For a finite set
 $I$ of indices, put $T_I=S-\sum_{i\in I}X_i$ and
@@ -180,21 +237,21 @@ satisfy
               \sum_k H_k<\infty,
               \qquad \delta_k\ge\sum_{l>k}H_l.
 \end{equation}
-There are no restrictions on the block sizes, their positive atom masses,
-or the overlap of the prefix translates.
 \end{corollary}
 
 Theorem~\ref{thm:structure} leaves both finite representations and
 nonatomic infinite convolutions with shrinking supports. Such infinite
 convolutions need not have a density. Theorem~\ref{thm:rank} is automatic
-when every relevant remainder has support $\R$; it therefore does not
-supply the missing regularity assertion.
+when every relevant remainder has support $\R$. Under the additional
+third-moment bound, Theorem~\ref{thm:weighted-variance} gives weighted
+summability, and Corollary~\ref{cor:weighted-regularity} excludes the
+stated local expansions of the distribution function.
 
 The compactification uses the classical accompanying Poisson-law method
 and L\'evy--Khintchine representation \cite{Levy1937};
 Section~\ref{sec:compactness} proves the needed moment bounds.
 Coordinate contamination follows He and Cheng
-\cite[Section~4]{HeCheng2026}; the independent-coordinate derivatives,
+\cite[Lemma~4.3]{HeCheng2026}; the independent-coordinate derivatives,
 L\'evy-intensity variations and contact propagation are derived below.
 The Gaussian estimates use the zero-bias transformation of Goldstein and
 Reinert \cite{GoldsteinReinert1997}, the transport estimate independently
@@ -400,7 +457,7 @@ $u$, $u^2-v_i$ and $|u|^3-b_i-3M_i u$. Differentiating
 \eqref{eq:objective} gives \eqref{eq:coord-contact}. Its integral under
 $\Law(X_i)$ is zero. Upper semicontinuity then extends equality from
 almost every point to the entire support. This is the coordinatewise
-contamination argument of \citet[Section~4]{HeCheng2026}.
+contamination argument of \citet[Lemma~4.3]{HeCheng2026}.
 
 Append a compensated Poisson variable $y(N_t-t)$ and use the centered
 threshold $z-ty$. Its raw CDF is exactly $\E F(z-yN_t)$; variance and
@@ -1338,6 +1395,8 @@ Their sum is constant on every completion pattern, a contradiction for
 a sufficiently late cut. The total variance and largest coordinate
 radius of the selected finite family tend to zero, independent of $M$.
 \end{proof}
+
+\input{variance-and-regularity.tex}
 
 \appendix
 \section{Rational checks for the Gaussian Fourier bound}\label{app:rational}

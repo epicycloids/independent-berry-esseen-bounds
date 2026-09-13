@@ -11,7 +11,7 @@ the supplied Gaussian interpolation bounds, and the comparison of every
 stored upper bound with
 
 $$
-U_* = \frac{8105578597689285}{18014398509481984}<0.44995.
+U_* = \frac{8104460571768603}{18014398509481984}<0.44988794.
 $$
 
 It also checks the endpoint estimates, the
@@ -42,10 +42,22 @@ maximum.
 
 A final box records either its own evaluated upper bound or a bound valid
 on its entire containing interval. The record identifies the choice.
-Numerical reevaluation records are supplied for the 141,533 individual
-values. The default checks verify these records and reconstruct the
-partitions; the commands below recompute the integrals with the recorded
-evaluator settings.
+The certificate contains 143,618 individual values and 92,041 bounds valid
+on their entire containing intervals. Within 8,671 final boxes, a further
+complete proof covers the feasible third-moment interval or partitions the
+largest-variance interval. These proofs retain containing parent bounds,
+exact closed children, and the moment inequalities used to exclude empty
+children. Their numerical nodes specify fixed evaluator inputs. They may
+also use a complete signed threshold partition, a rational split between
+two characteristic-function disks, or a forcing bound obtained by convex maximization over the moment
+weights, as derived in the paper. Every signed partition includes its outside-tail bound.
+
+The counts of nodes and final boxes in `result.json` describe the outer
+moment trees. Nested proof records do not increase those counts. The
+`complete_owner_proofs` field counts these nested moment proofs. The
+default checks reconstruct both levels of coverage and check the stored
+Gaussian and scalar certificates. The commands below recompute the
+fixed numerical inputs, including each selected nested proof.
 
 The [paper](../paper/independent-berry-esseen.pdf) gives the enclosure
 formulas and arithmetic assumptions. The
@@ -71,7 +83,9 @@ The output reports the interval and the range of boxes evaluated. For
 an individual stored value, the new calculation must agree exactly.
 For a containing-interval bound, the new value must be no larger than
 that bound. Each evaluator retains the precision, smoothing parameters,
-and early-stopping level that affect its numerical output.
+and early-stopping level that affect its numerical output. A nested proof
+retains the completed subdivisions and evaluated parent bounds, so its
+reevaluation does not choose a new subdivision or stop at a new target.
 
 Numerical reevaluation uses one thread. Large intervals can take
 substantially longer than the default checks. The evaluators use

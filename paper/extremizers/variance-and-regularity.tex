@@ -1,0 +1,1311 @@
+\section{Support shape and weighted variance}\label{sec:weighted-shape}
+
+We now impose the additional third-moment bound
+\begin{equation}\label{eq:weighted-resource-range}
+                       \beta\le\beta_*:=\frac{18481}{25000}.
+\end{equation}
+It supplies the strict scalar curvature inequalities proved below.
+Throughout these sections we use the representation in
+Theorem~\ref{thm:structure}, with data
+\eqref{eq:max-data}. Omit deterministic coordinates and put
+\[
+ H_i=\diam(\supp X_i),\qquad v_i=\E X_i^2,\qquad
+ V(h)=\sum_{H_i\le h}v_i,\qquad
+ W_s=\sum_i v_iH_i^{-s}.
+\]
+Constants denoted by $K$ may depend on this fixed representation and
+on explicitly fixed exponents, but not on a selected set of its
+coordinates or on a scale tending to zero.
+
+\begin{lemma}[The scalar curvature margin]\label{lem:weighted-scalar}
+Let $C\ge\ce$, $D=C\beta$, and define
+\[
+ L_0=\frac{15D+\phi'''(z)}4,\qquad
+ c_\varepsilon=3C+\varepsilon\phi''(z)/2,\quad
+ \varepsilon\in\{-1,1\}.
+\]
+Under \eqref{eq:weighted-resource-range},
+$c_\varepsilon>0$ and $c_\varepsilon^2>3DL_0$ for both signs.
+\end{lemma}
+\begin{proof}
+Set $r=486833/500000$. The identity
+$\phi(0)/\ce=6/(3+\sqrt{10})<r$ follows by squaring the positive
+number $6/r-3$. With $x=|z|$, a lower bound for
+$(c_\varepsilon^2-3DL_0)/C^2$ is
+\[
+ \left[3-\frac r2|x^2-1|e^{-x^2/2}\right]^2
+ -\frac{3\beta_*r}{4}|3x-x^3|e^{-x^2/2}
+ -\frac{45}{4}\beta_*^2.
+\]
+All square brackets are positive. On $0\le x\le1/2$, replace
+$e^{-x^2/2}$ by its upper bound
+$T(x)=1-x^2/2+x^4/8-x^6/48+x^8/384$. This gives the polynomial
+\[
+ P(x)=\left[3-\tfrac r2(1-x^2)T(x)\right]^2
+       -\tfrac{3\beta_*r}{4}(3x-x^3)T(x)
+       -\tfrac{45}{4}\beta_*^2.
+\]
+Here is a finite rational positivity check, specified entirely by
+these formulas. Write $P(x)=\sum_{j=0}^{20}p_jx^j$ and start with
+$b_i=\sum_{j\le i}p_j2^{-j}\binom ij/\binom{20}j$.
+Successive midpoint subdivision replaces a coefficient row by the
+left and right edges of its averaging triangle. On the five indicated
+intervals the smallest resulting coefficient exceeds the stated
+rational number:
+\[
+\begin{array}{c|ccccc}
+ I &[0,1/8]&[1/8,3/16]&[3/16,7/32]&[7/32,1/4]&[1/4,1/2]\\ \hline
+ \min b_i(I)>&1/40&1/1000&1/30000&1/1000&9/1000 .
+\end{array}
+\]
+The corresponding subdivision words are $00,010,0110,0111,1$.
+The Bernstein basis is nonnegative and sums to one, so these finite
+rational comparisons prove $P>0$ on $[0,1/2]$.
+For $x\ge1/2$, elementary differentiation gives
+$|\phi''(x)|/\phi(0)<2/3$ and
+$|\phi'''(x)|/\phi(0)<7/5$. The remaining lower bound is
+\[
+ (3-r/3)^2-\tfrac{3\beta_*r}{4}\tfrac75
+                  -\tfrac{45}{4}\beta_*^2
+       =\frac{35773617637}{140625000000}>0.
+\]
+Finally $3C-\phi(0)/2>0$ proves positivity of both $c_\varepsilon$.
+\end{proof}
+\begin{lemma}[Distances of the extreme support points from zero]\label{lem:weighted-shape}
+There is $\kappa>0$ such that every sufficiently late genuine
+three-point coordinate, with extreme states $-a_i,b_i$, satisfies
+\[
+ \min(a_i,b_i)\ge\kappa H_i.
+\]
+Consequently, after enlarging a fixed constant to include the finite
+prefix,
+\begin{equation}\label{eq:weighted-shape-bound}
+                         H_i\E|X_i|\le K v_i .
+\end{equation}
+For a two-point coordinate the latter identity holds with $K=2$.
+\end{lemma}
+\begin{proof}
+For a genuine triple $x<y<t$ in $[-h,h]$, vary its raw mean and
+second moment, keeping its support fixed. The probability map is
+nonsingular because its Vandermonde determinant is nonzero. If $r$
+is its centered third absolute moment and
+$k=[u|u|]_{x,y,t}$, divided differences give
+\[
+ |k|\le1,\quad |r_\mu|\le12h^2,\quad |r_v|\le3h,\quad
+ |r_{\mu\mu}|\le30h,\quad r_{\mu v}=-3k,\quad r_{vv}=0.
+\]
+For example the last two identities follow by differentiating
+$\E|Y-\mu|^3$ and using the mass, first-moment and second-moment
+coordinates; the second divided difference of $u|u|$ lies between
+$-1$ and $1$. The exact objective second variation, obtained as in
+\eqref{eq:objective}, is
+\[
+ (-3D-Cr_{\mu\mu})e^2+
+   (\phi''(z)+6Ck+3Cr_\mu)ef+
+   (-L_0+3Cr_v)f^2.
+\]
+It is nonpositive for all real $e,f$. Since $h\to0$, any limit of
+$k$ satisfies $(3Ck+\phi''(z)/2)^2\le3DL_0$. By
+Lemma~\ref{lem:weighted-scalar}, $k$ stays a fixed distance from both
+$-1$ and $1$ on late triples.
+
+Write their extremes as $-a,b$. For $y\ge0$ and $y\le0$ respectively,
+\[
+ k=1-\frac{2a^2}{(a+y)(a+b)},\qquad
+ k=-1+\frac{2b^2}{(a+b)(b-y)}.
+\]
+These formulas and centering give the asserted bound on both extremes.
+If the middle point is nonnegative, the negative extreme alone
+carries $\E|X|/2$ in first moment; hence
+$v\ge a\E|X|/2\ge\kappa H\E|X|/2$. Use the positive extreme when
+the middle point is nonpositive. For $X=H(B_p-p)$,
+$\E|X|=2p(1-p)H$ and $v=p(1-p)H^2$.
+\end{proof}
+
+\section{Third-moment growth under grouping and normal comparison}
+\label{sec:weighted-grouping}
+
+A group is a sum of disjoint original coordinates. Its cost is the
+increase in the sum of their third absolute moments. This cost is
+essential even though grouping does not change the full sum law.
+
+\begin{lemma}[Two grouping estimates]\label{lem:weighted-grouping}
+For a centered independent family with total variance $V$,
+\begin{equation}\label{eq:weighted-variance-cost}
+ 0\le\E|\textstyle\sum X_i|^3-\sum\E|X_i|^3\le2V^{3/2}.
+\end{equation}
+For independent raw variables $Y_i$, let
+$X_i=Y_i-\E Y_i$, $M=\sum\E|Y_i|$, and $A_-=\sum\E(Y_i)_-$.
+Then their grouping cost is at most $2M^3+6A_-V$.
+If the coordinates are divided into $B$ classes, with centered
+first-moment and variance sums $M_j,V_j$, there is, for every integer
+$J\ge1$, a partition into at most $8J+6B$ groups whose cost is at most
+\begin{equation}\label{eq:weighted-annular-cost}
+ \frac{18M^3}{J^2}+\frac{9S^2}{J},
+ \qquad M=\sum_jM_j,\quad S=\sum_j\sqrt{M_jV_j}.
+\end{equation}
+All bounds pass to countable groups with finite summed variance and
+third-moment sum.
+\end{lemma}
+The first upper bound is a classical third-moment estimate.
+Pinelis~\cite[equation (5)]{Pinelis2013} gives the sharper coefficient
+$\E|Z|^3=2\sqrt{2/\pi}$ in place of $2$. The elementary proof below
+suffices for all the rates used here.
+\begin{proof}
+The function $\E|x+Y|^3-|x|^3$ is convex for centered $Y$,
+because its second derivative is $6(\E|x+Y|-|x|)\ge0$.
+Jensen proves the lower bound. The pointwise Taylor bound
+\[
+ |x+y|^3\le|x|^3+3x|x|y+3|x|y^2+|y|^3
+\]
+gives an upper increment $3v_i\sqrt{\sum_{j<i}v_j}$ at step $i$.
+Summing and comparing with $\int_0^V3\sqrt u\,du$ proves
+\eqref{eq:weighted-variance-cost}. Applied to tail differences, the
+same inequality proves convergence in $L^3$.
+
+For centered $X$ define
+$k_X(t)=\E(X-t)_+-(-t)_+$. It is nonnegative, has supremum
+$\E|X|/2$, and integral $v_X/2$. Taylor's integral remainder yields
+the exact identity
+\[
+ \E|X+Y|^3-\E|X|^3-\E|Y|^3
+                  =12\int_{\R}k_X(t)k_Y(-t)\,dt.
+\]
+For a raw variable with first-moment data $M_i,A_i$,
+$k_{X_i}(t)\le M_i$ and
+$k_{X_i}(-t)\le(M_i-t)_++A_i$ for $t\ge0$. Split the integral at
+zero and apply the same bounds to each preceding partial sum. The
+increment is at most
+\[
+ 6(M_{<i}M_i^2+M_iM_{<i}^2)+6(A_iV_{<i}+A_{<i}v_i).
+\]
+The first terms telescope to at most $2M^3$ and the others sum to
+at most $6A_-V$.
+
+More generally choose raw laws and signs with
+$X_i=\varepsilon_i(Y_i-\E Y_i)$ and keep the two signs in separate
+groups. Retain individually every coordinate with
+$M_i>M/J$ or $A_i>A_-/J$. Greedily accumulate the remaining weights
+$M_i/M+A_i/A_-$ until they reach $1/J$, omitting the second weight
+when $A_-=0$. Every completed group has both normalized weights
+at most $3/J$. There are at most $4J+2$ groups, including the
+retained coordinates and the final group in each sign. The total
+cost is at most $18M^3/J^2+18A_-V/J$.
+
+In class $j$ take $Y_i=X_i$, so $A_-=M_j/2$, and allocate
+$J_j=\lceil J(M_j/M+\sqrt{M_jV_j}/S)\rceil$.
+Then $\sum J_j\le2J+B$ and the two terms sum to
+\eqref{eq:weighted-annular-cost}. Upper budgets in place of $M,S$
+only decrease the sum of the allocated weights. These observations
+also justify removal of any selected original coordinates before
+grouping.
+\end{proof}
+
+\begin{lemma}[A quadratic majorant for a sum of coordinates]
+\label{lem:weighted-majorant}
+Let $U$ be any finite or countable sum of original coordinates,
+independent of a remainder with CDF $G$, and let $\E U^2=\sigma^2>0$.
+There is a quadratic polynomial $P(u)=a+bu+cu^2$ such that
+\begin{equation}\label{eq:weighted-majorant}
+ Q_U(u):=P(u)+C|u|^3-G(z-u)\ge0,\qquad
+                        \E Q_U(U)\le2C\sigma^3.
+\end{equation}
+If $\sigma\to0$, the original coordinate radii are at most $H$, and
+$H/\sigma\to0$, its coefficients can be chosen with
+\begin{equation}\label{eq:weighted-coefficients}
+ |a|+|b|+|c|\le K,\qquad b+\phi(z)=O(\sigma),\qquad c+A=O(\sigma).
+\end{equation}
+In particular $Q_U(u)\le K(1+|u|^3)$ globally.
+\end{lemma}
+\begin{proof}
+Put $f(u)=G(z-u)-C|u|^3$ and maximize $\E f(Y)$ at prescribed
+first and second moments $(m,s)$ with $s>m^2$. The value is a
+finite concave function: $f\le1$, and a two-point law gives a finite
+lower bound. A supporting plane at $(0,\sigma^2)$ gives a quadratic
+majorant of $f$ at every real point. To include point masses without
+a continuity assumption, mix $\delta_x$ with a law approaching the
+value at $(0,\sigma^2)$, apply the plane inequality at the interior
+moment pair, and cancel its mixing weight. This yields $P(x)\ge f(x)$.
+Replacing the original block by any such $Y$ is an admissible
+one-coordinate comparison. If its third-moment sum is $\beta_I$,
+maximality bounds the value by $F(z)-C\beta_I$, whereas the actual
+grouped law has value $F(z)-C\E|U|^3$. Their difference is at most
+$C(\E|U|^3-\beta_I)\le2C\sigma^3$, proving
+\eqref{eq:weighted-majorant}.
+
+We give the coefficient argument because it fixes the quadratic term
+used later. Deleting the original block and applying the universal
+inequality to its remainder gives, for $\sigma^2\le1/2$,
+\[
+ G(z-u)\le\Phi((z-u)/\sqrt{1-\sigma^2})
+                    +C(\beta-\beta_I)(1-\sigma^2)^{-3/2}.
+\]
+Normal Taylor bounds imply
+$G(z-u)-F(z)+\phi(z)u\le K(u^2+\sigma^2)$.
+Its expectation is zero, so
+\begin{equation}\label{eq:weighted-affine-deletion}
+             \E|G(z-U)-F(z)+\phi(z)U|\le K\sigma^2.
+\end{equation}
+For any bounded score $\psi$ with $|\psi|\le1$,
+$\E\psi(U)=\E U\psi(U)=0$, replace the whole block by
+$(1+t\psi)\Law(U)$, $|t|\le1$. Write
+$g=\E G(z-U)\psi$, $d=\E U^2\psi$, $e=\E|U|^3\psi$.
+Its total variance and CDF are $1+td,F(z)+tg$, and its third-moment
+sum is $\beta+w+te$, where $0\le w\le2\sigma^3$.
+Here $|g|\le K\sigma^2$, $|d|\le\sigma^2$. Taylor expansion of
+$B^{3/2}[f-\Phi(z/\sqrt B)]$ at $(1,F(z))$, whose $B$ derivative
+is $A$, has remainder $O(\sigma^4)$ for $|t|\le1$.
+Using both signs of $t$ gives
+\[
+ |\E\{G(z-U)+AU^2-C|U|^3\}\psi|
+                                      \le Cw+K\sigma^4.
+\]
+The $L^1$ quotient duality for the subspace spanned by $1,U$
+therefore supplies $a_0,b_0$ with
+\[
+ \E|G(z-U)-C|U|^3-a_0-b_0U+AU^2|=O(\sigma^3).
+\]
+We may take $a_0=F(z)+A\sigma^2-C\E|U|^3$ by changing the error
+constant. Equation \eqref{eq:weighted-affine-deletion} and
+$\E|U|\ge c\sigma$ give $b_0+\phi(z)=O(\sigma)$.
+The latter lower bound follows from convergence of $U/\sigma$ to
+normal; the classical Berry--Esseen bound is at most $K H/\sigma$.
+
+Subtract this polynomial from the majorant in
+\eqref{eq:weighted-majorant}. Its $L^1$ norm under $U$ is
+$O(\sigma^3)$. On polynomials of degree at most two, the normal
+$L^1$ norm restricted to $[-2,2]$ controls all three coefficients.
+The same bound holds uniformly under $U/\sigma$ once its
+Kolmogorov distance to normal is small: absolute quadratics on the
+unit coefficient sphere have uniformly bounded variation there.
+It follows that
+$a-a_0=O(\sigma^3)$, $b-b_0=O(\sigma^2)$, $c+A=O(\sigma)$,
+as required.
+\end{proof}
+
+\begin{lemma}[Weighted normal comparison]\label{lem:weighted-normal}
+In Lemma~\ref{lem:weighted-majorant}, suppose
+$(H/\sigma)\log^{3/2}(1/\sigma)\to0$. Then
+\begin{equation}\label{eq:weighted-normal-slack}
+                         \E Q_U(\sigma Z)\le K(\sigma^3+H),
+                         \qquad Z\sim N(0,1).
+\end{equation}
+If $H/\sigma=O(\sigma^\zeta)$ for a fixed $\zeta>1$, then for every
+$2<q<\min(\zeta+1,3)$ and fixed $T$,
+\begin{equation}\label{eq:weighted-normal-window}
+ \sup_{|t|\le T\sigma}
+ |F(z+t)-F(z)-\phi(z)t+At^2|=O_{q,T}(\sigma^q).
+\end{equation}
+\end{lemma}
+\begin{proof}
+We record the weighted approximation estimate used in the proof.
+For a variance-one sum $W$ of centered independent variables bounded
+by $\epsilon$, and $\epsilon(1+L^3)$ sufficiently small,
+\begin{equation}\label{eq:weighted-MD}
+ |\Pp(W\le x)-\Phi(x)|+|\Pp(W<x)-\Phi(x)|
+       \le K\epsilon(1+x^2)\phi(x),\qquad |x|\le L.
+\end{equation}
+Here is the bounded-array exponential-tilting proof. If
+$K(t)=\log\E e^{tW}$, centered summands under the tilted product
+law are bounded by $2\epsilon$, so
+$|K'''(t)|\le2\epsilon K''(t)$ and
+$e^{-2\epsilon|t|}\le K''(t)\le e^{2\epsilon|t|}$.
+For $x\ge0$ choose $K'(t)=x$. Integration gives
+$t=x+O(\epsilon x^2)$, $s^2=K''(t)=1+O(\epsilon x)$, and
+$K(t)-tx=-x^2/2+O(\epsilon x^3)$. Berry--Esseen under the
+tilted law, applied to $e^{-tsu}\ind_{\{u\ge0\}}$ or its strict
+version, gives
+\[
+ \Pp(W\ge x)=e^{K(t)-tx}\{J(ts)+O(\epsilon)\},\quad
+ J(a)=\int_0^\infty e^{-au}\phi(u)\,du.
+\]
+The same formula holds with $>$. Since
+$J(a)\ge c/(1+a)$, $|(\log J)'(a)|\le\sqrt{2/\pi}$, and
+$e^{-x^2/2}J(x)=1-\Phi(x)$, the relative tail error is
+$O(\epsilon(1+x^3))$. Mills' bound and reflection prove
+\eqref{eq:weighted-MD}. Finite truncations and thresholds tending
+to $x$ from both sides prove the countable version. This is the
+classical Cram\'er tilting argument; no nonlattice assumption enters.
+For a modern independent-array formulation and its conjugate-law
+proof, see Beknazaryan, Sang and Xiao~\cite[Theorem 2.1]{BeknazaryanSangXiao2019}.
+Here the bounded-summand estimate above supplies the hypotheses directly.
+
+Put $Q_\sigma(x)=Q_U(\sigma x)$, $w(x)=(1+x^2)\phi(x)$, and
+$L=\sqrt{20\log(1/\sigma)}$. In the sense of measures on
+$[-L,L]$,
+\[
+ dQ_\sigma=a_\sigma'(x)\,dx+d\mu(x),\quad d\mu\ge0,\quad
+ a_\sigma(x)=P(\sigma x)+C\sigma^3|x|^3.
+\]
+The positive measure comes from $-G(z-\sigma x)$. Bounded
+coefficients give $\int w|a_\sigma'|\le K\sigma$.
+Since $Q_\sigma\ge0$, integration by parts against $w$ yields
+\[
+ \int_{-L}^L w\,|dQ_\sigma|
+ \le K\{\sigma+(1+L^3)I+(1+L^2)\phi(L)\},\quad
+ I=\int_{-L}^L Q_\sigma(x)\phi(x)\,dx.
+\]
+Both endpoint terms are included. Stieltjes integration by parts
+and \eqref{eq:weighted-MD}, with $\epsilon=H/\sigma$, now give
+\[
+ I\le\E Q_U(U)+K\epsilon
+          \{\sigma+(1+L^3)I+(1+L^2)\phi(L)\}.
+\]
+The term containing $I$ is absorbed. The global cubic bound on
+$Q_U$ pays the normal tails and proves
+\eqref{eq:weighted-normal-slack}. The left-continuous function
+$G(z-\sigma x)$ and its positive jump measure can be used throughout;
+the two endpoint versions in \eqref{eq:weighted-MD} justify the
+same argument when either law has atoms.
+
+For a fixed $|t|\le T$, the normal density ratio on $[-L,L]$
+under translation by $t$ is at most $e^{TL+T^2/2}$.
+The preceding weighted-variation argument applied to
+$Q_\sigma(x-t)$, together with
+\[
+ \Pp(|U|>\sigma L)
+ \le2\exp\{-L^2/[2(1+\epsilon L/3)]\}
+                       =\sigma^{10-o(1)},
+\]
+therefore gives
+\begin{equation}\label{eq:weighted-shifted-slack}
+ \sup_{|t|\le T}\E Q_U(U-\sigma t)
+                         \le\sigma^{-o(1)}(\sigma^3+H).
+\end{equation}
+The omitted actual tail is bounded by Cauchy--Schwarz and
+$\E|U|^6=O(\sigma^6)$; all fixed normalized moments are bounded
+by the elementary bounded-summand exponential-moment estimate.
+
+The coordinate contact identities determine the linear coefficient more
+accurately. Multiplying each identity by $X_i$ and summing gives
+\[
+ \E[UG(z-U)]=-\phi(z)\sigma^2-A\E U^3+C\sum_i\eta_i,\quad
+ \eta_i=\E[X_i|X_i|^3]-3v_i\E[X_i|X_i|].
+\]
+Consequently
+\[
+ (b+\phi(z))\sigma^2
+ =-(c+A)\E U^3-C\E[U|U|^3]
+                 +\E[UQ_U(U)]+C\sum_i\eta_i.
+\]
+Here $|\E U^3|\le H\sigma^2$, $\sum|\eta_i|\le4H^2\sigma^2$.
+Splitting at $|U|=\sigma\sqrt{M\log(1/\sigma)}$ and using
+nonnegativity, $\E Q_U(U)=O(\sigma^3)$ and bounded-summand tails
+gives $\E|U|Q_U(U)=O(\sigma^4\sqrt{\log(1/\sigma)})$.
+Thus $b+\phi(z)=O(\sigma^2\sqrt{\log(1/\sigma)})$ under the
+hypothesis $\zeta>1$. Finally the exact identity
+\[
+ F(z+\sigma t)-F(z)
+ =-b\sigma t+c\sigma^2t^2
+ +C\{\E|U-\sigma t|^3-\E|U|^3\}
+ +\E Q_U(U)-\E Q_U(U-\sigma t)
+\]
+and \eqref{eq:weighted-shifted-slack} prove
+\eqref{eq:weighted-normal-window}.
+\end{proof}
+
+\subsection{The closed-CDF phase identity}
+\label{subsec:weighted-phase}
+We use two elementary exponential bounds for independent centered
+variables. If their ranges have lengths $d_i$, integration of the
+tilted log-MGF bound $K_i''(t)\le d_i^2/4$ gives
+$\E e^{t\sum Y_i}\le\exp(t^2\sum d_i^2/8)$, the bounded-range
+estimate of Hoeffding~\cite{Hoeffding1963}. If instead $|Y_i|\le H$,
+the exponential series and $k!\ge2\cdot3^{k-2}$ for $k\ge2$ give
+\[
+ \log\E e^{t\sum Y_i}
+ \le\frac{t^2\sum\E Y_i^2}{2(1-H|t|/3)},\qquad H|t|<3.
+\]
+Chernoff's inequality gives the Bernstein bound used above and below.
+It also gives bounded moments of every fixed order after normalization
+when $H/\sqrt{\sum\E Y_i^2}$ is bounded.
+
+Unbiased rounding to the adjacent points of a lattice of mesh $\ell$
+preserves the mean and increases variance by at most $\ell^2/4$.
+For $N$ independent coordinates, choose the first $N-1$ lattice phases
+uniformly and the last so that their sum is $z$ modulo $\ell$.
+For each fixed phase vector the rounded coordinates are independent.
+If their sum is $L_{\boldsymbol u}$ and their unrounded sum has CDF $F$,
+then
+\begin{equation}\label{eq:weighted-phase-identity}
+ \E_{\boldsymbol u}F_{L_{\boldsymbol u}}(z)
+       =\E F(z-W_\ell),\quad
+ W_\ell=T_1+\cdots+T_{N-1}-U_\ell,
+\end{equation}
+where the $T_i$ are independent with density
+$\ell^{-1}(1-|x|/\ell)_+$ and $U_\ell$ is uniform on $[0,\ell]$.
+To verify the sign and endpoints, the phase-averaged mass at
+$z+k\ell$ is $\ell$ times the convolution of the $N$ triangular
+kernels with the original law. For the last kernel,
+$\ell\sum_{k\le0}k_\ell(z+k\ell-y)$ equals one for $y\le z$,
+$(z+\ell-y)/\ell$ for $z<y<z+\ell$, and zero for $y\ge z+\ell$.
+Tonelli proves \eqref{eq:weighted-phase-identity}, including atoms.
+In particular
+\[
+ \E W_\ell=-\ell/2,\qquad \E W_\ell^2=(N+1)\ell^2/6.
+\]
+For $N\ge3$ every pair of phases is independent. If $v_{\boldsymbol u}$
+is their total rounding variance, then
+\begin{equation}\label{eq:weighted-phase-variance}
+ \E v_{\boldsymbol u}=N\ell^2/6,\quad
+ \Var(v_{\boldsymbol u})\le N\ell^4/64,\quad
+ |\operatorname{Cov}(v_{\boldsymbol u},F_{L_{\boldsymbol u}}(z))|
+                                                    \le\sqrt N\ell^2/16.
+\end{equation}
+These follow by integrating $\ell^2t(1-t)$ over a uniform fractional
+part and using $0\le F_{L_{\boldsymbol u}}\le1$.
+
+\begin{lemma}[Grouping at a selected normal window]
+\label{lem:weighted-window-phase}
+Suppose \eqref{eq:weighted-normal-window} holds with $2<q<3$ at
+scales $\sigma\downarrow0$. Suppose the original sum is partitioned
+into $N\to\infty$ independent groups with actual cost $w\ge0$.
+The maximum is impossible if, with $L=\log(1/\sigma)$,
+\begin{equation}\label{eq:weighted-window-costs}
+ N\sigma^{2q-2}L\to0,\qquad
+       w\sqrt{NL}/\sigma\to0,\qquad wN^{2/3}\to0.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The conditions permit a mesh
+\[
+ \max(w,\sigma^q)\ll\ell\ll
+                   \min(\sigma/\sqrt{NL},N^{-2/3}).
+\]
+Indeed $\sigma^qN^{2/3}\to0$ follows from the first condition and
+$q<4$. The triangular noise in
+\eqref{eq:weighted-phase-identity} leaves $[-\sigma,\sigma]$ with
+probability at most $\exp\{-c\sigma^2/(N\ell^2)\}$; its first two
+tail moments satisfy the same bound up to polynomial factors.
+This is $o(\ell)$ because $\ell\ge\sigma^q$ and the exponent
+dominates $L$. Thus the window gives an average CDF increment
+$\phi(z)\ell/2-A(N+1)\ell^2/6+O(\sigma^q)+o(\ell)$.
+
+For a fixed phase, the normalized objective expands as
+\[
+ (1+v)^{3/2}[F_{\boldsymbol u}-\Phi(z/\sqrt{1+v})]
+ =F_{\boldsymbol u}-\Phi(z)+Av
+       +\tfrac32(F_{\boldsymbol u}-F(z))v+O(v^2).
+\]
+Equations \eqref{eq:weighted-phase-variance} cancel the term
+$-AN\ell^2/6$. The remaining covariance and normalization errors are
+$O(\ell^2+\sqrt N\ell^2+N\ell^3+N^2\ell^4)+o(\ell)$.
+The actual cubic interpolation cost is at most
+$K\ell^2\sum_i\E|Z_i|+KN\ell^3
+\le K\sqrt N\ell^2+KN\ell^3$, since the groups have total
+variance one. Every error and $w$ is $o(\ell)$. The average
+objective is therefore positive, a contradiction.
+\end{proof}
+
+\begin{lemma}[Small-diameter Fourier alternative]\label{lem:weighted-Fourier}
+If $V(r)\ge c r^p$ for all sufficiently small $r$, for some fixed
+$p<2$, the original representation cannot maximize.
+\end{lemma}
+\begin{proof}
+We give the approximation needed for this implication; smoothness of
+the original density alone would not suffice. Put
+$w(t)=\exp\{-t^2V(1/(8t))/12\}$ for $t\ge1$. The hypothesis
+makes $\int_1^\infty t^j w(t)\,dt$ finite for every fixed $j$.
+For a centered coordinate of diameter $d\le1/(8t)$ and variance $v$,
+each of the following characteristic functions has modulus at most
+$e^{-vt^2/12}$, for $1\le t\le\pi/\ell$:
+the original law, its accompanying compensated Poisson law,
+its unbiased rounding to $\ell\Z$, and the following rounding of its
+Poisson law. Interpolate the measure $x^2\Law(X)(dx)$ to $\ell\Z$;
+interpret its mass at zero as Gaussian variance and its mass at
+$u\ne0$ as $u^2$ times a Poisson intensity.
+
+For the original and Poisson versions use
+$1-\cos s\ge s^2/4$ on $|s|\le1$, with an independent copy for the
+original law. If $t\ell\le1/4$, the directly rounded diameter is at
+most $d+2\ell$, so the same estimate applies. Otherwise $d<\ell/2$,
+and the directly rounded law has masses $\rho/2,\rho/2$ at
+$-\ell,\ell$, with $\rho=\E|X|/\ell<1/2$.
+Since $\E|X|\ge v/d\ge8tv$ and
+$1-\cos s\ge2s^2/\pi^2$ on $[0,\pi]$, its damping is stronger than
+the stated bound. For the interpolated Poisson measure,
+$|tu|\le\pi+1/8$ and $1-\cos(tu)\ge t^2u^2/12$; the Gaussian
+mass at zero also has the required damping. Omitting one contributing
+factor loses at most $e^{1/768}$.
+
+Order the original variances decreasingly, put
+$A_k=\sum_{i>k}v_i^2$, and choose $\ell_k=\sqrt{A_k/k}$.
+Then $A_k=o(\ell_k)$ and $k\ell_k\to0$. Replace the tail by its
+accompanying Poisson law, interpolate its second-moment measure as
+above, and round the first $k$ coordinates directly. The three full
+characteristic-function errors, with damping from all remaining
+factors, are bounded respectively by
+\[
+ K A_k t^4w(t),\qquad K\ell_k^2t^4w(t),\qquad
+                         Kk\ell_k^2t^2w(t).
+\]
+For the first use $|e^{f_i-1}-f_i|\le v_i^2t^4/8$.
+For the second use
+$(e^{itx}-1-itx)/x^2=-t^2\int_0^1(1-s)e^{istx}\,ds$,
+whose second derivative is bounded by $t^4/12$.
+The interpolation preserves both total variance and the Poisson contribution
+to the additive third-moment quantity, because $|x|$ is affine between adjacent lattice
+nodes, including those adjoining zero. Direct rounding costs
+$O(k\ell_k^2)$ in variance and third-moment sum by bounded original
+supports.
+
+The created Gaussian variance $a_k$ is at most $\sum_{i>k}v_i\to0$.
+Replace it by $n$ fair centered Bernoullis of span $\ell_k$, taking
+$n$ nearest to $4a_k/\ell_k^2$. Their variance differs by
+$O(\ell_k^2)$ and their total third-moment sum is $O(a_k\ell_k)=o(\ell_k)$.
+For $|t\ell_k|\le\pi$,
+$|\cos(t\ell_k/2)|^n\le e^{\pi^2/16}e^{-a_kt^2/2}$;
+on $|t\ell_k|\le1$, logarithmic expansion gives an additional full
+error $K\ell_k^2(t^2+t^4)w(t)$. Outside that range use the damping
+itself. The final admissible law $Z_k$ lies on a translate of
+$\ell_k\Z$, has variance $1+o(\ell_k)$ and additive third-moment quantity
+$\beta+o(\ell_k)$, and satisfies
+\[
+ \int_0^{\pi/\ell_k}
+     |\widehat Z_k(t)-\widehat S(t)|\,\frac{dt}{t}=o(\ell_k),
+ \qquad
+ \int_0^{\pi/\ell_k}|\widehat Z_k(t)-\widehat S(t)|\,dt=o(1).
+\]
+The bounds below $t=1$ use $w=1$. All passages through infinite
+products are justified by the displayed summed variance bounds.
+
+Fourier inversion gives a smooth density $f$ for $S$.
+At a lattice point $x$, the exact mid-CDF formula is
+\[
+ F_{Z_k}(x)-\tfrac12\Pp(Z_k=x)
+ =\tfrac12-\frac{\ell_k}{2\pi}\int_0^{\pi/\ell_k}
+       \Im(e^{-itx}\widehat Z_k(t))\cot(t\ell_k/2)\,dt.
+\]
+The inequalities
+$0\le(\ell/2)\cot(t\ell/2)\le1/t$ and
+$|1/t-(\ell/2)\cot(t\ell/2)|\le K\ell^2t$ yield
+$\Pp(Z_k=x)=\ell_k f(x)+o(\ell_k)$ and
+$F_{Z_k}(x)=F(x)+\ell_k f(x)/2+o(\ell_k)$ uniformly at lattice
+points. At the maximizing threshold $f(z)=\phi(z)>0$.
+Choose a lattice point within $\ell_k/2$ of $z$; its original
+discrepancy differs from $D$ by $O(\ell_k^2)$. After the variance
+and third-moment corrections, its objective has gain
+$\phi(z)\ell_k/2+o(\ell_k)>0$.
+\end{proof}
+
+\section{The first weighted variance moment}\label{sec:weighted-first}
+
+\begin{lemma}\label{lem:weighted-subunit}
+Under \eqref{eq:weighted-shape-bound}, $W_{1/2}$ and $W_{3/4}$ are finite.
+\end{lemma}
+\begin{proof}
+For a cutoff $t$ set $M(t)=\sum_{H_i>t}\E|X_i|$ and
+\[
+ {\cal K}(t)=\sum_i v_i\min(1,t/H_i)
+              =V(t)+t\sum_{H_i>t}v_i/H_i.
+\]
+Then $M(t)\le K{\cal K}(t)/t$ and $V(t)\le{\cal K}(t)$.
+The exact Tonelli identity is
+\begin{equation}\label{eq:weighted-Tonelli}
+ \sum_{H_i\le1}v_iH_i^{-s}
+                 =V(1)+s\int_0^1 V(u)u^{-s-1}\,du.
+\end{equation}
+
+We first prove $W_{1/2}<\infty$. If it diverges, good points with
+$V(u)\ge u^a$, $a=13/24$, occur arbitrarily near zero.
+By Lemma~\ref{lem:weighted-Fourier} there are also
+$r\downarrow0$ with $V(r)\le r^p$, $p=15/8$.
+Take the largest good point below $r$, as a supremum. Monotonicity
+and right-continuity of the closed variance function give exactly
+\[
+ V(h)=h^a,\quad V(u)<u^a\ (h<u<r),\quad h\le r^{p/a}.
+\]
+There is a gap below $r$ because $V(r)<r^a$; approaching $h$
+from above and below proves equality even at a variance atom.
+Set $q=23/8$, $t=h^{37/72}$. Then $h<t<r$, and integration
+by parts for the actual discrete variance measure gives
+\[
+ {\cal K}(t)\le t/r+t^a/(1-a).
+\]
+Indeed the part with $H_i\le r$ equals
+$tV(r)/r+t\int_t^r V(u)u^{-2}\,du$.
+Select finitely many coordinates with $H_i\le h$ until their
+variance first reaches $h^{2/3}$. This is possible since
+$h^a>2h^{2/3}$; the overshoot is at most $h^2$. Its actual
+standard deviation is $\sigma\sim h^{1/3}$ and
+Lemma~\ref{lem:weighted-normal} gives the window with exponent $q$.
+The two positive margins are
+\[
+ \sigma^{-2/3}{\cal K}(t)
+       \le K(h^{1/360}+h^{97/1728}).
+\]
+Thus, with $L=\log(1/\sigma)$,
+$(1+M(t))\sigma^{q-2}L\to0$ and $V(t)^3L/\sigma^2\to0$.
+
+To check the grouping consequence explicitly, take
+$J=\lceil(1+M(t))\sigma^{-q}\rceil$ and retain the first
+$\lfloor\sqrt J\rfloor$ original coordinates separately.
+Group the remaining large coordinates by
+Lemma~\ref{lem:weighted-grouping}, and the small ones by variance:
+retain coordinates exceeding $V(t)/J$ and accumulate the others
+into groups of variance at most $2V(t)/J$. The complete count is
+$N=O(J)$, $N\to\infty$, and
+\[
+ w\le K\{(1+M)^3/J^2+(1+M)/J+V^{3/2}/\sqrt J\}.
+\]
+The three expressions in \eqref{eq:weighted-window-costs} tend to
+zero. For the second, the middle term is bounded by
+$K\sqrt{(1+M)\sigma^{q-2}L}$, the first is smaller by
+$(1+M)\sigma^q$, and the last is $KV^{3/2}\sqrt L/\sigma$.
+For the third, the middle term is
+$((1+M)\sigma^{q-2}L)^{2/3}\sigma^{(4-q)/3}L^{-2/3}$,
+and the same two comparisons apply. This contradicts
+Lemma~\ref{lem:weighted-window-phase}.
+
+Now write $W=W_{1/2}<\infty$ and suppose $W_{3/4}=\infty$.
+Repeat the crossing argument with
+\[
+ a=7/8,\quad p=15/8,\quad Q_0=15/7,\quad q=29/14,\quad t=\sqrt h.
+\]
+It gives $V(h)=h^a$, $V(u)<u^a$ on $(h,r)$ and
+$h\le r^{p/a}$. Select original variance
+$\sigma^2\in[h^{2/Q_0},h^{2/Q_0}+h^2]$.
+The window is available because $q<Q_0<3$.
+For the large-coordinate first moments and dyadic class sum,
+\[
+ M(t)\le K\{h^{-7/30}+h^{-1/16}\},\qquad
+ S(t)=\sum_j\sqrt{M_jV_j}\le K W,\qquad
+ V(t)\le h^{7/16}.
+\]
+The head estimate uses $M(H>r)\le KW/\sqrt r$ and the gap
+estimate uses $\int_t^r V(u)u^{-2}\,du$.
+
+Here is the more precise class allocation needed at this step.
+For a window of exponent $q$, the annular cost
+$K(M^3/J^2+S^2/J+V^{3/2}/\sqrt J)$ is sufficient if
+\begin{equation}\label{eq:weighted-annular-window}
+ M\sigma^{q-4/3}L^{2/3}\to0,\quad
+ S^2\sigma^{q-2}L\to0,\quad
+ V^3L/\sigma^2\to0,\quad B\sigma^{2q-2}L\to0 .
+\end{equation}
+In fact put $U_0=\sigma^{2-2q}/L$,
+$D_0=1+B+M^2L^{1/3}\sigma^{-2/3}+S^4L\sigma^{-2}$,
+and $J=\lceil\sqrt{D_0U_0}\rceil$.
+Then $D_0\ll J\ll U_0$. Applying
+\eqref{eq:weighted-annular-cost}, the variance partition, and the
+same retained prefix verifies the first two costs in
+\eqref{eq:weighted-window-costs}. The third follows by multiplying
+$w\sqrt{JL}/\sigma$ by
+$\sigma J^{1/6}/\sqrt L\le\sigma^{(4-q)/3}L^{-2/3}$.
+This proves the criterion.
+
+For the displayed crossing parameters,
+$(q-4/3)/Q_0=31/90>7/30,1/16$,
+$(q-2)/Q_0=1/30$, and $3a/2-2/Q_0=91/240$.
+Also $B=O(\log(1/t))=O(L)$. All conditions in
+\eqref{eq:weighted-annular-window} hold with strict power margins,
+giving the second contradiction.
+\end{proof}
+
+\section{A quantitative probability variation}\label{sec:weighted-packets}
+
+Write the nonnegative full-law contact defect as
+\[
+ d(u)=-Q(u)=F(z)-\phi(z)u-Au^2+C|u|^3-F(z-u).
+\]
+To control inverse convolution without a continuity hypothesis, fix
+$m>3$ and use
+\begin{equation}\label{eq:weighted-envelope}
+ E_m(h)=h^3+\sup_{r\ge h}(h/r)^m\sup_{|u|\le r}d(u).
+\end{equation}
+Then $h^3\le E_m(h)\le K$ for $h\le1$ and
+$E_m(th)\le t^mE_m(h)$ for $t\ge1$. The added $h^3$ merely
+includes the cubic polynomial in the same bound.
+
+\begin{lemma}[Actual same-sign contacts]\label{lem:weighted-pair}
+Translate a modal raw state of each of two distinct original
+coordinates to zero, writing its law as
+$K_i=(1-\theta_i)\delta_0+\eta_i$, $\theta_i\le1/4$.
+Let the diameters be at most $Lh$, and choose actual states
+$x=\varepsilon u$, $y=\varepsilon v$, with
+$\kappa h\le u,v\le Lh$. Under
+Lemma~\ref{lem:weighted-scalar}, uniformly as $h\to0$,
+\[
+ d(x)\le K\theta_1E_m(h),\quad
+ d(y)\le K\theta_2E_m(h),\quad
+ d(x+y)\le K(\theta_1+\theta_2)E_m(h).
+\]
+The bounds do not involve the probabilities of the selected states.
+\end{lemma}
+\begin{proof}
+Write $T_a f(u)=f(u+a)$ and
+$L_i=(T_{x_i}-I)K_i^{-1}$. The inverse is the absolutely
+convergent series
+$(1-\theta_i)^{-1}\sum_{n\ge0}[-T_{\eta_i}/(1-\theta_i)]^n$.
+A term translated by $n$ raw states costs at most
+$K(n+1)^mE_m(h)$ against $d$. Summing the geometric coefficients
+proves that removing one inverse changes a finite difference by
+$O(\theta_iE_m(h))$. Against $g(u)=|u|^3$ the same bound has
+$h^3$ in place of $E_m(h)$.
+
+Let $m_i$ be the raw mean and let $r_i,s_i$ be the first and
+second derivatives of its centered cubic moment when mass moves
+from zero to $x_i$. Direct differentiation gives
+\[
+ \begin{split}
+ v_i'&=x_i^2-2m_ix_i,\\
+ r_i&=|x_i-m_i|^3-|m_i|^3
+             -3x_i\E[(Y_i-m_i)|Y_i-m_i|],\\
+ s_i&=-6x_i\{(x_i-m_i)|x_i-m_i|+m_i|m_i|\}
+                              +6x_i^2\E|Y_i-m_i|.
+ \end{split}
+\]
+The exact first score is
+$L_if(0)=-\phi x_i-Av_i'+Cr_i$, where $f(u)=F(z-u)$.
+Since $L_i u=x_i$, $L_i u^2=v_i'$, this is
+$L_id(0)=C(L_ig(0)-r_i)=O(\theta_i h^3)$.
+Removing the inverse proves the individual bounds.
+
+Keep the raw event fixed by compensating the centered threshold
+by minus the changing mean. The original probability Hessian is
+negative semidefinite, however small the two feasible probability
+intervals. Divide its $ij$ entry by $x_ix_j$, a congruence.
+With $a_i=v_i'/x_i$, $b_i=r_i/x_i$, its exact entries are
+\[
+ \begin{split}
+ M_{ii}&=-3D+\phi''a_i-L_0a_i^2+3Ca_ib_i-Cs_i/x_i^2,\\
+ M_{12}&=-3D+\tfrac{\phi''}2(a_1+a_2)-L_0a_1a_2
+       +\tfrac{3C}2(a_1b_2+a_2b_1)
+       +\{CL_1L_2g(0)-L_1L_2d(0)\}/(xy).
+ \end{split}
+\]
+These follow by substitution in \eqref{eq:prob-hessian}; only
+probabilities and normal normalization are differentiated.
+Uniformly,
+$a_i=x_i+O(\theta_i h)$,
+$b_i=\varepsilon|x_i|^2+O(\theta_i h^2)$, and
+$s_i/x_i^2=-6|x_i|+O(\theta_i h)$.
+The double cubic difference is
+$L_1L_2g(0)=3uv(u+v)+O((\theta_1+\theta_2)uvh)$:
+its derivative under translation is bounded by $6|xy|$.
+The double defect difference is
+$d(x+y)-d(x)-d(y)+O((\theta_1+\theta_2)E_m(h))$.
+
+Consequently the deterministic part is the symmetric kernel
+\[
+ B_\varepsilon(u,v)=-3D+c_\varepsilon(u+v)-L_0uv
+                                      +\tfrac{3C}2uv(u+v).
+\]
+The diagonal errors are $O(\theta_i h)$ and the off-diagonal
+upper error is $K(\theta_1+\theta_2)E_m(h)/(uv)$; the omitted
+term $-d(x+y)/(uv)$ is nonpositive. Test on
+$(1+t,-1)$, $t=c_\varepsilon(u-v)/(3D)$. Its two entries have
+opposite signs, so that upper off-diagonal bound gives a lower
+bound on the quadratic form. Direct expansion gives
+\[
+ (1+t,-1)B_\varepsilon(1+t,-1)^{\mathsf T}
+  =(u-v)^2\{c_\varepsilon^2/(3D)-L_0+O(h)\}.
+\]
+Every polynomial term retains $(u-v)^2$, including when the gaps
+coincide. The strict scalar margin gives
+$uv(u-v)^2\le K(\theta_1+\theta_2)E_m(h)$.
+Now retain the defect and test on $(1,-1)$. The polynomial form is
+$(u-v)^2[-L_0+3C(u+v)]$, and the defect contributes
+$2d(x+y)/(uv)$. The preceding estimate absorbs the polynomial
+term and proves the pair bound.
+\end{proof}
+
+\begin{lemma}[A selected-intensity bound]\label{lem:weighted-intensity}
+Fix $\kappa,L>0$. Consider finitely many actual coordinates with
+modal raw states zero, diameters at most $Lh$, and modal deficits
+at most $\epsilon$. In one physical sign, select submeasures of
+their actual nonmodal states in $[\kappa h,Lh]$, of total mass
+$0<\lambda\le1$. For sufficiently small $h,\epsilon$,
+\begin{equation}\label{eq:weighted-intensity}
+ \epsilon E_m(h)\ge c\lambda h^4\min(\lambda,h),\qquad
+ \lambda\le K\{\sqrt{\epsilon E_m(h)}\,h^{-2}
+                              +\epsilon E_m(h)h^{-5}\}.
+\end{equation}
+The independent remainder and all unselected states are retained.
+\end{lemma}
+\begin{proof}
+Denote the selected submeasures by $\nu_i$, their masses by $r_i$,
+and their normalized positive mark law by
+$\mu=\lambda^{-1}\sum\nu_i$. Write
+$a=\int x\,d\mu$, $b=\int x^2\,d\mu$, $c_3=\int x^3\,d\mu$.
+They have their actual orders $h,h^2,h^3$ and $a\ge\kappa h$.
+For sign $\varepsilon$ put
+$s=2c_\varepsilon a/(3D)=O(h)$, $\alpha=2-s$.
+For $q>0$ small use the count distribution with generating function
+\begin{equation}\label{eq:weighted-compound-pgf}
+ B_q(t)=e^{\alpha q(t-1)}
+                         [1+sq(t-1)+q(t-1)^2].
+\end{equation}
+This is a probability law. To check positivity, its bracket is
+$1+(1-s)q-\alpha qt+qt^2$. With $x=\alpha q$, its zeroth and
+first coefficients are positive, the latter being
+$e^{-x}\alpha q^2(1-s)$. For $n\ge2$, after extracting
+$e^{-x}x^{n-2}q/(n-2)!$, the coefficient is
+$1-\alpha^2q/n+\alpha^2q^2(1-s)/(n(n-1))>0$.
+Here $0\le s\le1$ and a fixed sufficiently small upper bound on
+$q$ suffices.
+
+Append one centered coordinate
+$\varepsilon(\sum_{j=1}^{N_q}Z_j-2qa)$, with iid marks of law
+$\mu$. In original coordinate $i$, withdraw fraction
+$\alpha q/\lambda$ of $\nu_i$ to its own modal state.
+All laws stay positive for
+$0\le q\le q_0\lambda$, with a fixed $q_0>0$.
+Take the appended coordinate independently of the modified coordinates.
+
+We bound the full convolution error, since an uncontrolled cubic
+Taylor remainder would destroy the estimate. In the weighted
+convolution norm
+$\|\xi\|_m=\int(1+|u|/h)^m\,|\xi|(du)$, put
+$D_\mu=T_{\varepsilon\mu}-I$ and
+$A_i=\lambda^{-1}(T_{\varepsilon\nu_i}-r_iI)K_i^{-1}$.
+The modal series gives
+\[
+ \sum_i\|A_i\|_m\le K,\quad
+ \|D_\mu-\sum_iA_i\|_m\le K\epsilon,\quad
+                 \sum_i\|A_i\|_m^2\le K\epsilon/\lambda.
+\]
+The relative convolution operator is
+\[
+ {\cal P}(q)={\cal R}(q)[I+q(sD_\mu+D_\mu^2)],\quad
+ {\cal R}(q)=\prod_i(I-\alpha qA_i)e^{\alpha qD_\mu}.
+\]
+All factors commute. Its logarithmic derivative is
+$\alpha(D_\mu-\sum A_i)
+-\alpha^2q\sum A_i^2(I-\alpha qA_i)^{-1}$.
+Thus $\|{\cal R}'(0)\|_m\le K\epsilon$ and
+$\sup_{q\le q_0\lambda}\|{\cal R}''(q)\|_m\le K\epsilon/\lambda$,
+whence
+\begin{equation}\label{eq:weighted-relative-error}
+ \|{\cal P}(q)-I-q{\cal P}'(0)\|_m
+                                      \le K\epsilon q^2/\lambda.
+\end{equation}
+Against $d$ this costs $K\epsilon q^2E_m(h)/\lambda$.
+
+The moments of the fresh law are also exact. Its first three
+factorial count moments are
+$2q$, $2q+(4-s^2)q^2$, and
+$6\alpha q^2+(8-6s^2+2s^3)q^3$.
+Let $P_0=\Pp(N_q=0)$. Since every positive marked value is at
+least $\kappa h>2qa$, expansion on the zero and positive events gives
+\[
+ \begin{split}
+ \Var(\sum Z_j)&=2q(b+a^2)-s^2a^2q^2,\\
+ \E|\sum Z_j-2qa|^3
+ &=q(2c_3+6ab)-q^2(3s^2ab+6sa^3)
+                           +q^3(2s^3+16P_0)a^3 .
+ \end{split}
+\]
+Put $e_1=sa$, $v_1=sb+2a^2$, $r_1=sc_3+6ab$.
+The net raw mean change is exactly $\varepsilon e_1q$.
+For the total variance and additive third-moment quantity,
+\[
+ \begin{split}
+ V(q)-1&=q(v_1+O(\epsilon h^2))
+                 -q^2(e_1^2+O(\epsilon h^2/\lambda)),\\
+ {\cal B}'(0)&=r_1+O(\epsilon h^3),\\
+ {\cal B}(q)-\beta-q{\cal B}'(0)
+ &=-3e_1v_1q^2+(2s^3+16P_0)a^3q^3
+                               +O(\epsilon q^2h^3/\lambda).
+ \end{split}
+\]
+For the old coordinates these errors follow by differentiating
+their affine means: their summed second cubic derivatives are at
+most $K\lambda^{-2}\sum r_i^2h^3\le K\epsilon h^3/\lambda$.
+The term $16P_0a^3q^3$ is retained as the cost of centering the
+new coordinate.
+
+Evaluate at centered threshold $z-\varepsilon e_1q$ so that the
+raw event stays fixed. Every old first score is exactly zero.
+The fresh first derivative is the insertion of two marks, hence
+$J'(0)=-P_2$, where
+\[
+ P_2=\iint d(\varepsilon(x+y))\,d\mu(x)d\mu(y)
+                    \le K\epsilon E_m(h)/\lambda.
+\]
+Lemma~\ref{lem:weighted-pair} bounds distinct-coordinate
+selections; selections from the same original coordinate have
+weight at most $\sum r_i^2/\lambda^2\le\epsilon/\lambda$ and
+use the envelope. Thus a small fresh gradient is charged, not
+set to zero.
+
+For completeness, the smooth normalization after removing the
+polynomial part of the CDF is
+\[
+ {\cal N}(e,v)=(1+v)^{3/2}
+  [F(z)-\phi e-A(v+e^2)-\Phi((z-e)/\sqrt{1+v})]-D .
+ \]
+Its gradient at zero vanishes and its Hessian has entries
+$-3D,\phi''(z)/2,-L_0$. Combining the preceding exact moments,
+\eqref{eq:weighted-relative-error}, and the factor $(1+v)^{3/2}$
+on the remaining cubic term gives
+\[
+ \begin{split}
+ J(q)\ge -qP_2+\frac{q^2}{2}
+   \{-3De_1^2+2c_\varepsilon e_1v_1-L_0v_1^2+3Cv_1r_1\}\\
+               -K\{\epsilon q^2E_m(h)/\lambda+q^3h^3\}.
+ \end{split}
+\]
+The product term involving $v_1P_2$ is absorbed in the displayed
+error. The quadratic third-moment term supplies $6Ce_1v_1$ in the
+Hessian; together with the normal mixed term this is
+$2c_\varepsilon e_1v_1$. All remaining smooth terms are covered
+by $q^3h^3$ or $\epsilon q^2E_m(h)/\lambda$, since $E_m(h)\ge h^3$.
+Now $e_1=c_\varepsilon(2a^2)/(3D)$,
+$v_1=2a^2+O(h^3)$, and $r_1=O(h^3)$. The braces are
+$4a^4(c_\varepsilon^2/(3D)-L_0)+O(h^5)\ge c h^4$.
+Choose $q=c_0\min(\lambda,h)$ with a small fixed $c_0$.
+The centering cost is absorbed and $J(q)\le0$ proves
+\eqref{eq:weighted-intensity}.
+\end{proof}
+
+\section{From grouping rates to weighted summability}
+\label{sec:weighted-iteration}
+
+\begin{lemma}[A grouping rate implies weighted variance summability]
+\label{lem:weighted-rate-transfer}
+Suppose that after deletion of any selected set of original coordinates,
+the remaining coordinates can, for every large $J$, be partitioned
+into at most $KJ$ groups with cost $w\le KJ^{-1-\theta}$,
+where $\theta>0$ is fixed and the constant is independent of the
+selected set. Then
+\[
+ V(h)=o(h^p)\quad\left(1<p<\frac{1+2\theta}{1+\theta}\right),
+ \qquad
+ W_s<\infty\quad\left(0<s<\frac{1+2\theta}{1+\theta}\right).
+\]
+\end{lemma}
+\begin{proof}
+If $V(h)\ge c h^p$ along a sequence, select a finite original
+block with radii at most $h$ and variance $\sigma^2\asymp h^p$,
+by stopping when a fixed smaller multiple of $h^p$ is reached.
+Its variance overshoot is at most $h^2=o(h^p)$. Its independent
+remainder is denoted by $A_0$ and has CDF $G$.
+The majorant in Lemma~\ref{lem:weighted-majorant} has bounded
+coefficients and $b+\phi(z)=o(1)$, while
+Lemma~\ref{lem:weighted-normal} gives
+$\E Q_U(\sigma Z)=O(\sigma^3+h)=O(h)$.
+
+Choose fixed exponents
+\[
+ \frac{p(1+\theta)}{1+2\theta}<\lambda<1,\qquad
+        \frac{\lambda}{1+\theta}<j<2\lambda-p,
+ \qquad \ell=h^\lambda,\quad J=\lceil h^{-j}\rceil .
+\]
+All intervals are nonempty. In particular $\ell=o(\sigma)$,
+$N\ell^2\log(1/h)=o(\sigma^2)$, and $w,h,\sigma^3=o(\ell)$.
+Group the unselected remainder, append one ordinary
+$N(0,\sigma^2)$ coordinate, and phase-round these $N+1$ coordinates
+with total phase $z$ as in \eqref{eq:weighted-phase-identity}.
+If $W_N$ is the sum of $N$ independent triangular noises, that
+identity gives exactly
+\[
+ \E_{\rm phase}F_{\rm rounded}(z)
+     =\E_{0\le u\le\ell}F_{A_0+\sigma Z+W_N}(z+u).
+\]
+The right-hand average is uniform in $u$.
+
+We check the positive slack under this additional noise. Hoeffding's
+elementary exponential-moment bound gives
+$\E e^{tW_N}\le e^{N\ell^2t^2/2}$. If $g_u$ is the density of
+$\sigma Z+W_N-u$, then
+\[
+ \frac{g_u(\sigma x)}{\phi_\sigma(\sigma x)}
+ \le\exp\{\ell|x|/\sigma+N\ell^2x^2/(2\sigma^2)\}\le2
+\]
+on $|x|\le\sqrt{160\log(1/h)}$, uniformly for $0\le u\le\ell$.
+The tails cost $o(h)$ against $Q_U\le K(1+|u|^3)$ by the same
+subgaussian bound and sixth moments. Hence
+$\sup_{0\le u\le\ell}\E Q_U(\sigma Z+W_N-u)=O(h)$.
+For $R_u=\sigma Z+W_N-u$, the exact polynomial identity is
+\[
+ \begin{split}
+ F_{A_0+\sigma Z+W_N}(z+u)-F(z)
+ =-bu+c(N\ell^2/6+u^2)
+ +C\{\E|R_u|^3-\E|U|^3\}
+ +\E Q_U(U)-\E Q_U(R_u).
+ \end{split}
+\]
+Its last positive term may be retained as zero in a lower bound.
+Every term apart from $-bu$ is bounded below by
+$-K(h+\sigma^3+N\ell^2+\ell^2)=o(\ell)$.
+The phase-averaged CDF gain is thus
+$\phi(z)\ell/2-o(\ell)$.
+
+For every phase the variance lies between $1$ and
+$1+(N+1)\ell^2/4=1+o(\ell)$. Its third-moment sum is at most
+\[
+ \beta+w+K\sigma^3+
+        K\ell^2(\sqrt N+\sigma)+K(N+1)\ell^3=\beta+o(\ell).
+\]
+The removed third-moment sum was nonnegative; the upper bound
+charges the new Gaussian and every grouped and rounded coordinate.
+Normalization costs $o(\ell)$ uniformly. Some phase therefore has
+positive objective, a contradiction. Finally
+\eqref{eq:weighted-Tonelli}, with any larger available exponent
+$p>s$, proves the assertion about $W_s$.
+\end{proof}
+
+\begin{lemma}[An initial polynomial grouping rate]
+\label{lem:weighted-initial-rate}
+Under the hypotheses of Lemma~\ref{lem:weighted-shape}, the uniform
+grouping rate in Lemma~\ref{lem:weighted-rate-transfer} holds with
+$\theta=1/80$. Consequently $W_s<\infty$ for every $s<82/81$ and
+$\sum_i\E|X_i|<\infty$.
+\end{lemma}
+\begin{proof}
+We have $W_{3/4}<\infty$ by Lemma~\ref{lem:weighted-subunit}.
+Among coordinates with $v_i\le\delta$ and $H_i>r_\delta=\delta^{1/20}$,
+balanced extremes force a triple's middle state to have modal
+deficit $\theta_i\le K\delta/H_i^2$. Indeed the extreme contributions
+to variance bound their total probability, and the centered middle
+state has magnitude at most $\theta_iH_i$. All its nonmodal raw
+gaps are therefore comparable to $H_i$. For two-point laws,
+$v_i=\theta_i(1-\theta_i)H_i^2$ gives the same conclusion.
+The finitely many exceptional coordinates are absent for small
+$\delta$.
+
+In each dyadic shell $h<H_i\le2h$, apply
+Lemma~\ref{lem:weighted-intensity} separately to the two physical
+signs, with $\epsilon\le K\delta/h^2$ and $E_m(h)\le K$.
+It gives
+$\lambda\le K(\sqrt\delta\,h^{-3}+\delta h^{-7})$.
+For $h\ge r_\delta/2$ this tends to zero uniformly. If a sign's
+total intensity reached one, select fractions totaling one to
+obtain a contradiction. The entire sign intensity is therefore
+less than one and obeys the same bound. Since $v_i\le\theta_iH_i^2$,
+summing shells gives
+\[
+ {\cal W}(\delta):=\sum_{v_i\le\delta}v_i/\sqrt{H_i}
+ \le W_{3/4}r_\delta^{1/4}
+       +K(\sqrt\delta\,r_\delta^{-3/2}
+                                  +\delta r_\delta^{-11/2})
+ \le K\delta^{1/80}.
+\]
+Now remove any selected set. Retain all remaining $v_i>J^{-1/2}$
+individually, at most $\sqrt J$ of them. At the fine cutoff
+$r=J^{-2/3}$, the bounds from the full representation are
+$M(r)\le KW_{3/4}r^{-1/4}$ and $V(r)\le W_{3/4}r^{3/4}$.
+The remaining annular class sum is at most $K{\cal W}(J^{-1/2})$.
+Annular and variance grouping give $O(J)$ groups and
+\[
+ Jw\le K\{M(r)^3/J+{\cal W}(J^{-1/2})^2
+                                     +V(r)^{3/2}\sqrt J\}
+       \le K(J^{-1/2}+J^{-1/80}+J^{-1/4}).
+\]
+These bounds also hold after deleting coordinates, so the constant is
+uniform over selected sets. Lemma~\ref{lem:weighted-rate-transfer} proves the
+weighted assertion, and \eqref{eq:weighted-shape-bound} with any
+$s>1$ gives first-moment summability.
+\end{proof}
+
+\begin{lemma}[The envelope on a dyadic diameter interval]
+\label{lem:weighted-rich-shell}
+Suppose $W_s<\infty$ for some $s>1$. If a selected block
+from $h<H_i\le2h$ has variance
+$\sigma^2\ge c h^{2-\eta}$, where $\eta>0$ is fixed, then
+$E_m(h)\le Kh$ for every fixed $m>\max(3,2/\eta)$.
+\end{lemma}
+\begin{proof}
+Its coordinate radii are at most $2h$,
+$h/\sigma=O(h^{\eta/2})$, and
+$\sigma^2\le(2h)^sW_s=o(h)$. The majorant has
+$b+\phi(z),c+A=O(\sigma)$ and
+$\E Q_U(\sigma Z)=O(h)$.
+Set $L=\sqrt{160\log(1/h)}$, $r_*=\sigma/L$.
+For $|t|\le r_*$, the Gaussian density ratio on
+$|u|\le\sigma L$ is bounded by $e^{1+1/(2L^2)}$, and its cubic
+tails cost $o(h)$. The weighted Stieltjes estimate in
+Lemma~\ref{lem:weighted-normal}, applied to $Q_U(\sigma x+t)$,
+then gives
+\[
+ \sup_{|t|\le r_*}\E Q_U(U+t)\le Kh.
+\]
+Its error is bounded by
+$K(h/\sigma)\{\sigma+(1+L^3)\E Q_U(\sigma Z+t)
+ +(1+L^2)\phi(L)\}$, with both endpoints included; the actual
+tail is $o(h)$ by Bernstein and sixth moments.
+The exact averaged polynomial identity therefore gives
+$0\le d(t)\le K(h+\sigma^2+\sigma^3)\le Kh$ for $|t|\le r_*$.
+For larger radii use $d(t)\le K(1+|t|^3)$:
+\[
+ \sup_{r\ge r_*}(h/r)^m\sup_{|u|\le r}d(u)
+                \le K(h/r_*)^m
+                \le K h^{m\eta/2}L^m=o(h).
+\]
+Together with the added $h^3$ in \eqref{eq:weighted-envelope},
+this proves the claim for the full envelope.
+\end{proof}
+
+\begin{lemma}[Coordinates with small variance or small $p_iH_i$]
+\label{lem:weighted-sublevels}
+If $1<s<12/7$ and $W_s<\infty$, then for $q=0,1/2$,
+\begin{equation}\label{eq:weighted-variance-sublevels}
+             \sum_{v_i\le\delta}v_iH_i^{-q}
+                              \le K_s\delta^{(s-q)/6}.
+\end{equation}
+If all sufficiently late coordinates are two-point, write them
+$X_i=\varepsilon_iH_i(B_{p_i}-p_i)$ with $p_i\le1/2$.
+For $1<s<11/6$ with $W_s<\infty$,
+\begin{equation}\label{eq:weighted-mean-sublevels}
+             \sum_{p_iH_i\le\delta}p_iH_i
+                              \le K_s\delta^{(s-1)/5}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+For the first assertion choose
+$0<\eta<2-7s/6$ and then $m>\max(3,2/\eta)$.
+In the variance sublevel, each shell above
+$r_0=L_0'\delta^{1/7}$ has modal deficit at most $K\delta/h^2$.
+The global intensity bound from the preceding proof applies.
+Choose the fixed constant $L_0'$ large enough that its right side
+is below one at $h=r_0/2$. It bounds the full shell intensity
+above that cutoff.
+
+If a shell has total nonmodal intensity at least $h^{-\eta}$,
+its actual variance is at least $ch^{2-\eta}$: the mode has mass
+bounded below, the selected gaps are comparable to $h$, and
+$\Var Y=\frac12\E(Y-Y')^2$ includes the mode--nonmode pairs.
+Lemma~\ref{lem:weighted-rich-shell} gives $E_m(h)\le Kh$.
+Selecting one unit of intensity in a sign and using
+\eqref{eq:weighted-intensity} forces $\delta\ge c h^6$.
+Thus above $r_1=L_1'\delta^{1/6}$ the shell intensity is less
+than $h^{-\eta}$, with a sufficiently large fixed $L_1'$.
+For small $\delta$, $r_1<r_0$. The low, middle and high ranges
+have the following bounds:
+\[
+\begin{array}{c|c}
+ H_i\le r_1 & K\delta^{(s-q)/6}\\
+ r_1<H_i\le r_0 & K\delta^{(2-q-\eta)/7}\\
+ H_i>r_0,\ v_i\le\delta&
+       K\{\delta^{(5-2q)/14}+\delta^{(2-q)/7}\}.
+\end{array}
+\]
+The low range uses $W_s$; the others sum geometric shell bounds
+$h^{2-q}$ times their actual intensities. The chosen range of
+$s,\eta$ makes the last two rows no larger than the first, proving
+\eqref{eq:weighted-variance-sublevels}.
+
+For a two-point coordinate put $m_i=p_iH_i$. On $m_i\le\delta$,
+the modal deficit is $p_i\le\delta/h$ in a shell. The global
+intensity bound is
+$K(\sqrt\delta\,h^{-5/2}+\delta h^{-6})$, valid for the entire
+shell above $r_0=L_0'\delta^{1/6}$ by the same unit-selection
+argument. Choose $0<\eta<(11-6s)/5$. If the shell intensity is at least
+$h^{-\eta}$, then
+Lemma~\ref{lem:weighted-rich-shell} gives $E_m(h)\le Kh$, and selecting
+one unit of intensity forces $\delta\ge c h^5$. Thus shell intensity is below $h^{-\eta}$
+above $r_1=L_1'\delta^{1/5}$. The three contributions to
+$\sum m_i$ are
+\[
+ K\delta^{(s-1)/5},\qquad
+ K\delta^{(1-\eta)/6},\qquad
+ K(\delta^{1/4}+\delta^{1/6}).
+\]
+For the first use $m_i=v_i/((1-p_i)H_i)\le2v_i/H_i$.
+The stated range of $s,\eta$ makes all exponents at least
+$(s-1)/5$. The finite exceptional prefix is absent from either
+sublevel for sufficiently small $\delta$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:weighted-variance}]
+The elementary counting implication
+\[
+ \sum_{a_i\le\delta}a_i\le K\delta^b,\quad0<b<1
+          \quad\Longrightarrow\quad
+ \#\{i:a_i>\delta\}\le K'\delta^{b-1}
+\]
+follows by summing the dyadic intervals
+$(2^k\delta,2^{k+1}\delta]$. For the general core apply it to
+\eqref{eq:weighted-variance-sublevels} with $q=0$ and choose
+$\delta=J^{-6/(6-s)}$. Retain all $v_i>\delta$, at most $KJ$
+original coordinates. The remaining $W_{1/2}$ is at most
+$KJ^{-(s-1/2)/(6-s)}$. Since the full first-moment sum is finite,
+annular grouping above diameter $J^{-1}$ and variance grouping below
+it give, after any selected deletion,
+\[
+ w\le K_s\{J^{-2}+J^{-1-2(s-1/2)/(6-s)}
+                                  +J^{-1/2-3s/2}\}
+       \le K_sJ^{-1-\theta_s},\qquad
+                    \theta_s=\frac{2s-1}{6-s}.
+\]
+The class count is $O(\log J)$ and is included in $O(J)$.
+Lemma~\ref{lem:weighted-rate-transfer} therefore sends every
+available $s\in(1,12/7)$ to every
+$\gamma<T(s)=(3s+4)/(s+5)$.
+Initially an $s>1$ is available by
+Lemma~\ref{lem:weighted-initial-rate}. Availability is downward
+closed. If its supremum below $\sqrt5-1$ were $s_*$, choose
+available $s$ close enough to $s_*$ that $T(s)>s_*$, a contradiction.
+Here $T(s)>s$ exactly below the positive fixed point $\sqrt5-1$.
+Every use fixes $s$ before the limit; no uniform constants or
+conclusion at the endpoint are needed.
+
+For the two-point tail apply the counting implication to
+\eqref{eq:weighted-mean-sublevels} and choose
+$\delta=J^{-5/(6-s)}$. The retained count is $O(J)$ and the
+remaining endpoint mean is at most $KJ^{-(s-1)/(6-s)}$.
+Group the coordinates according to the sign of their nonmodal displacement.
+Within each sign class, apply the grouping estimate after reflection if
+necessary, using the nonnegative raw variables $H_iB_{p_i}$. Their
+negative first-moment term is zero.
+Lemma~\ref{lem:weighted-grouping} gives
+\[
+ w\le K_sJ^{-2-3(s-1)/(6-s)}
+       =K_sJ^{-1-\theta_s^{\rm B}},\qquad
+                   \theta_s^{\rm B}=\frac{2s+3}{6-s}.
+\]
+The finite original prefix is retained individually. This is uniform
+after any selected deletion. The new map is
+$T_{\rm B}(s)=(3s+12)/(s+9)$, with positive fixed point
+$\sqrt{21}-3<11/6$. Starting from any available $s>1$, the same
+supremum argument proves the improved range. First-moment
+summability already followed from
+Lemma~\ref{lem:weighted-initial-rate}.
+\end{proof}
+
+\subsection{Regularity at the selected threshold}
+\label{subsec:weighted-regularity}
+
+\begin{proof}[Proof of Corollary~\ref{cor:weighted-regularity}]
+The general grouping rate above has some $\theta>0$. If
+$F(z+t)=F(z)+\phi(z)t+O(t^2)$ through both signs, take
+$\ell=J^{-a}$ with $1<a<1+\theta$. The exact phase kernel
+\eqref{eq:weighted-phase-identity} has average linear gain
+$\phi(z)\ell/2$ and quadratic error $O(J\ell^2)=o(\ell)$.
+Concentration pays its excursion outside the stated neighborhood.
+Its actual grouping, rounding and normalization costs are $o(\ell)$,
+as in the preceding phase proofs. This contradicts maximality.
+
+More generally, suppose only the left expansion
+$F(z)-F(z-h)=\phi(z)h+O(h^{1+\alpha})$ holds.
+It is enough to take $0<\alpha\le1$, decreasing a larger exponent
+if necessary. A grouping rate $w=O(J^{-1-\theta})$ excludes it
+whenever $\alpha>1/(1+2\theta)$. Choose
+\[
+          \frac{1+\alpha}{2\alpha}<a<1+\theta,\qquad
+          \ell=J^{-a}.
+\]
+Evaluate the rounded array at the lattice point $z-b_J\ell$,
+where the integer $b_J=O(\sqrt{J\log J})$ is large enough that
+$-b_J\ell-W_\ell\in[-2b_J\ell,0]$ except with probability
+$O(J^{-L})$, for a fixed $L>a+1$.
+Hoeffding's inequality supplies this event. The exact noise mean
+and the left expansion give
+\[
+ \E_{\rm phase}F_{\rm rounded}(z-b_J\ell)
+   =F(z)-\phi(z)b_J\ell+\phi(z)\ell/2+o(\ell),
+\]
+since $\ell^\alpha(J\log J)^{(1+\alpha)/2}\to0$.
+The bounded CDF pays the exceptional event. Normal Taylor error
+is $O(J\ell^2\log J)=o(\ell)$; the variance cost is
+$O(J\ell^2)$, and the actual cubic cost is
+$w+O(\sqrt J\ell^2+J\ell^3)=o(\ell)$.
+Thus the same positive continuity correction remains.
+
+For the two-point tail, the rate just proved has
+$\theta=(2s+3)/(6-s)$ for every fixed available
+$s<\sqrt{21}-3$. Its threshold is
+$1/(1+2\theta)=(6-s)/(3s+12)$, whose limit is
+$(\sqrt{21}-3)/6$. Choose $s$ sufficiently close to the endpoint.
+\end{proof}

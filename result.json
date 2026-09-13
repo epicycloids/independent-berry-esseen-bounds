@@ -1,23 +1,24 @@
 {
-  "arithmetic_replayed_leaves": 141533,
-  "comparison_target": "0.44995",
+  "arithmetic_replayed_leaves": 143618,
+  "comparison_target": "0.44988794",
+  "complete_owner_proofs": 8671,
   "containing_band_bound_leaves": 92041,
   "counts": {
-    "accepted": 233574,
+    "accepted": 235659,
     "bands": 1670,
-    "infeasible": 6663,
-    "nodes": 478804
+    "infeasible": 6691,
+    "nodes": 483030
   },
   "cover_file": "certificates/cover.json",
-  "cover_sha256": "2a032df0e9371395f5fc3419cdff27739182bcfbf95789a490cb30a43b7ae533",
-  "date": "2026-09-11",
+  "cover_sha256": "d391cf76401be1f5c4c492bea394850b02d4066f73798b1393402857c667c1e4",
+  "date": "2026-09-13",
   "kappa": "0.099162",
   "large_L_upper_decimal": "0.447055000001",
-  "largest_recorded_upper": 0.44994999935317664,
-  "largest_recorded_upper_fraction": "8105578597689285/18014398509481984",
+  "largest_recorded_upper": 0.4498879364472132,
+  "largest_recorded_upper_fraction": "8104460571768603/18014398509481984",
   "lower_bound_expression": "(sqrt(10)+3)/(6*sqrt(2*pi))",
   "maximum_band_indices": [
-    37
+    96
   ],
   "recorded_runtime": {
     "numpy": "2.4.6",
@@ -26,7 +27,7 @@
     "scipy": "1.15.3"
   },
   "scalar_evidence_directory": "certificates/scalar",
-  "schema": "independent-be-result-v4",
+  "schema": "independent-be-result-v5",
   "sharp_conjecture_resolved": false,
   "small_L_coefficient": "0.3413",
   "small_L_source_limit": "0.01",
@@ -35,7 +36,7 @@
   "stored_gaussian_records": 261369,
   "stored_weight_sets": 1761,
   "title": "An upper bound on the Berry\u2013Esseen constant for independent summands",
-  "upper_bound": "0.44995",
+  "upper_bound": "0.44988794",
   "variance_upper_decimal": "0.540936541549",
-  "version": "0.4.0"
+  "version": "0.5.0"
 }
