@@ -3,7 +3,7 @@
 The [paper](../../paper/finite-arrays/main.tex) proves a strict bound of
 49/120 for two arbitrary independent summands. It proves Esseen's bound
 for arrays consisting of at most three Bernoulli coordinates, or entirely
-of Bernoulli coordinates with a common support diameter, and $C_{\mathrm E}L-\Delta>3/80$ for arrays of at most two Bernoulli
+of Bernoulli coordinates with a common support diameter, and $C_{\mathrm E}L-\Delta\gt 3/80$ for arrays of at most two Bernoulli
 coordinates with positive total variance. Here $L$ is the Lyapunov ratio
 and $\Delta$ is the normal-approximation error. Its
 [contact appendix](../../paper/finite-arrays/contact-proofs.tex) gives the
@@ -14,13 +14,14 @@ The appendix defines the support-index event labels used below.
 [current-results.json](current-results.json) identifies the current exact
 partitions, arithmetic definitions, receipt hashes, and recorded counts.
 The partitions and decision recipes are in
-[current-finite.zip](current-finite.zip). The common-diameter,
-maximal-atom, and product-odds calculations are recorded in
-[results.json](results.json).
+[current-finite.zip](current-finite.zip). The product-odds calculation is recorded in [results.json](results.json).
+The [Bernoulli supplement](../structure/README.md) supplies the
+common-diameter curvature calculation at the smaller coefficient
+$199/500$; positivity at $C_{\mathrm E}$ follows by monotonicity.
 
 | Calculation | Completed arithmetic evidence |
 | --- | --- |
-| Two Bernoulli summands: $C_{\mathrm E}L-\Delta>3/80$ | 63,792 leaves covering the two unit parameter cubes and the support-endpoint unit square, evaluated with separately arranged formulas at 320 bits. |
+| Two Bernoulli summands: $C_{\mathrm E}L-\Delta\gt 3/80$ | 63,792 leaves covering the two unit parameter cubes and the support-endpoint unit square, evaluated with separately arranged formulas at 320 bits. |
 | Three Bernoulli coordinates, arbitrary diameters | Eight recipes, 2,624,314 nodes and 1,312,161 accepted leaves. The bounds were reevaluated at 320 bits, using the producer's mathematical formulas and a separate tree traversal. |
 | Triple/pair `110`, unique representation (`lower110`) | 15,081 independently evaluated leaves. |
 | Triple/pair `210`, unique low/high representation (`low210`) | 113,322 independently evaluated leaves. |
@@ -29,8 +30,7 @@ maximal-atom, and product-odds calculations are recorded in
 | Two triples `221` or `320`, two representations (`tt221_negative`, `tt221_positive`) | 68,963 and 90,233 independently evaluated leaves in its two charts. The positive chart uses the signed divided-difference inequality proved in the appendix. |
 | Equality at 49/120 | 427 lower-event leaves and 34,084 upper-gap-collision leaves satisfy strict negative rejection inequalities at 384 bits. |
 | Two triples `321`, three or two representations (`three_owner321`, `adjacent_owner321`, `endpoint_owner321`) | Complete fixed scalar grids, with direct independent evaluations at 320 bits. |
-| Common-diameter curvature | 224,419 accepted boxes at 192 bits; the primary program was also rerun. |
-| Scalar maximal-atom inequality | 129,024 slabs; a separate coefficient-sum implementation checked them at 256 and 384 bits. |
+| Common-diameter curvature | 275,283 accepted boxes at 192 bits for coefficient $199/500$, reconstructed from 550,563 processed boxes. |
 | Product-odds inequality | Exact Bernstein coefficients in the quadratic field Q(sqrt(5)), with a separate algebraic calculation. |
 
 “Independently evaluated” in the contact rows means a different formulation
@@ -64,8 +64,8 @@ outward interval calculation proves the required strict inequality or a
 necessary contact condition is impossible. Enclosures printed in receipts
 are not trusted as arithmetic inputs.
 
-The broader command below also reconstructs the common-diameter curvature,
-scalar atom, and exact odds calculations. The curvature calculation uses
+The broader command below also reconstructs the common-diameter curvature
+and exact odds calculations. The curvature calculation uses
 its supplied subdivision algorithm; its complete run succeeds only when
 all cells are certified. Exhausting a limit is a failure.
 

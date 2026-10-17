@@ -226,6 +226,14 @@ def controls():
     else:raise AssertionError('Mismatched siblings were accepted')
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--arithmetic',action='store_true');parser.add_argument('--case');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--arithmetic',action='store_true',
+                        help='Reevaluate interval inequalities on the supplied fixed partitions.')
+    domains=json.loads(RECORD.read_text())['domains']
+    cases=sorted({name for name,item in domains.items()
+                  if name.startswith('n3_') or item['file'].endswith('.jsonl')}|{'scalars'})
+    parser.add_argument('--case',choices=cases,
+                        help='Select one frozen arithmetic family; requires --arithmetic.')
+    args=parser.parse_args()
     controls();record=verify(args.arithmetic,args.case)
     print('Current finite certificates: hashes and complete exact partitions passed.'+(' Requested frozen arithmetic passed.' if args.arithmetic else ' Arithmetic was not rerun.'))

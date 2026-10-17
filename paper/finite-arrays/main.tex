@@ -34,7 +34,7 @@ urlcolor=blue!45!black,pdftitle={Berry-Esseen bounds for two summands and Bernou
 \newcommand{\ph}{\phi}
 \title{Berry--Esseen bounds for two summands\\and Bernoulli arrays}
 \author{Logan Bell}
-\date{13 September 2026\quad Version 0.5.0}
+\date{6 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -44,25 +44,35 @@ satisfy the bound with Esseen's constant
 $C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$ whenever there are at most
 three summands, or all nondegenerate summands have the same support
 diameter. In the latter class the constant is optimal. For at most two
-Bernoulli summands the normalized deficit exceeds $3/80$ uniformly.
+Bernoulli summands, the standardized normal-approximation error $\Delta$
+and Lyapunov ratio $\ell$ obey $C_{\mathrm E}\ell-\Delta>3/80$.
 These finite results imply the Esseen bound for an arbitrary independent
 array containing two Bernoulli coordinates with at least $22/23$ of its
 variance, or two arbitrary coordinates with at least $439/440$ of its
-variance. The proofs combine moment optimization, exact contact equations,
-and interval certificates. For a three-point law and two two-point laws
-with a specified triangular threshold, we derive necessary conditions
-for a maximum over the full independent class. The two Bernoulli
-probabilities agree; the remaining masses are affine functions of total
-variance; and a mixed second variation gives a quadratic inequality in
-that variance. The computational supplement supplies interval
-formulas, finite partitions for the contact and small-array calculations,
-and programs for their verification.
+variance. The two-summand proof uses moment optimization to reduce an attained
+maximum to two laws with at most three support points. Contact equations
+and second variations then exclude its possible threshold configurations,
+with interval certificates for the remaining parameter domains. The
+Bernoulli proofs use explicit deficit estimates and a reduction to
+binomial sums. The supplement supplies frozen partitions for the two-law and
+three-Bernoulli calculations, and the arithmetic and deterministic
+subdivision program for the common-diameter curvature inequality.
 \end{abstract}
 
 \setcounter{tocdepth}{2}
 \tableofcontents
 
 \section{Results}\label{sec:main}
+The universal Berry--Esseen problem asks for an estimate valid for every
+independent array. Restrictions on the number or form of the summands can
+give sharper estimates. We study two arbitrary summands and several
+classes of Bernoulli arrays, then use these bounds in arrays whose variance
+is concentrated in two coordinates. For two arbitrary laws, the main
+difficulty is to control their support points and the location of a
+maximizing distribution-function jump. Moment optimization and the
+conditions for an attained maximum reduce this question to finitely many
+threshold configurations.
+
 Let $X_1,\ldots,X_n$ be independent centered real random variables with
 finite absolute third moments. Write
 \begin{equation}\label{eq:normalization}
@@ -135,9 +145,7 @@ $p_{\mathrm E}=(4-\sqrt{10})/2$ and $q_{\mathrm E}=1-p_{\mathrm E}$, the law
 has variance one, and its i.i.d. sums satisfy $\Delta/\ell\to\be$
 \cite{Esseen1956}.
 
-The atom estimates below use the product-measure LYM inequality of
-Yehuda and Yehudayoff \cite{YehudaYehudayoff2026}; the finite-support
-reduction uses classical moment-set methods
+The finite-support reduction uses classical moment-set methods
 \cite{Winkler1988,BertsimasPopescu2005}. The transfer to a Gaussian remainder
 uses the zero-bias estimate obtained independently by Goldstein and Tyurin
 \cite{Goldstein2010,Tyurin2009}. We state these inputs where they enter
@@ -162,17 +170,6 @@ Sections~\ref{sec:moments}--\ref{sec:arbitrary-two} use that deficit
 and moment optimization to prove the bound for two arbitrary summands;
 Appendix~\ref{app:contacts} supplies the contact-case exclusions.
 Section~\ref{sec:transfer} proves the variance-dominance corollaries.
-Section~\ref{sec:atoms} gives separate atom and interval inequalities.
-Section~\ref{sec:triangular-contact} treats a threshold configuration
-outside the settled two-summand and three-Bernoulli classes: one genuine
-three-point coordinate and two two-point coordinates, with the three
-threshold representations specified in
-\eqref{eq:triangle-configurations}. Proposition~\ref{prop:triangle-equal-probabilities}
-equalizes the two probabilities, and Theorem~\ref{thm:triangle-projection}
-eliminates the masses in favor of the original variance. The resulting
-normalization, density and curvature equations are necessary conditions
-for an attained maximum over the full independent class with this
-threshold pattern.
 
 \section{Two Bernoulli summands with arbitrary diameters}\label{sec:two}
 For independent Bernoulli variables $B_i$ with $\Pp(B_i=1)=p_i\in(0,1)$,
@@ -237,7 +234,7 @@ Then
 \end{equation}
 \end{lemma}
 \end{samepage}
-The independent ordinary-interval calculation in the supplement proves these inequalities on the full two unit cubes. Its combined three-domain cover, including the endpoint square below, has 63,792 leaves at 320 bits; the least certified excess over $3/80$ is greater than $2.5361\cdot10^{-7}$. Rational probability-variance maxima and H\"older bounds handle singular faces; Section~\ref{sec:verification} gives the exact acceptance formulas. Inequality~\eqref{eq:two-lower-middle}
+A separately formulated Arb interval calculation in the supplement proves these inequalities on the full two unit cubes. It substitutes intervals directly into the squared-variance-share formulas of Section~\ref{sec:verification}, using the same Arb library as the other calculations. Its combined three-domain cover, including the endpoint square below, has 63,792 leaves at 320 bits; the least certified excess over $3/80$ is greater than $2.5361\cdot10^{-7}$. Rational probability-variance maxima and H\"older bounds handle singular faces; Section~\ref{sec:verification} gives the exact acceptance formulas. Inequality~\eqref{eq:two-lower-middle}
 is proved for every $\alpha,\beta\geq0$ with $\alpha^2+\beta^2=1$.
 The parameters obtained from ordered diameters $0<h_1\leq h_2$ form a
 subset of this domain.
@@ -619,7 +616,7 @@ If that deficit is negative somewhere on
  \left\{p\in[0,1]^n:\sum_{i=1}^np_i=\mu\right\},
 \]
 then, after deleting deterministic coordinates and possibly applying the
-reflection~\eqref{eq:equal-gap-owner-reflection}, a negative global minimum
+reflection~\eqref{eq:equal-gap-owner-reflection}, a negative minimum on a face
 has the form
 \begin{equation}
  N_p\sim\Bin(M,p)+\Bern(x),
@@ -633,7 +630,7 @@ has the form
 Since $\mathcal B(p)\geq V(p)/2$, extend the selected deficit by $+\infty$
 on $V=0$. It then has a global minimum away from the zero-variance boundary.
 Choose a face of least dimension on which the selected deficit is negative
-somewhere. Among its global minimizers, choose one maximizing
+somewhere. Among the global minimizers on that face, choose one maximizing
 $\sum_i p_i^3$. A coordinate at zero can be deleted. A coordinate at one can be deleted after replacing
 $(\mu,k)$ by $(\mu-1,k-1)$. Both operations preserve $k-\mu$ and the selected
 deficit. Each face is identified bijectively with the reduced polytope, so
@@ -641,6 +638,11 @@ global minimality is preserved; the cubic tie-break is preserved as well,
 because the deleted cube is the constant zero or one on that face. Minimal
 dimension therefore makes the chosen minimizer interior.
 
+The next-power-sum choice and the three-coordinate variation adapt
+Mattner's proof of Theorem~1.1 \cite[pp.~5--6]{Mattner2022}.
+Here the original absolute cubic sum is also affine along the variation,
+so the argument applies to the selected deficit. The subsequent
+exclusion of two repeated probability values is an additional step.
 Select three coordinates and write $e_1,e_2,e_3$ for their elementary
 symmetric polynomials. Their generating polynomial is
 \begin{equation}
@@ -817,9 +819,14 @@ the universal bound of one for the neighbor fraction and accepts only if the res
 positive. The finite cover and its strict acceptance bounds are recorded in
 Section~\ref{sec:verification}.
 
-The verifier is
-\path{verify/finite/common_diameter/singleton_certificate.py}.
-The supporting records are listed in \path{certificates/finite/}.
+The verifier is \path{verify/structure/check.py}, run with
+\verb|--arithmetic| and \verb|--case common-gap|.
+Its one-exception calculation uses the smaller coefficient $199/500$.
+The coefficient of $2\be/\sqrt V$ in
+\eqref{eq:one-exceptional-compact-gap} is
+$4W+2+t_xt_p\ge1$, so the certified positive gap remains positive
+at $\be>199/500$. The supporting record is
+\path{certificates/structure/common_gap.json}.
 \end{proof}
 
 \begin{samepage}
@@ -1357,8 +1364,7 @@ $221$ and its transpose $320$ are covered by two contact charts with
 Every compact chart includes its closed boundary. Vanishing masses and
 coalescing support points reduce to the smaller-support cases above.
 A change of closed downset at a collision is assigned to the larger
-closed event, already in the classification. No coordinate is split
-into extra independent factors in this argument.
+closed event, already in the classification. 
 
 At $C=49/120$ all analytic contradictions remain strict. The only two
 lower-floor rejection expressions whose sign convention needs changing
@@ -1479,7 +1485,8 @@ This is nonpositive when $v^{3/2}\ge1084/1159$.
 The exact comparison $(22/23)^3>(1084/1159)^2$ proves the claim.
 \end{proof}
 
-The same comparison can retain the signed error of the head. For
+\subsection{Signed convolution estimates}
+The same comparison can retain the signed error of the selected sum. For
 $H=X_1+X_2$ of variance $v$ and independent remainder $T$, define
 \[
  f_H(x)=F_H(x)-\Phi(x/\sqrt v),\qquad
@@ -1491,7 +1498,7 @@ The exact convolution identity and Lemma~\ref{lem:gaussian-comparison} give
 \end{equation}
 Replacing $\mathcal N_T(f_H)$ by $\|f_H\|_\infty$ can lose the gain
 needed for sharpness. For three independent symmetric signs of size
-$1/\sqrt3$, the two-sign head has $\|f_H\|_\infty=1/4$, whereas
+$1/\sqrt3$, the two-sign partial sum has $\|f_H\|_\infty=1/4$, whereas
 \[
  \mathcal N_T(f_H)=\frac14-\frac12\Phi(-\sqrt2).
 \]
@@ -1503,7 +1510,7 @@ Together with the chord bound for $K(2/3)$, Mills' lower bound gives
 \]
 Thus \eqref{eq:signed-convolution} proves the sharp estimate in this
 example using the actual convolution. The corresponding unsmoothed
-head norm already exceeds the target.
+two-summand norm already exceeds the target.
 
 There is also an explicit Gaussian version which uses the sign of the
 integrated error. If $f=F_U-F_V$ for equal-mean laws,
@@ -1526,309 +1533,19 @@ gives $w\le b/v$. Therefore
 \end{equation}
 The Gaussian is an explicit hypothesis of this last estimate.
 
-\section{Atoms and short intervals}\label{sec:atoms}
-We use the product-measure Lubell--Yamamoto--Meshalkin (LYM) inequality in the form stated by Yehuda and
-Yehudayoff \cite[Theorem~2]{YehudaYehudayoff2026}; their Theorem~1 gives the
-antichain bound used for the atom comparison. The increasing chain with
-rank-conditioned Bernoulli marginals was constructed earlier by Broman,
-van de Brug, Kager, and Meester \cite[Lemma~2.2]{BromanEtAl2012}; see also
-\cite[Lemma~3 and Proposition~5]{YehudaYehudayoff2026}. We give an inductive
-construction, derive the equality condition, and extend the argument to
-closed intervals.
-\begin{samepage}
-\begin{proposition}[Weighted antichains and equality in the atom bound]\label{prop:weighted-antichain}
-Let $B_1,\ldots,B_n$ be independent Bernoulli variables with parameters
-$p_i\in(0,1)$, let $h_i>0$, and put $N=\sum_iB_i$. For every antichain
-$\mathcal A\subseteq2^{[n]}$ (no member properly contains another),
-\begin{equation}
- \sum_{A\in\mathcal A}
- \frac{\Pp(\{i:B_i=1\}=A)}
-      {\Pp(N=|A|)}
- \leq1.                                                \label{eq:weighted-lym}
-\end{equation}
-Consequently,
-\begin{equation}
- \sup_y\Pp\left(\sum_i h_iB_i=y\right)
- \leq\max_k\Pp(N=k).                                   \label{eq:weighted-atom-comparison}
-\end{equation}
-If the mass function of $N$ has a unique mode $m\in\{1,\ldots,n-1\}$,
-then equality in the atom comparison~\eqref{eq:weighted-atom-comparison}
-forces $h_1=\cdots=h_n$.
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-Write $r_i=p_i/(1-p_i)$ and let $\pi_k$ be the conditional law of the random
-subset $\{i:B_i=1\}$ given $N=k$. Thus
-\[
- \pi_k(A)=\frac{\prod_{i\in A}r_i}{e_k(r_1,\ldots,r_n)}
- \qquad(|A|=k),
-\]
-where $e_k$ is the elementary symmetric polynomial. We first construct a
-random maximal chain $A_0\subset A_1\subset\cdots\subset A_n$ whose rank-$k$
-marginal is $\pi_k$.
-
-Proceed by induction on $n$. Write $\pi_j^{(-n)}$ for the analogous rank-$j$
-law on $[n-1]$. Let $\alpha_k=\pi_k\{n\in A\}$, with $\alpha_0=0$ and
-$\alpha_n=1$. For $1\leq k\leq n-1$,
-\[
- \frac{\alpha_k}{1-\alpha_k}
- =r_n\frac{e_{k-1}(r_1,\ldots,r_{n-1})}
-          {e_k(r_1,\ldots,r_{n-1})}.
-\]
-Newton's inequalities make the ratio on the right nondecreasing in $k$, so
-$\alpha_k\leq\alpha_{k+1}$. Couple ranks $k$ and $k+1$ in three parts. With
-probability $\alpha_k$, both sets contain $n$ and their intersections with
-$[n-1]$ use the inductive coupling from $\pi_{k-1}^{(-n)}$ to
-$\pi_k^{(-n)}$. With probability $1-\alpha_{k+1}$, neither set contains
-$n$ and the intersections use the coupling from $\pi_k^{(-n)}$ to
-$\pi_{k+1}^{(-n)}$. With the remaining probability
-$\alpha_{k+1}-\alpha_k$, sample $C\sim\pi_k^{(-n)}$ and use
-$C\subset C\cup\{n\}$. Zero-mass branches are omitted; thus no nonexistent
-rank is invoked when $k=0$ or $k=n-1$. Separating the contain-$n$ and
-exclude-$n$ cases verifies the two marginals. Composing these adjacent
-kernels gives the required chain.
-
-Every maximal chain meets an antichain at most once. Taking expectations of
-the number of intersections gives the weighted LYM inequality~\eqref{eq:weighted-lym}.
-For fixed $y$, the fiber
-\[
- \mathcal F_y=\left\{A:\sum_{i\in A}h_i=y\right\}
-\]
-is an antichain because every $h_i$ is positive. If
-$s_k=\Pp(N=k)$ and $q_k=\pi_k(\mathcal F_y)$, then
-\[
- \Pp\left(\sum_i h_iB_i=y\right)=\sum_ks_kq_k
- \leq\left(\max_ks_k\right)\sum_kq_k
- \leq\max_ks_k,
-\]
-which proves the atom comparison~\eqref{eq:weighted-atom-comparison}.
-
-Suppose equality holds, let $y$ attain the supremum, and let $m$ be the
-unique interior mode. If $M=\max_k s_k$, then the identity
-\[
- M-\Pp\left(\sum_i h_iB_i=y\right)
- =M\left(1-\sum_kq_k\right)+\sum_k(M-s_k)q_k
-\]
-forces $q_m=1$.
-Since every $m$-subset has positive $\pi_m$-mass, every such subset lies in
-$\mathcal F_y$. Given $i\ne j$, choose an $(m-1)$-subset $C$ disjoint from
-$\{i,j\}$. Comparing $C\cup\{i\}$ and $C\cup\{j\}$ gives $h_i=h_j$.
-\end{proof}
-
-
-\begin{samepage}
-\begin{proposition}[An atom and third-moment inequality]\label{prop:signed-atom-hermite}
-Let $B_1,\ldots,B_n$ be independent Bernoulli variables with
-$p_i=\Pp(B_i=1)\in(0,1)$. Let
-\[
- X_i=h_i(B_i-p_i),\qquad h_i>0,\qquad
- a_i=p_i(1-p_i),\qquad t_i=1-2p_i,
-\]
-and put
-\[
- S=\sum_iX_i,\qquad V=\sum_i a_ih_i^2,\qquad
- \kappa=\sum_i a_ih_i^3t_i,\qquad
- \rho=\frac12\sum_i a_ih_i^3(1+t_i^2).
-\]
-Choose $\varepsilon\in\{-1,1\}$ so that
-$\varepsilon\kappa=|\kappa|$; when $\kappa\ne0$, this is
-$\varepsilon=\sgn\kappa$. Set
-\[
- g_i=1+\ke(t_i-\varepsilon t_*)^2,\qquad
- A=\sum_i\frac{a_i}{g_i^2}.
-\]
-For $\nu\geq1$ and $c\in(0,1]$, define
-\[
- \mathcal M(\nu,c)
- :=\sqrt{\frac{\pi\nu c}2}\,
-   \frac1\pi\int_0^\pi
-   \bigl(1-c\sin^2(\theta/2)\bigr)^{\nu/2}\,d\theta .
-\]
-The scalar inequality
-\begin{equation}
- \mathcal M(\nu,1-t^2)\leq1+\ke(t-t_*)^2
- \qquad(\nu\geq1,\ 0\leq t<1),                        \label{eq:signed-atom-scalar}
-\end{equation}
-is proved in Appendix~\ref{app:scalar}. It implies the joint atom and third-moment bound
-\begin{equation}
- \sqrt{2\pi V}\,\frac12\sup_x\Pp(S=x)
- +\frac{|\kappa|}{6V}
- \leq\ke\,\frac{\rho}{V},                             \label{eq:atom-hermite-resource}
-\end{equation}
-for every finite array of centered two-point laws.
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-The identities $\ke t_*=1/6$ and $\ke(1-t_*^2)=1$ give
-\[
- \ke\rho_i
- =a_ih_i^3\left(\frac12+\frac{\varepsilon t_i}{6}\right)
-  +\frac{\ke a_ih_i^3}{2}(t_i-\varepsilon t_*)^2,
- \qquad \rho_i=\frac12a_ih_i^3(1+t_i^2).
-\]
-Since $\varepsilon\kappa=|\kappa|$, the
-inequality~\eqref{eq:atom-hermite-resource} is equivalent to
-\begin{equation}
- \sup_x\Pp(S=x)\sqrt{2\pi V}
- \leq\frac1V\sum_i a_ig_ih_i^3.                       \label{eq:physical-atom-resource}
-\end{equation}
-Let $q_{\max}=\max_k\Pp(N=k)$, where $N=\sum_iB_i$.
-Translation and Proposition~\ref{prop:weighted-antichain} give
-$\sup_x\Pp(S=x)\leq q_{\max}$. H\"older's inequality gives
-\[
- V=\sum_i(a_ig_ih_i^3)^{2/3}(a_i/g_i^2)^{1/3}
- \leq\left(\sum_i a_ig_ih_i^3\right)^{2/3}A^{1/3}.
-\]
-Thus~\eqref{eq:physical-atom-resource} follows if
-\begin{equation}
- q_{\max}\sqrt{2\pi A}\leq1.                           \label{eq:modal-atom-resource}
-\end{equation}
-Equality in this application of H\"older's inequality holds when $h_i$ is
-proportional to $g_i^{-1}$.
-
-Put $c_i=4a_i=1-t_i^2$, $w_i=a_i/(Ag_i^2)$, and $\nu_i=w_i^{-1}$.
-Then $\sum_iw_i=1$ and $\nu_ic_i=4Ag_i^2$. Fourier inversion and
-generalized H\"older give
-\[
- q_{\max}\sqrt{2\pi A}
- \leq\prod_i
- \left\{\frac{\mathcal M(\nu_i,c_i)}{g_i}\right\}^{w_i}.
-\]
-If $\varepsilon t_i\geq0$, the scalar condition~\eqref{eq:signed-atom-scalar}
-applied to $t=\varepsilon t_i$ bounds the corresponding factor by one.
-If $\varepsilon t_i<0$, replace it by $|\varepsilon t_i|$; the left side is
-unchanged and
-\[
- 1+\ke(t_i-\varepsilon t_*)^2
- =1+\ke(|t_i|+t_*)^2
- \geq1+\ke(|t_i|-t_*)^2.
-\]
-Hence every factor is at most one, proving the modal
-bound~\eqref{eq:modal-atom-resource}.
-\end{proof}
-
-
-For any atom $y$, put $m_y=\Pp(S=y)$ and
-$F_S^0(y)=\{F_S^+(y)+F_S^-(y)\}/2$. Then
-\[
- \max\{F_S^+(y)-\Phi(y/B),\Phi(y/B)-F_S^-(y)\}
- =\frac{m_y}{2}+|F_S^0(y)-\Phi(y/B)|.
-\]
-Dividing \eqref{eq:atom-hermite-resource} by $\sqrt{2\pi V}$ gives
-\[
- \frac12\sup_y\Pp(S=y)+\frac{|\kappa|}{6\sqrt{2\pi}V^{3/2}}
- \leq\be\ell.
-\]
-The second term is the uniform amplitude of
-$\kappa(1-z^2)\phi(z)/(6V^{3/2})$, since
-$\sup_z|(1-z^2)\phi(z)|=\phi(0)$.
-
-
-\begin{samepage}
-\begin{theorem}[Closed intervals]\label{thm:interval}
-Let $Y=\sum_{i=1}^n h_iB_i$, where the $B_i$ are independent,
-$0<p_i<1$, and $h_i>0$. For $r\geq0$, put
-$Q(Y,r)=\sup_x\Pp\{Y\in[x,x+r]\}$.
-Choose a nonempty $J\subseteq\{1,\ldots,n\}$, put $d=|J|$,
-$\delta_J=\min_{i\in J}h_i$, and let $s^J_{(1)}\geq\cdots\geq s^J_{(d+1)}$
-be the decreasing arrangement of the rank probabilities of
-$N_J=\sum_{i\in J}B_i$. Then
-\begin{equation}\label{eq:interval}
- Q(Y,r)\leq\sum_{a=1}^L s^J_{(a)},\qquad
- L=\min\{\lfloor r/\delta_J\rfloor+1,d+1\}.
-\end{equation}
-If $r<\delta_J$, $N_J$ has a unique mode $m\in\{1,\ldots,d-1\}$,
-and equality holds, all selected $m$-subset sums lie in one interval of
-length $r$. Consequently $|h_i-h_j|\leq r$ for every $i,j\in J$.
-\end{theorem}
-\end{samepage}
-\begin{proof}
-Condition on the variables outside $J$. For each outside configuration the
-interval is translated, but its length remains $r$. Use the maximal chain
-$A_0\subset\cdots\subset A_d$ from
-Proposition~\ref{prop:weighted-antichain} on $J$, and set
-$H_k=\sum_{i\in A_k}h_i$. Along each chain, $H_{k+1}-H_k\geq\delta_J$,
-so a closed interval of length $r$ contains at most $L$ chain values.
-If $q_k$ is the probability that $H_k$ lies in the translated interval,
-then $0\leq q_k\leq1$ and $\sum_kq_k\leq L$.
-The conditional interval probability is $\sum_k s_k^Jq_k$.
-Choose a set $T$ of $L$ largest ranks and put $\lambda=\min_{k\in T}s_k^J$.
-The exact identity
-\begin{align*}
- \sum_{k\in T}s_k^J-\sum_k s_k^Jq_k
- ={}&\sum_{k\in T}(s_k^J-\lambda)(1-q_k)
- +\sum_{k\notin T}(\lambda-s_k^J)q_k
- +\lambda\left(L-\sum_kq_k\right)
-\end{align*}
-has nonnegative terms, also when the cutoff rank mass is tied.
-Averaging over the outside configurations proves \eqref{eq:interval}.
-
-For equality with $L=1$, every positive-probability outside configuration
-must itself attain the same bound. Fix one such configuration. Uniqueness
-of the mode in the preceding identity forces $q_m=1$ and $q_k=0$ for
-$k\ne m$. Every $m$-subset has positive conditional rank mass, so all of its
-subset sums lie in this one translated interval. For distinct $i,j\in J$,
-choose an $(m-1)$-subset $C$ disjoint from them. The sums for $C\cup\{i\}$
-and $C\cup\{j\}$ differ by $h_i-h_j$, proving the assertion.
-\end{proof}
-The strict cutoff $r<\delta_J$ is necessary for closed intervals: a single
-Bernoulli variable with gap $r$ has its entire mass in $[0,r]$.
-Uniqueness and interiority of the mode enter precisely in the equality
-argument. A boundary mode can attain the atom bound for unequal gaps.
-
-\begin{samepage}
-\begin{corollary}[Interval concentration and selected moments]\label{cor:interval-moments}
-For $S=\sum_i h_i(B_i-p_i)$, let $J\ne\varnothing$ satisfy $h_i>r$ on $J$.
-Write
-\[
- V_J=\sum_{i\in J}p_iq_ih_i^2,\qquad
- \kappa_J=\sum_{i\in J}p_iq_i(q_i-p_i)h_i^3,\qquad
- R_J=\sum_{i\in J}p_iq_i(p_i^2+q_i^2)h_i^3.
-\]
-Then
-\begin{equation}\label{eq:interval-moment}
- \frac12\sqrt{2\pi V_J}\,Q(S,r)+\frac{|\kappa_J|}{6V_J}
- \leq\ke\frac{R_J}{V_J}.
-\end{equation}
-With $\vartheta_J=V_J/B^2$, the full-variance form is
-\begin{equation}\label{eq:interval-full}
- \vartheta_J^{3/2}\frac{\sqrt{2\pi}}2Q(S,r)
- +\frac{|\kappa_J|}{6B^3}\leq\ke\frac{R_J}{B^3}.
-\end{equation}
-\end{corollary}
-\end{samepage}
-\begin{proof}
-Theorem~\ref{thm:interval} gives $Q(S,r)\leq q_J:=\max_k\Pp(N_J=k)$.
-The proof of \eqref{eq:atom-hermite-resource} establishes the stronger
-modal inequality with $q_J$ in place of the atom mass of the selected
-weighted sum. Substitution proves \eqref{eq:interval-moment}; multiplication
-by $V_J/B^3$ proves \eqref{eq:interval-full}.
-\end{proof}
-Near equality in the rank bound~\eqref{eq:interval} with $L=1$ gives no
-uniform closeness of the diameters. For example, let $0<\eta<1/2$,
-$p_1=\eta$, $p_2=1/2$, $h_1=M>1+r$, $h_2=1$, and $0\leq r<1$.
-The unique modal rank is $1$, of mass $1/2$, while
-$Q(Y,r)=\Pp\{Y\in[1,1+r]\}=(1-\eta)/2$.
-Thus the difference from the rank bound is $\eta/2$, although $M-1$ can
-be arbitrarily large.
-
-\input{three-coordinate-contact.tex}
-
 \section{Computational supplement}\label{sec:verification}
 The finite calculations assert inequalities on complete parameter
 domains. The supplied record distinguishes an arithmetic evaluation from
 a check of its stored output. The default command
-\begin{quote}\ttfamily
-uv run --frozen python verify/finite/current/check.py
+\begin{quote}
+\verb|uv run --frozen python verify/finite/current/check.py|
 \end{quote}
 checks source and archive hashes, reconstructs every original contact
 partition, verifies the three Bernoulli-pair forests and all eight
 Bernoulli-triple recipes, and checks the complete scalar Cartesian
 partitions. It performs no contact arithmetic and does not search.
-Adding \texttt{--arithmetic} recomputes every necessary interval bound
-on those frozen cells. The optional \texttt{--case} selects one of the
+Adding \verb|--arithmetic| recomputes every necessary interval bound
+on those frozen cells. The optional \verb|--case| selects one of the
 mathematical domains listed in the record. A failed enclosure is an error;
 the verifier never refines a cell to make it pass.
 
@@ -1842,8 +1559,8 @@ decreasing on $[0,1/4]$. These observations bound the H\"older third-moment expr
 the endpoint odds, and the two terms involving variance shares.
 Monotonicity of $\Phi$ supplies the probability bounds. The supplied
 partition has 63,792 leaves covering the three stated roots, evaluated
-at 320 bits with separately arranged formulas using ordinary intervals
-and squared variance shares.
+at 320 bits by direct interval substitution in separately arranged
+squared-variance-share formulas.
 
 For the Bernoulli triple, a recipe consists of exact midpoint bisections,
 face projections, and terminal inequalities. A terminal inequality is
@@ -1880,16 +1597,17 @@ bound derivatives on the complete rectangles; their accepted counts
 are 4,096 three-representation cells, 4,096 adjacent-representation cells (four represented
 by eight fixed subcells each), and 3,840 endpoint-representation cells.
 
-The common-diameter curvature calculation remains the three-chart
-inequality stated in Lemma~\ref{lem:one-exceptional-compact}: its
-192-bit evaluation accepted 224,419 boxes with no remaining domain.
-The separate scalar atom estimate uses 129,024 rational box slabs, and
-the endpoint-odds proof uses exact Bernstein coefficients in
-$\mathbb Q(\sqrt5)$. Their source programs and fixed controls are supplied
-beside the current certificates. The scalar atom calculation was checked
-by a separate coefficient-sum implementation, and the odds calculation
-by a separate exact polynomial conversion. SymPy is used for the latter
-\cite{Meurer2017}.
+The common-diameter curvature calculation uses the three charts in
+Lemma~\ref{lem:one-exceptional-compact}. At coefficient $199/500$,
+its complete 192-bit evaluation processed 550,563 boxes and accepted
+275,283 boxes, with no remaining domain. Monotonicity in the coefficient
+supplies the stated inequality at $\be$. This record supplies counts
+and a deterministic subdivision program; the arithmetic check
+reconstructs its partition.
+The endpoint-odds proof uses exact Bernstein coefficients in
+$\mathbb Q(\sqrt5)$, checked by a separate exact polynomial conversion.
+Its source programs and fixed controls are supplied beside the current
+certificates. The algebraic calculation uses SymPy \cite{Meurer2017}.
 
 The public archive contains exact leaf
 paths and boxes, projection recipes, and scalar witnesses. Its manifest
@@ -2383,205 +2101,7 @@ upper support.
 The two preceding endpoint lemmas supply the two signs at each endpoint.
 \end{proof}
 
-\section{The scalar Fourier inequality}\label{app:scalar}
-We prove the scalar input \eqref{eq:signed-atom-scalar} used in the atom
-and interval estimates. Write
-\[
- I_0(W)=\frac1\pi\int_0^\pi e^{W\cos\theta}\,d\theta,
- \qquad I_1(W)=I_0'(W).
-\]
-For $W=\nu c/4$, the inequality $1-u\leq e^{-u}$ gives
-\begin{equation}\label{eq:bessel-majorant}
- \mathcal M(\nu,c)\leq\sqrt{2\pi W}\,e^{-W}I_0(W).
-\end{equation}
-\begin{samepage}
-\begin{proposition}[Analytic ranges of the scalar atom bound]\label{prop:scalar-atom-ranges}
-The scalar inequality~\eqref{eq:signed-atom-scalar} holds in each of the
-following ranges:
-\[
- 1\leq\nu\leq2,\quad 0\leq t<1;
- \qquad
- \nu\geq1,\quad 0\leq t\leq\frac1{\sqrt{10}};
- \qquad
- \nu\geq1,\quad t_0\leq t<1,
-\]
-where
-\[
- t_0:=t_*+\sqrt{\frac1{5\ke}}=0.6035634\ldots.
-\]
-The only region not covered by these analytic estimates is
-\begin{equation}
- \nu>2,\qquad \frac1{\sqrt{10}}<t<t_0.                 \label{eq:scalar-atom-strip}
-\end{equation}
-For each fixed $t<1$, $\mathcal M(\nu,1-t^2)\to1$ as $\nu\to\infty$.
-Across the full scalar domain, the limiting margin vanishes only at $t=t_*$.
-This point lies in the already proved range $t<1/\sqrt{10}$, not in the
-closure of the remaining strip~\eqref{eq:scalar-atom-strip}; the latter has
-positive limiting margin at least
-$\ke(1/\sqrt{10}-t_*)^2$.
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-Put $c=1-t^2$ and
-$U(\theta)=(1-c\sin^2(\theta/2))^{1/2}$, with normalized Lebesgue
-measure on $[0,\pi]$. If $1\leq\nu\leq2$, Lyapunov's inequality gives
-\[
- \E U^\nu\leq(\E U^2)^{\nu/2}
- =(1-c/2)^{\nu/2}.
-\]
-Maximizing the resulting squared bound over $c\in[0,1]$ gives
-\[
- \mathcal M(\nu,c)^2
- \leq\frac{\pi\nu}{\nu+1}
-       \left(\frac{\nu}{\nu+1}\right)^\nu
- \leq\frac{8\pi}{27}<1.
-\]
-The middle expression is increasing on $[1,2]$, and $\pi<27/8$ proves the
-last inequality. This proves the first range.
-
-Suppose next that $9/10\leq c<1$. For $x\in[0,\pi/2]$, set
-\[
- D_c(x)=-\log(1-c\sin^2x)-cx^2.
-\]
-The derivative of
-$H_c(x)=\sin(2x)/(1-c\sin^2x)-2x$ is
-\[
- H_c'(x)=
- -\frac{2\sin^2x\{c^2\sin^2x-3c+2\}}
-        {(1-c\sin^2x)^2}.
-\]
-The factor in braces changes sign once. Since $H_c(0)=0$ and
-$H_c(\pi/2)=-\pi$, the function $D_c$ first increases and then decreases,
-so its minimum occurs at an endpoint. The endpoint $x=0$ gives zero, while
-\[
- D_c(\pi/2)=-\log(1-c)-\frac{c\pi^2}{4}\geq0.
-\]
-It suffices to check $c=9/10$, using $\log10>23/10$ and $\pi<22/7$;
-the endpoint expression then increases with $c$. Therefore
-$1-c\sin^2(\theta/2)<e^{-c\theta^2/4}$ when $0<\theta\leq\pi$.
-At $c=1$, the same strict comparison follows from $\tan x>x$ for
-$0<x<\pi/2$.
-Integrating over the original finite interval gives
-\[
- \mathcal M(\nu,c)
- <\operatorname{erf}\!\left(\pi\sqrt{\frac{\nu c}{8}}\right)<1
- \qquad(\nu>0).
-\]
-This proves the second range.
-
-For the third range put $W=\nu c/4$. Equation~\eqref{eq:bessel-majorant} gives
-\[
- \mathcal M(\nu,c)
- \leq e^{-W}I_0(W)\sqrt{2\pi W}<\frac65.
-\]
-For $0<W\leq1$, the series inequality $I_0(W)\leq e^{W^2/4}$ reduces the
-claim to the increasing function
-$\sqrt{2\pi W}\,e^{-W+W^2/4}$ and its value at one. For $W\geq1$, let
-$r=I_1/I_0$. Termwise comparison gives $r(1)<1/2$. The Riccati identity
-$r'=1-r^2-r/W$ then prevents $r$ from crossing
-$1-1/(2W)$, because at a contact its derivative is $1/(4W^2)$ whereas
-the comparison function has derivative $1/(2W^2)$. Thus the displayed
-Bessel expression decreases for $W\geq1$. Finally,
-$\sqrt{2\pi}e^{-3/4}<6/5$ follows from $\pi<22/7$ and the first five
-positive terms of $e^{3/2}$. When $t\geq t_0$, the right side of the
-scalar inequality~\eqref{eq:signed-atom-scalar} is at least $6/5$.
-
-For fixed $c>0$, the final limit follows from the change of variables
-$\theta=\sqrt{8/(\nu c)}\,u$ and dominated convergence in the resulting
-Laplace integral. The limiting right side is $1+\ke(t-t_*)^2$, whose
-gap from one vanishes only at $t=t_*$.
-\end{proof}
-
-\begin{samepage}
-\begin{proposition}[Full scalar atom bound]\label{prop:scalar-atom-bound}
-The scalar inequality~\eqref{eq:signed-atom-scalar} holds for every
-$\nu\geq1$ and $0\leq t<1$, strictly at every finite point. Its margin can
-tend to zero only when $\nu\to\infty$ and $t\to t_*$.
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-Proposition~\ref{prop:scalar-atom-ranges} leaves only the strip in
-the scalar region~\eqref{eq:scalar-atom-strip}. Put
-\[
- a=\frac1{\sqrt{10}},\qquad c=1-t^2,\qquad
- J_\nu(t)=\frac2\pi\int_0^{\pi/2}
- (\cos^2\theta+t^2\sin^2\theta)^{\nu/2}\,d\theta.
-\]
-For integers $m\geq0$, beta integration gives
-\begin{equation}
- q_m(t):=J_{2m}(t)
- =4^{-m}\sum_{k=0}^m
- \binom{2k}{k}\binom{2m-2k}{m-k}t^{2k}.              \label{eq:scalar-even-moment}
-\end{equation}
-If $2m-2\leq\nu\leq2m$, $m\geq2$, H\"older log-convexity and
-$\lambda=(\nu-2m+2)/2$ give
-\[
- J_\nu(t)\leq q_{m-1}(t)^{1-\lambda}q_m(t)^\lambda.
-\]
-Set $\ell_m(t)=\log(q_{m-1}(t)/q_m(t))>0$. Maximizing the resulting factor
-$\sqrt\nu\exp\{-\nu\ell_m(t)/2\}$ over all positive real $\nu$, a larger
-domain than the order slab, gives
-\begin{equation}
- \mathcal M(\nu,1-t^2)
- \leq U_m(t):=
- \sqrt{\frac{\pi(1-t^2)}{2e\ell_m(t)}}\,
- q_{m-1}(t)e^{(m-1)\ell_m(t)}.                       \label{eq:scalar-slab-majorant}
-\end{equation}
-
-It remains to bound finitely many one-variable functions. Divide $[0,1]$
-into the $2048$ exact rational intervals
-$[j/2048,(j+1)/2048]$ and map them affinely onto $[a,t_0]$.
-Outward Arb evaluation of the positive polynomial~\eqref{eq:scalar-even-moment}
-and the slab majorant~\eqref{eq:scalar-slab-majorant} proves
-\begin{equation}
- 1+\ke(t-t_*)^2-U_m(t)>\frac{19}{1000}.              \label{eq:scalar-compact-gap}
-\end{equation}
-The compact gap~\eqref{eq:scalar-compact-gap} holds on every such interval
-and for every $2\leq m\leq64$. These
-$2048\cdot63=129024$ boxes cover
-$2\leq\nu\leq128$ and $a\leq t\leq t_0$, including all four edges.
-The recorded smallest outward lower endpoint exceeds $0.0194747706542$.
-The compact interval proof and independent Arb implementation are, respectively,
-\begin{flushleft}
-\path{verify/finite/scalar_atom/compact_certificate.py}\\
-\path{verify/finite/scalar_atom/independent_certificate.py}
-\end{flushleft}
-Their digests and replay commands are recorded in \path{certificates/finite/}.
-
-For $\nu\geq128$, the Bessel majorant from the proof of
-Proposition~\ref{prop:scalar-atom-ranges} is decreasing because
-$W=\nu c/4\geq1$. Throughout the remaining strip,
-\[
- W\geq32(1-t_0^2).
-\]
-Since $t\geq a>t_*$, the right side of the scalar inequality is at least
-$1+\ke(a-t_*)^2$. Since the Bessel majorant decreases in $W$, its left side
-is at most its value at $W=32(1-t_0^2)$. Thus one outward evaluation gives
-\[
- 1+\ke(a-t_*)^2
- -\sqrt{2\pi W}\,e^{-W}I_0(W)>0.0180176
- \qquad\bigl(W=32(1-t_0^2)\bigr).
-\]
-This proves the tail for every real order, and hence the full scalar
-inequality. All finite-region bounds are strict. All regions outside the
-small-skew range have the fixed positive margins just proved. In the
-small-skew range, the preceding error-function estimate gives
-\[
- 1+\ke(t-t_*)^2-\mathcal M(\nu,1-t^2)
- >\ke(t-t_*)^2+
- \operatorname{erfc}\!\left(
-   \pi\sqrt{\frac{\nu(1-t^2)}8}\right).
-\]
-Hence a vanishing-margin sequence must have $t\to t_*$ and
-$\nu\to\infty$; the Laplace limit in
-Proposition~\ref{prop:scalar-atom-ranges} shows that this boundary is attained
-as a limit.
-\end{proof}
-
-
 \input{contact-proofs.tex}
 \bibliographystyle{plainnat}
-\bibliography{refs}
+{\raggedright\bibliography{refs}}
 \end{document}

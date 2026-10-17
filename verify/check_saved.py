@@ -13,7 +13,7 @@ from scalars import scalar_bounds
 ROOT=Path(__file__).resolve().parent.parent
 KERNEL=ROOT/'verify/kernel'
 sys.path.insert(0,str(KERNEL))
-UPPER=Fraction(8104460571768603,18014398509481984)
+UPPER=Fraction(1013039690742047,2251799813685248)
 CHOICES=((1.,0.),(1.02,-.02),(1.04,-.02))
 CUTOFFS=(.75,.78125,.8125,.84375,.875,.90625,.9375,.96875,1.)
 
@@ -114,11 +114,11 @@ def validate_band(band,evaluators,callback=None):
                 complete_owner_proofs=proof_count,upper=max(uppers),evaluators=recipes)
 
 def validate_cover(cover,result,root=ROOT):
-    require(cover['schema']=='independent-be-cover-v5' and result['schema']=='independent-be-result-v5','Unsupported certificate schema')
+    require(cover['schema']=='independent-be-cover-v6' and result['schema']=='independent-be-result-v6','Unsupported certificate schema')
     require(result['status']=='interval-bound' and result['sharp_conjecture_resolved'] is False,'Wrong result class')
-    require(cover['comparison_target']==result['comparison_target']==result['upper_bound']=='0.44988794','Wrong comparison target')
+    require(cover['comparison_target']==result['comparison_target']==result['upper_bound']=='0.44988','Wrong comparison target')
     require(Fraction(cover['upper_fraction'])==Fraction(result['largest_recorded_upper_fraction'])==finite(result['largest_recorded_upper'])==UPPER,'Exact upper endpoint differs')
-    require(UPPER<Fraction('0.44988794') and cover['geometry_precision_bits']==100,'Invalid upper or geometry precision')
+    require(UPPER<Fraction('0.44988') and cover['geometry_precision_bits']==100,'Invalid upper or geometry precision')
     domain=cover['domain']
     for side in ('lower','upper'):
         require(finite(domain[side])==Fraction(domain[side+'_fraction']) and float.fromhex(domain[side+'_hex'])==domain[side],'Exact endpoint differs')

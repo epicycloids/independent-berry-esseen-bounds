@@ -1,0 +1,232 @@
+{
+  "arithmetic": {
+    "package": "python-flint",
+    "precision_bits": 320,
+    "preconditioner_rule": "At the stored center, evaluate the analytic Jacobian of G using Dual; invert its 2-by-2 Arb matrix; serialize each midpoint with 90 significant decimal digits.",
+    "version": "0.8.0"
+  },
+  "inputs": {
+    "arb_precision_bits": 320,
+    "gaps": [
+      1,
+      1,
+      1,
+      2
+    ],
+    "preconditioner": [
+      [
+        "-1.14081934337561606264701127746167233592801335089053442239082387166095895103172047853219724",
+        "0.0357331416616560488953112628009782914636462966451995878433585784475193648549487915871413563"
+      ],
+      [
+        "0.107199424984968146685933788402934874390938889935598763530075735342558094564846374761424069",
+        "-0.714165307535111449947445087001304020455681754665817036459815278332056322752434636018594266"
+      ]
+    ],
+    "probability_box_radius": "1e-28",
+    "probability_centers": [
+      "0.572751600606024506947692808168800812788025680721556121192349920002408599118833081712780441",
+      "0.337472966089985017834868704005934991923190235570219945758644687622471547813808602603401053"
+    ],
+    "probability_groups": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3
+      ]
+    ],
+    "selected_raw_threshold": 2,
+    "selected_side": "closed"
+  },
+  "interpretation": {
+    "collision_vertices": [
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "coordinate_inequality": "The centered deletion CDF is bounded by q0+B*u-A*u^2+lambda*abs(u)^3. Every non-contact CDF breakpoint, every admissible cubic stationary point, and zero are checked; the positive cubic controls infinity. Exact contacts follow from the enclosed stationary root and the zero integrated score.",
+    "coupling_weights_order": "The three pair outcomes of the gap-1 variables, then the gap-2 singleton.",
+    "hessian_test": "Two exchange directions among the gap-1 variables have the displayed negative eigenvalue; the remaining 2-by-2 probability block has negative B11 and positive determinant.",
+    "root_check": "The displacement enclosures lie strictly inside the box and the displayed derivative row bounds are below one; this certifies one exact stationary root."
+  },
+  "local_and_comparison_checks": {
+    "attaining_threshold_unique_certified": true,
+    "comparison": "Two symmetric Bernoulli coordinates plus two zeros have ratio sqrt(2)/4 at the centered zero threshold.",
+    "constant_group_B11_ball": "[-2.6421111484918896610106947 +/- 3.06e-26]",
+    "constant_group_determinant_ball": "[3.6995792439301485805663201 +/- 5.80e-26]",
+    "coordinate_duals": [
+      {
+        "ambiguous": false,
+        "certified": true,
+        "exact_contact_basis": "Probability stationarity G_i=0 plus zero mean score; original two support masses are positive.",
+        "group": 0,
+        "off_contact_gaps": [
+          {
+            "gap": "[0.17534952625722172452205594 +/- 6.59e-27]",
+            "type": "breakpoint"
+          },
+          {
+            "gap": "[0.33261394862263014539940661 +/- 8.17e-27]",
+            "type": "breakpoint"
+          },
+          {
+            "gap": "[1.7329369484799556401699303 +/- 1.84e-26]",
+            "type": "breakpoint"
+          },
+          {
+            "gap": "[0.135168512838814829764542032 +/- 6.48e-28]",
+            "type": "stationary_or_zero"
+          },
+          {
+            "gap": "[0.1596633302796255358087157 +/- 5.28e-26]",
+            "type": "stationary_or_zero"
+          }
+        ]
+      },
+      {
+        "ambiguous": false,
+        "certified": true,
+        "exact_contact_basis": "Probability stationarity G_i=0 plus zero mean score; original two support masses are positive.",
+        "group": 1,
+        "off_contact_gaps": [
+          {
+            "gap": "[0.01380819810132011791514525 +/- 4.61e-27]",
+            "type": "breakpoint"
+          },
+          {
+            "gap": "[0.5090958148218183734437459 +/- 2.06e-26]",
+            "type": "breakpoint"
+          },
+          {
+            "gap": "[0.15882240225157802515497622 +/- 2.73e-27]",
+            "type": "stationary_or_zero"
+          },
+          {
+            "gap": "[0.0759790755706751501027421 +/- 5.33e-26]",
+            "type": "stationary_or_zero"
+          }
+        ]
+      }
+    ],
+    "coordinate_duals_certified": true,
+    "coupling_balls": [
+      "[0.311529987873025328747862760 +/- 9.42e-28]",
+      "[0.311529987873025328747862760 +/- 9.42e-28]",
+      "[0.311529987873025328747862760 +/- 9.42e-28]",
+      "[0.06541003638092401375641172 +/- 4.44e-27]"
+    ],
+    "coupling_certified": true,
+    "exchange_eigenvalue_ball": "[-0.01696632468570365517053144 +/- 4.37e-27]",
+    "feasibility_certified": true,
+    "hessian_negative_definite_certified": true,
+    "nonglobal_comparison_certified": true,
+    "ratio_ball": "[0.28248894967964153979405802 +/- 5.54e-27]",
+    "threshold_discrepancy_margins": [
+      {
+        "gap": "[0.164071006301353424624938366 +/- 6.45e-28]",
+        "raw_threshold": 0,
+        "side": "closed"
+      },
+      {
+        "gap": "[0.155001967490167594433073864 +/- 4.12e-28]",
+        "raw_threshold": 0,
+        "side": "strict"
+      },
+      {
+        "gap": "[0.063368517261205318833040696 +/- 7.20e-28]",
+        "raw_threshold": 1,
+        "side": "closed"
+      },
+      {
+        "gap": "[0.09957210926678539884580943 +/- 1.95e-27]",
+        "raw_threshold": 1,
+        "side": "strict"
+      },
+      {
+        "gap": "[0.06585178375460557520890972 +/- 1.04e-27]",
+        "raw_threshold": 2,
+        "side": "strict"
+      },
+      {
+        "gap": "[0.07346294764489376709994292 +/- 3.22e-27]",
+        "raw_threshold": 3,
+        "side": "closed"
+      },
+      {
+        "gap": "[0.06695078170359767012944229 +/- 1.63e-27]",
+        "raw_threshold": 3,
+        "side": "strict"
+      },
+      {
+        "gap": "[0.14478849603925132332631433 +/- 4.01e-27]",
+        "raw_threshold": 4,
+        "side": "closed"
+      },
+      {
+        "gap": "[0.08405821646795351206949192 +/- 4.66e-27]",
+        "raw_threshold": 4,
+        "side": "strict"
+      },
+      {
+        "gap": "[0.16483412084591442978966005 +/- 3.47e-27]",
+        "raw_threshold": 5,
+        "side": "closed"
+      },
+      {
+        "gap": "[0.14250251864008352362895707 +/- 1.76e-27]",
+        "raw_threshold": 5,
+        "side": "strict"
+      }
+    ]
+  },
+  "schema": "local-trap-fixed-box-v1",
+  "scope": "One stationary probability box for four independent centered two-point laws; local binary-law stability modulo common scale, and an explicit larger four-slot comparison.",
+  "stationary_root_check": {
+    "box_radius": "1e-28",
+    "contraction_certified": true,
+    "derivative_defect_balls": [
+      [
+        "[+/- 2.85e-27]",
+        "[+/- 1.65e-27]"
+      ],
+      [
+        "[+/- 3.59e-27]",
+        "[+/- 7.48e-27]"
+      ]
+    ],
+    "derivative_row_sum_upper_bounds": [
+      "4.50E-27",
+      "1.107E-26"
+    ],
+    "displacement_bound_balls": [
+      "[+/- 4.50e-55]",
+      "[+/- 1.11e-54]"
+    ],
+    "inclusion": true,
+    "preconditioner_nonsingular": true
+  }
+}

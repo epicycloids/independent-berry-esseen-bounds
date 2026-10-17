@@ -33,25 +33,26 @@
 
 \title{An upper bound on the Berry--Esseen constant\\ for independent summands}
 \author{Logan Bell}
-\date{13 September 2026}
+\date{6 October 2026}
 
 \begin{document}
 \maketitle
 \thispagestyle{fancy}
 \begin{abstract}
-Let $\Delta$ be the Kolmogorov distance between a standardized sum of
-independent centered real random variables and the standard normal law,
-and let $L$ be the normalized sum of third absolute moments. We prove
-that the supremum of $\Delta/L$ is less than $\UpperBound$.
-The argument combines moment bounds for characteristic functions,
-zero-bias comparison, and Prawitz smoothing. It bounds a summand of maximal
-variance separately and compares the sum with a sum of symmetric two-point
-variables having the same variances. The reference characteristic function
-is real, so its difference from the Gaussian can be retained with its sign
-in part of the Fourier integral. Analytic estimates cover small and
-large $L$; an interval calculation covers the intermediate range.
-The largest recorded upper endpoint is approximately $\RecordedUpper$. The supplement
-contains the partition records and arithmetic sources.
+For every finite sum of independent centered real random variables
+with positive total variance and finite third absolute moments, the
+Kolmogorov distance from the standard normal law after normalization
+to variance one is at most $U_*L$. Here $L$ is the normalized sum of
+third absolute moments and $U_*<\UpperBound$.
+The proof compares characteristic functions with those of symmetric
+two-point variables having the same individual variances. Their real
+characteristic-function product retains a signed contribution to the
+smoothing integral. Third-moment excess controls the comparison error;
+the largest summand variance and its third moment sharpen that control.
+Analytic estimates cover small and large $L$, and a finite interval
+calculation covers the remaining moment domain. The accompanying
+certificate gives the complete partitions, numerical enclosures, and
+arithmetic sources.
 
 \end{abstract}
 
@@ -93,14 +94,25 @@ For comparison, \citet{Shevtsova2013} obtained the upper bound $0.5583$
 for general independent summands. The interval calculation proving the
 new upper bound is given in Section~\ref{sec:certificate}.
 
-The argument refines the zero-bias and Fourier estimates of
+The proof refines the zero-bias and Fourier estimates of
 \citet{Tyurin2009} by retaining third-moment excess and logarithmic
 corrections to characteristic-function products. It uses Prawitz
 smoothing and comparison with a sum of symmetric two-point variables
 having the same variances, an approximation studied by
 \citet[Theorem~1.2 and Example~1.4]{MattnerShevtsova2019}.
-The estimates apply to unequal summand variances and use only the
-second and third absolute moments.
+All estimates use only the individual variances and third absolute moments.
+
+The main difficulty is to control the characteristic-function error
+uniformly over arrays with unequal variances. The classical modulus
+estimates do not exploit the vanishing comparison error at zero
+third-moment excess or the sign of the cosine-product displacement.
+Write $f_S$ for the sum's characteristic function, $C_v$ for the
+cosine product, and $g$ for the Gaussian characteristic function.
+We split $f_S-g=(f_S-C_v)+(C_v-g)$. The first term is bounded by
+an error radius. Before the first positive zero of a cosine factor, the second is real
+and nonpositive, so it contributes with its sign in Prawitz's
+smoothing integral. The resulting estimate depends on four moment
+parameters, whose feasible domain admits a finite certified cover.
 
 \subsection{Normalization and moment parameters}
 Replace each $X_j$ by $X_j/\sqrt V$, reuse the notation $X_j$, and
@@ -131,18 +143,14 @@ $v_j^{3/2}\le b_j\le B_R$, and $v_j^{3/2}\le\tau_R$. Thus
 $v_j\le a_R$. Every realizable tuple satisfies these constraints;
 maximizing over the possibly larger set they define gives an upper bound.
 
-For each admissible tuple $(L,d,b,\tau)$, the calculation needs an upper
-bound for $\Delta/L$. We first bound characteristic-function products and
-individual zero-bias errors in Sections~\ref{sec:products}--\ref{sec:current-scalar}.
-The zero-bias differential identity then turns their sum into a bound for
-$|f_S(t)-e^{-t^2/2}|$; Section~\ref{sec:distinguished} treats $X_1$
-separately in this step. A second comparison, with
-$\prod_i\cos(t\sqrt{v_i})$, retains a signed real contribution to the
-error (Section~\ref{sec:current-reference}). Prawitz smoothing converts
-these Fourier bounds into a bound for $\Delta/L$
-(Sections~\ref{sec:smoothing}--\ref{sec:current-smoothing}). Finally,
-Section~\ref{sec:certificate} covers the moment domain by closed boxes
-and evaluates that bound on each box.
+The product and zero-bias estimates in
+Sections~\ref{sec:products}--\ref{sec:current-scalar} bound
+$|f_S(t)-e^{-t^2/2}|$. Section~\ref{sec:distinguished} uses the
+largest-variance summand separately. The comparison with
+$\prod_i\cos(t\sqrt{v_i})$ in Section~\ref{sec:current-reference}
+preserves a signed real error. Smoothing then bounds $\Delta/L$,
+and Section~\ref{sec:certificate} evaluates that bound on a complete
+cover of the moment domain.
 
 \section{Bounds for characteristic-function products}\label{sec:products}
 

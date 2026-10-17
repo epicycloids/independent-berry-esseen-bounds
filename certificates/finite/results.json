@@ -6,21 +6,6 @@
     "sympy": "1.14.0"
   },
   "recorded_primary_results": {
-    "binomial_plus_bernoulli_curvature": {
-      "precision_bits": 192,
-      "processed_boxes": 448835,
-      "accepted_boxes": 224419,
-      "deepest_accepted": 31,
-      "recorded_weakest_lower_bound": "1.85327642560342901102008138512e-7",
-      "program": "verify/finite/common_diameter/singleton_certificate.py",
-      "program_sha256_in_record": "253a72da1a2b14fa37e808fc490f25b231e1964f8ff2f93fb4519ce02cd87121"
-    },
-    "scalar_maximal_atom": {
-      "box_slabs": 129024,
-      "program": "verify/finite/scalar_atom/compact_certificate.py",
-      "program_sha256_in_record": "17d7a6f1e53ab34da3a1a83274eb9fde76b4e2d51b07dce7bd88e654fda32533",
-      "verified_lower_bound_floor": "0.0194747706542"
-    },
     "product_odds": {
       "small_bernstein_degree": [
         60,
@@ -43,39 +28,12 @@
     }
   },
   "source_sha256": {
-    "verify/finite/common_diameter/singleton_certificate.py": "e73a21bb436906492080580e720a07bb483693f2ff91a56001a5828303764253",
-    "verify/finite/scalar_atom/compact_certificate.py": "35410ea2f44560967980d836834cf856c4ec088b9c318d2d17e7c207ca53b75f",
-    "verify/finite/scalar_atom/independent_certificate.py": "4485583a610f80ed3da4532ace33e6128598b242328bc5ec2a07f1ca3209c246",
     "verify/finite/support_odds/exact_certificate.py": "22da22abf118a2552120c330e9c5070355e664a225984bdbf11c5d31d3dddb15",
     "verify/finite/support_odds/failure_controls.py": "19a2416554cd0120fa188a490ac7dbbe54edf122c5ee7d647284ff1b645ab151",
     "verify/finite/support_odds/independent_certificate.py": "a29990f5750b314e9b1a187db3bae94ccad1dee9ce5c87543a0477bfe93754bf"
   },
   "source_preparation": "Executable mathematics matches the recorded programs. The source_sha256 table identifies the supplied files; program_sha256_in_record identifies programs used for the recorded complete evaluations.",
   "recorded_arithmetic_checks": {
-    "binomial_plus_bernoulli_curvature": {
-      "program": "verify/finite/common_diameter/singleton_certificate.py",
-      "program_sha256_in_record": "253a72da1a2b14fa37e808fc490f25b231e1964f8ff2f93fb4519ce02cd87121",
-      "method": "Complete rerun of the primary program.",
-      "precision_bits": 192,
-      "processed_boxes": 448835,
-      "accepted_boxes": 224419,
-      "deepest_accepted": 31,
-      "recorded_weakest_lower_bound": "1.85327642560342901102008138512e-7"
-    },
-    "scalar_maximal_atom": {
-      "program": "verify/finite/scalar_atom/independent_certificate.py",
-      "program_sha256_in_record": "b4cee8bfbe42b25919033ea1551a6cc1abfcf895ba1e19b955f633ddb69be3e5",
-      "method": "Separate implementation using direct coefficient sums.",
-      "precision_bits": [
-        256,
-        384
-      ],
-      "accepted_box_slabs": 129024,
-      "missing_box_slabs": 0,
-      "duplicate_box_slabs": 0,
-      "recorded_weakest_lower_bound_prefix": "0.01947477065428698168738041851412679783677",
-      "recorded_bessel_tail_gap_prefix": "0.018017617783676365214525330669684565"
-    },
     "product_odds": {
       "program": "verify/finite/support_odds/independent_certificate.py",
       "program_sha256_in_record": "34337e3d6087627fbb7cf437838142ba3c32e3da346a72ba137cd529cb658a4e",
@@ -92,5 +50,6 @@
       "output_sha256_in_record": "c89cd96c17800077a3b27c212216b8abf85cb6ad93db74fb71ace74e00368885"
     }
   },
-  "current_finite_record": "current-results.json"
+  "current_finite_record": "current-results.json",
+  "common_diameter_curvature": "../structure/common_gap.json"
 }

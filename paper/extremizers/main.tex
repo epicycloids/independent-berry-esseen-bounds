@@ -36,33 +36,28 @@ urlcolor=blue!45!black,pdftitle={Extremizers for the independent Berry-Esseen in
 \newcommand{\TV}{\mathrm{TV}}
 \title{Extremizers for the independent Berry--Esseen inequality}
 \author{Logan Bell}
-\date{13 September 2026\quad Version 0.5.0}
+\date{6 October 2026\quad Version 0.7.0}
 \begin{document}
 \maketitle
 \begin{abstract}
-Suppose the optimal Berry--Esseen constant for arbitrary independent
-summands exceeds Esseen's constant. We prove that the supremum is attained
-in a class of countable independent convolutions with an infinitely
-divisible remainder and an additive third-moment quantity attached to the
-representation. A maximizing representation can be chosen with
-summands having at most three support points. Its Gaussian and L\'evy
-components vanish, and the supports of its independent summands shrink
-to zero. If infinitely many
-summands are nonconstant, their sum is nonatomic. We also prove a rank
-condition on the finite support configurations that can complete to a
-maximizing threshold. This condition excludes infinitely many finite blocks
-satisfying a stated separation condition. For a maximizing representation
-with at most three support points per summand, total variance one, and
-additive third-moment quantity at most $18481/25000$, we prove
-$\sum_i\Var(X_i)/\diam(\supp X_i)^\gamma<\infty$ for
-$0<\gamma<\sqrt5-1$, where the sum runs over nonconstant coordinates.
-Consequently $\sum_i\E|X_i|<\infty$. If all but finitely many
-nonconstant summands have two support points, the exponent improves to
-$\sqrt{21}-3$. Under the same third-moment bound, the maximizing
-distribution function cannot satisfy
-$F(z+t)=F(z)+\phi(z)t+O(t^2)$ as $t\to0$ through both signs at a
-maximizing threshold $z$. The sharp inequality for all independent arrays
-remains open.
+If the independent Berry--Esseen constant exceeds Esseen's constant, its
+supremum is attained in a class of countable independent convolutions with
+an infinitely divisible remainder. Every original coordinate of an
+unrestricted probability-local maximizer has at most four support points.
+At a full maximum one can choose at most three points per coordinate while
+preserving each coordinate's variance and absolute third moment. For a
+maximizing representation with these three-point coordinates, the Gaussian and
+L\'evy components vanish, its summand supports shrink to zero, and an
+infinitely active sum is nonatomic. For these three-point representations,
+under the additional bound
+$\beta\le18481/25000$ on the additive third-moment quantity at total
+variance one, we prove weighted-variance summability with exponent below
+$\sqrt5-1$, or below $\sqrt{21}-3$ for an eventually two-point
+representation. These estimates exclude specified regularity at a
+maximizing threshold. Contact variations also exclude separated finite
+blocks and Bernoulli tails satisfying explicit gap and nonoverlap
+conditions. The sharp inequality for arbitrary independent arrays remains
+open.
 \end{abstract}
 
 \section{Statements and notation}\label{sec:statements}
@@ -85,18 +80,26 @@ asymptotics give $\ci\ge\ce$ \cite{Esseen1956,Shevtsova2013}.
 
 We use the small-Lyapunov theorem proved in the companion manuscript
 \cite[Theorem~1.1]{BellSmall2026}: with
-$\ell_0=\exp(-\exp(20004))$,
+$\ell_0=\exp(-\exp(97))$,
 \begin{equation}\label{eq:small-input}
  \sum_i\E|X_i|^3\le\ell_0
  \quad\Longrightarrow\quad
  \Delta(\textstyle\sum_iX_i)\le\ce\sum_i\E|X_i|^3.
 \end{equation}
 That theorem extends the uniform smoothing, contamination and local
-comparison methods of He and Cheng \cite{HeCheng2026} to
+comparison methods in the first version of He and Cheng \cite{HeCheng2026} to
 nonidentically distributed arrays, with explicit constants. Its finite input
 is the common-diameter Bernoulli theorem of \cite{BellFinite2026}.
 The present paper concerns the remaining extremal problem at positive
 Lyapunov ratio.
+
+The support theorem below also applies to full maxima at a fixed finite
+horizon. Its probability variations preserve each coordinate's mass and
+mean, while allowing its variance and absolute third moment to change.
+The subsequent compactification, contact propagation and Gaussian
+exclusion concern the unrestricted horizon supremum. These are different
+comparison classes; fixing every individual variance does not supply the
+probability variations used for the support theorem.
 
 \begin{definition}\label{def:representation}
 An admissible representation is a decomposition of the form
@@ -125,9 +128,13 @@ The approximation statement for the whole representation is proved in
 Section~\ref{sec:compactness}.
 
 \begin{theorem}\label{thm:structure}
-If $\ci>\ce$, there is a maximizing admissible representation whose
-variables $X_i$ have at most three support points. Every maximizing
-representation with this support property satisfies
+If $\ci>\ce$, there is a maximizing admissible representation.
+Every maximizing representation has at most four support points per
+original coordinate, and it admits an equally maximizing representation
+with at most three points per coordinate that preserves each original
+variance and absolute third moment, and the independent remainder.
+Every maximizing representation with at most three support points per
+coordinate satisfies
 \begin{equation}\label{eq:main-structure}
  a=0,\qquad \nu=0,\qquad
  \max\{|u|:u\in\supp X_i\}\longrightarrow0.
@@ -153,8 +160,8 @@ branch with the branch $\Phi(x)-\Pp(S<x)$.
 
 \begin{theorem}[Weighted variance of the original coordinates]
 \label{thm:weighted-variance}
-Suppose $\ci>\ce$, and let a maximizing representation as in
-Theorem~\ref{thm:structure} have
+Suppose $\ci>\ce$, and let a maximizing representation with at most
+three support points per original coordinate have
 $\beta\le18481/25000$. For each nonconstant coordinate put
 $H_i=\diam(\supp X_i)$ and $v_i=\Var(X_i)$. Then
 \[
@@ -181,6 +188,21 @@ have two support points, it cannot obey
 \]
 for any $\alpha>(\sqrt{21}-3)/6$.
 \end{corollary}
+
+The small-Lyapunov input prevents the third-moment quantity of a
+maximizing sequence from tending to zero. Compactification supplies the
+full relaxed comparison class. The probability Hessian then gives
+Theorem~\ref{thm:original-support}, including its exact moment-preserving
+three-point representative. Contact-copy variations remove the L\'evy
+remainder and nonshrinking supports; a separate lattice and Fourier
+comparison removes the Gaussian remainder. Together these give
+Theorem~\ref{thm:structure}. For the quantitative
+restrictions, the additional bound on $\beta$ controls the shapes of
+three-point supports. Grouping small coordinates and comparing with
+Gaussian and lattice sums give weighted summability. The grouping rates
+also bound how closely the distribution function can follow its tangent
+at a maximizing threshold; the rare-tail exclusions apply this constraint
+to specified sequences of gaps.
 
 The third-moment bound supplies the two strict curvature inequalities in
 Lemma~\ref{lem:weighted-scalar}; it is not a consequence of attainment.
@@ -209,7 +231,8 @@ The support on the right is the closed support of the actual independent
 remainder. This definition does not condition on the event $S=z$.
 
 \begin{theorem}\label{thm:rank}
-Fix a maximizing representation as in Theorem~\ref{thm:structure} and a
+Fix a maximizing representation with at most three support points per
+original coordinate, as in Theorem~\ref{thm:structure}, and a
 threshold satisfying \eqref{eq:max-data}. There is $k_0$ such that, for
 every finite $I\subset\{k_0,k_0+1,\ldots\}$, the following holds:
 if functions $f_i:\supp X_i\to\R$ satisfy
@@ -439,10 +462,10 @@ its admissible tangent cone when all first derivatives vanish.
 
 \begin{lemma}\label{lem:contacts}
 Let $G_i$ be the CDF of $S-X_i$, and put
-$v_i=\E X_i^2$, $b_i=\E|X_i|^3$, $M_i=\E[X_i|X_i|]$. Then
+$v_i=\E X_i^2$, $\rho_i=\E|X_i|^3$, $M_i=\E[X_i|X_i|]$. Then
 \begin{align}
  G_i(z-u)-F(z)+\phi(z)u+A(u^2-v_i)
-   -C\{|u|^3-b_i-3M_i u\}&\le0,                    \label{eq:coord-contact}\\
+   -C\{|u|^3-\rho_i-3M_i u\}&\le0,                    \label{eq:coord-contact}\\
  Q(y):=F(z-y)-F(z)+\phi(z)y+Ay^2-C|y|^3&\le0.       \label{eq:Q}
 \end{align}
 Equality holds in \eqref{eq:coord-contact} at every support point of
@@ -453,7 +476,7 @@ zeros of $Q$ lie in one bounded interval.
 \begin{proof}
 Replace the raw law of $X_i$ by $(1-t)\Law(X_i)+t\delta_u$.
 The derivatives of mean, variance and third absolute central moment are
-$u$, $u^2-v_i$ and $|u|^3-b_i-3M_i u$. Differentiating
+$u$, $u^2-v_i$ and $|u|^3-\rho_i-3M_i u$. Differentiating
 \eqref{eq:objective} gives \eqref{eq:coord-contact}. Its integral under
 $\Law(X_i)$ is zero. Upper semicontinuity then extends equality from
 almost every point to the entire support. This is the coordinatewise
@@ -469,7 +492,7 @@ $\int Q\,d\eta$. Thus $Q=0$ almost everywhere for $\nu$, and upper
 semicontinuity gives equality on its nonzero support.
 
 In \eqref{eq:coord-contact}, use $v_i\le1$, $|M_i|\le1$ and
-$Cb_i\le C\beta=D$. Its right side at a support point is bounded
+$C\rho_i\le C\beta=D$. Its right side at a support point is bounded
 above by a fixed cubic polynomial in $|u|$ with leading coefficient
 $-C$. The same reasoning applies to \eqref{eq:Q}. Both zero sets are
 therefore bounded uniformly in $i$.
@@ -505,6 +528,220 @@ its second derivatives are
 The second variance derivative in one transfer is $-2d_i^2$, whereas
 mixed moment derivatives in different coordinates vanish. This accounts
 for the diagonal term $-3Dd_i^2$ in \eqref{eq:prob-hessian}.
+
+\subsection{Support of every original coordinate}
+
+The following result has a larger finite-horizon domain than the
+maximizing representations considered elsewhere in this paper. A finite
+array is priced by $R=\sum_i\E|X_i|^3$. In the countable class, $R$ also
+includes the L\'evy cubic integral as in \eqref{eq:profile-moments}; its
+Gaussian remainder has zero price. For total variance $V>0$ the objective
+is $V^{3/2}d_K(S,N(0,V))/R$.
+
+\begin{theorem}[Support of the original coordinates]
+\label{thm:original-support}
+Let independent centered originals, with finite summed variance and
+absolute third moments, form a finite array or the original block of
+an admissible representation. Suppose total variance $V$ and total
+price $R$ are positive. Select a positive closed-CDF branch
+$D=\Pp(S\le y)-\Phi(y/\sqrt V)>0$, after reflection if needed.
+If its ratio $C=V^{3/2}D/R$ is locally maximal against all two-sided
+signed probability changes of one original with bounded density relative
+to its law and compact support, preserving its mass and mean, then every
+original has at most four support points.
+
+If the full objective is globally maximal at a fixed finite horizon
+(zero coordinates allowed), or over the full admissible representation
+class, and the selected branch attains its full discrepancy, there is an
+equally maximizing representation with at most three
+support points per original. It preserves each original variance and
+absolute third moment, the selected threshold, and any independent remainder.
+In particular a four-point original at such a full maximum lies on an
+exact flat probability segment with a three-point endpoint.
+\end{theorem}
+
+\begin{proof}
+Fix one original law $P$ and a signed measure $\delta$ with bounded
+density relative to $P$, supported in a bounded set, and satisfying
+$\int d\delta=\int u\,d\delta=0$. Both signs of sufficiently small
+$\eps$ make $P+\eps\delta$ a centered probability law. Write
+\[
+ v_1=\int u^2\,d\delta,\qquad r_1=\int|u|^3\,d\delta,
+ \qquad z=y/\sqrt V,\qquad q=z\phi(z)(3-z^2).
+\]
+All other components stay fixed. Thus total variance and original price
+are exactly $V+\eps v_1$ and $R+\eps r_1$. At the same raw closed
+event the CDF is affine:
+\[
+ F_\eps(y)=\int\Pp(S-X\le y-u)\,(P+\eps\delta)(du).
+\]
+This requires no density of the deleted law and remains valid at atoms.
+Put $D_\eps=F_\eps(y)-\Phi(y/\sqrt{V+\eps v_1})$ and
+$C_\eps=(V+\eps v_1)^{3/2}D_\eps/(R+\eps r_1)$.
+The two-sided local ceiling gives $C'_0=0$, so
+\[
+ \frac{D'_0}{D}=\frac{r_1}{R}-\frac{3v_1}{2V},
+ \qquad D''_0=-\frac{qv_1^2}{4V^2}.
+\]
+Taking the stationary second logarithmic derivative yields
+\begin{equation}\label{eq:original-rank-hessian}
+ \frac{C''_0}{C}=-\frac{15+q/D}{4}\left(\frac{v_1}{V}\right)^2
+                       +\frac{3r_1v_1}{RV}\le0.
+\end{equation}
+Consequently the admissible directions cannot realize arbitrary pairs
+$(v_1,r_1)$: choosing $v_1=V$ and
+$r_1=R\{(15+q/D)/12+1\}$ would give $C''_0/C=3$.
+
+Any five distinct real points make the evaluation vectors
+$(1,u,u^2,|u|^3)$ have rank four. Indeed a nonzero relation with zero
+absolute-cubic coefficient is a quadratic and cannot vanish at five
+points. Otherwise a function $|u|^3-a-bu-cu^2$ would have five zeros,
+although its continuous second derivative $6|u|-2c$ has at most two
+zeros, contradicting Rolle's theorem twice. If $P$ had five support
+points, choose four independent evaluation columns and disjoint bounded
+neighborhoods of their points with positive $P$ mass. The normalized
+restrictions of $P$ to sufficiently small fixed neighborhoods have an
+invertible four-moment matrix. A signed combination of these restrictions
+therefore realizes zero mass and mean and the forbidden $(v_1,r_1)$.
+Its density relative to $P$ is bounded: the neighborhood masses can be
+arbitrarily small but are positive and fixed. This supplies a nonempty
+two-sided probability interval and contradicts
+\eqref{eq:original-rank-hessian}. Every actual support has at most four
+points, including in the countable class.
+
+Suppose now that one original has four distinct atoms $u_j$ of positive
+masses $p_j$. Its four-moment matrix has rank three: rank four would
+again realize the forbidden pair, while $(1,u,u^2)$ already has rank
+three. Hence $|u_j|^3=a+bu_j+cu_j^2$ on this support. A nonzero vector
+$(d_j)$ annihilating $(1,u,u^2)$ also annihilates $|u|^3$.
+Along the compact feasible interval
+\[
+                 I=\{t:p_j+td_j\ge0\text{ for all }j\},
+\]
+mass, mean, variance and the original absolute third moment stay exactly
+fixed. The selected CDF is affine in $t$; stationarity at the interior
+point $0$ makes its slope zero. At either endpoint at least one mass
+vanishes. Full globality makes that endpoint another global maximizer:
+its selected ratio equals $C$, and its full objective cannot exceed $C$.
+
+Replace all four-point originals successively. This immediately proves
+the finite statement. For countably many originals couple old and new
+coordinates independently across indices. The difference between the
+partly replaced and fully replaced sums has variance at most
+$4\sum_{i>k}v_i\to0$. Every individual price and variance has been
+preserved, so the limiting total $V,R$ and residual are unchanged.
+Portmanteau at the same closed threshold gives
+$F_{\rm new}(y)\ge\limsup_kF_k(y)=F(y)$. The full relaxed ceiling
+forces equality. The fully replaced representation is therefore
+equally maximizing and retains the selected threshold.
+\end{proof}
+
+This theorem gives no positive atom-mass floor and no bound on the number
+of nonconstant originals. It does not assert that every representation
+has three-point coordinates. The three-point moment-face reduction used
+in compactification, Lemma~\ref{lem:threepoint}, instead applies to
+near-supremizing arrays and need not preserve their individual cubic
+prices. No hypothesis $\ci>\ce$ enters
+Theorem~\ref{thm:original-support}.
+
+\subsection{Original convolution factors and their price}
+
+The inequality below is the $p=3$ lower bound in Cox--Kemperman's
+Theorem~(2.6), with parameters~(2.9); their equality condition also gives
+its strictness \cite{CoxKemperman1983}. We give a proof using the centered
+two-point mixture reduction and mixed-derivative argument presented by
+Ruzankin \cite[Theorem~E and Sections~2.1--2.2]{Ruzankin2014}.
+The strict inequality will compare the third-moment costs of an original
+variable and its independent convolution factors.
+
+\begin{lemma}\label{lem:strict-cubic-splitting}
+For independent centered real $U,W$ with finite absolute third moments,
+\[
+                 \E|U+W|^3\ge\E|U|^3+\E|W|^3.
+\]
+Equality holds exactly when at least one variable is identically zero.
+\end{lemma}
+\begin{proof}
+For centered two-point laws on $\{-a,b\}$ and $\{-c,d\}$ with all
+endpoint magnitudes positive, multiply the difference by
+$(a+b)(c+d)$ to obtain
+\begin{align*}
+N={}&bd\{(a+c)^3-a^3-c^3\}
+ +bc\{|d-a|^3-a^3-d^3\}\\
+ &+ad\{|b-c|^3-b^3-c^3\}
+ +ac\{(b+d)^3-b^3-d^3\}.
+\end{align*}
+It vanishes when any argument is zero, and its mixed derivative is
+\[
+ \partial_a\partial_b\partial_c\partial_dN
+       =12\{\min(a,d)+\min(b,c)\}>0.
+\]
+The continuous second derivative of $|x|^3$ justifies this identity
+also across the two absolute-value crossings. Four integrations from
+zero prove $N>0$ throughout the positive orthant.
+
+For a nonzero centered law $U$, let $\mu_-$ and $\mu_+$ be its
+negative-magnitude and positive restrictions to $(0,\infty)$ and put
+$h=\E U_+=\E U_->0$. The measure
+\[
+              M(da,db)=\frac{a+b}{h}\,\mu_-(da)\mu_+(db)
+\]
+has mass $\Pp(U\ne0)$. At label $(a,b)$ choose the centered
+two-point law on $\{-a,b\}$; with remaining mass $\Pp(U=0)$ choose
+the zero law. Integrating its probabilities $b/(a+b),a/(a+b)$
+recovers exactly $\Law(U)$ and its absolute third moment. Use independent
+labels for $U,W$. The conditional difference is strictly positive at
+every pair of nonzero labels and zero if either label is zero.
+The nonzero-label pair has positive probability when both variables
+are nondegenerate. Integrating proves strictness; all moments are finite
+because $|u+w|^3\le4(|u|^3+|w|^3)$. The zero case gives equality.
+\end{proof}
+
+\begin{corollary}\label{cor:original-indecomposable}
+Every nonconstant original at a full global maximum over admissible
+representations is indecomposable as a convolution of two nonconstant
+independent real laws. The same statement holds at a full fixed-horizon
+global maximum if a deterministic-zero original slot is available.
+A genuine three-point original with raw arithmetic-progression support
+$\{0,g,2g\}$ and positive weights $(a,b,c)$ is therefore excluded in
+these classes when $b^2\ge4ac$.
+\end{corollary}
+\begin{proof}
+If a centered original $X$ factors in law as $U_0+W_0$, its finite
+third moment gives finite third moments of both factors. For example
+choose $B$ with $\Pp(|W_0|\le B)>0$ and use independence to bound
+\[
+ \Pp(|W_0|\le B)\E(|U_0|-B)_+^3\le\E|U_0+W_0|^3.
+\]
+Center each factor separately. Their sum still has law $X$, their
+variances add to $\Var(X)$, and Lemma~\ref{lem:strict-cubic-splitting}
+strictly lowers the original price. Replacing $X$ by these two independent
+originals leaves the full sum law, variance and positive selected
+discrepancy fixed and strictly improves the ratio. Reindexing the
+countable class permits the additional coordinate; a fixed finite
+horizon requires the stated zero slot. The L\'evy price is additive
+under residual convolution, so this argument concerns originals.
+
+For completeness, a genuine three-point real law admits such a
+factorization exactly when its support is an arithmetic progression and
+$b^2\ge4ac$. Independent factor supports $A,B$ obey
+$A+B\subset\supp(X)$. Fixing a point of either support makes both
+finite, and $|A+B|\ge|A|+|B|-1$ forces both to have two points.
+Their positive gaps must coincide: otherwise their four pair sums are
+distinct. For raw support $\{0,g,2g\}$ put $m=b+2c$. The Bernoulli
+probabilities are the roots of $t^2-mt+c=0$, with discriminant
+$b^2-4ac$. If this is nonnegative, both roots are in $(0,1)$: their
+sum and product are positive, the polynomial at $1$ is $a>0$, and
+their sum is less than $2$. Their independent sum has exactly the
+specified weights. Conversely two equal-gap bits give those weights
+and discriminant $(p-q)^2\ge0$. Thus splitting is admissible in exactly
+the stated arithmetic case. Nonarithmetic ternaries are indecomposable
+by the support argument; their optimality is not established here.
+\end{proof}
+
+With no free zero slot, a fixed-horizon ceiling does not license the
+additional original.
+\subsection{Atoms of a countable original sum}
 
 \begin{lemma}\label{lem:atoms-modal}
 If the full sum has an atom of mass $m>0$ and each $X_i$ has at most
@@ -577,6 +814,10 @@ Lemma~\ref{lem:contacts}; the second is nonpositive. Maximality forces
 it to be zero. Upper semicontinuity extends this identity to all
 same-sign support pairs, by choosing $H$ on neighborhoods of any two
 specified support points. The case $x=y$ is included.
+
+A pair sum obtained here is a zero of $Q$; it need not belong to the
+L\'evy support. The propagation argument below retains an actual old
+two-sided direction and inserts a new original at such a fixed contact.
 
 For the support count, perturb the L\'evy measure by a finite signed
 measure $\eta=f\nu$ with bounded $f$ supported away from zero. Define
@@ -754,8 +995,11 @@ has $\nu=0$ and $\max\{|u|:u\in\supp X_i\}\to0$.
 \begin{proof}
 Let $x=\sigma u$ be either a nonzero limiting support value or a point
 of $\supp\nu$. In the latter case it is an atom of positive intensity
-by Lemma~\ref{lem:levy-pairs}. Let $y=\sigma v$ be any same-sign global
-contact. For fixed $\eps>0$, append the one raw three-point law
+by Lemma~\ref{lem:levy-pairs}. Retain this actual old two-sided
+probability or intensity direction throughout the argument. Let
+$y=\sigma v$ be any fixed same-sign contact of $Q$; it need not carry
+L\'evy intensity or occur in an existing original. For fixed $\eps>0$,
+append \emph{one} new raw three-point law
 \[
         (1-(1+\eps)t)\delta_0+t\delta_x+\eps t\delta_y,
                       \qquad t\ge0.
@@ -767,7 +1011,10 @@ $s_1=x|x|+\eps y|y|$, its moment derivatives are
  m'=m_1,\quad B'=v_1,\quad B''=-2m_1^2,
  \quad R_*'=|x|^3+\eps|y|^3,\quad R_*''=-6m_1s_1.
 \]
-The raw CDF is affine in $t$. Its Hessian diagonal is consequently
+Both nonzero states belong to this same new original. Its raw CDF is
+affine in $t$, so there is no raw double-shift term in its diagonal.
+Together with the displayed exact recentering derivatives, this gives
+the Hessian diagonal
 \[
  \mathcal K_\sigma(u,u)+2\eps\mathcal K_\sigma(u,v)
                               +\eps^2\mathcal K_\sigma(v,v).
@@ -787,7 +1034,10 @@ uniform radius.
 
 Starting with $Q(x)=0$, this conclusion propagates to $Q(nx)=0$ for
 every positive integer $n$, always using the same old direction and a
-fixed contact at the next step. This contradicts the bounded contact
+fixed contact at the next step. At step $y=nx$, that contact is used
+only in the newly inserted ternary; no mass or intensity at $nx$ is
+removed. Thus the induction requires no residual support membership
+for its pair-created contacts. This contradicts the bounded contact
 set in Lemma~\ref{lem:contacts}. No such $x$ exists. The finite L\'evy
 measure must therefore be zero. The uniformly bounded independent
 supports cannot have a nonzero accumulation along distinct indices, so
@@ -1397,6 +1647,7 @@ radius of the selected finite family tend to zero, independent of $M$.
 \end{proof}
 
 \input{variance-and-regularity.tex}
+\input{rare-tails.tex}
 
 \appendix
 \section{Rational checks for the Gaussian Fourier bound}\label{app:rational}

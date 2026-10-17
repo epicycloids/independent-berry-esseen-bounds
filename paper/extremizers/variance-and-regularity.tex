@@ -5,7 +5,8 @@ We now impose the additional third-moment bound
                        \beta\le\beta_*:=\frac{18481}{25000}.
 \end{equation}
 It supplies the strict scalar curvature inequalities proved below.
-Throughout these sections we use the representation in
+Throughout these sections we use a maximizing representation with at
+most three support points per original coordinate, as in
 Theorem~\ref{thm:structure}, with data
 \eqref{eq:max-data}. Omit deterministic coordinates and put
 \[
@@ -852,6 +853,10 @@ $\alpha q/\lambda$ of $\nu_i$ to its own modal state.
 All laws stay positive for
 $0\le q\le q_0\lambda$, with a fixed $q_0>0$.
 Take the appended coordinate independently of the modified coordinates.
+For the raw convolution calculation below, use the carrier
+$\varepsilon\sum_{j=1}^{N_q}Z_j$ and keep the raw threshold fixed.
+The admissible coordinate is its recentered version
+$\varepsilon(\sum_{j=1}^{N_q}Z_j-2qa)$.
 
 We bound the full convolution error, since an uncontrolled cubic
 Taylor remainder would destroy the estimate. In the weighted
@@ -926,8 +931,8 @@ $J'(0)=-P_2$, where
 Lemma~\ref{lem:weighted-pair} bounds distinct-coordinate
 selections; selections from the same original coordinate have
 weight at most $\sum r_i^2/\lambda^2\le\epsilon/\lambda$ and
-use the envelope. Thus a small fresh gradient is charged, not
-set to zero.
+use the envelope. The lower bound below retains the resulting term
+$-qP_2$.
 
 For completeness, the smooth normalization after removing the
 polynomial part of the CDF is
@@ -1216,7 +1221,7 @@ The elementary counting implication
  \#\{i:a_i>\delta\}\le K'\delta^{b-1}
 \]
 follows by summing the dyadic intervals
-$(2^k\delta,2^{k+1}\delta]$. For the general core apply it to
+$(2^k\delta,2^{k+1}\delta]$. For the three-point representation apply it to
 \eqref{eq:weighted-variance-sublevels} with $q=0$ and choose
 $\delta=J^{-6/(6-s)}$. Retain all $v_i>\delta$, at most $KJ$
 original coordinates. The remaining $W_{1/2}$ is at most

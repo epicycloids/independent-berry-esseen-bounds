@@ -41,14 +41,6 @@ def fixed_checks():
     ctx.prec = 256
     stream = io.StringIO()
     with redirect_stdout(stream):
-        load("common_diameter/singleton_certificate.py").fixed_controls()
-        load("scalar_atom/compact_certificate.py").fixed_controls()
-        scalar = load("scalar_atom/independent_certificate.py")
-        scalar.verify_source_hashes()
-        scalar.coverage_and_deletion_controls(2048)
-        scalar.mathematical_controls()
-        scalar.error_function_controls()
-        scalar.bessel_tail_control()
         algebra = load("support_odds/exact_certificate.py")
         for value, sign in ((3-algebra.SQRT5, 1), (2-algebra.SQRT5, -1),
                             (algebra.SQRT5-algebra.SQRT5, 0)):
@@ -59,16 +51,15 @@ def fixed_checks():
 
 def complete_runs(independent: bool):
     commands = [
-        ["common_diameter/singleton_certificate.py", "--max-depth", "38"],
-        ["scalar_atom/compact_certificate.py"],
         ["support_odds/exact_certificate.py"],
     ]
     if independent:
         commands += [
-            ["scalar_atom/independent_certificate.py", "256", "2048"],
             ["support_odds/independent_certificate.py"],
             ["support_odds/failure_controls.py"],
         ]
+    subprocess.run([sys.executable, str(ROOT / "verify/structure/check.py"),
+                    "--arithmetic", "--case", "common-gap"], check=True)
     for name, *arguments in commands:
         print(f"Running {name}", flush=True)
         subprocess.run([sys.executable, str(HERE / name), *arguments], check=True)

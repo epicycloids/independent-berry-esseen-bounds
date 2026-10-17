@@ -1,0 +1,142 @@
+\section{Two arbitrary binary diameters}\label{sec:two}
+We first justify attainment and separate the boundary cases from the
+open stationary domain. Normalize $V=1$ and take a maximizing sequence
+with ratio at least $c>0$. For two coordinates, $R\ge1/\sqrt2$,
+whereas the discrepancy is at most one, so $R\le1/c$.
+The squares are uniformly integrable, since
+\[
+ \sum_i\E[X_i^2;|X_i|>L]\le\frac1{cL}.
+\]
+After reflection, selected positive closed thresholds stay bounded:
+Chebyshev controls thresholds tending to $-\infty$, and $1-\Phi(y)$
+controls those tending to $+\infty$. Coordinatewise weak limits preserve
+centering and total variance. A weak limit of two-point laws has at most
+two points. Closed-set Portmanteau at the moving thresholds and lower
+semicontinuity of $R$ give a limiting ratio at least the supremum;
+equality follows from its definition. Thus a binary-class maximizer exists.
+
+\subsection{The top threshold and equal-diameter boundary}
+For a centered binary variable on $\{-b,a\}$, $a,b>0$,
+\[
+ v=ab,\qquad \rho=\frac{ab(a^2+b^2)}{a+b}
+                 \ge2(\sqrt2-1)\frac{v^2}{a}.
+\]
+The inequality is the minimum of $(1+x^2)/(1+x)$ for $x=a/b>0$.
+For two such coordinates with total upper endpoint $L$, Cauchy's
+inequality gives $R\ge2(\sqrt2-1)V^2/L$.
+At the top closed threshold the CDF is one, so its ratio is at most
+\[
+ \frac{z\{1-\Phi(z)\}}{2(\sqrt2-1)}
+ \le\frac{e^{-1/2}}{4(\sqrt2-1)}<\frac{37}{100},
+ \qquad z=L/\sqrt V.
+\]
+Here $1-\Phi(z)\le e^{-z^2/2}/2$ follows by translating its Gaussian
+integral. For the final rational comparison,
+$\sqrt e>41/25$, $\sqrt2-1>207/500$ give
+$12500/33948<37/100$.
+Reflection treats the negative strict bottom threshold.
+The common-diameter two-active-bit case was excluded in
+Section~\ref{sec:common}. A zero coordinate leaves exactly the
+one-coordinate problem, whose ratio exceeds $37/100$.
+
+\subsection{Open unequal-diameter stationary points}
+Scale the larger diameter to one and write the other as $t\in(0,1)$.
+Let their upper probabilities be $p,q\in(0,1)$, and put
+\[
+ a=p(1-p),\quad b=q(1-q),\quad
+ r_p=p^2+(1-p)^2,\quad r_q=q^2+(1-q)^2,
+ \quad V=a+t^2b,\quad R=ar_p+t^3br_q.
+\]
+The raw support is $0,t,1,1+t$. The three remaining positive closed
+thresholds have the data
+\[
+ \begin{array}{c|c|c}
+ \text{raw threshold}&F&y\ \text{(centered threshold)}\\\hline
+ 0&(1-p)(1-q)&-p-tq\\
+ t&1-p&-p+t(1-q)\\
+ 1&1-pq&1-p-tq.
+ \end{array}
+\]
+Set $z=y/\sqrt V$, $D=F-\Phi(z)$ and $C=DV^{3/2}/R$.
+At a global maximum, a selected active branch has a local maximum
+even if other thresholds tie. Its three derivatives therefore vanish.
+Define
+\[
+ \alpha=\phi(z)/\sqrt V,\quad
+ A=\frac{3D+z\phi(z)}{2V},\quad\lambda=D/R.
+\]
+After removing the common positive factor $V^{3/2}/R$, the two
+probability derivatives are
+\begin{align*}
+ g_p&=F_p+\alpha+A(1-2p)-\lambda(1-2p)^3,\\
+ g_q&=F_q+\alpha t+At^2(1-2q)-\lambda t^3(1-2q)^3.
+\end{align*}
+Divide the diameter derivative by $q$ for thresholds $0,1$ and by
+$1-q$ for threshold $t$, then multiply by $VR\sqrt V$. Its numerator is
+\begin{equation}\label{eq:gap-gradient}
+ G=\phi(z)RB+3Dwt a\sqrt V\,(r_p-tr_q),
+\end{equation}
+where the pairs $(w,B)$ for these three rows are, respectively,
+\[
+ \bigl(1-q,\ p[(1-p)-t(1-q)]\bigr),\quad
+ \bigl(q,-p[(1-p)+qt]\bigr),\quad
+ \bigl(1-q,(1-p)[p+t(1-q)]\bigr).
+\]
+The extra factors $p$ and $1-p$ in the first and last rows are
+strictly positive in the open chart and can also be removed.
+These factorizations retain cancellation near vanishing probabilities.
+
+\subsection{A compact domain for the necessary equations}
+The probability equations also bound the normalized support points.
+For one centered binary coordinate with law $P_i$, put
+$s_i=\E X_i^2$, $b_i=\E|X_i|^3$, $M_i=\E X_i|X_i|$ and let
+$G_i$ be the deleted CDF. In total-variance-one units define
+\[
+ Q_i(u)=G_i(y-u)-F(y)+\phi(y)u+A(u^2-s_i)
+                 -C\{|u|^3-b_i-3M_i u\}.
+\]
+Its mean under $P_i$ is zero. Probability stationarity says its two
+endpoint values agree, so both equal zero. This uses probability
+stationarity alone, without a full-law majorant.
+Since $Cb_i\le CR=D\le1$, $|M_i|\le s_i\le1$,
+$\phi<2/5$ and $|A|\le13/8$, every active endpoint satisfies
+\[
+ C|u|^3\le4+(2/5+3C)|u|+(13/8)u^2.
+\]
+For $|u|\ge3$, dividing the right side by $u^2$ bounds it by
+$C+793/360$. In particular $|u|<3+8/C$.
+At $C\ge37/100$, the larger normalized diameter $1/\sqrt V$
+is less than twice $911/37$. Hence
+\begin{equation}\label{eq:two-compact-domain}
+ V>\frac{1369}{3319684}>\frac1{2500},\qquad
+ R\ge V^{3/2}/\sqrt2>V/75.
+\end{equation}
+
+The arithmetic certificate covers the three closed cubes
+$(p,q,t)\in[0,1]^3$, conditional on \eqref{eq:two-compact-domain}
+and $C\ge37/100$. Each box is excluded by an empty conditional domain,
+a strict ratio upper bound, or a nonzero enclosure of a required
+probability or factored diameter derivative. One useful ratio bound is
+\[
+ C\le D\sqrt{a/r_p^2+b/r_q^2},
+\]
+which follows from H\"older's inequality applied to $V,R$.
+There are 37287 accepted source leaves in the complete partition.
+An independently written, cancellation-preserving replay checks every
+source condition, using 37421 descendant leaves and no unresolved
+or unstarted region. The input bindings and exact binary forests are
+part of the public certificate. Boundary boxes enclose limits of open
+stationary points; they do not impose stationarity on actual one-bit
+boundary maximizers.
+
+Consequently no competitive unequal-diameter two-active-bit maximum
+can satisfy its necessary equations. The preceding endpoint and
+common-diameter arguments cover all remaining two-active-bit cases.
+Attainment leaves exactly one active coordinate, proving
+Theorem~\ref{thm:two}.
+To require both variances positive, add a centered symmetric binary
+coordinate of diameter tending to zero. Choose the closed threshold
+just above the winning one-coordinate atom. Its CDF, variance and
+third-moment denominator converge to the one-coordinate values.
+Thus the supremum remains $C_1$, and the classification prevents its
+attainment with both coordinates active.

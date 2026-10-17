@@ -1,0 +1,92 @@
+{
+  "all_covers_certified": true,
+  "controls": {
+    "analytic_tail_left": "[1.5015359146202091805331773850217356449188849534445839077 +/- 1.95e-56]",
+    "analytic_tail_right": "[1.41288822609203411122817033760660331018704440682787712401 +/- 8.37e-57]",
+    "passed": true,
+    "price": "199/500",
+    "singleton_anchor": "[0.37790444673091211267625808336804570849884364494830849286 +/- 6.35e-57]",
+    "singleton_inflated_penalty": "[-0.20380357555877538732374191663195429150115635505169150714 +/- 5.11e-57]",
+    "small_variance_margin": "[0.00806826225857902751659321823555780804414991616554493618 +/- 3.37e-57]",
+    "two_summand_anchor": "[0.029886929842555049498086478003434752920699616154748183386 +/- 4.36e-58]",
+    "two_summand_lowered_price": "[-0.012686300113120273913923640953557305607969171701645244759 +/- 4.62e-58]"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "python_flint": "0.8.0"
+  },
+  "original_formulas": {
+    "singleton": {
+      "source_sha256": "3a44b54786d29e7c591f33936f060d803f516a2a0fd537f34166cb9b87c8a41e"
+    },
+    "two_summand": {
+      "source_sha256": "03f90c832b818b16c376571690dbcedbff312abf80bbf47143a2236c59897644"
+    }
+  },
+  "parameters": {
+    "arb_precision": 192,
+    "max_seconds": 145,
+    "price": "199/500",
+    "singleton_max_boxes": 2000000,
+    "singleton_max_depth": 42,
+    "two_summand_max_boxes": 1000000,
+    "two_summand_max_depth": 40
+  },
+  "singleton": {
+    "accepted": 275283,
+    "certified": true,
+    "deepest_accepted": 31,
+    "margin_scope": "Subdivision lower-endpoint diagnostic; not the physical global minimum",
+    "max_boxes": 2000000,
+    "max_depth": 42,
+    "pending": 0,
+    "processed": 550563,
+    "weakest_accepted_box": {
+      "bounds": [
+        [
+          "3/4",
+          "25/32"
+        ],
+        [
+          "21/32",
+          "11/16"
+        ],
+        [
+          "11/16",
+          "3/4"
+        ],
+        [
+          "3/4",
+          "13/16"
+        ]
+      ],
+      "case": "p<=1/2,W<=q^2",
+      "depth": 18
+    },
+    "weakest_accepted_lower": "[1.00470850502400946323587188696775024752487843958504759994e-6 +/- 4.35e-63]"
+  },
+  "source_sha256": "8657bc38f0347cf4598a6e955f7ad54d172b675c2d337e64cf9df430d42e1028",
+  "two_summand": {
+    "accepted": 6822,
+    "certified": true,
+    "deepest_accepted": 16,
+    "margin_scope": "Subdivision lower-endpoint diagnostic; not the physical global minimum",
+    "max_boxes": 1000000,
+    "max_depth": 40,
+    "pending": 0,
+    "processed": 13641,
+    "weakest_accepted_box": {
+      "depth": 13,
+      "p_bounds": [
+        "9/32",
+        "19/64"
+      ],
+      "threshold": 0,
+      "x_bounds": [
+        "19/128",
+        "5/32"
+      ]
+    },
+    "weakest_accepted_lower": "[1.98485451024550899405921459256687008655410294574234233933e-5 +/- 2.96e-62]"
+  }
+}

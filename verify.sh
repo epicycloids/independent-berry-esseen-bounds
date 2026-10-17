@@ -8,14 +8,16 @@ Usage: ./verify.sh [--no-latex]
        ./verify.sh --help
 
 Check file hashes, stored upper-bound records, the default scalar and finite
-certificates, and the extremizer paper's exact rational Gaussian certificate.
+certificates, the Bernoulli structure certificates, the exact rational Gaussian
+certificate, and the fixed unequal-gap observation certificate.
 The default also builds all PDFs under dist/.
 
   --no-latex    Run the checks without building PDFs.
   -h, --help    Show this help and exit without checking or building.
 
 Requires uv and Python 3.12; PDF builds also require Tectonic.
-See verify/README.md and certificates/finite/README.md for reevaluation
+See verify/README.md, certificates/finite/README.md, and
+certificates/structure/README.md for reevaluation
 commands and the scope of the recorded checks.
 USAGE
 }
@@ -41,7 +43,9 @@ uv run --frozen python verify/check_replays.py
 uv run --frozen python verify/check_scalar_certificates.py
 uv run --frozen python verify/paper_values.py
 uv run --frozen python verify/finite/check.py
+uv run --frozen python verify/structure/check.py
 uv run --frozen python paper/extremizers/gaussian_window_certificate.py
+uv run --frozen python verify/observations/local_trap.py
 if [ "$BUILD" = yes ]; then
     ./build.sh
 fi

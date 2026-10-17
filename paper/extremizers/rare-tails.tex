@@ -1,0 +1,275 @@
+\section{Restrictions on infinite Bernoulli tails}\label{sec:rare-tails}
+
+The contact equations also restrict the spacing of infinitely many
+two-point coordinates. The orientation matters: throughout this section
+a selected coordinate is
+\[
+ X_j=h_j(p_j-B_j),\qquad B_j\sim\Bern(p_j),\quad h_j>0.
+\]
+Its negative value has probability $p_j$. We assume $p_j\to0$.
+All statements concern a complete maximizing representation and the
+threshold in \eqref{eq:max-data}. We do not assume that a conditional
+or deleted law is maximizing.
+
+\subsection{A probability equation at the maximizing threshold}
+
+Put $\varphi=\phi(z)$ and
+\begin{equation}\label{eq:right-defect}
+ d(t)=F(z)+\varphi t-At^2+Ct^3-F(z+t),\qquad t\ge0.
+\end{equation}
+The Poisson contact inequality \eqref{eq:Q} gives $d\ge0$.
+Monotonicity of $F$ gives, with a fixed finite $K$,
+\begin{equation}\label{eq:right-defect-growth}
+ d(t)\le\varphi t+|A|t^2+Ct^3,\qquad
+ d(y)-d(x)\le K(y-x)\quad(0\le x\le y\le1).
+\end{equation}
+
+For one selected coordinate put $p=p_j$, $q=1-p$, $h=h_j$.
+If $T_hf(t)=f(t+h)$, the distribution functions of $S$ and $S-X_j$
+satisfy the exact identity
+\[
+ \psi=(qI+pT_h)g,\qquad
+ \psi(t)=F(z+t),\quad g(t)=F_{S-X_j}(z-ph+t).
+\]
+For $p<1/2$, the inverse is its convergent Neumann series. Thus, for
+a polynomially bounded function $f$ with $f(0)=0$,
+\begin{equation}\label{eq:resolvent}
+ [(T_h-I)(qI+pT_h)^{-1}f](0)
+       =q^{-2}\sum_{k\ge1}(-p/q)^{k-1}f(kh).
+\end{equation}
+All series here converge absolutely. Varying the probability at the
+two fixed raw support points and applying \eqref{eq:objective} gives
+\[
+ [(T_h-I)(qI+pT_h)^{-1}\psi](0)
+      =\varphi h-A(1-2p)h^2+C(1-2p)^3h^3.
+\]
+The derivatives of raw mean, central variance and central absolute
+third moment are $-h$, $(1-2p)h^2$ and $(1-2p)^3h^3$.
+This calculation uses probability derivatives, so it remains valid
+when $z$ is an atom. The same operator sends $t,t^2,t^3$ at zero to
+$h,(1-2p)h^2,(1-6pq)h^3$, respectively. Substituting
+\eqref{eq:right-defect} therefore yields
+\begin{equation}\label{eq:rare-score}
+ \sum_{k\ge1}(-p/q)^{k-1}d(kh)
+                   =-2Cp^2q^2(3-4p)h^3<0.
+\end{equation}
+In particular,
+\begin{equation}\label{eq:rare-defect-bound}
+ d(h)\le\sum_{k\ge2}(p/q)^{k-1}d(kh)\le K_1ph
+                      \quad(p\le1/4, h\le1),
+\end{equation}
+where $K_1$ is uniform over the selected tail. The last bound follows
+by summing the linear, quadratic and cubic bounds in
+\eqref{eq:right-defect-growth}.
+
+\subsection{Successive gaps and right-hand regularity}
+
+\begin{theorem}\label{thm:dense-rare-gaps}
+Suppose a maximizing representation contains distinct original
+coordinates $h_j(p_j-B_j)$ with $p_j\to0$, and $h_j$ strictly decreasing
+to zero. If, for some $\nu>1$,
+\begin{equation}\label{eq:actual-gap-mesh}
+                 h_j-h_{j+1}=O(h_j^\nu),
+\end{equation}
+then
+\[
+ F(z+t)=F(z)+\phi(z)t+O(t^{1+\alpha}),\qquad
+ \alpha=\min(1,\nu-1),\quad t\downarrow0.
+\]
+Under the hypotheses of Theorem~\ref{thm:weighted-variance}, the
+representation is consequently impossible if
+\[
+ \nu>1+(\sqrt5-1)/2.
+\]
+Under the same hypotheses, if the complete representation is eventually
+two-point, the sufficient condition improves to
+\[
+ \nu>1+(\sqrt{21}-3)/6.
+\]
+The selected coordinates need not be the whole tail for the regularity
+conclusion. The exclusion uses the grouping estimates for the complete
+representation.
+\end{theorem}
+
+\begin{proof}
+First take $1<\nu\le3$. For each small $x>0$, let $s(x)$ be the
+largest selected gap not exceeding $x$. Equation
+\eqref{eq:actual-gap-mesh} gives
+$0\le x-s(x)\le K_0x^\nu$. Put
+$H(x)=\sup_{0\le t\le x}d(t)$. Choose $r_0>0$ so small that
+\[
+ W_\nu=\sum_{k\ge2}r_0^{k-1}k^\nu<1,
+ \qquad W_3=\sum_{k\ge2}r_0^{k-1}k^3<1.
+\]
+Eventually $p_j/(1-p_j)\le r_0$. Combining
+\eqref{eq:rare-defect-bound} with the one-sided increment bound in
+\eqref{eq:right-defect-growth}, and taking a supremum, gives
+\[
+ H(x)\le c_0x^\nu+\sum_{k\ge2}r_0^{k-1}H(kx)
+                                      \quad(0<x<\delta).
+\]
+For a sufficiently large constant $K_2$, the function
+$B(x)=K_2(x^\nu+x^3)$ dominates $H$ on $[\delta,\infty)$ and satisfies
+\[
+ B(x)-\sum_{k\ge2}r_0^{k-1}B(kx)\ge c_0x^\nu.
+\]
+The positive part $v=(H-B)_+$ is bounded and vanishes outside
+$(0,\delta)$. It obeys
+$v(x)\le\sum_{k\ge2}r_0^{k-1}v(kx)$ for every $x>0$.
+The sum of the coefficients is less than one, so taking the supremum
+forces $v=0$. Hence $d(t)=O(t^\nu)$ at zero. Together with
+\eqref{eq:right-defect}, this gives the asserted regularity. For
+$\nu>3$, apply the argument with exponent three.
+
+We record why a right-hand expansion suffices for the exclusion.
+Suppose the complete representation can be partitioned into $N=O(J)$
+independent groups, increasing its additive third absolute moment by
+at most $w=O(J^{-1-\theta})$, with $\theta>0$. A right-hand expansion
+of order $1+\alpha$, $0<\alpha\le1$, is incompatible with maximality
+when $\alpha>1/(1+2\theta)$.
+Choose
+\[
+ \frac{1+\alpha}{2\alpha}<a<1+\theta,
+ \qquad \ell=J^{-a}.
+\]
+Use the rounding phases of \eqref{eq:weighted-phase-identity} and a
+lattice threshold $z+b\ell$, where $b$ is a positive integer of
+order $\sqrt{J\log J}$ with a sufficiently large fixed coefficient.
+Bounded-range concentration ensures
+$0\le b\ell-W_\ell\le2b\ell$ except with probability $O(J^{-L})$
+for any chosen fixed $L>a+1$. The right-hand expansion and
+$\E W_\ell=-\ell/2$ give
+\[
+ \E_{\boldsymbol u}F_{L_{\boldsymbol u}}(z+b\ell)
+       =F(z)+\varphi b\ell+\varphi\ell/2+o(\ell).
+\]
+The remainder is
+$O((\sqrt{J\log J}\,\ell)^{1+\alpha})=o(\ell)$.
+The exceptional probability and first moment cost are $o(\ell)$
+as well. The normal comparison contributes
+$\Phi(z)+\varphi b\ell+O(J\ell^2\log J)$.
+The actual variance change is $O(J\ell^2)$; grouping and rounding
+increase the cubic quantity by at most
+\[
+ w+O(\sqrt J\,\ell^2+J\ell^3)=o(\ell).
+\]
+All normalization errors are $o(\ell)$. The positive average gain
+$\varphi\ell/2+o(\ell)$ contradicts maximality at the comparison
+threshold.
+
+The grouping estimates for the whole representation proved in
+Section~\ref{sec:weighted-grouping} and the proof of
+Theorem~\ref{thm:weighted-variance} supply
+\[
+ \theta=(2s-1)/(6-s),\quad1<s<\sqrt5-1,
+\]
+and, for an eventually two-point representation,
+\[
+ \theta=(2s+3)/(6-s),\quad1<s<\sqrt{21}-3.
+\]
+Inserting these in $\alpha>1/(1+2\theta)$ and taking $s$ sufficiently
+close to its upper endpoint proves the two stated strict thresholds.
+\end{proof}
+
+For actual gaps $h_j=aj^{-r}$ at every sufficiently large index,
+\eqref{eq:actual-gap-mesh} holds with $\nu=1+1/r$.
+Thus an admissible complete maximizing representation with
+$\beta\le18481/25000$ is excluded for
+$0<r<(\sqrt5+1)/2$, or for
+$0<r<(\sqrt{21}+3)/2$ if it is eventually two-point.
+An asymptotic equivalent for $h_j$ alone does not control its
+successive increments.
+
+\subsection{Nonoverlapping support intervals}
+
+\begin{theorem}\label{thm:nonoverlapping-tail}
+A maximizing representation cannot have the form
+\[
+ S=P+\sum_{j\ge1}h_j(p_j-B_j),
+\]
+where $P$ has finite support and is independent of the tail,
+$0<p_j\le1/2$, $p_j\to0$, and, for some fixed $c>0$,
+\[
+ T_j:=\sum_{k>j}h_k\le h_j,
+ \qquad h_{j+1}\ge c h_j>0
+\]
+at every sufficiently large index. In particular, this excludes
+geometric gaps $h_j=ar^j$ with $0<r\le1/2$ and $p_j\to0$.
+No bound on $\beta$ beyond admissibility is required.
+\end{theorem}
+
+\begin{proof}
+Absorb a finite initial segment into $P$, and suppose the gap
+conditions hold at every index. Put $M(t)=F(z+t)-F(z)$.
+Equations \eqref{eq:right-defect}--\eqref{eq:rare-defect-bound} give
+\[
+ M(t)\le K_3t\quad(t>0),\qquad
+ M(h_j)\ge\varphi h_j-|A|h_j^2-K_1p_jh_j.
+\]
+The gaps decrease, and $h_j\ge h_{j+1}+h_{j+2}\ge2h_{j+2}$.
+Consequently, for all sufficiently large $j$,
+\begin{equation}\label{eq:rare-annulus}
+                  M(h_j)-M(h_{j+2})\ge\varphi h_j/3.
+\end{equation}
+
+Write $b=\sum_jp_jh_j$ and
+$K=\{\sum_jh_j\varepsilon_j:\varepsilon_j\in\{0,1\}\}$.
+This compact set is the support of $\sum_jh_jB_j$.
+For each support state $a$ of $P$ with mass $w_a$, put
+$y_a=a+b-z$. States with $y_a\notin K$ contribute nothing to
+sufficiently small right-hand intervals at $z$.
+For each remaining state choose one expansion
+$y_a=\sum_jh_j\varepsilon_{a,j}$ and put
+\[
+ v_{a,j}=w_a\prod_{k<j}p_k^{\varepsilon_{a,k}}
+                              (1-p_k)^{1-\varepsilon_{a,k}}.
+\]
+If $\varepsilon_{a,j}=1$, its modal child lies at a displacement
+from $z$ between zero and $2h_j$. A zero displacement would require
+an infinite all-one tail, whose probability is zero. Hence
+\begin{equation}\label{eq:rare-prefix-cap}
+ v_{a,j}(1-p_j)\le M(2h_j)\le2K_3h_j,
+                         \qquad v_{a,j}\le4K_3h_j.
+\end{equation}
+Distinct expansions of $y_a$ can only meet at a support-interval
+endpoint when $h_j=T_j$. Such endpoints do not lie in the strict
+raw interval $[y_a-t,y_a)$ corresponding to the right-hand
+increment of the closed CDF.
+
+For a point in $[y_a-h_i,y_a)$ whose first different digit is at
+$j<i$, the chosen digit must be one and the new digit zero.
+The new tail must be within $h_i$ of its maximum $T_j$.
+Thus its digits $j+1,\ldots,i$ are all one, almost surely; the only
+exception would again require an infinite all-one continuation.
+Its first-difference class has mass at most
+$v_{a,j}(1-p_j)\prod_{k=j+1}^ip_k$.
+Equation \eqref{eq:rare-prefix-cap} and
+$h_j/h_i\le c^{-(i-j)}$ bound the total of these earlier classes by
+\[
+ 4K_3h_iR_i,\qquad
+ R_i=\sum_{j<i}\prod_{k=j+1}^i(p_k/c).
+\]
+The recurrence $R_{i+1}=(p_{i+1}/c)(1+R_i)$ gives $R_i\to0$.
+There are only finitely many states of $P$, so all earlier classes
+together have mass $o(h_i)$.
+
+A first different digit after $i+2$ has displacement at most
+$T_{i+2}\le h_{i+2}$ and cannot contribute to the annulus in
+\eqref{eq:rare-annulus}. For large $i$, at least
+$\varphi h_i/4$ therefore comes from indices $i,i+1,i+2$.
+If $P$ has $d$ states, one pair $(a,j)$ among these $3d$ possibilities
+satisfies
+\[
+ \varepsilon_{a,j}=1,\qquad
+ v_{a,j}\ge c_1h_j,\qquad c_1=\varphi/(12d)>0.
+\]
+Once this occurs at $j$, every later prefix of that component includes
+the rare factor $p_j$. For fixed $L$ and $j<k\le j+L$,
+\[
+ \frac{v_{a,k}}{h_k}\le4K_3c^{-L}p_j\longrightarrow0.
+\]
+The same component cannot supply two such pairs within $L$ late
+indices. Choose $L=3d+3$ and $d+1$ disjoint three-index windows
+starting at $N,N+3,\ldots,N+3d$. They require $d+1$ pairs among
+$d$ components over a span smaller than $L$, a contradiction.
+\end{proof}

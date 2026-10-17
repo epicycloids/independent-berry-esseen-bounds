@@ -56,7 +56,7 @@ term in the differential equation
 for comparison with the cosine product. At zero frequency, the checker uses
 the continuous quotient after removing the factors that vanish there.
 
-The logarithmic bounds use $\lambda\in\{3/4,1,3/2,2,3\}$. The checker
+The logarithmic bounds use $\lambda\in\lbrace3/4,1,3/2,2,3\rbrace$. The checker
 verifies the tangent and endpoint conditions at 192-bit Arb precision;
 the evaluator constructs these bounds at 100-bit precision. The affine
 zero-bias bounds use the common slopes $5/4,3/2,2,3,4$.

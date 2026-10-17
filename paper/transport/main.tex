@@ -1,0 +1,701 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,enumitem,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+urlcolor=blue!45!black,pdftitle={Zero-bias transport and extremal Bernoulli arrays},pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bern}{Bern}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\phz}{\phi(0)}
+\newcommand{\Law}{\mathcal L}
+\title{Zero-bias transport and extremal Bernoulli arrays}
+\author{Logan Bell}
+\date{6 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For a finite sum of independent centered real variables, the Wasserstein
+distance to its zero-biased law is at most the sum of the third absolute
+moments divided by twice the total variance. We prove that equality holds
+exactly when all nonconstant summands have one identical two-point law.
+The proof treats arbitrary summand distributions: a same-variance Choquet
+representation reduces the single-law equality problem to three-point
+laws, and an exact conditional-variance identity resolves the remaining
+Bernoulli mixtures. A sharp comparison between lattice span, skewness,
+and zero-bias transport then identifies equality in the Berry--Esseen
+limit obtained by independently repeating a fixed finite block. The
+limiting ratio is at most Esseen's constant, with equality exactly for
+identically distributed Esseen two-point summands and any zero summands.
+\end{abstract}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\section{The problem and the main results}\label{sec:results}
+The classical extremal example for the Berry--Esseen inequality is a sum
+of identically distributed two-point variables. For general independent
+summands, two separate questions arise: what forces two-point support,
+and what forces the resulting laws to agree? This paper answers both
+questions for equality in the optimal zero-bias transport bound. It then
+uses that equality classification in a fixed-block Berry--Esseen limit.
+
+For probability laws with finite first moments, write
+\[
+ W_1(\mu,\nu)=\inf\{\E|U-V|:\Law(U)=\mu,\ \Law(V)=\nu\}.
+\]
+We also write $W_1(U,V)$ for the distance between their laws. If $X$ is
+centered and has variance $v>0$, its zero-biased law is characterized by
+\begin{equation}\label{eq:zero-bias}
+             \E[Xf(X)]=v\E f'(X^*).
+\end{equation}
+This identity holds for every absolutely continuous $f$ for which the
+expectations exist.
+Goldstein and Reinert introduced this transformation and its
+independent-sum replacement construction
+\cite[Definition~1.1 and Lemma~2.1]{GoldsteinReinert1997}.
+Goldstein and Tyurin independently proved the sharp bound
+\begin{equation}\label{eq:single-bound}
+ W_1(X,X^*)\le\frac{\E|X|^3}{2v}
+\end{equation}
+for every centered law with finite third absolute moment
+\cite[Lemma~1.1]{Goldstein2010}\cite[Theorem~3]{Tyurin2009}.
+Every nonconstant two-point law attains equality. Our first result
+characterizes all equality cases, both for one law and for an independent
+array.
+
+Let $X_1,\ldots,X_n$ be independent centered real variables and put
+\begin{equation}\label{eq:array-data}
+ S=\sum_{i=1}^nX_i,\qquad
+ V=\sum_{i=1}^n\E X_i^2>0,\qquad
+ R=\sum_{i=1}^n\E|X_i|^3<\infty.
+\end{equation}
+The denominator $R$ records the original summands. It is generally
+different from $\E|S|^3$.
+
+\begin{theorem}[Equality in zero-bias transport]\label{thm:array-equality}
+For the array in \eqref{eq:array-data},
+\begin{equation}\label{eq:additive-bound}
+                      2V W_1(S,S^*)\le R.
+\end{equation}
+Equality holds if and only if all nonconstant coordinates have one
+identical centered two-point law. Any remaining coordinates are
+identically zero. In particular, equality in \eqref{eq:single-bound}
+holds if and only if $X$ has a two-point law.
+\end{theorem}
+
+The distinction between $R$ and $\E|S|^3$ is necessary even for the
+equality statement. A sum of two or more nonconstant iid Bernoulli
+variables has more than two support points. Its single-law bound is
+therefore strict, although its bound with the original third-moment
+sum is an equality.
+
+For changing arrays with Lyapunov ratio tending to zero and
+Berry--Esseen ratio tending to Esseen's constant, a companion paper
+\cite{BellSmallStructure2026} proves that \eqref{eq:additive-bound}
+approaches equality. Full finite-horizon global optimality in that
+regime gives the exact equality class. The fixed-block theorem below
+has its own asymptotic hypotheses.
+
+The second result concerns repetitions of one fixed independent block.
+Let $S_1,S_2,\ldots$ be independent copies of the sum $S$ in
+\eqref{eq:array-data}. For each integer $m\ge1$, define
+\begin{equation}\label{eq:block-ratio}
+ C_m=\frac{\sqrt m\,V^{3/2}}{R}
+ \sup_x\left|\Pp\left\{\frac{S_1+\cdots+S_m}{\sqrt{mV}}\le x\right\}
+                   -\Phi(x)\right|.
+\end{equation}
+This is the Berry--Esseen ratio for the $mn$ original coordinates,
+whose total variance is $mV$ and whose third-moment sum is $mR$.
+Set
+\[
+ \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},\qquad
+ p_{\mathrm E}=\frac{4-\sqrt{10}}2.
+\]
+
+\begin{theorem}[A fixed block repeated independently]\label{thm:block}
+The limit of \eqref{eq:block-ratio} exists and satisfies
+\begin{equation}\label{eq:block-bound}
+ \lim_{m\to\infty}C_m
+ \le \ce\frac{2V W_1(S,S^*)}{R}\le\ce.
+\end{equation}
+Equality with $\ce$ holds if and only if, for some $h>0$, every
+nonconstant coordinate has the law of $h(B-p_{\mathrm E})$, where
+$B\sim\Bern(p_{\mathrm E})$, or every such coordinate has its reflection.
+The other coordinates are zero.
+\end{theorem}
+
+Esseen's fixed-law asymptotic formula and sharp moment inequality already
+give the constant $\ce$ for iid sums \cite[pp.~160--163]{Esseen1956}.
+Theorem~\ref{thm:block} retains the separate third moments of the original
+block and identifies equality through transport. The proof depends on a
+lattice inequality in which entire binomial laws, rather than only
+two-point laws, attain equality. The original denominator then determines
+which binomial decompositions attain the Berry--Esseen constant.
+
+The block is fixed throughout the limit. The theorem gives no uniform
+remainder estimate for changing laws, and it does not prove the sharp
+Berry--Esseen bound at a finite sample size. Its proof uses the classical
+asymptotic formula.
+
+\section{Zero bias and the independent-sum bound}\label{sec:basic}
+We use two formulas from Goldstein and Reinert
+\cite[Lemma~2.1(2), (4), and (5)]{GoldsteinReinert1997}. The zero-biased
+law of a centered variable $X$ of variance $v>0$ has density
+\begin{equation}\label{eq:density}
+             d_X(u)=\frac1v\E[X\mathbf1_{\{X>u\}}].
+\end{equation}
+For $u<0$, centering rewrites the numerator as
+$-\E[X\mathbf1_{\{X\le u\}}]$, so the density is nonnegative on both
+half-lines. The defining identity gives
+\begin{equation}\label{eq:bias-moments}
+ \E X^*=\frac{\E X^3}{2v},\qquad
+ \E|X^*|=\frac{\E|X|^3}{2v}.
+\end{equation}
+The first follows by taking $f(x)=x^2/2$; the second follows by taking
+$f(x)=x|x|/2$.
+
+For laws with finite first moments, the Wasserstein distance is the
+integral of the absolute CDF difference:
+\begin{equation}\label{eq:cdf-distance}
+       W_1(\mu,\nu)=\int_\R|F_\mu(x)-F_\nu(x)|\,dx.
+\end{equation}
+For example, Goldstein states the optimal quantile coupling in
+\cite[equations~(15)--(16)]{Goldstein2010}. This formula makes both mixture
+convexity and convolution contraction immediate by the triangle
+inequality and Tonelli's theorem.
+
+Discard the zero coordinates of \eqref{eq:array-data} and write
+$v_i=\E X_i^2$, $\rho_i=\E|X_i|^3$, and $T_i=S-X_i$. Choose an index
+$I$, independently of all variables, with
+$\Pp(I=i)=v_i/V$, and replace $X_I$ by an independent variable with its
+zero-biased law. Then
+\begin{equation}\label{eq:replacement}
+                  S^*\ \stackrel{d}=\ T_I+X_I^*.
+\end{equation}
+Indeed, applying \eqref{eq:zero-bias} to each summand, conditional on
+the others, gives
+$\E[Sf(S)]=\sum_i v_i\E f'(T_i+X_i^*)$.
+Consequently
+\begin{equation}\label{eq:bound-chain}
+ \begin{split}
+ W_1(S,S^*)
+ &\le\sum_i\frac{v_i}{V}W_1(S,T_i+X_i^*)\\
+ &\le\sum_i\frac{v_i}{V}W_1(X_i,X_i^*)
+ \le\frac R{2V}.
+ \end{split}
+\end{equation}
+The last step is \eqref{eq:single-bound}. Tyurin's Corollary~1 gives
+the same independent-sum bound \cite{Tyurin2009}.
+
+There are three possible sources of strictness in
+\eqref{eq:bound-chain}: a strict single-coordinate bound, cancellation
+under convolution, and cancellation between replacement components.
+The next two sections determine their equality cases.
+
+\section{Equality for an arbitrary single law}\label{sec:single-equality}
+For a centered law $\mu$ of variance $v>0$ and third absolute moment
+$\rho$, put
+\[
+                 B(\mu)=\frac{2v W_1(\mu,\mu^*)}{\rho}.
+\]
+This quantity is invariant under nonzero scaling and reflection. We first
+settle laws with at most three atoms, then use an exact mixture at fixed
+variance to treat every law.
+
+\subsection{Two-point laws and strict three-point bounds}
+A centered two-point law can be written as $h(B-p)$, with
+$h>0$, $0<p<1$, $q=1-p$, and $B\sim\Bern(p)$. Its variance and third
+absolute moment are
+\[
+        v=h^2pq,\qquad \rho=h^3pq(p^2+q^2).
+\]
+Its zero-biased law is uniform on $[-hp,hq]$, and direct integration
+gives
+\begin{equation}\label{eq:binary-transport}
+                 W_1(\mu,\mu^*)=\frac h2(p^2+q^2).
+\end{equation}
+These are Goldstein's exact two-point formulas
+\cite[Lemma~1.2]{Goldstein2010}; they give $B(\mu)=1$.
+
+\begin{lemma}\label{lem:strict-ternary}
+Every centered law with three distinct support points of positive mass
+has $B(\mu)<1$.
+\end{lemma}
+\begin{proof}
+First suppose none of its atoms is zero. Reflect the law, if necessary,
+so that its support is $x<y<0<z$. Let $\mu_1$ and $\mu_0$ be the
+centered two-point laws on $\{x,z\}$ and $\{y,z\}$. There is a unique
+$\alpha\in(0,1)$ such that
+\[
+                 \mu=\alpha\mu_1+(1-\alpha)\mu_0.
+\]
+The variances are $-xz$ and $-yz$. Thus
+\[
+ \mu^*=\beta\mu_1^*+(1-\beta)\mu_0^*,\qquad
+ \beta=\frac{\alpha x}{\alpha x+(1-\alpha)y}>\alpha.
+\]
+This variance reweighting is Goldstein's mixture identity
+\cite[Theorem~2.1]{Goldstein2010}.
+
+Write $D_j=W_1(\mu_j,\mu_j^*)$ and
+$D_{10}=W_1(\mu_0,\mu_1^*)$. A coupling formed with weights
+$\alpha$, $1-\beta$, and $\beta-\alpha$ gives
+\begin{equation}\label{eq:ternary-coupling}
+ W_1(\mu,\mu^*)
+ \le\alpha D_1+(1-\beta)D_0+(\beta-\alpha)D_{10}.
+\end{equation}
+In contrast, the two-point equalities give
+\[
+                   \frac\rho{2v}=\beta D_1+(1-\beta)D_0.
+\]
+The cross-transport comparison in Goldstein's Lemma~3.1 is strict for
+$x<y<0<z$. More explicitly, integrating the two affine CDF pieces,
+as in \cite[equation~(28) and the following case]{Goldstein2010}, gives
+\[
+ D_1-D_{10}=
+ \begin{cases}
+ \displaystyle
+ \frac{-y(y-x)\{y^2+2z^2-y(x+2z)\}}{(z-x)(z-y)^2},
+       &y(x+z)\le y^2+z^2,\\[2ex]
+ \displaystyle\frac{z^2}{z-x},&y(x+z)>y^2+z^2.
+ \end{cases}
+\]
+In the first case the expression in braces is at least $z(z-y)>0$.
+The second expression is positive as well. Subtracting
+\eqref{eq:ternary-coupling} therefore gives a strictly positive deficit
+$\rho/(2v)-W_1(\mu,\mu^*)$.
+
+It remains to treat an atom at zero. Write the support as
+$\{-ph,0,qh\}$, where $p+q=1$ and, after reflection, $0<p\le q$.
+If the middle mass is $1-\tau\in(0,1)$, the endpoint masses are
+$\tau q$ and $\tau p$. The zero-biased law is uniform on the full
+interval. Integration on its two sides gives, with $r=p^2+q^2$,
+\begin{equation}\label{eq:zero-middle}
+ B(\mu)=
+ \begin{cases}
+ (q-p+2\tau^2p^2)/r,&\tau q\ge p,\\
+ 1+2\tau^2-4\tau pq/r,&\tau q<p.
+ \end{cases}
+\end{equation}
+The deficits are respectively
+$2p^2(1-\tau^2)/r$ and $2\tau(2pq/r-\tau)$. Both are positive:
+in the second case, $2pq/r\ge p/q>\tau$. This direct calculation
+provides strictness at the boundary which Goldstein's proof of
+Theorem~3.1 treats by continuity.
+\end{proof}
+
+\subsection{An exact mixture at fixed variance}\label{sec:choquet}
+Normalize the variance of $\mu$ to one. Consider the convex set
+\[
+ \mathcal K=\left\{\nu:\nu\text{ is a probability law on }\R,
+         \ \int x\,\nu(dx)=0,\ \int x^2\,\nu(dx)\le1\right\}.
+\]
+The inequality on the second moment makes this set weakly compact.
+Indeed, it gives tightness and uniform integrability of first moments,
+since
+\[
+           \int_{|x|>A}|x|\,\nu(dx)\le\frac1A.
+\]
+Centering is therefore preserved under weak limits, and lower
+semicontinuity preserves the second-moment bound. The weak topology on
+$\mathcal K$ is metrizable. Embed finite signed measures in the locally
+convex Hausdorff space whose topology is induced by integration against
+$C_b(\R)$. Choquet's representation theorem applies to $\mathcal K$
+\cite[pp.~333--337, especially Corollary~2 and Lemma~5]{Choquet1960}.
+It gives a probability measure $\pi$ carried by the extreme points,
+with barycenter $\mu$.
+
+Every extreme point of $\mathcal K$ has at most three atoms. To see
+this, suppose $\nu$ charges four disjoint Borel sets $A_1,\ldots,A_4$.
+Choose a nonzero vector $(c_j)_{j=1}^4$ in the nullspace of their three
+feature rows
+\[
+        \left(\int_{A_j}1\,d\nu\right)_j,\quad
+        \left(\int_{A_j}x\,d\nu\right)_j,\quad
+        \left(\int_{A_j}x^2\,d\nu\right)_j.
+\]
+The bounded function $g=\sum_jc_j\mathbf1_{A_j}$ is nonzero
+$\nu$-almost surely on a set of positive mass. For sufficiently small
+$\varepsilon>0$, the distinct measures $(1\pm\varepsilon g)\nu$
+belong to $\mathcal K$ and have average $\nu$, contradicting
+extremality. A law not supported on at most three points admits such
+four sets.
+
+The barycenter identity first holds for bounded continuous functions.
+It identifies $\mu$ with the mixture measure $\int\nu\,\pi(d\nu)$,
+and hence extends to nonnegative Borel functions. In particular,
+\begin{equation}\label{eq:exact-variance-mixture}
+ 1=\int\left(\int x^2\,\nu(dx)\right)\pi(d\nu),\qquad
+ \rho(\mu)=\int\rho(\nu)\,\pi(d\nu).
+\end{equation}
+Every inner second moment is at most one. Therefore it equals one
+for $\pi$-almost every component. The decomposition is consequently
+into centered laws of the \emph{same} variance, with no degenerate
+component.
+
+For these components the zero-bias transformation uses the same
+mixture weights. One can check this without any choice of coupled
+variables: for a Borel set $A$, the measurable positive kernel
+\begin{equation}\label{eq:bias-kernel}
+             \nu^*(A)=\int x\left(\int_0^x\mathbf1_A(u)\,du\right)\nu(dx)
+\end{equation}
+has total mass one and satisfies \eqref{eq:zero-bias}. For negative
+$x$, the inner integral is oriented, so its product with $x$ remains
+nonnegative. Tonelli's theorem gives
+\begin{equation}\label{eq:same-weight}
+                        \mu^*=\int\nu^*\,\pi(d\nu).
+\end{equation}
+All required first moments are integrable by
+\eqref{eq:bias-moments} and \eqref{eq:exact-variance-mixture}. Thus
+\begin{equation}\label{eq:mixture-bound}
+ W_1(\mu,\mu^*)
+ \le\int W_1(\nu,\nu^*)\,\pi(d\nu)
+ \le\frac12\int\rho(\nu)\,\pi(d\nu)=\frac{\rho(\mu)}2.
+\end{equation}
+Goldstein's Theorem~2.2 gives this convexity at fixed variance; it also
+explains why unequal mixture variances cannot be used here
+\cite[Remark~2.2]{Goldstein2010}. The exact barycenter above permits
+its use in the equality problem for an arbitrary law.
+
+If $B(\mu)=1$, the nonnegative component deficits in
+\eqref{eq:mixture-bound} have integral zero. Lemma~\ref{lem:strict-ternary}
+then shows that almost every component is a two-point law.
+
+\subsection{Distinct binary components cancel}
+A centered unit-variance two-point law is uniquely parametrized by
+$a>0$:
+\[
+ \nu_a=\frac1{1+a^2}\delta_{-a}
+              +\frac{a^2}{1+a^2}\delta_{1/a}.
+\]
+Its signed third moment is $c(a)=1/a-a$, a strictly decreasing
+continuous function with a continuous inverse. This parametrization
+is Borel, since moments are measurable limits of bounded truncations.
+Push the representing measure $\pi$ to the parameter $a$.
+
+The signed CDF difference from the uniform zero-biased law is
+\begin{equation}\label{eq:binary-cdf}
+ f_a(x)=F_{\nu_a}(x)-F_{\nu_a^*}(x)
+ =\frac1{1+a^2}-\frac{x+a}{a+1/a}\quad(-a<x<1/a),
+\end{equation}
+and is zero outside that interval, apart from irrelevant endpoint
+values. Its zero is $c(a)$. If $a<b$, then $f_a>0$ and $f_b<0$ on
+\begin{equation}\label{eq:opposite-interval}
+          (\max\{-a,c(b)\},\ \min\{1/b,c(a)\}).
+\end{equation}
+This interval has positive length: each of $-a$ and $c(b)$ is
+strictly smaller than each of $1/b$ and $c(a)$.
+
+If the parameter distribution is not a point mass, choose two
+distinct points $a<b$ in its support. On a compact subinterval of
+\eqref{eq:opposite-interval}, sufficiently small parameter
+neighborhoods retain the two opposite signs, bounded away from zero.
+Both neighborhoods have positive probability. For every $x$ in that
+subinterval,
+\[
+ \E|f_a(x)|-|\E f_a(x)|
+       =2\min\{\E(f_a(x))_+,\E(f_a(x))_-\}>0.
+\]
+Here $u_+=\max(u,0)$ and $u_-=\max(-u,0)$. Integrating gives a
+strict triangle inequality in the first line of
+\eqref{eq:mixture-bound}. Fubini is justified by
+$\int\E|f_a(x)|\,dx=\int\rho(\nu_a)\,\pi(da)/2<\infty$.
+Therefore equality forces a single binary component. Scaling back
+proves the single-law assertion in Theorem~\ref{thm:array-equality}.
+
+\section{Equality for independent arrays}\label{sec:array}
+If any nonconstant coordinate is not two-point, the last inequality
+in \eqref{eq:bound-chain} is strict. We may therefore write every
+nonconstant coordinate as
+\[
+                  X_i=h_i(B_i-p_i),\qquad h_i>0,\quad 0<p_i<1,
+\]
+with independent $B_i\sim\Bern(p_i)$. Two remaining calculations
+determine the gaps and probabilities separately.
+
+\subsection{Unequal support diameters give strict convolution loss}
+Suppose a coordinate has the largest support diameter $h$ and another
+coordinate has diameter $0<\delta<h$. In raw coordinates the signed
+CDF difference between the first coordinate and its uniform zero-biased
+law is
+\[
+                f(x)=q-x/h\quad(0<x<h),\qquad f(x)=0\text{ otherwise},
+\]
+where $q$ is its lower-atom probability. The deleted sum has two atoms
+of positive probability separated by $\delta$: fix all its Bernoulli
+coordinates at their lower atoms, and then change only the coordinate
+of diameter $\delta$.
+
+The two corresponding translates of $f$ have opposite signs on a
+translate of
+\[
+                    (\max\{qh,\delta\},\ \min\{qh+\delta,h\}).
+\]
+Its length is positive because $0<q<1$ and $0<\delta<h$.
+Consequently $|\E f(x-T)|<\E|f(x-T)|$ on a set of positive measure.
+After integration, convolution contraction is strict for the
+largest-gap coordinate in \eqref{eq:bound-chain}. Equality in
+\eqref{eq:additive-bound} therefore forces one common diameter $h$.
+
+\subsection{An exact deficit for a common diameter}\label{sec:posterior}
+Assume there are $n$ nonconstant coordinates, all of diameter $h$.
+Put
+\[
+ K=\sum_i B_i,\qquad \mu=\sum_i p_i,\qquad
+ w_i=\frac{h^2p_i(1-p_i)}V,\qquad
+ c_{i,k}=\Pp\left\{\sum_{j\ne i}B_j=k\right\}.
+\]
+For $0\le k\le n-1$, define
+\begin{equation}\label{eq:posterior-weights}
+ b_k=\sum_i w_i c_{i,k},\qquad
+ \pi_{i,k}=\frac{w_i c_{i,k}}{b_k},\qquad
+ Q_k=\sum_i\pi_{i,k}(1-p_i).
+\end{equation}
+Every $b_k$ is positive, and $\sum_kb_k=1$.
+
+\begin{proposition}[Conditional-variance identity]\label{prop:posterior}
+For a common-diameter Bernoulli array,
+\begin{equation}\label{eq:posterior-deficit}
+ \frac R{2V}-W_1(S,S^*)
+       =h\sum_{k=0}^{n-1}b_k\Var_{\pi_k}(p_i)
+       =\frac h2\sum_{k=0}^{n-1}
+          \frac{\sum_{i,j}w_iw_jc_{i,k}c_{j,k}(p_i-p_j)^2}{b_k}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+On the sum-lattice cell $[h(k-\mu),h(k+1-\mu)]$, let $s\in(0,1)$
+be the relative position. Condition on the deleted count. The
+$i$th replacement in \eqref{eq:replacement} gives exactly
+\[
+       F_S-F_{T_i+X_i^*}=c_{i,k}(1-p_i-s).
+\]
+After averaging with the variance weights, this becomes
+$F_S-F_{S^*}=b_k(Q_k-s)$. The integral of its absolute value on the
+cell is
+\[
+                 \frac{h b_k}2\{Q_k^2+(1-Q_k)^2\}.
+\]
+On the other hand, \eqref{eq:binary-transport} gives
+\[
+ \frac R{2V}=\frac h2\sum_iw_i\{p_i^2+(1-p_i)^2\}
+            =\frac h2\sum_kb_k\E_{\pi_k}\{p_i^2+(1-p_i)^2\}.
+\]
+Subtracting yields the first identity, since the difference between
+the two quadratic expressions is $2\Var_{\pi_k}(p_i)$. The usual
+pairwise formula for variance gives the second.
+\end{proof}
+
+The weights $\pi_{i,k}$ have a direct probabilistic meaning: conditional
+on the chosen zero-bias replacement interval having cell index $k$,
+they are the probabilities of the replaced coordinate. At $k=0$ every
+coordinate has positive conditional weight. Thus
+\eqref{eq:posterior-deficit} vanishes exactly when all $p_i$ agree.
+Conversely, for an iid binary sum all the cell means are $Q_k=1-p$,
+and
+\begin{equation}\label{eq:iid-transport}
+                      W_1(S,S^*)=\frac h2\{p^2+(1-p)^2\}.
+\end{equation}
+Together with the strict unequal-diameter argument, this proves
+Theorem~\ref{thm:array-equality}. Zero coordinates have zero variance
+weight and do not affect any of the identities.
+
+\section{Lattice span, skewness, and transport}\label{sec:lattice}
+We now compare the two terms in Esseen's fixed-law asymptotic formula
+with the transport distance. Let $X$ be a centered lattice variable
+of variance $v>0$ and finite third absolute moment. Suppose its law
+is supported on $a+h\Z$, with $h>0$, and write $\kappa=\E X^3$.
+The spacing $h$ need not be maximal for the inequality below.
+
+\begin{theorem}[A lattice transport inequality]\label{thm:span}
+For such a law,
+\begin{equation}\label{eq:span-transport}
+              |\kappa|+3hv\le(3+\sqrt{10})\,2v W_1(X,X^*).
+\end{equation}
+Equality holds exactly for the laws of
+$h(N-np)$, where $N\sim\Bin(n,p)$, $n\ge1$, and
+$p\in\{p_{\mathrm E},1-p_{\mathrm E}\}$.
+\end{theorem}
+
+\subsection{Integration on the lattice cells}
+By \eqref{eq:density}, the density of $X^*$ is constant on every open
+cell $(a+kh,a+(k+1)h)$; call it $d_k$. If $d_k=0$, the cell lies
+outside the support's convex hull and its CDF difference is zero.
+For the other cells put
+\[
+ \omega_k=hd_k,\qquad
+ r_k=\frac{F_X(a+kh)-F_{X^*}(a+kh)}{hd_k},\qquad
+ \ell(r)=\int_0^1|r-s|\,ds.
+\]
+Then $\sum_k\omega_k=1$. The CDF difference within the cell is
+$hd_k(r_k-s)$, so
+\begin{equation}\label{eq:cell-identities}
+ \frac{W_1(X,X^*)}h=\sum_k\omega_k\ell(r_k),\qquad
+ \sum_k\omega_k(r_k-1/2)=\frac\kappa{2vh}.
+\end{equation}
+For the second identity, integrate the signed CDF difference and use
+$\E X^*-\E X=\kappa/(2v)$. Absolute convergence follows from the
+finite first moments in \eqref{eq:bias-moments}.
+
+The function $\ell$ is convex, with
+\[
+ \ell(r)=
+ \begin{cases}
+ r^2-r+1/2,&0\le r\le1,\\
+ |r-1/2|,&r\notin[0,1].
+ \end{cases}
+\]
+Let $t=|\kappa|/(vh)$. Jensen's inequality in
+\eqref{eq:cell-identities} gives
+\begin{equation}\label{eq:jensen-bound}
+ 2vW_1(X,X^*)\ge
+ \begin{cases}
+ vh(1+t^2)/2,&0\le t\le1,\\
+ vht,&t\ge1.
+ \end{cases}
+\end{equation}
+In the first range, $2(3+t)/(1+t^2)$ has its unique maximum
+$3+\sqrt{10}$ at $t=\sqrt{10}-3$. In the second range,
+$(3+t)/t\le4<3+\sqrt{10}$. This proves
+\eqref{eq:span-transport}.
+
+Combining \eqref{eq:span-transport} with
+\eqref{eq:single-bound} recovers Esseen's lattice moment inequality
+\cite[Lemma~1, pp.~162--163]{Esseen1956}:
+\[
+                |\kappa|+3hv\le(3+\sqrt{10})\E|X|^3.
+\]
+Esseen's original lemma allows the more general condition that consecutive
+support points are at least $h$ apart. We use the lattice case because
+the asymptotic correction is determined by lattice span.
+
+\subsection{Equality determines a binomial law}
+Equality in \eqref{eq:span-transport} requires
+$|\kappa|/(vh)=\sqrt{10}-3<1$. The mean argument of $\ell$ in
+Jensen's inequality therefore lies strictly between zero and one.
+At that argument its supporting line touches $\ell$ only once.
+All positive-density cells consequently have the same ratio $r$, with
+\begin{equation}\label{eq:r-optimal}
+                 0<r<1,\qquad |2r-1|=\sqrt{10}-3.
+\end{equation}
+
+Let $x$ be a grid point having mass $p_x$, and let $d_-$ and $d_+$
+be the densities on its left and right cells. The CDF jump and the
+density jump give
+\[
+ p_x=h\{r d_++(1-r)d_-\},\qquad
+                   v(d_--d_+)=x p_x.
+\]
+These equations remain valid at the support endpoints, where one
+density is zero. Solving them gives
+\begin{equation}\label{eq:binomial-density}
+ hd_-=p_x(1+rhx/v),\qquad
+ hd_+=p_x(1-(1-r)hx/v).
+\end{equation}
+A missing interior grid atom is impossible: its positive unchanged
+density would make the cell ratio decrease by one across that point,
+contrary to its constancy. Positivity in
+\eqref{eq:binomial-density} confines every atom to
+$[-v/(rh),v/((1-r)h)]$, so the support is finite. At its lower and
+upper endpoints,
+\[
+                   x_-=-\frac v{rh},\qquad
+                   x_+=\frac v{(1-r)h}.
+\]
+Their separation is $nh$ for an integer $n\ge1$. Thus, with $p=1-r$,
+\[
+          v=nr(1-r)h^2,\qquad x_j=h(j-np),\quad 0\le j\le n.
+\]
+The density on the cell between $x_j$ and $x_{j+1}$ is the same
+when calculated from either endpoint. Substituting these locations
+in \eqref{eq:binomial-density} gives
+\[
+             \frac{p_{x_{j+1}}}{p_{x_j}}
+                    =\frac{(n-j)p}{(j+1)(1-p)}.
+\]
+Normalization identifies the law as centered $h\Bin(n,p)$, and
+\eqref{eq:r-optimal} gives $p=p_{\mathrm E}$ or $1-p_{\mathrm E}$.
+Conversely, \eqref{eq:iid-transport} and the binomial third moment
+verify equality for each of these laws. This completes the proof of
+Theorem~\ref{thm:span}.
+
+For $n\ge2$ these binomial laws are not two-point laws. They attain
+the span/transport inequality, but their single-law transport bound
+is strict. Resolving them into their independent binary constituents
+changes the third-moment denominator and restores equality in
+\eqref{eq:additive-bound}.
+
+\section{The Berry--Esseen limit for a fixed block}\label{sec:block}
+Return to \eqref{eq:array-data}. The law of $S$ has finite third
+absolute moment, since the block is finite. Its variance is $V$ and
+its signed third moment is
+\[
+                          \kappa=\E S^3=\sum_i\E X_i^3.
+\]
+Let $h$ be its maximal lattice span, or set $h=0$ if its law is
+nonlattice. Esseen's fixed-law asymptotic formula
+\cite[pp.~160--162, equations~(6)--(7)]{Esseen1956} gives
+\begin{equation}\label{eq:esseen-limit}
+ \lim_{m\to\infty}\sqrt m\,
+ d_K\left(\frac{S_1+\cdots+S_m}{\sqrt{mV}},Z\right)
+                  =\frac{\phz}{6V^{3/2}}(|\kappa|+3hV),
+\end{equation}
+where $Z$ is standard normal and $d_K$ is Kolmogorov distance.
+The source uses one fixed law with positive variance and finite third
+absolute moment. Multiplying by $V^{3/2}/R$ yields
+\begin{equation}\label{eq:original-price-limit}
+                    \lim_{m\to\infty}C_m
+                      =\frac{\phz}{6R}(|\kappa|+3hV).
+\end{equation}
+
+If $h>0$, Theorem~\ref{thm:span} applies to the sum law and gives
+the first inequality in \eqref{eq:block-bound}. Notice that
+\eqref{eq:span-transport} has no third absolute moment in its
+denominator, so it can be divided by the original $R$ without
+identifying $R$ with $\E|S|^3$. The second inequality is
+Theorem~\ref{thm:array-equality}.
+
+If $h=0$, the transport distance dominates the difference of means,
+so \eqref{eq:bias-moments} gives
+$|\kappa|\le2V W_1(S,S^*)$. Hence the stronger comparison
+\[
+             \lim_{m\to\infty}C_m
+             \le\frac{\phz}{6}\frac{2V W_1(S,S^*)}{R}
+             \le\frac{\phz}{6}<\ce
+\]
+holds in the nonlattice case.
+
+Finally suppose the limit equals $\ce$. The sum is lattice, and
+both inequalities in \eqref{eq:block-bound} are equalities.
+Theorem~\ref{thm:array-equality} forces all nonconstant coordinates
+to have one law $g(B-p)$, with $g>0$. If there are $k$ such
+coordinates, the sum is centered $g\Bin(k,p)$; its maximal lattice
+span is $g$, and
+\[
+                        \frac\kappa{Vg}=1-2p.
+\]
+Equality in Theorem~\ref{thm:span} forces
+$|1-2p|=\sqrt{10}-3$, or $p\in\{p_{\mathrm E},1-p_{\mathrm E}\}$.
+Conversely these arrays attain both equalities and have the stated
+limit by \eqref{eq:esseen-limit}. This proves
+Theorem~\ref{thm:block}.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

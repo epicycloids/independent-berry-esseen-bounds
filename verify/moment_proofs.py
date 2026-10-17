@@ -136,9 +136,12 @@ def validate(proof,lo,hi,callback=None):
         if 'adapter' in recipe:
             require(recipe['method']=='signed' and recipe['adapter'] in (
                 'cauchy_reference_adapter','cauchy_endpoint_adapter','packed_weight_adapter',
-                'packed_weight_general_adapter','packed_frontier_adapter','packed_polynomial_regional_adapter'),
+                'packed_weight_general_adapter','packed_frontier_adapter','packed_polynomial_regional_adapter',
+                'packed_polynomial_current_adapter'),
                 'Unknown source inequality')
             require(recipe['mode'] in ('baseline','contracted','polynomial'),'Unknown source comparison')
+            if recipe['adapter']=='packed_polynomial_current_adapter':
+                require(recipe['mode']=='polynomial','Unused scalar mode in the polynomial-only proof')
             if recipe['adapter'].startswith('cauchy_'):require(0<Q(recipe['eta'])<=1,'Invalid radius factor')
         if recipe['method']=='disk_signed':
             require(recipe['contexts'],'Empty disk-intersection portfolio');disk_contexts(recipe,lo,hi)

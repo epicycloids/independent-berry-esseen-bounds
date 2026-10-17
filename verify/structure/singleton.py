@@ -1,15 +1,14 @@
-#!/usr/bin/env python3
-"""Arb interval verification of the curvature inequality for a binomial sum
-and one Bernoulli variable.
+                      
 
-The three parametrizations cover 0<p,x<1, p(1-p)<=W<=3,
-0<=f<=1, and W>=(1-f)(1-p)^2. The proof bounds three neighboring
-binomial masses and uses
 
-    z phi(z) (2+z^2) >= sqrt(2/pi) min(z,0).
 
-Every accepted box has a strictly positive interval lower bound.
-"""
+
+
+
+
+
+
+
 
 from __future__ import annotations
 
@@ -35,7 +34,7 @@ class Box:
 
 
 def interval(lo: Fraction, hi: Fraction) -> arb:
-    """Return an outward ball enclosing [lo, hi]."""
+
 
     midpoint = (lo + hi) / 2
     radius = (hi - lo) / 2
@@ -65,7 +64,7 @@ def split_box(box: Box) -> tuple[Box, Box]:
 
 
 def physical_parameters(box: Box) -> tuple[arb, arb, arb, arb, arb, arb]:
-    """Map a unit box onto one exact piece of the physical domain."""
+
 
     sp, sx, sw, sf = (interval(lo, hi) for lo, hi in box.bounds)
     x = sx
@@ -103,11 +102,11 @@ def physical_parameters(box: Box) -> tuple[arb, arb, arb, arb, arb, arb]:
 
 
 def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | None:
-    """Return an outward lower bound for the scalar gap on ``box``.
 
-    ``None`` means that interval dependency has hidden positivity of a
-    denominator; subdivision is then mandatory.
-    """
+
+
+
+
 
     p, x, w, phase, one_minus_phase, previous_numerator = physical_parameters(box)
     q = 1 - p
@@ -118,8 +117,8 @@ def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | N
     variance_upper = variance.upper()
     ce = (arb(10).sqrt() + 3) / (6 * (2 * arb.pi()).sqrt())
     if variance_upper < arb(1) / 5:
-        # Universally max(V,S_2)>=1/3, hence the smooth term is at least
-        # 8 C_E/sqrt(3).  Also h(z)>=-4/(e sqrt(pi)) and ell<=1.
+                                                                        
+                                                                
         return (
             8 * ce.lower() / arb(3).sqrt().upper()
             - 4 / (arb(1).exp().lower() * arb.pi().sqrt().lower())
@@ -136,13 +135,13 @@ def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | N
     if smooth_numerator > 1:
         smooth_numerator_lower = smooth_numerator.lower()
     else:
-        # Since tx,tp are in [-1,1] and W>=0, this is an exact fallback.
+                                                                        
         smooth_numerator_lower = arb(1)
     smooth_term_lower = 2 * ce.lower() * smooth_numerator_lower / root_upper
 
-    # The phase parametrization is y=f(W+v)/(1-qf).  Its denominator can
-    # vanish only at the deleted p=0 boundary.  There we use the weaker but
-    # continuous lower bound y>=0 instead of dividing an indeterminate ball.
+                                                                        
+                                                                           
+                                                                            
     phase_denominator = p + q * one_minus_phase
     phase_numerator = pair_scale - p * x - one_minus_phase * (pair_scale + q * x)
     normal_slope = (arb(2) / arb.pi()).sqrt()
@@ -162,13 +161,13 @@ def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | N
         else:
             normal_term_lower = -normal_slope.upper() * x.upper() / root_lower
 
-    # Let d_j be the upper neighboring atom and f=(d_j-d_{j+1})/d_j.
-    # The recurrence gives d_{j-1}=r_- d_j, where the following rational
-    # expression is the exact r_- after eliminating m and k.
+                                                                    
+                                                                        
+                                                            
     previous_denominator = p * p + one_minus_phase * (w + 2 * v)
 
-    # ``previous_numerator`` is nonnegative by the case parametrizations;
-    # a ball touching zero need not certify that fact through comparison.
+                                                                         
+                                                                         
     def nonnegative_lower(value: arb) -> arb:
         return value.lower() if value > 0 else arb(0)
 
@@ -187,8 +186,8 @@ def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | N
         if not adjacent_upper < 1:
             adjacent_upper = arb(1)
     else:
-        # Every signed adjacent difference of a probability mass function is
-        # at most one.  This handles the deleted deterministic boundary.
+                                                                            
+                                                                        
         adjacent_upper = arb(1)
     if penalty_multiplier is None:
         penalty_multiplier = arb(1)
@@ -197,7 +196,7 @@ def gap_enclosure(box: Box, *, penalty_multiplier: arb | None = None) -> arb | N
 
 
 def fixed_controls() -> None:
-    """Check constants, parametrizations, and fixed perturbation controls."""
+
 
     ce = (arb(10).sqrt() + 3) / (6 * (2 * arb.pi()).sqrt())
     assert ce > arb(409) / 1000
@@ -216,12 +215,12 @@ def fixed_controls() -> None:
     assert tail_left > 1
     assert tail_right > arb(3) / 2
 
-    # The same coarse Fourier tail estimate is deliberately insufficient at
-    # W=1, so the compact certificate cannot silently lose its lower slabs.
+                                                                           
+                                                                           
     premature_tail = 8 * ce * (arb(3) / 2).sqrt() - arb(15) / arb.pi() - normal_floor
     assert premature_tail < 0
 
-    # Exact physical anchor near the floating minimizer of the relaxation.
+                                                                          
     anchor = Box(
         CASE_HIGH_P,
         (
@@ -235,8 +234,8 @@ def fixed_controls() -> None:
     if anchor_gap is None or not anchor_gap > arb(45) / 100:
         raise AssertionError(f"anchor gap not reproduced: {anchor_gap}")
 
-    # Increasing the adjacent-mass penalty by 25 percent must fail at an
-    # unrelated box; this catches a reversed inequality or missing factor.
+                                                                        
+                                                                          
     false_gap = gap_enclosure(anchor, penalty_multiplier=arb(5) / 4)
     if false_gap is None or not false_gap < 0:
         raise AssertionError(f"inflated-penalty control did not fire: {false_gap}")

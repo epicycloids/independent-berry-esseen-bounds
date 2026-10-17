@@ -1,0 +1,9 @@
+{
+  "arb_precision": 192,
+  "diagonal_max_boxes": 100000,
+  "diagonal_max_depth": 40,
+  "full_max_boxes": 500000,
+  "full_max_depth": 42,
+  "max_seconds": 145,
+  "price": "37/100"
+}

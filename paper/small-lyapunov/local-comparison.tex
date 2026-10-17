@@ -2,7 +2,7 @@
 \begin{theorem}[Explicit independent local comparison]\label{thm:local}
 Set
 \begin{equation}\label{eq:local-constants}
- \mathcal A=e^{10000},\qquad\lambda=e^{-\mathcal A},
+ \mathcal A=38e^{43},\qquad\lambda=e^{-\mathcal A},
                    \qquad N=\lceil e^{\mathcal A}\rceil.
 \end{equation}
 Every independent array of the form
@@ -123,12 +123,12 @@ The expansion includes the third moments of the additional coordinates.
 
 Fix
 \[
- a_0=e^{1000},\quad\mathcal C=e^{1004},\quad\mathcal B=e^{1006},
+ a_0=e^{43},\quad\mathcal C=\frac{49}{4}a_0,\quad
+ \mathcal B=\frac{25}{2}a_0,
  \quad q=e^{-\mathcal C},\quad T=e^{\mathcal B}.
 \]
-The inequalities $\mathcal A>100\mathcal B$,
-$\mathcal B>7\mathcal C$, and $\mathcal C>50a_0$ imply, for every
-$m\ge N$,
+We check the four error terms in \eqref{eq:local-error} directly.
+For every $m\ge N$,
 \begin{equation}\label{eq:local-numerical}
  \xi(T+1)^2<1/56,\quad E_m(T)<q/1000,\quad
  m^{-1/2}<q/1000,\quad200\lambda<q/1000.
@@ -139,8 +139,25 @@ For a direct check, the four terms in \eqref{eq:local-error} are at most
  64\mathcal B e^{-\mathcal A+2\mathcal B},\quad
  240000\mathcal B(262144)^2e^{-3\mathcal A/2},\quad56e^{-\mathcal B}.
 \]
-Each is below $q/4000$. The third uses $e^{-x}\le2/x^2$, so this
-verification places no upper bound on $m$.
+The third uses $e^{-x}\le2/x^2$. Dividing these bounds by $q/4000$
+gives, respectively,
+\[
+ 3208000\mathcal B e^{-27a_0/4},\quad
+ 256000\mathcal B e^{-3a_0/4},\quad
+ 960000000\mathcal B(262144)^2e^{-179a_0/4},\quad
+ 224000e^{-a_0/4}.
+\]
+Each is less than one. The logarithms of the first three prefactors
+are below $110$, since $\log\mathcal B=43+\log(25/2)$,
+whereas their smallest negative exponent has magnitude
+$3a_0/4>750$. The fourth follows from $a_0/4>250>\log224000$.
+The remaining inequalities in \eqref{eq:local-numerical} follow from
+\[
+ \xi(T+1)^2\le64e^{-13a_0}<1/56,\quad
+ m^{-1/2}/q\le e^{-27a_0/4}<1/1000,\quad
+ 200\lambda/q=200e^{-103a_0/4}<1/1000.
+\]
+These estimates hold without an upper bound on $m$.
 
 Shift the jitter by $\pm1/2$. Either normalized signed discrepancy is
 at most
@@ -155,7 +172,7 @@ The main term is at most $(3+z^2)\phi(z)$, below $1/100$ for
 $|z|\ge4$. Thus the full bound there is below $1/24$.
 
 \subsection{Small residual variance}\label{subsec:small-residual}
-Suppose $0<\Lambda\le e^{-1000}$. If $\Lambda=0$, the result is
+Suppose $0<\Lambda\le e^{-43}$. If $\Lambda=0$, the result is
 exactly \eqref{eq:finite-input}. We use a one-sided loss estimate:
 if $\E Y=0$, $\E Y^4\le1/160000$, $f(0)=0$, and
 $3/4\le f'\le5/4$ on $[-7/10,7/10]$, then for $|u|\le3/5$,
@@ -200,8 +217,18 @@ at least $m^2/16$.
 Apply \eqref{eq:one-sided} to $Y=W-m_k$ conditionally on $K_0=k$,
 using $f_k(v+m_k)-f_k(m_k)$ and $v=u-m_k$.
 The bounds above give $|m_k|<1/20$ and the required fourth-moment
-bound. Also $e^{-100}/5\le Pb_k\le5$.
-The resulting normalized loss is at least $e^{-120}H$.
+bound, since $10^8D\le2\cdot10^8e^{-86}<1/160000$.
+At a central threshold, $B>50$ gives $|(k-\mu)/B|<4.01$.
+Using $f_k'(0)\le5/4$ and $P/B\ge1/2$,
+\[
+ Pb_k\ge\frac45\frac PB\phi((k-\mu)/B)
+       \ge\frac25\phi(4.01)>e^{-11}.
+\]
+For the last inequality, $\sqrt{2\pi}<3$, $4.01^2/2<17/2$,
+and $e^{5/2}>(8/3)^2(3/2)>15/2$ suffice.
+The positive term in \eqref{eq:one-sided} is at least $H/80000$,
+so its normalized loss exceeds $e^{-11}H/80000>e^{-23}H$;
+the last comparison follows from $(8/3)^{12}>80000$. Also $Pb_k\le5$.
 Its fourth-moment and leakage errors are below $10^{14}D$, and its
 conditional-mean error is at most $62500\sqrt{\Lambda_A}/\sqrt m$.
 
@@ -215,7 +242,7 @@ The normal variance change costs at most $\xi/8$ before multiplication
 by $P$. Combining these errors with \eqref{eq:layers}, either central
 normalized branch is at most
 \begin{equation}\label{eq:small-comparison}
- R_0-e^{-120}H+e^{40}
+ R_0-e^{-23}H+e^{40}
            \left\{D+\frac{\sqrt{\Lambda_A}+\Lambda}{\sqrt m}\right\}.
 \end{equation}
 The full definition of $H$ gives
@@ -224,8 +251,13 @@ The full definition of $H$ gives
  \sqrt{\Lambda_A}/H\le1,\quad
  \Lambda/H\le\sqrt{\Lambda+\eps_0^2}.
 \]
-Since $\eps_0\le e^{-1000}$ and $m\ge e^{1000}$, the error is below
-$e^{40}(3e^{-1500}+2e^{-500})H<e^{-120}H/2$.
+Since $\eps_0\le e^{-43}$ and $m\ge e^{1000}$, the error is at most
+$e^{40}(3e^{-129/2}+2e^{-500})H$.
+Its ratio to $e^{-23}H$ is at most
+\[
+ 3e^{-3/2}+2e^{-437}<3/4+2^{-436}<1,
+\]
+using $e>8/3$ and $\sqrt e>3/2$.
 Thus the central comparison is strict for every positive residual
 variance. Finally $R_0\ge\phz/4>1/12$: apply the count estimate at
 an integer nearest $\mu$ and take half its jump. The bound $1/24$
@@ -233,7 +265,7 @@ at distant thresholds is also below $R_0$.
 
 \subsection{Positive residual variance and interval mass}
 \label{subsec:large-residual}
-Suppose $\Lambda\ge e^{-1000}$ and $|z|\le4$.
+Suppose $\Lambda\ge e^{-43}$ and $|z|\le4$.
 Choose all integers $|k-x|\le\max(1,\sqrt\Lambda)$. There are at
 least $\sqrt\Lambda$ of them, all within $6\sqrt m$ of $\mu$.
 Tilt the Bernoulli probabilities exponentially to make their count
@@ -254,7 +286,7 @@ Thus these assertions include their actual variances.
 Apply Lemmas~\ref{lem:conditional-fourier} and~\ref{lem:minorant}
 to both quarter-intervals $(1/4,1/2)$ and $(-1/2,-1/4)$, with
 \[
- L_0=\tfrac12e^{-1000},\quad C_0=4+2e^{500},\quad A_g=4e^{500},
+ L_0=\tfrac12e^{-43},\quad C_0=4+2e^{43/2},\quad A_g=4e^{43/2},
  \quad\omega=16e^{A_g^2/6},\quad T_g=4\omega.
 \]
 The shift $y=x-k-m_k^0$ satisfies $|y|\le C_0\sqrt L$, and
@@ -264,19 +296,28 @@ $\phi(A_g)/(4\omega\sqrt L)$.
 With $\beta=7/64$, the three terms in
 \eqref{eq:conditional-fourier-error} are at most
 \[
- 128e^{-\mathcal A/2},\qquad128e^{500-\mathcal A},\qquad
-                         10^7e^{4a_0-\mathcal A}.
+ 128e^{-19a_0},\qquad128e^{43/2-38a_0},\qquad
+                         10^7e^{-34a_0}.
 \]
 Their sum is below $e^{-10a_0}<\phi(A_g)/32$, because
 $\phi(A_g)>e^{-9a_0}$, $\omega<e^{3a_0}$, and $T_g<e^{4a_0}$.
-Also $8\lambda T_g<\beta/162$.
+Indeed, after division by $e^{-10a_0}$, each term is below $1/3$,
+using $a_0>1000$ and $\log a_0=43$.
+Also $8\lambda T_g<8e^{-34a_0}<\beta/162$.
 For the third term use $L\le m$, $e^{-x}\le2/x^2$, and $m\ge N$;
 this is uniform over all possible residual variances.
 
 Each conditional quarter-interval probability is at least
 $\phi(A_g)/(8\omega\sqrt L)$. Multiply by the count probabilities
 \eqref{eq:central-count} and sum over the chosen integers.
-Since $L\le2\Lambda$ and $\mathcal C>50a_0$, this gives
+Since $L\le2\Lambda$, the resulting lower bound is
+\[
+ \frac{e^{-100}\phi(A_g)}{8\sqrt2\,\omega\sqrt m}
+       >\frac{e^{-12a_0-104}}{\sqrt m}
+       >\frac q{\sqrt m},
+\]
+where the last inequality uses
+$\mathcal C-12a_0=a_0/4>104$. Thus
 \begin{equation}\label{eq:quarter-mass}
  \Pp\{S-x\in(1/4,1/2)\},\quad
  \Pp\{S-x\in(-1/2,-1/4)\}\ge q/\sqrt m.

@@ -1,0 +1,326 @@
+\section{All finite common-diameter maximizers}\label{sec:common}
+Scale the common diameter to one and write
+\[
+ \mu=\sum_i p_i,\quad V=\sum_i p_i(1-p_i),\quad
+ R=\sum_i\{p_i-3p_i^2+4p_i^3-2p_i^4\},\quad
+ F_k=\Pp\{\textstyle\sum_i B_i\le k\}.
+\]
+Since $R\ge V/2$, the ratio is at most $2\sqrt V$.
+Its extension by zero at $V=0$ is continuous on the compact probability
+cube. Thus $C=C_n^{\mathrm{com}}$ is attained.
+At any selected closed integer threshold, define
+\begin{equation}\label{eq:deficit}
+ H_C(p)=\frac{CR}{V^{3/2}}+
+             \Phi((k-\mu)/\sqrt V)-F_k.
+\end{equation}
+The global definition of $C$ gives $H_C\ge0$ everywhere with $V>0$,
+and equality at every maximizing array at its selected threshold.
+
+The probability replacements below have classical precedents.
+Hoeffding's pair identity preserves the sum of two probabilities
+\cite[equation~(10), pp.~714--716]{Hoeffding1956}.
+Mattner's few-moment extremum theorem and next-power-sum argument
+\cite[Theorems~1.1--1.2 and Lemma~2.1]{Mattner2022} use related fibers
+for separately affine symmetric functions. The present deficit contains
+a cubic-moment denominator. We establish its required affinity directly.
+
+\subsection{A uniform third-difference estimate}
+For the mass function $c_j$ of a Poisson-binomial sum, extended by zero,
+put $\Delta^3c_j=c_j-3c_{j-1}+3c_{j-2}-c_{j-3}$.
+
+\begin{lemma}\label{lem:third-difference}
+If that sum has variance $W$, then
+\[
+                \sup_j|\Delta^3c_j|<\frac{16/5}{(1+W)^{3/2}}.
+\]
+\end{lemma}
+\begin{proof}
+For $W\le1/4$, choose the more likely outcome of each bit as a base
+configuration. Let $J$ count departures, $\epsilon_i=\min(p_i,1-p_i)$,
+$E=\sum\epsilon_i$, and $Q=\sum\epsilon_i/(1-\epsilon_i)$.
+Then $E\le2W\le1/2$, $W\le Q\le1$,
+\[
+ \Pp(J=0)\ge e^{-Q},\qquad
+ \Pp(J=1)=Q\Pp(J=0)\ge We^{-W}.
+\]
+At the two indices where the base state contributes magnitude three,
+the one-departure terms have the opposite sign and magnitude at least
+one. The base probability is at least $1/2$, so the sign cannot reverse.
+Thus the absolute third difference is at most $3-4We^{-W}$ there.
+At all other indices it is at most $1+4W$.
+For the central bound use $e^{-W}\ge1-W$ and
+\[
+ (1+W)^{-3/2}\ge h(W):=
+       1-3W/2+15W^2/8-35W^3/16.
+\]
+The polynomial $(16/5)h(W)-(3-4W+4W^2)$ is decreasing on $[0,1/4]$:
+its derivative is bounded above by
+$-1/2+13W/4-315W^2/16<0$.
+At $W=1/4$ it equals $1/64$.
+The outer estimate is at most two, below $(16/5)(5/4)^{-3/2}$.
+
+For $W\ge1/4$, Fourier inversion gives
+\[
+ |\Delta^3c_j|\le I(W):=
+ \frac{16}{\pi}\int_0^{\pi/2}\sin^3u\,e^{-2W\sin^2u}\,du.
+\]
+Write $J_r=\int_0^{\pi/2}\sin^ru\,e^{-2W\sin^2u}\,du$.
+Integration of $(\sin^4u\cos u\,e^{-2W\sin^2u})'$ gives
+$(5+4W)J_5=4J_3+4WJ_7$. Consequently
+\[
+ \frac{d}{dW}\log\{I(W)(1+W)^{3/2}\}
+ \le-\frac8{5+4W}+\frac3{2(1+W)}<0.
+\]
+At $W=1/4$, the exponential upper Taylor polynomial through degree six
+and the exact odd sine integrals give
+\[
+ I(1/4)(5/4)^{3/2}
+ \le\frac{10\sqrt5}{\pi}\,
+       \frac{911264}{2027025}<\frac{16}{5}.
+\]
+The last strict inequality follows by squaring and using
+$\pi>6283/2000$; it is one of the rational scalar controls in
+the computational supplement.
+\end{proof}
+
+\subsection{Reducing the number of distinct probabilities}
+Fix a maximizing array and its mean, variance and closed threshold.
+Consider the compact zero set
+\[
+ Z=\{p\in[0,1]^n:\ \sum p_i=\mu,\
+                  \sum p_i(1-p_i)=V,\ H_C(p)=0\}.
+\]
+Let $K$ be its connected component containing the array, and maximize
+$\sum p_i^3$ on $K$. For three selected probabilities, let $e_1,e_2,e_3$
+be their elementary symmetric functions. Their generating polynomial is
+\[
+ 1+e_1(w-1)+e_2(w-1)^2+e_3(w-1)^3.
+\]
+Holding $e_1,e_2$ fixed preserves their mean and variance. Their
+contribution to $R$ is
+\begin{align*}
+ R_3={}&e_1-3e_1^2+4e_1^3-2e_1^4
+ +(6-12e_1+8e_1^2)e_2-4e_2^2+4(3-2e_1)e_3.
+\end{align*}
+Both $F_k$ and $R$ are affine in $e_3$ on this fiber. If its three
+roots are distinct and interior, $e_3$ can move in both directions.
+A nonzero slope contradicts $H_C\ge0$. A zero slope gives a continuous
+path in $Z$, hence in $K$, on which $\sum p_i^3=e_1^3-3e_1e_2+3e_3$
+increases. The chosen point therefore has at most two distinct active
+probabilities.
+
+Suppose they are $a<b$, each occurring at least twice. The triples
+$(a,a,b)$ and $(a,b,b)$ are opposite endpoints of their three-root
+fibers. If $d_j$ is the mass function of the other coordinates, the
+fiber slope is
+\[
+ L=\frac{4C(3-2e_1)}{V^{3/2}}+\Delta^2d_k.
+\]
+The two endpoint conditions give $L_{aab}\le0\le L_{abb}$.
+Delete two bits of each type, let $c_j$ be the remaining mass function,
+and let $W$ be its variance. Direct subtraction gives
+\[
+ L_{abb}-L_{aab}
+       =(b-a)\left\{\Delta^3c_k-\frac{8C}{V^{3/2}}\right\}.
+\]
+Since $V\le W+1$, Lemma~\ref{lem:third-difference} contradicts these
+signs whenever $C\ge2/5$. Thus one of the two multiplicities is one.
+At $n=3$ this is automatic. At $n=4$, the only remaining repeated
+pattern is $(2,2)$; its deleted law is deterministic, so
+$|\Delta^3c_k|\le3$, whereas $8C/V^{3/2}\ge8C>3$ when
+$C\ge199/500$.
+
+\subsection{Strict curvature of the remaining fiber}
+The remaining unequal pattern is $\Bin(M,p)+\Bern(x)$, $p\ne x$.
+We record its exact curvature and the finite inequality used to exclude it.
+Let $q=1-p$, $m=M-1$, $d_j=\Pp(\Bin(m,p)=j)$, $W=mpq$, and
+\[
+ V=x(1-x)+Mpq,\quad z=\frac{k-x-Mp}{\sqrt V},\quad
+ \xi=d_{k-1}-d_k,\quad
+ S_2=(1-2x)^2+(1-2x)(1-2p)+(1-2p)^2.
+\]
+Preserve the sum of the exceptional mass and one mass $p$, write them
+as $\bar p+d,\bar p-d$, and set $u=d^2$. Along this path,
+\[
+ F_k'=\xi,\qquad V'=-2,\qquad R'=-2S_2,\qquad R''=-8.
+\]
+At stationarity of $H_C$, differentiating its smooth terms and
+eliminating $R$ gives
+\begin{equation}\label{eq:fiber-curvature}
+ V^2H_C''=5V\xi-C\left(8\sqrt V+\frac{2S_2}{\sqrt V}\right)
+                       -z\phi(z)(2+z^2).
+\end{equation}
+A minimum requires this expression to be nonnegative.
+
+\begin{lemma}[The certified curvature inequality]\label{lem:certified-curvature}
+Put $c_*=199/500$. For
+\[
+ 0<p,x<1,\quad pq\le W\le3,\quad0\le f\le1,\quad
+ A_0=W-(1-f)q^2\ge0,
+\]
+define
+\[
+ B_0=p^2+(1-f)(W+2pq),\quad V=x(1-x)+W+pq,
+ \quad z=\frac{f(W+pq)/(1-qf)-x}{\sqrt V}.
+\]
+Then
+\begin{equation}\label{eq:compact-curvature}
+ \frac{2c_*}{\sqrt V}\{4W+2+(1-2x)(1-2p)\}
+ +z\phi(z)(2+z^2)
+ -\frac{5VfB_0}{(2-f)B_0+A_0}>0.
+\end{equation}
+Also every two-bit unit-diameter array has ratio less than $c_*$.
+\end{lemma}
+
+The lemma is a finite arithmetic premise. Its compact interval cover
+at 192 Arb bits \cite{Johansson2017} processed 550563 boxes for
+\eqref{eq:compact-curvature} and 13641 boxes for the two-bit assertion,
+with no unresolved box. The archived records bind the evaluated
+formulas and the declared domains. Below we explain the covering
+charts and the analytic complements; rebuilding those interval covers
+is distinct from checking the saved hashes and coverage metadata.
+
+For $V\le1/5$, the first term in \eqref{eq:compact-curvature} is at
+least $8c_*/\sqrt3$, the normal term is at least $-4/(e\sqrt\pi)$,
+and the final term is at most one. Rational controls give
+\begin{equation}\label{eq:scalar-margins}
+ \frac{8c_*}{\sqrt3}-\frac4{e\sqrt\pi}-1>\frac1{247},\quad
+ 8c_*\sqrt3-\frac{10}{\pi}-\frac4{e\sqrt\pi}>1,\quad
+ 8c_*\sqrt{7/2}-\frac{35}{3\pi}-\frac4{e\sqrt\pi}>\frac{44}{45}.
+\end{equation}
+For $V\ge1/5$ use
+$z\phi(z)(2+z^2)\ge\sqrt{2/\pi}\min(z,0)$.
+The following maps from $[0,1]^4$, with fourth variable $x$, cover
+the entire remaining domain:
+\begin{align*}
+ &p=(1+s_p)/2,\quad W=pq+s_W(3-pq),\quad f=s_f;\\
+ &p=s_p/2,\quad W=q^2+s_W(3-q^2),\quad f=s_f;\\
+ &p=s_p/2,\quad W=pq+s_W(q^2-pq),\quad
+                    f=1-(1-s_f)W/q^2.
+\end{align*}
+The first covers $p\ge1/2$. The last two split $p\le1/2$ at $W=q^2$;
+below that interface the last map imposes exactly $f\ge1-W/q^2$.
+Interval division is used only with a strictly positive denominator.
+Otherwise the universal neighbor-fraction bound one, or $y\ge0$ at a
+singular endpoint, supplies a valid lower bound. A box is accepted only
+when its outward lower endpoint is positive. The two-bit cover includes
+the entire probability square and all three closed integer thresholds.
+The zero-variance corners use $\mathcal C\le2\sqrt V$ before division.
+
+To apply the lemma to \eqref{eq:fiber-curvature}, first suppose $M\ge2$.
+If $\xi\le0$, then $\max(V,S_2)\ge1/3$ and
+\[
+ C(8\sqrt V+2S_2/\sqrt V)+z\phi(z)(2+z^2)
+ \ge8c_*/\sqrt3-4/(e\sqrt\pi)>0.
+\]
+Thus $H_C''<0$. If $\xi>0$, binomial recurrence gives
+\[
+ y=k-(m+1)p>0,\quad f=y/(kq)\in(0,1],\quad
+ d_k=(1-f)d_{k-1},\quad d_{k-2}=r_0d_{k-1},
+\]
+where
+\[
+ r_0=A_0/B_0,\qquad y=f(W+pq)/(1-qf).
+\]
+The sum of these three masses is at most one, so
+$\xi\le f/(2-f+r_0)$. For $W\le3$, Lemma~\ref{lem:certified-curvature}
+therefore makes \eqref{eq:fiber-curvature} negative. The coefficient
+of $C$ is positive, so the same conclusion holds for every actual extremal ratio
+$C\ge c_*$.
+For $W\ge3$, Fourier inversion gives
+\[
+ |\xi|\le\frac4\pi\int_0^{\pi/2}\sin u\,e^{-2W\sin^2u}\,du
+                        <\frac2{\pi W}.
+\]
+The negative of the right side of \eqref{eq:fiber-curvature} is at least
+$8c_*\sqrt V-4/(e\sqrt\pi)-10V/(\pi W)$.
+It is concave in $V\in[W,W+1/2]$. Both endpoint values increase with
+$W$, and \eqref{eq:scalar-margins} gives positive bounds at $W=3$.
+For $M=1$ the two-bit assertion of the lemma excludes the pattern at
+price $C\ge c_*$.
+
+\subsection{From one equal-mass point to every maximizer}
+The cubic maximizer on $K$ is now an IID group plus deterministic bits.
+The number $m$ of active bits is at least three, by
+Lemma~\ref{lem:certified-curvature}. We prove this point is isolated in $Z$.
+For a pair in the IID group, use $p+d,p-d$ and $u=d^2$.
+Nonnegativity gives $\Lambda:=\partial_uH_C(0)\ge0$.
+If $\Lambda=0$, \eqref{eq:fiber-curvature} applies at the diagonal
+with deleted law $\Bin(m-2,p)$. The compact lemma or its analytic
+complement makes $\partial_u^2H_C(0)<0$, contradicting $H_C\ge0$
+for small positive $u$. Hence $\Lambda>0$.
+Permutation symmetry makes the exchange quadratic form
+$(\Lambda/2)\|y_{\mathrm{cen}}\|^2$ on the mean-zero directions
+of the active probabilities.
+
+For a nearby point in $Z$, let $a_i\ge0$ activate zero probabilities,
+$b_j\ge0$ deactivate probability-one coordinates, and $y_l$ change
+the $m$ active probabilities. Put $a=\sum a_i$, $b=\sum b_j$, $t=a+b$.
+The two constraints give exactly
+\[
+ \sum_l y_l=b-a,\qquad
+ \sum_l y_l^2=2pa+2(1-p)b-\sum_i a_i^2-\sum_j b_j^2.
+\]
+Thus $\|y_{\mathrm{cen}}\|^2\ge c_pt-O(t^2)$, with $c_p>0$.
+The endpoint linear coefficients of $H_C$ are nonnegative: activate
+one endpoint and compensate uniformly in the active group to preserve
+the mean, then apply $H_C\ge0$ on that feasible path.
+The Taylor expansion on the fixed mean/variance fiber consequently has
+nonnegative endpoint linear terms, the positive exchange term, and
+remaining terms $O(t^{3/2})$. The uniform active direction is $O(t)$,
+the exchange direction is $O(\sqrt t)$, so these remainder orders also
+include their mixed terms. For small $t>0$ this gives $H_C>0$.
+If $t=0$, the two constraints force $y=0$. The IID point is isolated.
+Its connected component $K$ is therefore a singleton, and the original
+maximizer was the same IID group plus zeros.
+
+The required lower prices follow from two exact admissible examples:
+\[
+ \begin{array}{c|c|c|c}
+ \text{active count}&p&\text{closed raw threshold}&\text{ratio lower bound}\\\hline
+ 3&43/100&1&0.3981444741>199/500\\
+ 5&9/20&2&0.4009890598>2/5.
+ \end{array}
+\]
+Their binomial probabilities are rational. Rational square-root bounds,
+Machin bounds for $\pi$, and the integrated Gaussian Taylor polynomial
+$x-x^3/6+x^5/40-x^7/336$ give the displayed strict lower bounds.
+Padding preserves them. The three-bit example handles $n=3,4$;
+the five-bit example supplies the $2/5$ hypothesis for the repeated-type
+argument at every $n\ge5$.
+
+\subsection{The remaining two-coordinate case}
+For two probabilities $p,x$, set $s=p+x$, $w=px$ and
+\[
+ V=s-s^2+2w,\quad
+ R=s-3s^2+4s^3-2s^4+(6-12s+8s^2)w-4w^2.
+\]
+At rank $k=0,1,2$, the closed CDFs are $1-s+w$, $1-w$, $1$.
+Let $z=(k-s)/\sqrt V$, $D=F_k-\Phi(z)$ and $C=DV^{3/2}/R$.
+Off the diagonal the map $(p,x)\mapsto(s,w)$ is invertible, so an
+interior local maximum requires both derivatives to vanish.
+With $F_w=(1,-1,0)_k$, $F_s=(-1,0,0)_k$,
+$V_s=1-2s$, $R_w=6-12s+8s^2-8w$ and
+$R_s=(1-2s)^3+(-12+16s)w$, their positive-denominator numerators are
+\begin{align*}
+ G_w={}&R(VF_w+z\phi(z)+3D)-DVR_w,\\
+ G_s={}&2VRF_s+2\sqrt V R\phi(z)+Rz\phi(z)V_s
+                           +3DRV_s-2DVR_s.
+\end{align*}
+At $G_w=0$,
+\[
+ \frac{C_{ww}}C=\frac{N}{DV^2R},\quad
+ N=R\{6F_wV+z\phi(z)(3+z^2)+3D\}+8DV^2.
+\]
+The finite critical certificate covers each owner square by
+$C<37/100$, $0\notin G_w$, $0\notin G_s$, or $N>0$.
+A separate diagonal cover uses only the ratio bound, since the
+$(s,w)$ chart is singular there. These covers processed respectively
+4683 and 195 boxes, with no unresolved box. They exclude every
+two-active-bit common-diameter maximizer at ratio at least $37/100$.
+Boundary derivatives are not assumed to vanish; the cover bounds their
+limits only to enclose the open stationary domain.
+The exact one-bit example $p=2/5$ gives a ratio greater than $37/100$.
+Compact attainment therefore leaves exactly one active bit at $n=2$.
+The $n=1$ case is immediate. This completes
+Theorem~\ref{thm:common}.

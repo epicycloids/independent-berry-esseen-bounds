@@ -40,13 +40,13 @@ pdfauthor={Logan Bell}}
 \title{The sharp Berry--Esseen bound for independent arrays\\
 with small Lyapunov ratio}
 \author{Logan Bell}
-\date{13 September 2026\quad Version 0.5.0}
+\date{6 October 2026\quad Version 0.7.0}
 \begin{document}
 \maketitle
 \begin{abstract}
 Every finite independent centered array with positive total variance
 and finite third absolute moments satisfies $\Delta\le C_{\mathrm E}\ell$
-whenever $\ell\le\exp(-\exp(20004))$, where $\Delta$ is the
+whenever $\ell\le\exp(-\exp(97))$, where $\Delta$ is the
 Kolmogorov distance of the standardized sum from the normal law,
 $\ell$ is its Lyapunov ratio, and
 $C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$.
@@ -81,20 +81,27 @@ $\ce=3+\sqrt{10}$ and $\be=\ce\phz/6$.
 \begin{theorem}\label{thm:main}
 For every array satisfying \eqref{eq:basic-data},
 \[
- \boxed{\quad\ell\le\ell_0:=\exp\bigl(-\exp(20004)\bigr)
+ \boxed{\quad\ell\le\ell_0:=\exp\bigl(-\exp(97)\bigr)
           \quad\Longrightarrow\quad\Delta\le\be\ell.\quad}
 \]
 The coefficient $\be$ cannot be decreased, even when all coordinates
 have the same two-point law.
 \end{theorem}
 
+A companion paper \cite{BellSmallStructure2026} classifies every
+full finite-horizon global maximizer below an ineffective Lyapunov
+threshold. That qualitative structural result concerns the maximizing
+laws; the present theorem gives an explicit value bound for every array.
+
 The value of $\ell_0$ is a sufficient threshold. The proof does not
 estimate the largest admissible threshold, and the sharp inequality
 for unrestricted independent arrays remains open.
 
-He and Cheng \cite[Theorem~1.1, Sections~2--5, and Appendix~A]{HeCheng2026} prove
+He and Cheng \cite[Theorem~1.1]{HeChengCurrent2026} prove
 the sharp inequality for iid sums once their sample size exceeds a
-universal threshold. Their proof supplies three mechanisms used here:
+universal threshold. We use the arguments in Sections~2--5 and Appendix~A
+of their first version \cite{HeCheng2026}, and retain that version's
+numbering when citing its lemmas and equations. Their proof supplies three mechanisms used here:
 coordinate contamination gives support equations, uniform jitter
 reveals a lattice scale, and a local comparison separates small and
 large residual variance. Independence with different laws requires
@@ -131,7 +138,7 @@ For the lattice step, define
  \pe=\frac{4-\sqrt{10}}2=\frac{1-1/\ce}{2},\quad
  \qe=1-\pe,\quad\te=\pe^2+\qe^2,\quad\he=1/\te.
 \end{equation}
-Esseen's moment inequality \cite[pp.~161--162]{Esseen1956} states
+Esseen's moment inequality \cite[pp.~162--163]{Esseen1956} states
 that a centered variable $Y$ supported on a translate of $h\Z$ satisfies
 \begin{equation}\label{eq:esseen-moment}
  |\E Y^3|+3h\E Y^2\le\ce\E|Y|^3.
@@ -469,7 +476,7 @@ maximizer with $\ell<2t_*\le L_*$. Proposition~\ref{prop:reduction}
 puts the entire array into the class of Theorem~\ref{thm:local},
 contradicting $R>\be$.
 
-It remains to show $\ell_0<t_*$. Write $A=\mathcal A=e^{10000}$,
+It remains to show $\ell_0<t_*$. Write $A=\mathcal A=38e^{43}$,
 so $\lambda=e^{-A}$, $N=\lceil e^A\rceil$,
 $\rho=10^{-26}e^{-2A}$, and $\eta=10^{-10}e^{-A}$.
 For the jitter parameters put
@@ -496,10 +503,11 @@ The other entries of \eqref{eq:tstar} have negative logarithms
 \[
  3A+30\log10+\log108<4A,\qquad\log2000<A.
 \]
-Therefore $-\log t_*<41A^2$. Finally
-$e^4>\sum_{j=0}^5 4^j/j!=643/15>41$, whence
+Therefore $-\log t_*<41A^2=59204e^{86}$.
+The positive exponential series gives $e>163/60$, and the rational
+comparison $(163/60)^{11}>59204$ gives
 \[
- -\log\ell_0=e^{20004}=e^4A^2>41A^2>-\log t_*.
+ -\log\ell_0=e^{97}>59204e^{86}>-\log t_*.
 \]
 This completes the proof of Theorem~\ref{thm:main}.
 

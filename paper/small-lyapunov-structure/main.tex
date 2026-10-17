@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,enumitem,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+urlcolor=blue!45!black,pdftitle={Small Lyapunov ratios and the structure of Berry--Esseen maximizers},pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Var}{Var}\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\supp}{supp}\DeclareMathOperator{\Law}{Law}
+\DeclareMathOperator{\Bern}{Bern}\DeclareMathOperator{\dist}{dist}
+\newcommand{\E}{\mathbb E}\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}\newcommand{\Z}{\mathbb Z}
+\newcommand{\ind}{\mathbf1}\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\pe}{p_*}\newcommand{\qe}{q_*}\newcommand{\re}{r_*}
+\newcommand{\te}{t_*}\newcommand{\be}{\beta_*}\newcommand{\nus}{\nu_*}
+\newcommand{\phz}{\phi(0)}
+\title{Small Lyapunov ratios and the structure\\of Berry--Esseen maximizers}
+\author{Logan Bell}\date{6 October 2026}
+\begin{document}\maketitle
+\begin{abstract}
+For changing finite independent centered arrays whose Lyapunov ratio
+tends to zero and whose Berry--Esseen ratio tends to Esseen's constant,
+we prove approximation by coordinatewise laws on one common lattice.
+The sum of their squared and cubed Wasserstein errors is smaller than
+the corresponding lattice scale, and the original additive zero-bias
+transport bound is asymptotically an equality. If each row is an actual
+global maximizer at its own finite horizon, then every original
+representation is eventually exactly an IID two-point array padded by
+zeros. The resulting Lyapunov threshold is qualitative. The proof
+retains the absolute third moments of the original coordinates and
+uses a relative conditional first-moment estimate to exclude phase
+noise of arbitrarily small size.
+\end{abstract}
+\tableofcontents
+
+\section{The results}
+Let $X_1,\ldots,X_N$ be independent centered real variables with finite
+third absolute moments. Write
+\begin{equation}\label{eq:original-data}
+ S=\sum_iX_i,\quad B^2=\sum_i\E X_i^2>0,\quad
+ R=\sum_i\E|X_i|^3,\quad L=R/B^3,\quad
+ C=L^{-1}d_K(S/B,Z),
+\end{equation}
+where $Z$ is standard normal. All sums of third moments below refer
+to these original coordinates. Centered zero coordinates are allowed.
+Set
+\[
+ \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},\quad
+ \pe=\frac{4-\sqrt{10}}2,\quad\qe=1-\pe,\quad
+ \te=\qe-\pe=\sqrt{10}-3,
+\]
+\[
+ \re=\pe^2+\qe^2,\quad
+ \be=\frac{\re}{\sqrt{\pe\qe}},\quad\nus=\re^{-1}.
+\]
+The variance-one Esseen law $W$ is specified by
+$\Pp(W=\sqrt{\qe/\pe})=\pe$ and
+$\Pp(W=-\sqrt{\pe/\qe})=\qe$.
+For laws with finite $j$th moments, $W_j$ denotes Wasserstein distance,
+with $W_j^j(X,Y)=\inf\E|\widetilde X-\widetilde Y|^j$, where the infimum
+is over couplings with the stated marginal laws. The zero-biased law $S^*$ is defined by
+$\E[Sf(S)]=B^2\E f'(S^*)$. The independent-sum zero-bias construction
+and the sharp single-law bound give
+\begin{equation}\label{eq:additive}
+ \mathcal B(X):=\frac{2B^2W_1(S,S^*)}{R}\le1;
+\end{equation}
+see \citet{GoldsteinReinert1997,Goldstein2010,Tyurin2009} and the
+equality classification in \citet[Theorem~1.1]{BellTransport2026}.
+
+\begin{theorem}[Changing arrays near Esseen's constant]\label{thm:near}
+In each row $n$, take a finite array satisfying
+\eqref{eq:original-data}. Its length may change. Suppose
+\begin{equation}\label{eq:near-assumption}
+                         L_n\longrightarrow0,
+                  \qquad C_n\longrightarrow\ce.
+\end{equation}
+There are positive gaps $h_n\sim R_n/(\re B_n^2)$ and centered laws
+$X_{ni}^{\rm lat}$ on individual cosets of $h_n\Z$, coupled independently
+coordinate by coordinate to the original laws, such that
+\begin{equation}\label{eq:strong-lattice}
+ \sum_iW_2^2(X_{ni},X_{ni}^{\rm lat})=o(h_n^2),\qquad
+ \sum_iW_3^3(X_{ni},X_{ni}^{\rm lat})=o(h_n^3).
+\end{equation}
+Moreover $\mathcal B(X_n)\to1$.
+
+There also exist subsets $I_n$ of active original coordinates,
+$m_n=|I_n|$, and a common sign within each row, such that
+$I_n$ retains $1-o(1)$ of both total variance and original price,
+$m_nL_n^2/\be^2\to1$, and the padded IID laws
+\[
+ Q_{ni}=\Law(B_nW/\sqrt{m_n})\quad(i\in I_n),\qquad
+ Q_{ni}=\delta_0\quad(i\notin I_n)
+\]
+obey
+\[
+ \sum_iW_2^2(X_{ni},Q_{ni})=o(B_n^2),\qquad
+ \sum_iW_3^3(X_{ni},Q_{ni})=o(R_n).
+\]
+Here $W$ is the variance-one Esseen two-point law or its reflection.
+The total variance of the target is exactly $B_n^2$ and its original
+price is asymptotic to $R_n$.
+\end{theorem}
+
+The lattice comparators in \eqref{eq:strong-lattice} may have more
+than two atoms. Their exact coordinate variances and cubic prices can
+differ from those of the originals. The IID approximation has a weaker
+error scale. A rare integer excursion can have a negligible contribution
+relative to $R_n$ while preventing a binary approximation at scale $h_n$.
+
+Let $C_N$ be the supremum of \eqref{eq:original-data} over all arrays
+with at most $N$ coordinates. An actual global maximizer means an array
+attaining this full supremum, with all centered finite-third-moment
+laws admitted as competitors.
+
+\begin{theorem}[Exact structure of small-Lyapunov globals]\label{thm:global}
+Suppose each row is an actual global maximizer at its own finite horizon
+$N_n$, and $L_n\to0$. Then every sufficiently late original array has
+identically distributed nonzero two-point coordinates and zero
+coordinates. The assertion applies to every original representation.
+Equivalently, there exists an absolute $\varepsilon_0>0$ such that every
+actual full global maximizer with $L<\varepsilon_0$ is padded IID binary.
+\end{theorem}
+
+The threshold in Theorem~\ref{thm:global} is ineffective. Zero padding
+increases the horizon without changing $L$, so the theorem is stated
+in terms of $L$. It does not specify the winning active count or binary
+probability. The universal independent sharp-constant problem outside
+the small-Lyapunov regime remains open.
+
+The quantitative value theorem of \citet{BellSmall2026} concerns every
+array with $L\le\exp(-\exp(97))$. Its penalized counterexample selection
+and explicit local comparison are separate from the present classification
+of actual globals, whose finite ratios can be below $\ce$. We use the
+published asymptotic upper estimate
+\begin{equation}\label{eq:asymptotic-upper}
+ d_K(S/B,Z)\le\ce L+0.2538L^{4/3}\qquad(L\le10^{-3})
+\end{equation}
+from \citet[Corollary~4.18, p.~303]{Shevtsova2012}, rather than the
+quantitative companion theorem, for the near-Esseen selection.
+The moment and Fourier estimates extracted from that source are proved
+with their retained losses in Section~\ref{sec:shape}.
+The contamination contact argument follows
+\citet[Section~2.1, equations~(7)--(12)]{HeChengCurrent2026}, applied
+to one original coordinate rather than a common IID law.
+The changing-array common-scale and lattice arguments, and the relative
+conditional estimates required for exact phase collapse, are supplied
+in the proofs below.
+
+For exact structure, an approximation with an absolute error tending
+to zero is insufficient. The remaining phase noise can be smaller than
+that error by an arbitrary amount. We first confine every support phase,
+then estimate conditional phase moments relative to the actual norm
+$\E|T|$. Here a phase means the residual modulo the common lattice gap.
+The integer count labels record the nearest lattice sites; the centered
+rounding residuals may depend on their labels within each coordinate,
+while the coordinate pairs remain independent. The integer endpoint
+competitor has a loss of the actual phase norm, and
+each comparison error is $o(\E|T|)$. This is the part of the argument
+that uses full globality.
+
+\section{Finite horizons and selected endpoints}\label{sec:finite}
+We use closed and strict CDFs,
+$F_S(y)=\Pp(S\le y)$ and $F_S^-(y)=\Pp(S<y)$. Continuity of the
+normal target gives
+\begin{equation}\label{eq:branches}
+ d_K(S/B,Z)=\sup_y\max\{F_S(y)-\Phi(y/B),\,
+                                  \Phi(y/B)-F_S^-(y)\}.
+\end{equation}
+Reflection turns the strict negative branch into a closed positive
+branch. For positive discrepancy, the selected closed branch attains
+its maximum: it is upper semicontinuous and tends to zero in both tails.
+
+\begin{lemma}[Attainment at a fixed horizon]\label{lem:attainment}
+For each finite $N$, $C_N$ is attained with zeros allowed. Every sequence
+with ratio tending to $C_N$, normalized to total variance one, has a
+subsequence converging coordinatewise in $W_3$ to a maximizing array.
+\end{lemma}
+\begin{proof}
+A symmetric binary coordinate padded with zeros gives a positive
+benchmark $c_0=\Phi(1)-1/2$. Since discrepancy is at most one, a ratio
+at least $c_0$ implies $R\le1/c_0$. In the product weak topology the
+centered $N$-tuples with total variance one and that cubic budget form
+a compact set: tightness follows from the variance bound, and bounded
+third moments give uniform integrability of first and second moments.
+The cubic budget is lower semicontinuous. Convolution is weak-continuous
+for fixed $N$. CDF bracketing against the continuous normal target shows
+that discrepancy is weak-continuous. Finally
+$R\ge\sum_i(\E X_i^2)^{3/2}\ge N^{-1/2}$, so discrepancy divided by
+$R$ is upper semicontinuous. Arrays outside this compact set have smaller
+ratio than the benchmark.
+
+Along an extremizing subsequence, the discrepancies converge. Their
+cubic sums therefore converge to the discrepancy of the limiting array
+divided by $C_N$. Lower semicontinuity and maximality force equality
+with its actual cubic sum. Each individual cubic moment converges,
+because there are finitely many nonnegative terms. Weak convergence
+together with third-moment convergence is $W_3$ convergence.
+\end{proof}
+
+The same supremum is obtained if every individual variance is required
+to be positive, by replacing zero laws with arbitrarily small centered
+bounded laws; that restricted class need not attain it. A separate
+probability-Hessian result gives at most four support points in every
+original global law and some equally optimal three-point representative
+preserving each variance and price
+\cite[Theorem~3.2]{BellExtremizers2026}.
+The exact proof below works on the original laws directly and does not
+use an existential replacement to change their support.
+
+\input{near-esseen.tex}
+\input{joint-limit.tex}
+\input{exact-globals.tex}
+
+\section{A large binary group}\label{sec:large-group-example}
+As an example of Theorem~\ref{thm:global}, suppose an actual full global
+array at horizon $M+r_M$ contains $M\to\infty$ active binary laws of a
+common diameter $h_M$, with probabilities in a fixed compact
+$J\subset(0,1)$. Let
+\[
+ R_{\rm rem}=\sum_{i\text{ outside the group}}\E|X_i|^3.
+\]
+The direct original-price condition
+\begin{equation}\label{eq:large-group-price}
+                      R_{\rm rem}=o(M^{3/2}h_M^3)
+\end{equation}
+is sufficient. The given group contributes variance at least
+$c_JMh_M^2$ and price at most $KMh_M^3$, so
+\[
+ L\le\frac{KMh_M^3+R_{\rm rem}}
+                 {(c_JMh_M^2)^{3/2}}\longrightarrow0.
+\]
+Theorem~\ref{thm:global} therefore makes every sufficiently late original
+array padded IID binary. Its common diameter is $h_M$, because the
+original group is active: each remaining coordinate is either the
+same binary law or zero. No bound on the number of remaining
+coordinates is needed beyond their stated additive price.
+
+For instance, if all remaining centered laws have support diameter at
+most $H_Mh_M$, then
+$R_{\rm rem}\le r_MH_M^3h_M^3$.
+Thus $r_MH_M^3=o(M^{3/2})$ implies
+\eqref{eq:large-group-price} directly.
+
+\begingroup\small\raggedright
+\bibliographystyle{plainnat}\bibliography{refs}
+\endgroup
+\end{document}

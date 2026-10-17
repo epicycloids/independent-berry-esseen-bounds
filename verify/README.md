@@ -11,16 +11,34 @@ the supplied Gaussian interpolation bounds, and the comparison of every
 stored upper bound with
 
 $$
-U_* = \frac{8104460571768603}{18014398509481984}<0.44988794.
+U_* = \frac{1013039690742047}{2251799813685248}<0.44988.
 $$
 
 It also checks the endpoint estimates, the
 [scalar certificates](../certificates/scalar/README.md), the default
-[finite-array certificates](../certificates/finite/README.md), and the
+[finite-array certificates](../certificates/finite/README.md), the
+[Bernoulli certificates](../certificates/structure/README.md), and the
 extremizer paper's
 [exact rational Gaussian certificate](../paper/extremizers/gaussian_window_certificate.py).
 Running `./verify.sh` adds the PDF builds. The locked environment uses
 Python 3.12.
+
+The default also rechecks the [fixed unequal-gap example](observations/local_trap.py)
+against its [interval certificate](../certificates/observations/local-trap.json),
+using the saved probability box and 320-bit Arb arithmetic. This is a fixed-box
+verification, with no root search. To print every rechecked enclosure, run:
+
+```sh
+uv run --frozen python verify/observations/local_trap.py --json
+```
+
+The hashes also cover the [numerical observations](../docs/numerical-observations.md)
+and their [data](../data/empirical-observations.json). These are stored
+candidate searches and numerical controls, with their coverage stated in
+the note. The default checks do not repeat those optimizations or turn
+their probability grids into interval root-count certificates. The
+binomial phase and general structure theorems are analytic arguments in
+their respective manuscripts.
 
 ## The supplied certificate
 
@@ -43,7 +61,7 @@ maximum.
 A final box records either its own evaluated upper bound or a bound valid
 on its entire containing interval. The record identifies the choice.
 The certificate contains 143,618 individual values and 92,041 bounds valid
-on their entire containing intervals. Within 8,671 final boxes, a further
+on their entire containing intervals. Within 10,238 final boxes, a further
 complete proof covers the feasible third-moment interval or partitions the
 largest-variance interval. These proofs retain containing parent bounds,
 exact closed children, and the moment inequalities used to exclude empty

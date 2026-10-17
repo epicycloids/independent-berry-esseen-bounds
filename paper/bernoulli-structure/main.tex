@@ -1,0 +1,179 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,enumitem,booktabs,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+urlcolor=blue!45!black,pdftitle={Bernoulli extremizers for the independent Berry-Esseen ratio},pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Bern}{Bern}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator{\sinc}{sinc}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\ind}{\mathbf1}
+\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\pe}{p_{\mathrm E}}
+\newcommand{\phz}{\phi(0)}
+\title{Bernoulli extremizers for the independent\\Berry--Esseen ratio}
+\author{Logan Bell}
+\date{6 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study the Berry--Esseen ratio of independent centered two-point
+variables, allowing zero summands. At every fixed number of available
+coordinates, every maximizing array with a common support diameter has
+identically distributed nonzero coordinates. With at most two coordinates,
+the same conclusion holds for arbitrary support diameters, and only one
+coordinate is nonzero. A uniform binomial phase expansion determines
+the asymptotic choice of active count when zeros are allowed: eventually
+at most four zeros are needed, and their frequencies are explicit.
+For binary arrays with ratios bounded away from zero, large total count
+variance and small diameter deviations, replacement by a common diameter strictly
+increases the ratio. The gain is quantified without an individual
+probability floor, and improves when the probabilities stay in a compact
+subset of $(0,1)$.
+The finite classifications use interval certificates with explicitly
+stated domains. The replacement argument is analytic.
+\end{abstract}
+\tableofcontents
+
+\section{The extremal questions}
+Let $X_1,\ldots,X_n$ be independent centered real variables and put
+\[
+ V=\sum_i\E X_i^2>0,\qquad R=\sum_i\E|X_i|^3<\infty,
+ \qquad
+ \mathcal C(X)=\frac{V^{3/2}}R
+   \sup_y\left|\Pp\{\textstyle\sum_iX_i\le y\}-\Phi(y/\sqrt V)\right|.
+\]
+Here $\Phi$ and $\phi$ are the standard normal distribution function and
+density. A binary coordinate has the form $h_i(B_i-p_i)$, where
+$h_i>0$ and $B_i\sim\Bern(p_i)$. Its support diameter is $h_i$.
+Parameters $p_i=0,1$ give a centered zero coordinate.
+For binary coordinates,
+\begin{equation}\label{eq:binary-moments}
+ V=\sum_i h_i^2p_i(1-p_i),\qquad
+ R=\sum_i h_i^3p_i(1-p_i)\{p_i^2+(1-p_i)^2\}.
+\end{equation}
+
+The conjectured unrestricted bound is
+\[
+ \mathcal C(X)\le\ce:=\frac{3+\sqrt{10}}{6\sqrt{2\pi}}.
+\]
+Esseen's fixed-law asymptotics give this value as a necessary lower
+bound, using repeated copies of a binary law with upper mass
+$\pe=(4-\sqrt{10})/2$ \cite[pp.~160--163]{Esseen1956}.
+Schulz proves the sharp bound for binomial sums
+\cite[Theorem~1]{Schulz2016}; a companion paper proves it for independent
+binary coordinates having a common diameter \cite{BellFinite2026}.
+The present paper identifies the finite maximizers and proves
+replacement theorems beyond exact diameter equality. It also explains
+the zero padding visible in finite binomial optimization. The integer
+threshold cannot remain at its preferred phase while the probability
+remains at its asymptotic optimum; a smaller active core can have a
+better phase and a larger ratio.
+
+There are two separate difficulties. Unequal masses change both the
+variance and the third-moment denominator. Unequal diameters can split
+a convolution atom, so the objective need not be differentiable under
+support motions. Our finite common-diameter argument varies probabilities
+at a fixed integer threshold. Our diameter comparison replaces the
+whole diameter vector and keeps the exact probabilities of crossing
+each count layer.
+
+Let $B_m$ be the maximal ratio for $m$ identically distributed active
+binary coordinates. Let $C_n^{\mathrm{com}}$ be the maximum over at most
+$n$ common-diameter binary coordinates. The maximum allows zero
+coordinates. Let $C_1$ be the one-coordinate binary maximum; explicitly,
+\begin{equation}\label{eq:c1}
+ C_1=\max_{0<p<1}
+ \frac{\sqrt{p(1-p)}}{p^2+(1-p)^2}
+       \left\{\Phi\!\left(\sqrt{\frac p{1-p}}\right)-p\right\}.
+\end{equation}
+Bentkus and Kirsa prove that this is also the unrestricted
+one-coordinate constant \cite[Theorem~1]{BentkusKirsa1989}.
+
+\begin{theorem}[Common diameter]\label{thm:common}
+For every $n\ge1$,
+\[
+ C_n^{\mathrm{com}}=\max_{1\le m\le n}B_m.
+\]
+Every maximizing array consists of identically distributed active
+binary coordinates and zero coordinates.
+\end{theorem}
+
+\begin{theorem}[Two arbitrary binary diameters]\label{thm:two}
+Over arrays with at most two binary coordinates, the maximal ratio is
+$C_1$. Every maximizing array has exactly one active coordinate.
+If both variances must be positive, $C_1$ is an unattained supremum.
+\end{theorem}
+
+Theorems~\ref{thm:common} and~\ref{thm:two} include finite interval
+calculations. Their precise arithmetic premises and the analytic
+boundary arguments are given in Sections~\ref{sec:common}
+and~\ref{sec:two}. The records and verifier are described in
+\path{certificates/structure/README.md} and \path{verify/structure/}.
+These finite classifications do not assert uniqueness of the maximizing
+active count or probability. The eventual binomial phase results are
+given in Section~\ref{sec:iid-phase}.
+
+\begin{theorem}[Small diameter spread]\label{thm:spread}
+Fix $c_0>0$. There are $A_0,\sigma_0,\eta_0,\kappa>0$, depending
+only on $c_0$, with the following property. Let
+$X_i=g_i(B_i-p_i)$, where $g_i>0$ and $0<p_i<1$. Put
+\[
+ a_i=p_i(1-p_i),\quad A=\sum_i a_i,\quad
+ h_0=\frac{\sum_i a_i g_i}{A},\quad e_i=g_i/h_0-1,
+ \quad\sigma^2=\sum_i a_i e_i^2,\quad\eta=\max_i|e_i|.
+\]
+If $A\ge A_0$, $0<\sigma\le\sigma_0$, $\eta\le\eta_0$ and
+$\mathcal C(X)\ge c_0$, then
+\[
+ \mathcal C(B_1-p_1,\ldots,B_n-p_n)-\mathcal C(X)
+                 \ge\kappa\frac{\sigma^2}{\sigma+\eta}>0.
+\]
+The comparator preserves every individual probability. If all
+probabilities belong to a fixed compact $J\subset(0,1)$, the gain is
+at least $\kappa_J\sigma$ for some $\kappa_J>0$.
+\end{theorem}
+
+The maximum deviation condition controls diameters carried by arbitrarily
+small probabilities. The constants in Theorem~\ref{thm:spread} are
+qualitative. Section~\ref{sec:spread} also gives a competitive binary
+family for which the gain has exactly the smaller order
+$\sigma^2/(\sigma+\eta)$.
+
+For every finite-support sum we use both atom sides:
+\begin{equation}\label{eq:branches}
+ \sup_y|F(y)-\Phi(y/\sqrt V)|
+ =\sup_y\max\{F(y)-\Phi(y/\sqrt V),\,
+               \Phi(y/\sqrt V)-F^-(y)\},
+\end{equation}
+where $F(y)=\Pp(S\le y)$ and $F^-(y)=\Pp(S<y)$.
+Reflection interchanges the branches. Between consecutive atoms,
+the positive closed discrepancy decreases. Thus its maximum occurs at
+an atom, and one selected positive closed threshold suffices after
+reflection, including ties.
+
+\input{common-diameter.tex}
+\input{two-diameters.tex}
+\input{iid-phase.tex}
+\input{diameter-comparison.tex}
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}
