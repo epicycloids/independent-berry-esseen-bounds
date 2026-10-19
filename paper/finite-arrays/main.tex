@@ -967,8 +967,9 @@ $W\in[2/3,4/3]$ of mean $1$, and its conditional third absolute moment is
 affine in its variance with nonnegative slope. Because $u\mapsto u^{-3/2}$ is
 decreasing, $\E[(U_i-\E U_i)W^{-3/2}]\le0$, so the average of $\be$ times the
 conditional Lyapunov ratio exceeds $\be R$ by at most $\be R(\E W^{-3/2}-1)$,
-while the normal CDF convexity error is at most $(7/50)\E[-\log W]$ (since
-$|\partial_v^2\Phi(y/\sqrt v)|\le\phi'''(y/\sqrt v)/(4v^2)<7/(50v^2)$). Over
+while the normal CDF convexity error is at most $(7/50)\E[-\log W]$ (since for
+$N(v)=\varepsilon\Phi(y/\sqrt v)$,
+$N''(v)=\varepsilon\phi'''(y/\sqrt v)/(4v^2)\le|\phi'''(y/\sqrt v)|/(4v^2)<7/(50v^2)$). Over
 all centered random variables $W$ of mean $1$ and support width at most $1/3$,
 a 256-cell rational midpoint-derivative check verifies $\E W^{-3/2}-1<113/2000$
 and $\E[-\log W]<1/70$. Combining the conditional margin $3/80$ from
@@ -995,8 +996,15 @@ the middle/low representation of $210$, and the $211$ collision analytically,
 and rules out the remaining four configurations (\texttt{lower110}, \texttt{low210},
 \texttt{collision210}, \texttt{collision221}) by certified interval covers.
 \item \emph{Two three-point summands ($3\times3$ grid):}
-Letting $\eta_i=(\alpha_i\delta_{x_{i,0}}-\delta_{x_{i,1}}+\beta_i\delta_{x_{i,2}})/(u_iv_i)$
-be the mean-zero, variance-zero signed measure on $\supp X_i$, the joint
+For ordered support points $x_{i,0}<x_{i,1}<x_{i,2}$ with adjacent gaps
+$u_i=x_{i,1}-x_{i,0}$ and $v_i=x_{i,2}-x_{i,1}$, set
+$\alpha_i=v_i/(u_i+v_i)$ and $\beta_i=u_i/(u_i+v_i)$, and let
+\[
+ \eta_i=\frac{\alpha_i\delta_{x_{i,0}}-\delta_{x_{i,1}}
+                 +\beta_i\delta_{x_{i,2}}}{u_iv_i}
+\]
+be the signed measure on $\supp X_i$ having zero total mass, zero first
+moment, and unit second moment ($\int x^2\,d\eta_i=1$). The opposite joint
 perturbation $(P_1+t\eta_1)\otimes(P_2-t\eta_2)$ preserves total variance and
 makes $R$ affine in $t$, so maximality requires
 $g=\iint\ind_{\{x+y\le z\}}\,d\eta_1d\eta_2\ge0$. This sign condition

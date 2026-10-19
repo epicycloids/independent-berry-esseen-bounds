@@ -267,10 +267,12 @@ $S=\sum_i X_i$ of indecomposable three-point (or two-point) summands with no
 Gaussian or Poisson part, shrinking supports, nonatomic sum law when infinite,
 full completion rank, and (for $\beta\le18481/25000$) finite weighted variance
 moments $W_\gamma<\infty$ and rough distribution function at $z$. To close
-the conjecture $\ci=\ce$ along this variational route, what remains is to
-rule out the coexistence of infinitely many active summands (or finitely many
-summands with unequal support diameters) in the window
-$\ell_0<\beta<1.321$.
+the conjecture $\ci=\ce$ along this variational route, what remains in the
+range $\ell_0<\beta<1/\ce$ is to rule out nonatomic infinite convolutions with
+shrinking supports and finite representations (other than common-diameter
+two-point arrays, which satisfy $\Delta(S)\le\ce\beta$ by \citet{BellFinite2026}),
+including finite arrays with genuine three-point summands or with two-point
+summands of unequal support diameters.
 
 Let us outline the methods used across the paper:
 \begin{itemize}[leftmargin=2em]
@@ -429,11 +431,17 @@ $Q(y)=0$ at every $y\in\supp\nu\setminus\{0\}$. In particular, all supports
 $\supp X_i$ and $\supp\nu$ are uniformly bounded.
 \end{lemma}
 \begin{proof}
-Perturbing $\Law(X_i)$ to $(1-t)\Law(X_i)+t\delta_u$ at $w=z-tu$ gives
-\eqref{eq:coord-contact} (compare \citet[Lemma~4.3]{HeCheng2026}), and
-appending an independent compensated Poisson variable $y(N_t-t)$ at $w=z-ty$
-gives \eqref{eq:Q}. Since $-C|u|^3$ dominates as $|u|\to\infty$, all
-supports are uniformly bounded.
+Replacing the raw law of $X_i$ by $(1-t)\Law(X_i)+t\delta_u$ at fixed raw
+threshold $w=z$ (so the centered threshold is $w-m=z-tu$, while mean, variance,
+and central third absolute moment have derivatives $u$, $u^2-v_i$, and
+$|u|^3-\rho_i-3M_iu$) gives \eqref{eq:coord-contact} (compare
+\citet[Lemma~4.3]{HeCheng2026}), with equality on $\supp X_i$ by upper
+semicontinuity. Similarly, appending an independent compensated Poisson
+variable $y(N_t-t)$ at the centered threshold $z-ty$ (where the raw CDF is
+$\Pp(S+yN_t\le z)=\E F(z-yN_t)$ and variance and $\beta$ increase by $ty^2$
+and $t|y|^3$) gives \eqref{eq:Q}, and varying $\nu$ by bounded signed
+densities yields $Q(y)=0$ on $\supp\nu\setminus\{0\}$. Since $-C|u|^3$
+dominates as $|u|\to\infty$, all supports are uniformly bounded.
 \end{proof}
 
 For a mass transfer from $v$ to $u$ within $X_i$, write $d=u-v$, $b=u^2-v^2$,
@@ -583,14 +591,21 @@ $Q(x+y)=0$. Moreover, $\supp\nu\setminus\{0\}$ contains at most two positive
 and two negative points.
 \end{lemma}
 \begin{proof}
-Replacing a compensated Poisson component of intensity $p-kp^2$ ($k=m^2/v$)
-and jump law $H$ supported on one side of $0$ by a single centered variable
-$B_pH-pm$ preserves total variance to second order in $p$ and expands the
-objective excess at $O(p^2)$ as $(k+1)\E Q(H)-\frac12\E Q(H+H')\le0$; since
-$Q=0$ on $\supp\nu\setminus\{0\}$, upper semicontinuity forces $Q(x+y)=0$ for
-all same-sign $x,y\in\supp\nu\setminus\{0\}$.
+Choose a probability law $H$ dominated by a finite multiple of $\nu$ and
+supported on a compact interval on one side of $0$, with $m=\E H$,
+$v=\E H^2$, $r=\E|H|^3$, and $k=m^2/v$. Replacing a compensated Poisson
+component of intensity $p-kp^2$ and jump law $H$ by a single centered variable
+$B_pH-pm$ at centered threshold $z-kp^2m$ preserves total variance to second
+order in $p$ and expands the objective excess at $O(p^2)$ as
+$(k+1)\E Q(H)-\frac12\E Q(H+H')\le0$; since $Q=0$ on $\supp\nu\setminus\{0\}$,
+upper semicontinuity forces $Q(x+y)=0$ for all same-sign
+$x,y\in\supp\nu\setminus\{0\}$.
 
-Perturbing $\nu$ by $\eta=f\nu$ on one side $\sigma\in\{-1,1\}$ of $0$ gives
+Perturbing $\nu$ by a finite signed measure $\eta=f\nu$ with bounded $f$
+supported away from $0$ on one side $\sigma\in\{-1,1\}$, and setting
+$d_\eta=\int y\,d\eta$, $v_\eta=\int y^2\,d\eta$, $r_\eta=\int|y|^3\,d\eta$,
+and $U_\eta g(w)=\int[g(w-y)-g(w)]\,\eta(dy)$, the centered threshold
+$z-d_\eta$ gives
 \begin{equation}\label{eq:intensity-objective}
  (1+v_\eta)^{3/2}
  \left\{[e^{U_\eta}F](z)
@@ -629,11 +644,21 @@ atoms and $d_n>x$ along a subsequence, then $F$ is continuous at $z-x$ and
 $z-2x$.
 \end{lemma}
 \begin{proof}
-Since $v_{i_n}\to0$, choosing a modal state $v_n\to0$ (via
-Lemma~\ref{lem:atoms-modal} if $F$ has atoms) gives $Q(x)=0$ from first-order
-stationarity and $-2Q(2x)\le0$ from the two-coordinate Hessian contrast
-$(1,-1)$ in \eqref{eq:prob-hessian}, which together with $Q(2x)\le0$ forces
-$Q(2x)=0$.
+Since $v_{i_n}\to0$, we may choose a state $v_n\in\supp X_{i_n}$ with
+$v_n\to0$ (taking $v_n$ to be a modal state with probability $q_n\to1$ via
+Lemma~\ref{lem:atoms-modal} if $F$ has atoms, so that the modal-branch CDF
+$H_n(w)=\Pp(S-X_{i_n}+v_n\le w)$ satisfies $\|H_n-F\|_\infty\le1-q_n\to0$,
+and similarly for double deletions). Passing to a subsequence on which
+$d_n=u_n-v_n$ equals $x$, lies above $x$, or lies below $x$, each shifted CDF
+has a definite side limit; let $Q_1^*,Q_2^*$ denote the corresponding versions
+of $Q(x),Q(2x)$ formed with these side limits. First-order stationarity gives
+$Q_1^*=0$, and the two-coordinate Hessian contrast $(1,-1)$ in
+\eqref{eq:prob-hessian} gives $-2Q_2^*\le0$. Because closed CDF values
+dominate their left limits and $Q\le0$, we have $0=Q_1^*\le Q(x)\le0$ and
+$0\le Q_2^*\le Q(2x)\le0$, so $Q(x)=Q(2x)=0$. Moreover, when $d_n>x$ along a
+subsequence, the arguments $z-d_n$ and $z-d_n-d_m$ approach $z-x$ and $z-2x$
+from the left, so equality $Q_1^*=Q(x)$ and $Q_2^*=Q(2x)$ forces the left
+limits of $F$ at $z-x$ and $z-2x$ to equal $F(z-x)$ and $F(z-2x)$.
 \end{proof}
 
 \begin{lemma}\label{lem:closed-copy}
@@ -687,11 +712,17 @@ stationarity:
 
 \subsection{Zero-bias Ornstein--Uhlenbeck bound and lattice comparison}
 
-By \eqref{eq:zero-bias} and the Goldstein--Tyurin bound
+For a centered random variable $T$ of variance $v>0$, its zero-biased
+distribution $T^*$ is characterized by $\E[Tg(T)]=v\E g'(T^*)$, which together
+with the independent-sum replacement construction \citep{GoldsteinReinert1997}
+and the single-variable and additive transport bounds of
+\citet[Lemma~1.1]{Goldstein2010} and \citet[Theorem~3 and Corollary~1]{Tyurin2009}
+gives
 \begin{equation}\label{eq:zero-bias}
-                  W_1(W,W^*)\le\frac{\beta}{2(1-a)},
+                  W_1(W,W^*)\le\frac{\beta}{2(1-a)}.
 \end{equation}
-solving the Stein equation for $h(u)=\Phi((z-u)/\sqrt a)$ gives:
+Solving the Stein equation $vg'(u)-ug(u)=h(u)-\E h(\sqrt v\,Z)$ for
+$h(u)=\Phi((z-u)/\sqrt a)$ and $v=1-a$ gives:
 
 \begin{lemma}\label{lem:gauss-large}
 For every $0<a<1$,
@@ -788,9 +819,21 @@ proving $a=0$.
 
 Suppose $S=\sum_{i\ge1}X_i$ has an atom, and let $c_i$ be a modal state of
 $X_i$ with probability $q_i=1-p_i\ge1/3$, so $\sum_i p_i<\infty$ by
-Lemma~\ref{lem:atoms-modal} and $\sum_i|c_i|<\infty$. If infinitely many
-$X_i$ were nonconstant, choose $K$ with $q_j\ge3/4$ for $j\ge K$, and for a
-late nonconstant coordinate $i\ge K$ with nonmodal state $u_i=c_i+d_i$ and
+Lemma~\ref{lem:atoms-modal} and $\sum_i|c_i|<\infty$. Writing $X_i=c_i+Y_i$,
+the set of sums using at most $M$ nonzero $Y_j$ is compact for every fixed
+$M\ge1$, and if all selected nonzero displacements are positive ($Z_j\ge0$),
+their sums avoid $[b-\eta,b)$ for each $b>0$ and some $\eta>0$ (since a
+sequence approaching $b$ from below would have fixed terms summing to $b$ and
+escaping positive terms, making it eventually at least $b$). Moreover, if the
+maximizing threshold $z$ is itself an atom of $S$ of mass $m>0$, then all
+sufficiently late gaps $d_i=u_i-c_i$ are negative: for $d_i>0$ with
+$d_i\to0$, the modal-branch CDF $H_i(w)=\Pp(S-X_i+c_i\le w)$ satisfies
+$\|H_i-F\|_\infty\le p_i\to0$ and hence $H_i(z-d_i)-H_i(z)\to-m<0$,
+contradicting mass-transfer stationarity $g_i+\phi(z)d_i+Ab_i-Cr_i'=0$.
+
+If infinitely many $X_i$ were nonconstant, choose $K$ so that $q_j\ge3/4$ for
+$j\ge K$ (and $d_j<0$ for $j\ge K$ when $z$ is an atom). For a late
+nonconstant coordinate $i\ge K$ with nonmodal state $u_i=c_i+d_i$ and
 $S_i^0=S-X_i+c_i$, its mass-transfer derivative is
 \begin{equation}\label{eq:pivotal}
  g_i=-\operatorname{sgn}(d_i)\Pp(E_i),\qquad
@@ -799,12 +842,18 @@ $S_i^0=S-X_i+c_i$, its mass-transfer derivative is
        \{z<S_i^0\le z-d_i\},&d_i<0.
       \end{cases}
 \end{equation}
-Letting $N_i$ count the nonmodal outcomes among $j\ge K$, $j\ne i$,
-compactness of finite configurations implies that for every fixed $M\ge1$,
+Letting $N_i$ count the nonmodal outcomes among $j\ge K$, $j\ne i$, we have
+for every fixed $M\ge1$:
 \begin{equation}\label{eq:large-count}
                   E_i\subset\{N_i>M\}
                   \qquad\text{for all sufficiently large }i.
 \end{equation}
+Indeed, if $z$ is not an atom, $z$ has positive distance from the compact set
+of configurations with at most $M+K$ nonmodal outcomes; if $z$ is an atom,
+conditioning on any prefix configuration before $K$ writes
+$S_i^0=b-\sum_{j\ge K,j\ne i}Z_j$ with $Z_j\ge0$, so $E_i$ becomes
+$\sum_{j\ge K,j\ne i}Z_j\in[b-z-|d_i|,b-z)$, which is empty for $b-z\le0$ and
+avoids $\{N_i\le M\}$ for small $|d_i|$ by the one-sided compactness property.
 Meanwhile, stationarity of the mass transfer gives
 \begin{equation}\label{eq:pivotal-size}
           \frac{g_i}{d_i}\longrightarrow-\phi(z),\qquad
@@ -812,8 +861,14 @@ Meanwhile, stationarity of the mass transfer gives
 \end{equation}
 Pairing the mass transfer $s$ in coordinate $i$ with the collective
 product-law variation $t$ that multiplies all nonmodal probabilities for
-$j\ge K,j\ne i$ by $1+t$, the $2\times2$ Hessian of \eqref{eq:objective}
-satisfies
+$j\ge K,j\ne i$ by $1+t$ (compensated at the mode), the product-law score is
+\[
+ L_i=\sum_{j\ge K,\,j\ne i}\ell_j,\qquad
+ \ell_j=\begin{cases}1,&Y_j\ne0,\\-p_j/q_j,&Y_j=0,\end{cases}\qquad
+ L_i\ge N_i-\sum_{j\ge K}\frac{p_j}{q_j},
+\]
+with mixed raw-CDF derivative $g_{i,t}=-\operatorname{sgn}(d_i)\E[\ind_{E_i}L_i]$,
+and the $2\times2$ Hessian of \eqref{eq:objective} satisfies
 \begin{equation}\label{eq:atomic-H}
        |J_{ss}|\le K_1d_i^2,\qquad
        |J_{st}-g_{i,t}|\le K_2|d_i|,\qquad
@@ -832,13 +887,21 @@ $w_i=\E f_i(X_i)^2$, $W=\sum_{i\in I}w_i>0$, $V=\sum_{i\in I}v_i\to0$, and
 $h=\max_{i\in I}\max|\supp X_i|\to0$) with $\sum_{i\in I}f_i(x_i)=c$ on
 $\mathcal A_I$. Moving each support state $x_i$ to $x_i+tf_i(x_i)$ and the
 threshold to $z+tc$ leaves the raw event probability $F_*(z+tc)$ identically
-constant for small $|t|$. Choosing $j\in I$ to maximize $w_j/v_j$, so that
+constant for small $|t|$. Choosing $j\in I$ to maximize $w_j/v_j$, and setting
+\[
+ \begin{gathered}
+ X=X_j,\qquad f=f_j(X_j),\qquad v=v_j,\qquad w=w_j,\\
+ m=\E[Xf],\qquad a_1=\E[X^2f],\qquad b_1=\E[Xf^2],\qquad
+ M=\sum_{i\in I}\E[X_if_i(X_i)],
+ \end{gathered}
+\]
+we have
 \begin{equation}\label{eq:rank-selection}
-                         \frac{v_j}{w_j}\le \frac VW,
+                         \frac{v}{w}\le \frac VW.
 \end{equation}
-and tilting $\Law(X_j)$ by $(1+sf_j(X_j))$ while applying the support motion
-$t$, the centered threshold $x$, variance $B$, and third-moment functional
-$R$ have derivatives at $(s,t)=(0,0)$ given by
+Tilting $\Law(X)$ by $(1+sf)$ while applying the support motion $t$, the
+centered threshold $x$, variance $B$, and third-moment functional $R$ have
+derivatives at $(s,t)=(0,0)$ given by
 \begin{align}
  x_s=-m,\quad x_t=c,\quad x_{st}=-w,&\qquad
  B_s=a_1,\quad B_{ss}=-2m^2,\notag\\

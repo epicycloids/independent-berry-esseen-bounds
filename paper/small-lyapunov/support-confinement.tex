@@ -147,17 +147,23 @@ which together with $R>\be$ and \eqref{eq:span-envelope} implies
 \begin{equation}\label{eq:near-max-envelope}
  3h+|\theta|>c-16u,\qquad R\le\be+u+18r.
 \end{equation}
-Thus the aggregate Esseen deficit of $(Q_i)$ is at most $D$, so
-\eqref{eq:lattice-ratios} yields
+It follows that $h>3/2$. Reflecting the rounded variables by
+$\operatorname{sign}\theta$ (arbitrarily if $\theta=0$),
+\eqref{eq:rounded-data}--\eqref{eq:near-max-envelope} bound the aggregate
+oriented Esseen deficit of $(\operatorname{sign}(\theta)Q_i)$ by $D$ (since
+$hV_Q>1$), so \eqref{eq:lattice-ratios} yields
 \begin{equation}\label{eq:near-esseen}
  |h-\he|\le H_h<\frac1{40},\qquad
  \bigl||\theta|-1/\sqrt{10}\bigr|\le34r+3k_D+\frac{H_h}{6}<\frac1{10},
 \end{equation}
 and hence
 \begin{equation}\label{eq:span-range}
-                  \frac{19}{10}<h<2,\qquad\theta>\frac15,
+                  \frac{19}{10}<h<2,\qquad|\theta|>\frac15.
 \end{equation}
-while $\be<(\be+18r)e^{-z^2/2}+u$ gives
+If $\theta<0$, then since $h>|\theta|$ the right-hand side of
+\eqref{eq:global-envelope} is maximized over $z\in\R$ at $z=0$, which with
+$R>\be$ and \eqref{eq:span-envelope} would imply $|\theta|<128r+8u=D/2<1/5$, a
+contradiction. Hence $\theta>1/5$, while $\be<(\be+18r)e^{-z^2/2}+u$ gives
 \begin{equation}\label{eq:threshold-bound}
            |z|\le Z,\qquad0\le K-\be\le u+18r+\eta.
 \end{equation}

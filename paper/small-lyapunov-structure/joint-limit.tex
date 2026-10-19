@@ -59,9 +59,21 @@ For fixed $u,v\in\R$ and $s=u/\sqrt A$, expanding
 $\sum_{i\in I}\log(\E e^{\ii sJ_i+\ii vZ_i}/\E e^{\ii vZ_i})$ through second
 order in $s$ and using $\Cov(K,T)=o(\sqrt A)$ gives
 $\E e^{\ii s(K-\mu)+\ii vT}=e^{-u^2/2+o(1)}\E e^{\ii vT}$, proving joint
-weak convergence. Inverting the Fourier transform in the first coordinate at
-$k$ using \eqref{eq:torus-damping} and tightness from \eqref{eq:all-layer}
-yields \eqref{eq:joint-local}.
+weak convergence. To prove \eqref{eq:joint-local}, invert the Fourier
+transform in the first coordinate at $k$. Since $\sup_{i\in I}\E Z_i^2\to0$,
+on a fixed small cell $|s|\le c_0$ the twisted core factors
+$\E e^{\ii sJ_i+\ii vZ_i}$ converge uniformly in $C^2$ to the centered
+$\Bern(p)$ factor, are bounded away from zero, and have log-modulus second
+derivatives at most $-c$ while their log-modulus first derivatives at $s=0$
+sum to at most $K_v\sqrt A$ by Cauchy--Schwarz. Thus
+\[
+ \left|\prod_{i\in I}\E e^{\ii sJ_i+\ii vZ_i}\right|
+          \le\exp\bigl(K_v|s|\sqrt A-cAs^2\bigr)\qquad(|s|\le c_0),
+\]
+whereas on $c_0\le|s|\le\pi$ the uniformly binary-like twisted core product is
+exponentially small in $M$. Substituting $s=w/\sqrt A$, dominated convergence
+and tightness from \eqref{eq:all-layer} together with \eqref{eq:integer-local}
+yield \eqref{eq:joint-local}.
 \end{proof}
 
 \begin{lemma}[Asymptotic threshold envelopes]\label{lem:endpoints}
@@ -105,10 +117,12 @@ $\theta_0+\Z$, so there exist phases $\vartheta_n$ such that
 
 To deduce $\mathcal B(X_n)\to1$ from \eqref{eq:modular}, let $q=\qe$,
 $t=2q-1=\te$, and let $P_q(u)$ be the $1$-periodic sawtooth function equal to
-$-2(1-q)u$ on $[0,q]$ and $2q(u-1)$ on $[q,1]$. Then $-tx+P_q(x-\vartheta)$
-is $1$-Lipschitz, has mean $-q(1-q)$ on the circle, and vanishes on
-$\vartheta+\Z$. Using $\E S^*=\kappa/(2V)$ and $|\E e^{\ii uS^*}|\le1/(|u|\sqrt V)$
-in its Fourier series gives, by Kantorovich--Rubinstein duality,
+$-2(1-q)u$ on $[0,q]$ and $2q(u-1)$ on $[q,1]$. Then $P_q(x-\vartheta)$ has
+mean $-q(1-q)$ on the circle and vanishes on $\vartheta+\Z$ (with
+$|P_q(x-\vartheta)|\le2\dist(x-\vartheta,\Z)$), while the combined test
+function $-tx+P_q(x-\vartheta)$ is $1$-Lipschitz on $\R$. Using
+$\E S^*=\kappa/(2V)$ and $|\E e^{\ii uS^*}|\le1/(|u|\sqrt V)$ in the Fourier
+series of $P_q(x-\vartheta)$ gives, by Kantorovich--Rubinstein duality,
 \begin{equation}\label{eq:modular-dual}
  W_1(S,S^*)\ge\frac{t\kappa}{2V}+q(1-q)
   -2\E\dist(S-\vartheta,\Z)-\frac{\zeta(3)}{\pi^3\sqrt V}.

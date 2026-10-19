@@ -39,8 +39,8 @@ gives
  (\sqrt{10}+1)(-x-b)^2(-x+2s),&x\le0.
  \end{cases}
 \]
-Since $\E Q(X)=0$ and $\E f(X)\le-\delta(X)$, we have
-$\delta(X)\ge\E[Q(X)-f(X)]\ge c_0\E[\dist(X,\{-b,a\})^3]$ with
+Since $\E Q(X)=0$ and $\E f(X)=-\delta(X)$, we have
+$\delta(X)=\E[Q(X)-f(X)]\ge c_0\E[\dist(X,\{-b,a\})^3]$ with
 $c_0=2\pe(\sqrt{10}-1)>0$. Rounding $X$ to $a$ on $[0,\infty)$ and to $-b$ on
 $(-\infty,0)$ at cubic cost $e\le\delta(X)/c_0$ and then matching the atom
 probabilities to $\pe,\qe$ gives $W_3^3(X,W)\le4e+4(a+b)^2e^{1/3}$. Rescaling
@@ -152,7 +152,8 @@ yields \eqref{eq:raw-core}.
 \section{First nonzero Fourier peak and integer lifts}\label{sec:alias}
 
 \begin{lemma}\label{lem:first-alias}
-At a spacing $h_n$ asymptotic to $\nus R_n B_n$, the rescaled summands
+At a spacing $h_n$ asymptotic to $\nus R_n/B_n^2=\nus L_nB_n$ (so $h_n\sim\nus R_n$
+under the normalization $B_n=1$), the rescaled summands
 $Y_i=X_i/h_n$ decompose as
 \[
  Y_i=J_i+Z_i,\qquad J_i=K_i-\E K_i,\qquad K_i\in\Z,\qquad

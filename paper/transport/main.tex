@@ -87,7 +87,8 @@ by the identity
 \begin{equation}\label{eq:zero-bias}
              \E[Xf(X)]=v\E f'(X^*)
 \end{equation}
-for all absolutely continuous functions $f:\R\to\R$ with $\E|Xf(X)|<\infty$.
+for all absolutely continuous functions $f:\R\to\R$ for which both
+expectations exist.
 \citet[Lemma~1.1]{Goldstein2010} and \citet[Theorem~3]{Tyurin2009}
 independently proved the sharp single-variable transport inequality
 \begin{equation}\label{eq:single-bound}
@@ -252,8 +253,8 @@ $\E[Sf(S)]=\sum_{i=1}^n v_i\E f'(T_i+X_i^*)$, so that
                   S^*\ \stackrel{d}=\ T_I+X_I^*.
 \end{equation}
 Applying the representation \eqref{eq:cdf-distance} and the triangle
-inequality to the mixture \eqref{eq:replacement}, followed by translation
-invariance of $W_1$ under convolution with $T_i$ and the single-summand bound
+inequality to the mixture \eqref{eq:replacement}, followed by contraction of
+$W_1$ under convolution with $T_i$ and the single-summand bound
 \eqref{eq:single-bound}, gives the three-step inequality chain
 \begin{equation}\label{eq:bound-chain}
  \begin{split}
@@ -276,7 +277,7 @@ For a centered probability measure $\mu$ on $\R$ with variance $v>0$ and
 third absolute moment $\rho=\int|x|^3\,\mu(dx)<\infty$, define the scale- and
 reflection-invariant transport ratio
 \[
-                 B(\mu)=\frac{2v W_1(\mu,\mu^*)}{\rho}\in(0,1].
+                 B(\mu)=\frac{2v W_1(\mu,\mu^*)}{\rho}\in[0,1].
 \]
 
 \subsection{Two-point distributions and strictness for three-point distributions}
@@ -326,7 +327,8 @@ yields
  \displaystyle\frac{z^2}{z-x},&y(x+z)>y^2+z^2.
  \end{cases}
 \]
-In the first case, $y<0<z$ and $x<y$ imply $y^2+2z^2-y(x+2z)>z(z-y)>0$, so
+In the first case, $y<0<z$ and $y(x+z)\le y^2+z^2$ imply
+$y^2+2z^2-y(x+2z)\ge z(z-y)>0$, so
 in both cases $D_1-D_{10}>0$. Subtracting \eqref{eq:ternary-coupling} from
 $\rho/(2v)$ therefore gives $\rho/(2v)-W_1(\mu,\mu^*)\ge(\beta-\alpha)(D_1-D_{10})>0$.
 
@@ -550,8 +552,8 @@ with $d_k=0$, $F_X-F_{X^*}=0$. On cells with $d_k>0$, set
  \end{cases}
 \end{gather*}
 Then $\sum_k\omega_k=1$, and within the $k$th cell $F_X(a+(k+s)h)-F_{X^*}(a+(k+s)h)=hd_k(r_k-s)$,
-so integrating $|F_X-F_{X^*}|$ and $F_{X^*}-F_X$ over $\R$ and using
-$\E X^*-\E X=\kappa/(2v)$ gives
+so integrating $|F_X-F_{X^*}|$ and $F_X-F_{X^*}$ over $\R$ and using
+$\int_\R(F_X-F_{X^*})\,dx=\E X^*-\E X=\kappa/(2v)$ gives
 \begin{equation}\label{eq:cell-identities}
  \frac{W_1(X,X^*)}h=\sum_k\omega_k\ell(r_k),\qquad
  \sum_k\omega_k\left(r_k-\frac12\right)=\frac\kappa{2vh}.

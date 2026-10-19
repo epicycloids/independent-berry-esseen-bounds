@@ -49,23 +49,37 @@ and the fractional part $\{y+\mu\}$ converges to $0$ modulo $1$. In
 particular, whenever $t:=\E|T|>0$, we have $Q=o(t)$.
 \end{lemma}
 \begin{proof}
-For any deleted coordinate $i$ and $|u|\le H$, if the deleted fractional part
+For any deleted coordinate $i$, put $v_i=\E Y_i^2$, $\rho_i=\E|Y_i|^3$,
+$w_i=V-v_i$, and $\gamma_i=\kappa(Y_{-i})/w_i$, where $\kappa(Y_{-i})$ is the
+deleted third-moment sum. For $|u|\le H$, if the deleted fractional part
 $\tau_i(u)=\{y-u+\mu_{-i}\}$ lies in $[\epsilon,1-\epsilon]$, then
 Lemma~\ref{lem:integer} applied to the deleted sum gives
 \begin{equation}\label{eq:away-phase}
                F_{-i}(y-u)=G_i(u)-d\phz\tau_i(u)+o(d),
 \end{equation}
 where $G_i(u)=\Phi(x_i)+w_i^{-1/2}\phi(x_i)\{1/2+\gamma_i(1-x_i^2)/6\}$
-($x_i=(y-u)/\sqrt{w_i}$) is the smooth deleted Edgeworth approximation, which
-satisfies uniformly for $|u|\le H$:
+($x_i=(y-u)/\sqrt{w_i}$) is the smooth deleted Edgeworth approximation. In
+gap units, the contact score and level from \eqref{eq:full-contact-unit} are
+\[
+ g_i(u)=F_{-i}(y-u)+b_iu+A_0u^2-\lambda|u|^3,\qquad
+ \ell_i=F(y)+A_0v_i-\lambda\rho_i,
+\]
+where
+\[
+ b_i=d\phi(z)+3\lambda\E[Y_i|Y_i|],\qquad
+ \lambda=\frac DP=Cd^3,\qquad
+ A_0=\frac{3D+z\phi(z)}{2V},
+\]
+so that $g_i(u)\le\ell_i$ for all $u\in\R$ with equality on $\supp Y_i$.
+Expanding around $u=0$ shows that uniformly in $i$ and $|u|\le H$,
 \begin{equation}\label{eq:smooth-contact-bound}
        G_i(u)+b_iu+A_0u^2-\lambda|u|^3-\ell_i\le o(d)
 \end{equation}
 (since $C\to\ce>\phz/6$ makes the cubic coefficient $-\lambda+\phz d^3/6$
 strictly negative). If $u\in\supp Y_i$ had $u+\E K_i$ bounded away from $\Z$,
 then $\tau_i(u)$ would stay in $[\epsilon,1-\epsilon]$ (since $\{y+\mu\}\to0$)
-and \eqref{eq:away-phase}--\eqref{eq:smooth-contact-bound} would give strict
-inequality in \eqref{eq:full-contact-unit}, contradicting $u\in\supp Y_i$.
+and \eqref{eq:away-phase}--\eqref{eq:smooth-contact-bound} would give
+$g_i(u)<\ell_i$, contradicting $u\in\supp Y_i$.
 Thus $\eta_n=\max_i\|Z_i\|_\infty\to0$. Finally, $\E T^4\le3Q^2+\eta_n^2Q$
 and $t=\E|T|\ge Q^{3/2}/(\E T^4)^{1/2}\ge Q/\sqrt{3Q+\eta_n^2}$ imply
 $Q=o(t)$ whenever $t>0$.
@@ -140,7 +154,8 @@ proof of Lemma~\ref{lem:multiplier},
  \Delta\le Kt,\qquad \sum_{i=1}^N\Pp(|D_i|>b)\le \frac KB,\qquad
                       U\le K_Bt^2\quad\bigl(K_B=O(B)\bigr).
 \end{equation}
-On the frequency cell $\|s\|\le c/H$ ($s=(s_1,s_2)$), let
+On the frequency cell $\|s\|\le c/H$ ($s=(s_1,s_2)$), set
+$f_i(u)=\E e^{\ii uJ_i}$ and
 $m_{ir}(s)=\E[d_i^re^{\ii(s_1J_i+s_2J_i')}]/[f_i(s_1)f_i(s_2)]$. Applying
 Lemma~\ref{lem:multiplier} to the antisymmetric variables $d_i$ bounds the
 linear twisted sum by
@@ -155,13 +170,23 @@ outside $\|s\|\le c/H$) yields, uniformly for $|k_1-\mu|,|k_2-\mu|\le B_0\sqrt A
  \E(W^2\mid K=k_1,K'=k_2)=U+o(t^2),\qquad
  \E(W^4\mid K=k_1,K'=k_2)\le C_Bt^4.
 \end{equation}
-If $\Delta\ge\epsilon t$, conditioning on the disjoint events where a single
-$|D_i|>b$ gives $\E(|D|\mid K=K'=k)\ge c\Delta\ge c\epsilon t$ for large $B$;
-if $\Delta<\epsilon t$, then $U\ge(1-\epsilon)^2t^2$ and moment interpolation
-in \eqref{eq:two-count-moments} gives $\E(|W|\mid K=K'=k)\ge c_Bt$, so
-choosing $\epsilon<c_B/4$ gives $2\E(|T|\mid K=k)\ge\E(|D|\mid K=K'=k)\ge c_Bt/2$.
-Finally, applying the one-copy Fourier expansion with \eqref{eq:relative-Fourier}
-and $|\Cov(K,T)|\le KHQ=o(Ht)$ gives $|\E(T\mid K=k)|=o(t)$.
+For the discarded tail $D-W=\sum_i D_i\ind_{\{|D_i|>b\}}$, one-pair deletion
+ratios $\Pp(K_{-i}=k-k_{i1},K'_{-i}=k-k_{i2})/\Pp(K=K'=k)=1+o(1)$ uniformly
+over shifts $O(H)$ imply $\E(|D-W|\mid K=K'=k)\le2\Delta\le2Kt$, while
+\eqref{eq:two-count-moments} and $U\le K_Bt^2$ give
+$\E(|W|\mid K=K'=k)\le K(B)t$, so $\E(|D|\mid K=K'=k)\le K'(B)t$. For the
+lower bound, if $\Delta\ge\epsilon t$, conditioning on the disjoint events
+where a single $|D_i|>b$ gives $\E(|D|\mid K=K'=k)\ge c\Delta\ge c\epsilon t$
+for large $B$; if $\Delta<\epsilon t$, then $U\ge(1-\epsilon)^2t^2$ and
+moment interpolation in \eqref{eq:two-count-moments} gives
+$\E(|W|\mid K=K'=k)\ge c_Bt$, so choosing $\epsilon<c_B/4$ gives
+$2\E(|T|\mid K=k)\ge\E(|D|\mid K=K'=k)\ge c_Bt/2$. Finally, applying the
+one-copy Fourier expansion with \eqref{eq:relative-Fourier} and
+$|\Cov(K,T)|\le KHQ=o(Ht)$ gives $|\E(T\mid K=k)|=o(t)$, and conditional
+Jensen yields
+\[
+ \E(|T|\mid K=k)\le\E(|T-T'|\mid K=K'=k)+|\E(T\mid K=k)|\le K''(B)t.
+\]
 \end{proof}
 
 \section{Exact phase collapse for global maximizers}\label{sec:comparison}
@@ -184,8 +209,9 @@ If $t=\E|T|>0$, then at the attaining central layer $k$ and offset $\theta$,
 Truncating $T$ to $X=T\ind_{\{|T|\le1/4\}}$ changes its conditional CDF,
 mean, and $L^1$ norm by $O(Q)=o(t)$ (via \eqref{eq:all-layer}), so
 $m=\E(X\mid K=k)=o(t)$ and $s=\E(|X|\mid K=k)\ge ct$ by
-Lemma~\ref{lem:conditional-relative}. For $0\le\theta\le1/4$,
-$s=2\E(X_+\mid K=k)-m\le2\theta+\frac12\Pp(X>\theta\mid K=k)-m\le2(\theta+u)-m$;
+Lemma~\ref{lem:conditional-relative}. Put $u=\Pp(X>\theta\mid K=k)$. For
+$0\le\theta\le1/4$,
+$s=2\E(X_+\mid K=k)-m\le2\theta+\frac12u-m\le2(\theta+u)-m$;
 for $\theta=-b\in[-1/4,0)$, $m\le(1/4+b)u-b\le u/2-b$ and $s\le u/2-m$ give
 $\theta+u\ge s+2m$, proving \eqref{eq:relative-closed-loss}.
 \end{proof}
@@ -213,8 +239,11 @@ $|\theta|$ and $w(\theta)$ by $f(\theta)$, the discrepancies satisfy
 Along the interpolation $Y_i(s)=J_i+sZ_i$ ($0\le s\le1$),
 Lemma~\ref{lem:multiplier} with $W_i=3Y_i(s)|Y_i(s)|$ bounds
 $\bigl|\frac{d}{ds}\sum_i\E|Y_i(s)|^3\bigr|\le K(\sqrt{HA}+H^2)t=o(At)$, so
-$|P_Y-P_J|=o(At)$. Consequently, the prefactors $V^{3/2}/P_Y$ and
-$A^{3/2}/P_J$ differ by $o(t)$, and \eqref{eq:selected-comparison} shows that
+$|P_Y-P_J|=o(At)$. Since $V\sim A$ ($d=V^{-1/2}$) and $P_Y\sim P_J\sim\re V$,
+the prefactors $V^{3/2}/P_Y\sim(\re d)^{-1}$ and $A^{3/2}/P_J$ differ by a
+relative error of $o(t)$, that is, $|V^{3/2}/P_Y-A^{3/2}/P_J|=o(d^{-1}t)$.
+Because $D_J=O(d)$ and $t\le Kf(\theta)$, multiplying
+\eqref{eq:selected-comparison} by $V^{3/2}/P_Y$ shows that
 $(J_1,\ldots,J_N)$ has Berry--Esseen ratio strictly larger than that of
 $(Y_1,\ldots,Y_N)$ by at least $c'f(\theta)\ge c''t>0$, contradicting global
 maximality of $(Y_1,\ldots,Y_N)$. Thus $t=0$ eventually, so $Z_i=0$ almost
@@ -232,7 +261,8 @@ is supported on two adjacent points of its lattice coset.
 \end{lemma}
 \begin{proof}
 Let $c_i(x)=\Pp(\sum_{j\ne i}Y_j=x)$ be the deleted point mass function on
-its coset, with deleted variance $w_i=V-v_i$ and $d_i=w_i^{-1/2}$. Fourier
+its coset, with deleted variance $w_i=V-v_i$, $d_i=w_i^{-1/2}$, deleted
+signed cubic sum $\kappa_i=\kappa(Y_{-i})$, and $H_3(x)=x^3-3x$. Fourier
 inversion with multiplier $e^{-\ii u}-1$ and \eqref{eq:torus-damping} gives,
 uniformly in $i$ and $x$,
 \begin{equation}\label{eq:pmf-first-difference}
@@ -250,7 +280,7 @@ $d^2z\phi(z)$ part of $2A_0$, leaving for $|u|\le H+1$:
        +o(1+|u|)+O(d|z|v_i).
 \end{equation}
 Because $\ce>\phz$ and $|u+1|^3+|u-1|^3-2|u|^3$ equals $6|u|$ for $|u|\ge1$
-and $2+6u^2\ge2+4u^2$ for $|u|\le1$, the leading expression in
+and $2+6u^2-2|u|^3\ge2+4u^2$ for $|u|\le1$, the leading expression in
 \eqref{eq:lattice-concavity} is bounded above by $-c(1+|u|)$ with $c>0$.
 Applying the discrete Green identity on any interval of length $L\ge2$
 between two contact points $u_0,u_0+L\in\supp Y_i$,

@@ -198,6 +198,36 @@ $L=\log(1/\sigma)$,
        \frac{w\sqrt{NL}}{\sigma}\longrightarrow0,\qquad wN^{2/3}\longrightarrow0.
 \end{equation}
 \end{lemma}
+\begin{proof}
+Because $2<q<3$, the hypotheses \eqref{eq:weighted-window-costs} imply
+$\sigma^qN^{2/3}\to0$ and allow us to choose a mesh $\ell$ satisfying
+\[
+ \max(w,\sigma^q)\ll\ell\ll\min\bigl(\sigma/\sqrt{NL},\,N^{-2/3}\bigr).
+\]
+By Hoeffding's inequality, $W_\ell$ in \eqref{eq:weighted-phase-identity}
+leaves $[-\sigma,\sigma]$ with probability at most $\exp\{-c\sigma^2/(N\ell^2)\}=o(\ell)$
+(since $\ell\ge\sigma^q$ and $\sigma^2/(N\ell^2)\gg L$), and its first two
+tail moments satisfy the same bound. Applying \eqref{eq:weighted-normal-window}
+to \eqref{eq:weighted-phase-identity} therefore gives
+\[
+ \E_{\boldsymbol u}F_{L_{\boldsymbol u}}(z)-F(z)
+ =\frac12\phi(z)\ell-\frac{A(N+1)\ell^2}{6}+O(\sigma^q)+o(\ell).
+\]
+For each phase vector $\boldsymbol u$ with rounding variance
+$v=v_{\boldsymbol u}$, the normalized objective expands as
+\[
+ (1+v)^{3/2}\bigl[F_{L_{\boldsymbol u}}(z)-\Phi(z/\sqrt{1+v})\bigr]
+ =F_{L_{\boldsymbol u}}(z)-\Phi(z)+Av
+  +\frac32\bigl(F_{L_{\boldsymbol u}}(z)-F(z)\bigr)v+O(v^2).
+\]
+Averaging over $\boldsymbol u$ via \eqref{eq:weighted-phase-variance} cancels
+$-AN\ell^2/6$, leaving covariance and normalization errors of order
+$O(\ell^2+\sqrt N\ell^2+N\ell^3+N^2\ell^4)+o(\ell)=o(\ell)$. Meanwhile, the
+third-moment increase of the $N$ rounded groups $Z_i$ over the unrounded
+groups is at most $K\ell^2\sum_{i=1}^N\E|Z_i|+KN\ell^3\le K\sqrt N\ell^2+KN\ell^3=o(\ell)$,
+and the grouping cost $w$ is also $o(\ell)$. Thus the phase-averaged objective
+excess is $\frac12\phi(z)\ell+o(\ell)>0$, contradicting maximality.
+\end{proof}
 
 \begin{lemma}[Fourier exclusion of slow small-diameter variance decay]\label{lem:weighted-Fourier}
 No maximizing representation can satisfy $V(r)\ge cr^p$ for all sufficiently
@@ -268,10 +298,12 @@ testing on $(1,-1)$ then bounds $d(x+y)$.
 \end{proof}
 
 \begin{lemma}[Shell nonmodal intensity bound]\label{lem:weighted-intensity}
-Fix $\kappa,L>0$. For finitely many summands with modal state $0$, diameters
-at most $Lh$, and modal deficits $\theta_i\le\epsilon$, let submeasures
-$\nu_i$ of their nonmodal states in $\varepsilon[\kappa h,Lh]$ have total
-mass $\lambda=\sum_i\nu_i(\R)\in(0,1]$. Then for small $h,\epsilon$,
+Fix $\kappa,L>0$ and a physical sign $\varepsilon\in\{-1,1\}$. For finitely
+many summands with modal state $0$, diameters at most $Lh$, and modal deficits
+$\theta_i\le\epsilon$, let $\nu_i$ be positive-amplitude submeasures on
+$[\kappa h,Lh]$ such that $\varepsilon\nu_i$ are submeasures of their nonmodal
+states in $\varepsilon[\kappa h,Lh]$, with total mass
+$\lambda=\sum_i\nu_i(\R)\in(0,1]$. Then for small $h,\epsilon$,
 \begin{equation}\label{eq:weighted-intensity}
  \epsilon E_m(h)\ge c\lambda h^4\min(\lambda,h),\qquad
  \lambda\le K\bigl\{\sqrt{\epsilon E_m(h)}\,h^{-2}
@@ -279,24 +311,41 @@ mass $\lambda=\sum_i\nu_i(\R)\in(0,1]$. Then for small $h,\epsilon$,
 \end{equation}
 \end{lemma}
 \begin{proof}
-With $\mu=\lambda^{-1}\sum_i\nu_i$, $a=\int x\,d\mu\ge\kappa h$,
-$s=2c_\varepsilon a/(3D)$, and $\alpha=2-s$, adjoin one compound-Poisson-type
-summand $\varepsilon(\sum_{j=1}^{N_q}Z_j-2qa)$ whose count $N_q$ has
-probability generating function
+With $r_i=\nu_i(\R)$, normalized positive mark law $\mu=\lambda^{-1}\sum_i\nu_i$
+on $[\kappa h,Lh]$, $a=\int x\,d\mu\ge\kappa h>0$,
+$s=2c_\varepsilon a/(3D)=O(h)>0$, and $\alpha=2-s$, adjoin one
+compound-Poisson-type summand $\varepsilon(\sum_{j=1}^{N_q}Z_j-2qa)$ with
+i.i.d.\ positive marks $Z_j\sim\mu$, whose count $N_q$ has generating function
 \begin{equation}\label{eq:weighted-compound-pgf}
  B_q(t)=e^{\alpha q(t-1)}
                          \bigl[1+sq(t-1)+q(t-1)^2\bigr],
 \end{equation}
-while withdrawing fraction $\alpha q/\lambda$ of each $\nu_i$ to its mode $0$.
-In the weighted convolution norm $\|\xi\|_m=\int(1+|u|/h)^m\,|\xi|(du)$, the
-relative convolution operator $\mathcal P(q)=\prod_i(I-\alpha qA_i)e^{\alpha qD_\mu}[I+q(sD_\mu+D_\mu^2)]$
+while withdrawing fraction $\alpha q/\lambda$ of each $\varepsilon\nu_i$ to its
+modal state $0$. Note that $B_q$ is a genuine probability generating function for
+$0\le s\le1$ and all sufficiently small $q>0$: its bracket is
+$1+(1-s)q-\alpha qt+qt^2$, so with $x=\alpha q$ its $t^0$ and $t^1$
+coefficients are $e^{-x}[1+(1-s)q]>0$ and $e^{-x}\alpha q^2(1-s)>0$, and for
+$n\ge2$ the coefficient of $t^n$ after factoring out $e^{-x}x^{n-2}q/(n-2)!$
+is $1-\alpha^2q/n+\alpha^2q^2(1-s)/[n(n-1)]>0$. Moreover, the modified
+coordinate laws $K_i(q)$ remain positive probability measures for all
+$0\le q\le q_0\lambda$ with a fixed $q_0>0$.
+
+Writing $T_\eta f(u)=\int f(u+y)\,\eta(dy)$ and $\varepsilon\eta$ for the
+pushforward of $\eta$ under $y\mapsto\varepsilon y$, set
+$D_\mu=T_{\varepsilon\mu}-I$ and
+$A_i=\lambda^{-1}(T_{\varepsilon\nu_i}-r_iI)K_i^{-1}$. In the weighted
+convolution norm $\|\xi\|_m=\int(1+|u|/h)^m\,|\xi|(du)$, the Neumann series
+for $K_i^{-1}$ gives $\sum_i\|A_i\|_m\le K$, $\|D_\mu-\sum_i A_i\|_m\le K\epsilon$,
+and $\sum_i\|A_i\|_m^2\le K\epsilon/\lambda$, so for $0\le q\le q_0\lambda$
+the relative convolution operator
+$\mathcal P(q)=\prod_i(I-\alpha qA_i)e^{\alpha qD_\mu}[I+q(sD_\mu+D_\mu^2)]$
 satisfies
 \begin{equation}\label{eq:weighted-relative-error}
  \|\mathcal P(q)-I-q\mathcal P'(0)\|_m
                                       \le K\frac{\epsilon q^2}{\lambda}.
 \end{equation}
-Evaluating \eqref{eq:objective} at $q=c_0\min(\lambda,h)$ and using
-Lemma~\ref{lem:weighted-pair} and $c_\varepsilon^2>3DL_0$ yields
+Evaluating \eqref{eq:objective} at $q=c_0\min(\lambda,h)\le q_0\lambda$ and
+using Lemma~\ref{lem:weighted-pair} and $c_\varepsilon^2>3DL_0$ yields
 \eqref{eq:weighted-intensity}.
 \end{proof}
 

@@ -372,9 +372,10 @@ deleted product bounds
 \begin{equation}\label{eq:corrected-products}
  \begin{split}
  F_0(t;V_0,B,a,\tau_0)&=\min\{1,e^{-H-Q}\},\\
- D_0(t;V_0,B,a,\tau_0)&=\min\{1,e^{-H+m(t,a)-\max(0,Q-m(t,a)^2)}\}.
+ D_0(t;V_0,B,a,\tau_0)&=\min\{1,e^{-H+m(t,a)-\max(0,Q-m(t,a)^2)}\},
  \end{split}
 \end{equation}
+setting $F_0=D_0=1$ for the empty index set.
 
 To maximize the bounds \eqref{eq:corrected-products} as $\tau_0$ varies over
 a closed interval $[\ell,h]$, suppose $A_0\ge0$ and $t>0$, and put
@@ -495,14 +496,17 @@ decreasing on $[2/3,1]$. On the linear branch $r\ge q_\lambda$,
  =\left(\lambda A(1-z)-\frac{c_\lambda}{z^2}\right)''
  =-\frac{6c_\lambda}{z^4}\le0.
 \]
-Since $\varphi_\lambda(r(z))/z^2$ is $C^1$ across the transition $r=q_\lambda$,
-its derivative increases up to the inflection point and decreases thereafter.
-Consequently, the difference $\varphi_\lambda(r(z))/z^2-(\alpha z-\beta)$
-vanishes with derivative zero at $z=u$, is nonnegative on $[0,u]$ by
-convexity, increases from $u$ to the inflection point, and is concave to the
-right of the inflection point; its minimum on $[0,M]$ is therefore attained
-at $z=u$ or $z=M$. Finally, convexity on $[0,u]$ and $\psi(0)=\psi'(0)=0$
-imply $\alpha,\beta\ge0$.
+Since $r(z)$ strictly increases on $[0,2/3]$ and $\varphi_\lambda(r(z))/z^2$
+is $C^1$ across the transition $r(z)=q_\lambda$, on $[0,2/3]$ the derivative
+of $\varphi_\lambda(r(z))/z^2$ increases on $[0,z_0]$ (where $z_0\ge u$ is the
+smaller of the inflection point of $\psi$ and the transition point
+$r(z)=q_\lambda$) and decreases on $[z_0,2/3]$, while on $[2/3,1]$ it is
+nonpositive. Consequently, the difference
+$\varphi_\lambda(r(z))/z^2-(\alpha z-\beta)$ decreases to zero at $z=u$, is
+nondecreasing on $[u,z_0]$, and is concave on $[z_0,2/3]$ and nonincreasing on
+$[2/3,1]$; its minimum on $[0,M]$ is therefore attained at $z=u$ or $z=M$.
+Finally, convexity on $[0,u]$ and $\psi(0)=\psi'(0)=0$ imply
+$\alpha,\beta\ge0$.
 \end{proof}
 
 The certificate \path{certificates/scalar/direct-log.json} stores 2,006
@@ -514,7 +518,8 @@ nonnegative quantities $B+\tau_0$ and $B-\tau_0$ in
 $-k(B+\tau_0)-\lambda k(B-\tau_0)$ before expanding). We denote by
 $\mathcal F_0$ and $\mathcal D_0$ the pointwise minima of the quadratic
 bounds \eqref{eq:corrected-products} and all applicable tangent bounds from
-Lemma~\ref{lem:current-log-support}.
+Lemma~\ref{lem:current-log-support} (setting $\mathcal F_0=\mathcal D_0=1$ for
+the empty product).
 
 \section{Real and imaginary zero-bias errors}\label{sec:directional}
 
@@ -603,7 +608,8 @@ where the last step uses the algebraic identity and inequality
  \frac{y^2(y+1)^2}{y+1/2}=y^3+\frac32y^2+\frac{y^2}{4(y+1/2)}
  \le y^3+\frac32y^2+\frac{2+4y^2}{36}=y^3+\frac{29}{18}y^2+\frac1{18},
 \]
-which holds for all $y\ge0$ since $(2+4y^2)/9-y^2/(4(y+1/2))=(y-1)^2(4y+1)/(9(2y+1))\ge0$.
+which holds for all $y\ge0$ since
+$(2+4y^2)/9-y^2/(y+1/2)=(y-1)^2(4y+1)/[9(y+1/2)]\ge0$.
 \end{proof}
 
 \section{A one-sided lower bound for the real zero-bias difference}\label{sec:quadratic}
@@ -754,8 +760,8 @@ Then the least concave majorant of $\max(F_1,F_2)$ on $[0,\infty)$ is
 \]
 \end{lemma}
 \begin{proof}
-For $a>0$, rescale by $z=we/a$, so that $(w/a)^2F_1^2=1+rz+sz^2$ and
-$(w/a)^2F_2^2=rz+(s+1)z^2$, which cross at $z=1$. When $r\le2\sqrt{s+1}$,
+For $a>0$, rescale by $z=we/a$, so that $F_1^2/a^2=1+rz+sz^2$ and
+$F_2^2/a^2=rz+(s+1)z^2$, which cross at $z=1$. When $r\le2\sqrt{s+1}$,
 squaring shows that $1+\sqrt{s+1}\,z$ majorizes both branches; since any
 concave majorant is at least $1$ at $z=0$ and has asymptotic slope at least
 $\sqrt{s+1}$ as $z\to\infty$, $1+\sqrt{s+1}\,z$ is the least concave
@@ -810,7 +816,8 @@ where, with $x=t\sqrt a$,
  P_{\rm dir}(t;B,a,\tau_0)=\min\left\{B,
   \sqrt{\alpha(x)^2\tau_0^2+q(x)^2(B-\tau_0)(2B+2\tau_0/3)}\right\},
 \end{equation}
-which likewise increases in $t,a,B$ and decreases in $\tau_0$.
+which likewise increases in $t,a,B$ and decreases in $\tau_0$ (with
+$P_{\rm dir}=0$ for the empty subset).
 
 \subsection{Certified affine bounds in the third absolute moment}\label{sec:current-affine}
 
@@ -865,16 +872,18 @@ $h_x(y)=g_x(y)-2\ii y-2(1-y^2)/x$ with $|g_x(y)|\le2/x_0+4y/x_0^2$)
 completes the verification on $\R$.
 \item \textbf{Directional projection certificates (\path{directional.zip}):}
 Cover 61 frequency cells and 5 slopes across 25 directions $\zeta$ in the
-closed upper half-plane (which extend by complex conjugation
-$h_x(-w)=\overline{h_x(w)}$ to 48 directions whose supporting half-planes
-contain the disk of radius $\eta=997/1000$). Dividing the maximum directional
-intercept by $\eta$ yields a second certified bound of the form
-\eqref{eq:current-affine-sum}.
+closed upper half-plane, which extend by complex conjugation
+$h_x(-w)=\overline{h_x(w)}$ to 48 directions whose convex hull contains the
+disk of radius $\eta=997/1000$ (equivalently, $\max_\zeta\Re(\zeta z)\ge\eta|z|$
+for all $z\in\mathbb C$, verified via the supporting half-planes of the
+48-gon). Maximizing the intercepts over all 48 directions and dividing the
+entire resulting projection bound in \eqref{eq:current-affine-sum} by $\eta$
+yields a second certified bound for $\sum_{i\in J}v_i|f_i(t)-f_i^*(t)|$.
 \end{enumerate}
 
 We denote by $P(t;B,a,\tau_0)$ the pointwise minimum of $P_{\rm quad}$,
-$P_{\rm dir}$, and all applicable affine bounds \eqref{eq:current-affine-sum},
-so that
+$P_{\rm dir}$, and all applicable affine bounds \eqref{eq:current-affine-sum}
+(with $P=0$ for the empty subset), so that
 \[
  \sum_{i\in J} v_i|f_i(t)-f_i^*(t)|\le \frac t2P(t;B,a,\tau_0).
 \]
@@ -910,7 +919,8 @@ product by
 \]
 the single-summand modulus $|f_1(t)|$ by $A(t)$, the minimum of
 \eqref{eq:single-cf} and the square root of \eqref{eq:paired-cf}, the
-deleted remainder product by $D_R(t)=\mathcal D_0(t;w,B_R,a_R,\tau_R)$, and
+deleted remainder product by $D_R(t)=\mathcal D_0(t;w,B_R,a_R,\tau_R)$ (if the
+remainder is empty, we set $R(t)=D_R(t)=1$ and $P(t;B_R,a_R,\tau_R)=0$), and
 the deleted whole-sum product by $D_S(t)=\mathcal D_0(t;1,L,d,\tau)$.
 Splitting \eqref{eq:sum-zero-bias} into $i=1$ and $i\ge2$ gives
 \begin{equation}\label{eq:distinguished-error}
@@ -933,7 +943,8 @@ Similarly, for the full characteristic function $|f_S(t)|$, we use
 Notice that the third expression in \eqref{eq:B} can also be written as the
 convex combination $\lambda U_1+(1-\lambda)U_R$, where $\lambda=b/L\in[0,1]$,
 $U_1=P(t;b,d,d^{3/2})R(t)/b\in[0,1]$, and
-$U_R=P(t;B_R,a_R,\tau_R)A(t)D_R(t)/B_R\in[0,1]$. On a parameter box where
+$U_R=P(t;B_R,a_R,\tau_R)A(t)D_R(t)/B_R\in[0,1]$ (setting $U_R=0$ when
+$B_R=0$). On a parameter box where
 $\lambda\in[\lambda_-,\lambda_+]$ and $U_1\le\overline U_1$,
 $U_R\le\overline U_R$, we have
 \begin{equation}\label{eq:moment-fraction}
@@ -1527,7 +1538,8 @@ For $z\ge7$, the bound $|A_x(y)-A_x(1)|\le2(x+1/x)$ gives
  \le\frac{400}{(z-2)^4}\le\frac{16}{25}<1,
 \]
 while $J_x(1)\ge0$ and $J_x'(1)=2x^2k_0(4k_0-3\ell_0)/9>0$ on $(0,2]$
-(with $k_0=2\sinc x-\cos x>0$ and $4k_0-3\ell_0\ge257/105$). Thus
+(with $k_0=2\sinc x-\cos x>0$, $\ell_0=(2-x^2)\sinc x-3\cos x$, and
+$4k_0-3\ell_0\ge257/105$). Thus
 \eqref{eq:current-J-majorant} holds for all $y\ge0$.
 
 \section{Proof of the scalar bound for the cosine comparison}\label{sec:current-energy-cert}

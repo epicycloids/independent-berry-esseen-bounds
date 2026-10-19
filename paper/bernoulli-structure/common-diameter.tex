@@ -102,7 +102,8 @@ $L=4C(3-2e_1)/V^{3/2}+\Delta^2d_k$. Since $(a,a,b)$ and $(a,b,b)$ lie at
 opposite endpoints of their three-root $(e_1,e_2)$ fibers, $H_C\ge0$ forces
 $L_{aab}\le0\le L_{abb}$. Deleting two copies of $a$ and two copies of $b$,
 and letting $c_j$ be the point mass function of the remaining $n-4$
-coordinates (with variance $W\le V-1$), subtraction gives
+coordinates and $W$ be the variance of their sum (so $V-W\le1$, i.e.,
+$W\ge V-1$), subtraction gives
 \[
  0\le L_{abb}-L_{aab}
        =(b-a)\left\{\Delta^3c_k-\frac{8C}{V^{3/2}}\right\}.
@@ -149,8 +150,10 @@ Furthermore, every two-summand unit-diameter array has ratio strictly less
 than $c_*$.
 \end{lemma}
 
-Lemma~\ref{lem:certified-curvature} is verified on $V\le1/5$ and $W\ge3$ by
-the elementary bounds
+Lemma~\ref{lem:certified-curvature} is verified on $V\le1/5$ by using that
+the first term in \eqref{eq:compact-curvature} is at least $8c_*/\sqrt3$, the
+normal term is at least $-4/(e\sqrt\pi)$, and the final term is at most $1$,
+together with the first elementary bound in
 \begin{equation}\label{eq:scalar-margins}
  \frac{8c_*}{\sqrt3}-\frac4{e\sqrt\pi}-1>\frac1{247},\qquad
  8c_*\sqrt3-\frac{10}{\pi}-\frac4{e\sqrt\pi}>1,\qquad
@@ -159,9 +162,43 @@ the elementary bounds
 and on $V\ge1/5$, $pq\le W\le3$ by a 192-bit Arb interval cover (550,563
 processed boxes, 275,283 accepted boxes for \eqref{eq:compact-curvature}, and
 13,641 processed boxes, 6,822 accepted boxes for the two-summand bound; see
-\path{certificates/structure/README.md}). Consequently, for every $C\ge c_*$,
-\eqref{eq:fiber-curvature} is strictly negative for $M\ge2$, while the
-two-summand bound excludes $M=1$.
+\path{certificates/structure/README.md}).
+
+To apply Lemma~\ref{lem:certified-curvature} to \eqref{eq:fiber-curvature} for
+$C\ge c_*$, first suppose $M\ge2$. Note that
+$4V+S_2=4W+2+(1-2x)(1-2p)>0$, so the coefficient of $C$ in
+\eqref{eq:fiber-curvature} has a negative sign. If $\xi\le0$, then
+$\max(V,S_2)\ge1/3$ gives
+\[
+ C\left(8\sqrt V+\frac{2S_2}{\sqrt V}\right)+z\phi(z)(2+z^2)
+ \ge\frac{8c_*}{\sqrt3}-\frac4{e\sqrt\pi}>0,
+\]
+and hence $H_C''<0$. If $\xi>0$, binomial recurrence gives
+\[
+ y=k-(m+1)p>0,\qquad f=\frac{y}{kq}\in(0,1],\qquad
+ d_k=(1-f)d_{k-1},\qquad d_{k-2}=r_0d_{k-1},
+\]
+where
+\[
+ r_0=\frac{A_0}{B_0}\ge0,\qquad y=\frac{f(W+pq)}{1-qf}.
+\]
+Because $d_{k-2}+d_{k-1}+d_k\le1$, we have
+\[
+ \xi=(1-(1-f))d_{k-1}\le\frac{f}{2-f+r_0}=\frac{fB_0}{(2-f)B_0+A_0}.
+\]
+For $pq\le W\le3$, Lemma~\ref{lem:certified-curvature} therefore implies that
+\eqref{eq:fiber-curvature} is strictly negative for every $C\ge c_*$. For
+$W\ge3$, Fourier inversion gives
+\[
+ |\xi|\le\frac4\pi\int_0^{\pi/2}\sin u\,e^{-2W\sin^2u}\,du<\frac2{\pi W},
+\]
+so the negative of the right-hand side of \eqref{eq:fiber-curvature} is at
+least $8c_*\sqrt V-4/(e\sqrt\pi)-10V/(\pi W)$. This lower bound is concave in
+$V\in[W,W+1/2]$, its endpoint values at $V=W$ and $V=W+1/2$ are increasing in
+$W\ge3$, and the last two inequalities in \eqref{eq:scalar-margins} certify
+that both endpoint values are strictly positive at $W=3$. Finally, for $M=1$,
+the two-summand bound in Lemma~\ref{lem:certified-curvature} excludes the
+configuration whenever $C\ge c_*$.
 
 \subsection{Isolation of the i.i.d.\ point and completion of Theorem~\ref{thm:common}}
 
