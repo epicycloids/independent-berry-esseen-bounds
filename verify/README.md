@@ -27,7 +27,7 @@ This command runs in the pinned Python 3.12 environment managed by `uv` and perf
 7. **Gaussian window certificate (`paper/extremizers/gaussian_window_certificate.py`):** Executes the exact rational arithmetic verification for Lemma 5.3 of [Manuscript 7](../paper/extremizers/extremizers.pdf).
 8. **Four-summand local maximizer certificate (`verify/observations/local_trap.py`):** Re-evaluates the 320-bit Arb interval certificate [`certificates/observations/local-trap.json`](../certificates/observations/local-trap.json) described in [Numerical Studies & Conjectures](../docs/numerical-observations.md).
 
-Running `./verify.sh` without `--no-latex` additionally compiles all seven LaTeX manuscripts into `dist/` via `./build.sh`.
+Running `./verify.sh` without `--no-latex` additionally compiles all eight LaTeX manuscripts into `dist/` via `./build.sh`.
 
 ---
 

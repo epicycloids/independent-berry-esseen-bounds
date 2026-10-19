@@ -31,7 +31,7 @@ C_{\mathrm{E}} = \frac{3 + \sqrt{10}}{6\sqrt{2\pi}} = 0.40973218370239634299\ldo
 
 establishing the lower bound $C_{\mathrm{ind}} \ge C_{\mathrm{E}}$. Whether $C_{\mathrm{ind}} = C_{\mathrm{E}}$ holds for all independent arrays remains open.
 
-This repository presents a collection of seven manuscripts, together with computer-assisted proof certificates and verification suites, establishing the unconditional upper bound
+This repository presents a collection of eight manuscripts, together with computer-assisted proof certificates and verification suites, establishing the unconditional upper bound
 
 ```math
 C_{\mathrm{E}} \le C_{\mathrm{ind}} < 0.44988,
@@ -52,12 +52,13 @@ Each manuscript includes its compiled PDF, LaTeX source, and bibliography under 
 | 5. [Bernoulli extremizers for the independent Berry–Esseen ratio](paper/bernoulli-structure/bernoulli-structure.pdf) ([TeX](paper/bernoulli-structure/main.tex)) | Every $n$-summand common-diameter maximizer consists of i.i.d. two-point summands and zeros; $C_{2,\mathrm{bin}} = C_1 \approx 0.370352$; local common-diameter replacement strictly improves the ratio; $O(m^{-2})$ binomial phase expansion shows at most four zero summands are eventually optimal. | Elementary-symmetric probability fibers, certified curvature bounds, rejective-sampling conditional $L^1$ estimates, and seventh-order Edgeworth–Euler–Maclaurin expansions with quadratic-field separation. |
 | 6. [Small Lyapunov ratios and the structure of Berry–Esseen maximizers](paper/small-lyapunov-structure/small-lyapunov-structure.pdf) ([TeX](paper/small-lyapunov-structure/main.tex)) | Arrays with $L \to 0$ and $\Delta/L \to C_{\mathrm{E}}$ concentrate on a common lattice and saturate zero-bias transport; every global maximizer with $L < \varepsilon_0$ (for an ineffective absolute $\varepsilon_0 > 0$) consists of i.i.d. two-point summands and zeros. | Stability analysis of Shevtsova's smoothing inequality, joint local limit theorems for lattice counts and rounding residuals, relative conditional first-moment bounds, and discrete Green-function concavity. |
 | 7. [Extremizers for the independent Berry–Esseen inequality](paper/extremizers/extremizers.pdf) ([TeX](paper/extremizers/main.tex)) | Every summand of a maximizer has at most four support points and admits a moment-preserving three-point replacement; summands of unrestricted maximizers are convolution-indecomposable; if $C_{\mathrm{ind}} > C_{\mathrm{E}}$, compactified maximizers have no Gaussian or Poisson components, are nonatomic when infinite, and obey weighted variance summability for $L \le 18481/25000$. | Second-order probability variations, Cox–Kemperman third-moment superadditivity, Lévy–Khintchine compactification, contact-propagation Hessians, and multi-scale grouping with randomized lattice rounding. |
+| 8. [On the structural conjecture for extremizers of the independent Berry–Esseen inequality](paper/structural-conjecture/structural-conjecture.pdf) ([TeX](paper/structural-conjecture/main.tex)) | Separates sum-law selection from minimum third-moment factorization ($\mathcal{M}_n(\mu)$); proves that a maximizer of $C_n$ is a padded i.i.d. two-point array if and only if its sum law is binomial of order $m \le n$; establishes a sharp separated-support moment family and an endogenous characteristic-function criterion ($\mathcal{J} = 0$); synthesizes proved regimes, certified local obstructions, and the remaining open global selection step. | Exact third-moment splitting identity, convex-order fiber compactness, probability generating functions, size-biased moment sum-of-squares identities, and endogenous Fourier coherence. |
 
 ## Documentation and Verification Guides
 
 | Guide | Contents |
 | --- | --- |
-| [Overview & Reading Guide](docs/overview.md) | Mathematical narrative connecting the seven manuscripts, proof strategies, dependency structure, and open problems. |
+| [Overview & Reading Guide](docs/overview.md) | Mathematical narrative connecting the eight manuscripts, proof strategies, dependency structure, and open problems. |
 | [Summary of Bounds](docs/bounds.md) | Explicit constants, moment regimes, and classes of independent arrays where $\Delta \le C_{\mathrm{E}} L$ is established. |
 | [Numerical Studies & Conjectures](docs/numerical-observations.md) | High-precision binomial optimizations through $m = 3000$, zero-summand phase patterns, a certified suboptimal four-summand local maximizer, and open finite-$n$ conjectures. |
 | [Verification Guide](verify/README.md) | Overview of the verification suite, moment-domain partition certificates, and commands for numerical reevaluation. |
@@ -74,12 +75,12 @@ From the repository root:
 
 ```sh
 ./verify.sh --no-latex   # Verify file hashes, partitions, and default certificates
-./build.sh               # Compile all seven manuscripts into dist/
-./verify.sh              # Run all default checks and compile all seven manuscripts
+./build.sh               # Compile the manuscripts into dist/
+./verify.sh              # Run all default checks and compile the manuscripts
 ```
 
 Details on optional full arithmetic reevaluation of the leaf enclosures are provided in the [Verification Guide](verify/README.md), [Scalar Certificates](certificates/scalar/README.md), [Finite-Array Certificates](certificates/finite/README.md), and [Bernoulli Structure Certificates](certificates/structure/README.md).
 
 ## Citation and License
 
-Author: Logan Bell. Cite individual manuscripts by author, title, and date (6 October 2026), referencing collection version `0.7.0`. Repository metadata is provided in [CITATION.cff](CITATION.cff). Manuscripts and documentation are licensed under CC BY 4.0; code, configuration, and certificate data are licensed under the MIT License. See [LICENSE](LICENSE).
+Author: Logan Bell. Cite individual manuscripts by author, title, and manuscript date (6 October 2026 for Manuscripts 1–7; 18 October 2026 for Manuscript 8), referencing collection version `0.7.0`. Repository metadata is provided in [CITATION.cff](CITATION.cff). Manuscripts and documentation are licensed under CC BY 4.0; code, configuration, and certificate data are licensed under the MIT License. See [LICENSE](LICENSE).

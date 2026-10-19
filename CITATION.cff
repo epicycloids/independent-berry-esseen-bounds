@@ -1,8 +1,9 @@
 cff-version: 1.2.0
 message: >-
-  Cite an individual manuscript by Logan Bell, its title, and its date
-  (6 October 2026). Include collection version 0.7.0 to identify the
-  files used, or cite this collection using the metadata below.
+  Cite an individual manuscript by Logan Bell, its title, and its manuscript
+  date (6 October 2026 for Manuscripts 1–7; 18 October 2026 for Manuscript 8).
+  Include collection version 0.7.0 to identify the files used, or cite this
+  collection using the metadata below.
 title: >-
   The Berry–Esseen constant for independent summands
 version: 0.7.0

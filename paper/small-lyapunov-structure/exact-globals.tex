@@ -155,8 +155,11 @@ proof of Lemma~\ref{lem:multiplier},
                       U\le K_Bt^2\quad\bigl(K_B=O(B)\bigr).
 \end{equation}
 On the frequency cell $\|s\|\le c/H$ ($s=(s_1,s_2)$), set
-$f_i(u)=\E e^{\ii uJ_i}$ and
-$m_{ir}(s)=\E[d_i^re^{\ii(s_1J_i+s_2J_i')}]/[f_i(s_1)f_i(s_2)]$. Applying
+\[
+ f_i(u)=\E e^{\ii uJ_i},\qquad
+ m_{ir}(s)=\frac{\E[d_i^re^{\ii(s_1J_i+s_2J_i')}]}{f_i(s_1)f_i(s_2)}.
+\]
+Applying
 Lemma~\ref{lem:multiplier} to the antisymmetric variables $d_i$ bounds the
 linear twisted sum by
 \begin{equation}\label{eq:relative-Fourier}

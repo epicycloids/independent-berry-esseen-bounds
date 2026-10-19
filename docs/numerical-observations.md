@@ -15,7 +15,7 @@ L = \frac{R}{V^{3/2}}, \qquad
 
 where $Z \sim N(0, 1)$ and $d_{\mathrm{K}}$ denotes Kolmogorov distance. Denote by $C_n$ the supremum of $\mathcal{C}(X_1, \dots, X_n)$ over all $n$-tuples of independent centered real random variables (allowing deterministic zero summands).
 
-This guide summarizes the numerical investigations stored in [`data/empirical-observations.json`](../data/empirical-observations.json) and the certified four-summand local maximizer in [`certificates/observations/local-trap.json`](../certificates/observations/local-trap.json), and explains how they motivate the structural theorems and open conjectures of the collection.
+This guide summarizes the numerical investigations stored in [`data/empirical-observations.json`](../data/empirical-observations.json) and the certified four-summand local maximizer in [`certificates/observations/local-trap.json`](../certificates/observations/local-trap.json), and explains how they motivate the structural theorems and open conjectures of the collection. A comprehensive mathematical treatment of the structural conjecture—including the exact-fiber third-moment functional $\mathcal{M}_n(\mu)$, the separated-support moment and characteristic-function criteria, and the analysis of what remains open—is given in [Manuscript 8](../paper/structural-conjecture/structural-conjecture.pdf) ([TeX](../paper/structural-conjecture/main.tex)).
 
 ---
 
@@ -144,13 +144,13 @@ By Theorem 1.1 of [Manuscript 4](../paper/transport/transport.pdf), the normaliz
 \mathcal{B}_{\mathrm{add}}(X_1, \dots, X_n) = \frac{2V W_1(S, S^*)}{R} \le 1
 ```
 
-equals $1$ if and only if all nonzero summands are identically distributed two-point variables. While $\mathcal{B}_{\mathrm{add}}(X^{(n)}) \to 1$ along any sequence with $L_n \to 0$ and $\mathcal{C}(X^{(n)}) \to C_{\mathrm{E}}$ ([Manuscript 6](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf), Theorem 1.1), the pointwise inequality $\mathcal{C} \le C_{\mathrm{E}} \mathcal{B}_{\mathrm{add}}$ does not hold for arbitrary laws. Indeed, for $n = 1$, replacing the standard normal distribution on $[-a, a]$ by three atoms at $\{-a, 0, a\}$ with matching mean and variance yields $\mathcal{C}(X_a) \sim a/6$ and $\mathcal{B}_{\mathrm{add}}(X_a) \sim 5a^2/18$ as $a \downarrow 0$, so that $\mathcal{C}(X_a) / \mathcal{B}_{\mathrm{add}}(X_a) \sim 3/(5a) \to \infty$ even though $\mathcal{C}(X_a) \to 0$.
+equals $1$ if and only if all nonzero summands are identically distributed two-point variables. While $\mathcal{B}_{\mathrm{add}}(X^{(n)}) \to 1$ along any sequence with $L_n \to 0$ and $\mathcal{C}(X^{(n)}) \to C_{\mathrm{E}}$ ([Manuscript 6](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf), Theorem 1.1), the pointwise inequality $\mathcal{C} \le C_{\mathrm{E}} \mathcal{B}_{\mathrm{add}}$ does not hold for arbitrary laws. Indeed, for $n = 1$, modifying $Z \sim N(0, 1)$ by keeping its normal density outside $[-a, a]$ and replacing its restriction to $[-a, a]$ by three atoms at $\{-a, 0, a\}$ with matching mass, zero mean, and second moment yields $\mathcal{C}(X_a) \sim a/6$ and $\mathcal{B}_{\mathrm{add}}(X_a) \sim 5a^2/18$ as $a \downarrow 0$ ([Manuscript 8](../paper/structural-conjecture/structural-conjecture.pdf), Proposition 3.5), so that $\mathcal{C}(X_a) / \mathcal{B}_{\mathrm{add}}(X_a) \sim 3/(5a) \to \infty$ even though $\mathcal{C}(X_a) \to 0$.
 
 ---
 
 ## 4. Open Finite-$n$ Conjectures
 
-The theoretical results in Manuscripts 2–7 and the numerical evidence above point to two open conjectures for every fixed number of summands $n \ge 1$:
+The theoretical results in Manuscripts 2–8 and the numerical evidence above point to two open conjectures for every fixed number of summands $n \ge 1$ (together with the uniqueness questions analyzed in [Manuscript 8](../paper/structural-conjecture/structural-conjecture.pdf), Section 6):
 
 1. **Finite-$n$ Value Conjecture:** For every $n \ge 1$,
    ```math
@@ -164,3 +164,4 @@ What is currently proved toward these conjectures:
 - Both conjectures hold at every $n \ge 1$ when restricted to two-point summands with a common support diameter ([Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf), Theorem 1.1), and for $n = 2$ when restricted to two-point summands with arbitrary diameters ([Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf), Theorem 1.2).
 - Every global maximizer of $C_n$ has at most four support points per summand and admits an equally optimal representation with at most three support points per summand ([Manuscript 7](../paper/extremizers/extremizers.pdf), Theorem 3.2).
 - Both conjectures hold for any global maximizer of $C_n$ whose Lyapunov ratio satisfies $L < \varepsilon_0$ ([Manuscript 6](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf), Theorem 1.2). Because adjoining zero summands increases $n$ without reducing $L$, extending this classification from small $L$ to all $n$ remains open.
+- By Theorem 2.3 of [Manuscript 8](../paper/structural-conjecture/structural-conjecture.pdf), the Finite-$n$ Extremizer Conjecture for a maximizer of $C_n$ is equivalent to the statement that its sum $S = X_1 + \cdots + X_n$ has a centered binomial distribution of order $m \le n$.

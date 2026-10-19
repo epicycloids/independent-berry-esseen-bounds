@@ -1,0 +1,2054 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,enumitem,booktabs,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+urlcolor=blue!45!black,pdftitle={On the structural conjecture for extremizers of the independent Berry-Esseen inequality},pdfauthor={Logan Bell}}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Bern}{Bern}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator{\Law}{Law}
+\DeclareMathOperator{\dist}{dist}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\ind}{\mathbf1}
+\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
+\newcommand{\pe}{p_{\mathrm E}}
+\newcommand{\qe}{q_{\mathrm E}}
+\newcommand{\phz}{\phi(0)}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ii}{\mathrm i}
+
+\title{On the structural conjecture for extremizers\\of the independent Berry--Esseen inequality}
+\author{Logan Bell}
+\date{18 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In the proved regimes of the independent Berry--Esseen problem---including
+single summands, common-diameter two-point arrays, pairs of two-point
+summands with arbitrary diameters, and general arrays with sufficiently small
+Lyapunov ratio---arrays of independent centered random variables that maximize
+the Berry--Esseen ratio consist of $m\le n$ identically distributed two-point
+random variables together with $n-m$ deterministic zero variables. In this
+paper we
+formulate the structural and value conjectures for fixed numbers of summands
+$n$, separate the determination of the optimal constant from the
+classification and uniqueness of maximizing arrays, and examine what current
+theorems and computations establish. First, we separate the choice of the
+marginal distribution $\mu$ of the sum $S=X_1+\cdots+X_n$ from the choice of
+independent summands $(X_1,\ldots,X_n)$ that realize $\mu$. Studying the
+minimum third-moment functional $\mathcal M_n(\mu)=\inf\sum_{i=1}^n\E|X_i|^3$
+over $n$-summand independent factorizations of $\mu$, we prove that
+$\mathcal M_n(\mu)$ is attained on a $W_3^n$-compact fiber and is lower
+semicontinuous, but for $n\ge2$ is continuous at $\mu$ if and only if $\mu$
+is convolution-indecomposable. Using an elementary third-moment splitting
+identity and probability generating functions, we solve the factorization
+problem for Poisson-binomial and binomial sum distributions and deduce that
+an $n$-summand global maximizer consists of $m\le n$ identically distributed
+two-point summands and $n-m$ zeros if and only if its sum $S$ has a centered
+binomial distribution of order $m\le n$. Second, we establish a sharp
+two-parameter moment inequality on separated supports and an endogenous
+characteristic-function criterion whose zero set over all finite or countable
+independent arrays consists precisely of finite identically distributed
+two-point arrays with zero padding. Third, we synthesize the partial
+classifications proved in the companion manuscripts, explain what the stored
+high-precision binomial scans and the certified four-summand unequal-diameter
+local maximizer demonstrate, and isolate the missing global implication and
+analytical obstructions that leave the general finite-$n$ conjectures open.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction: three questions on independent summands}\label{sec:intro}
+
+\subsection{The Berry--Esseen ratio and the padded binomial family}
+
+Let $X_1,\ldots,X_n$ be independent centered real random variables with
+positive total variance and finite third absolute moments. Write
+\begin{equation}\label{eq:basic-quantities}
+ S=\sum_{i=1}^n X_i,\qquad
+ V=\sum_{i=1}^n\E X_i^2>0,\qquad
+ R=\sum_{i=1}^n\E|X_i|^3<\infty,\qquad
+ L=\frac{R}{V^{3/2}},
+\end{equation}
+where $L$ is the Lyapunov ratio. Deterministic zero summands ($X_i=0$ almost
+surely) are permitted; they contribute zero to $S$, $V$, and $R$, and merely
+leave available coordinate slots unused. Let
+\begin{equation}\label{eq:kolmogorov-ratio}
+ \Delta(S)=\sup_{x\in\R}\left|\Pp\left\{\frac{S}{\sqrt V}\le x\right\}-\Phi(x)\right|,\qquad
+ \mathcal C(X_1,\ldots,X_n)=\frac{\Delta(S)}{L}=\frac{V^{3/2}\Delta(S)}{R},
+\end{equation}
+where $\Phi(x)=\int_{-\infty}^x\phi(u)\,du$ and
+$\phi(u)=(2\pi)^{-1/2}e^{-u^2/2}$ are the standard normal distribution
+function and density. Notice that $\mathcal C(X_1,\ldots,X_n)$ is invariant
+under multiplying all summands by a common nonzero constant, under common
+sign reflection $X_i\mapsto -X_i$, and under permuting coordinates.
+
+For each integer $n\ge1$, let
+\begin{equation}\label{eq:cn-cind}
+ C_n=\sup\mathcal C(X_1,\ldots,X_n),\qquad
+ \Cind=\sup_{n\ge1}C_n,
+\end{equation}
+where the supremum in $C_n$ is taken over all $n$-tuples of independent
+centered real random variables satisfying \eqref{eq:basic-quantities}.
+Because an $n$-summand array can be extended to $n+1$ summands by adjoining
+$X_{n+1}=0$, the sequence $(C_n)_{n\ge1}$ is nondecreasing. As we recall in
+Section~\ref{sec:known}, the supremum $C_n$ is attained for every $n\ge1$,
+and requiring every summand to have strictly positive variance yields the
+exact same supremum $C_n$ (though the positive-variance supremum need not be
+attained, as occurs at $n=2$ when the summands are restricted to two-point
+distributions \citep[Theorem~1.2]{BellBernoulli2026}).
+
+A fundamental special family consists of arrays in which $m\in\{1,\ldots,n\}$
+summands are identically distributed centered two-point (Bernoulli) random
+variables and the remaining $n-m$ summands are zero:
+\begin{equation}\label{eq:padded-binomial-array}
+ X_i=h(B_i-p)\quad(1\le i\le m),\qquad
+ X_i=0\quad(m<i\le n),
+\end{equation}
+where $h>0$ is the common support diameter, $B_1,\ldots,B_m$ are independent
+$\Bern(p)$ random variables with $\Pp(B_i=1)=p\in(0,1)$ and
+$\Pp(B_i=0)=q:=1-p$. For the array \eqref{eq:padded-binomial-array},
+\[
+ V=mh^2pq,\qquad
+ R=mh^3pq(p^2+q^2),\qquad
+ L=\frac{p^2+q^2}{\sqrt{mpq}}.
+\]
+Writing $K=\sum_{i=1}^m B_i\sim\Bin(m,p)$ and $z_k=(k-mp)/\sqrt{mpq}$, the
+Kolmogorov distance $\Delta(S)$ is achieved at one of the jump points
+$k\in\{0,1,\ldots,m\}$ on either the right-continuous or the left-continuous
+branch of the distribution function, so the Berry--Esseen ratio of
+\eqref{eq:padded-binomial-array} is
+\begin{equation}\label{eq:rmp}
+ R_m(p)=\frac{\sqrt{mpq}}{p^2+q^2}
+ \max_{0\le k\le m}\bigl\{\Pp(K\le k)-\Phi(z_k),\,\Phi(z_k)-\Pp(K<k)\bigr\}.
+\end{equation}
+Since $R_m(p)=R_m(1-p)$ grows like $\sqrt{mp}$ as $p\downarrow0$, the
+continuous function $p\mapsto R_m(p)$ attains its maximum on $(0,1)$. Define
+the $m$-summand binomial maximum and the $n$-summand padded binomial envelope
+by
+\begin{equation}\label{eq:bm-pn}
+ B_m=\max_{0<p<1}R_m(p),\qquad
+ P_n=\max_{1\le m\le n}B_m.
+\end{equation}
+Clearly $P_n\le C_n$ for every $n\ge1$.
+
+In 1956, \citet{Esseen1956} proved that among identically distributed
+summands with finite third absolute moments, the largest asymptotic value of
+$\Delta/L$ as $m\to\infty$ is
+\begin{equation}\label{eq:esseen-constants}
+ \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}}=0.40973218370239634299\ldots,
+\end{equation}
+and that this limit is attained by two-point summands with success
+probability
+\begin{equation}\label{eq:esseen-probability}
+ \pe=\frac{4-\sqrt{10}}{2}=0.41886116991581033400\ldots
+\end{equation}
+or $\qe=1-\pe=( \sqrt{10}-2)/2$. Sixty years later, \citet[Theorem~1]{Schulz2016}
+proved that $B_m<\ce$ for every $m\ge1$, so that $\sup_{n\ge1}P_n=\lim_{m\to\infty}B_m=\ce$.
+
+\subsection{Separating value, structure, and uniqueness}
+
+The central theme of this paper is the empirical and theoretical observation
+that arrays maximizing $\mathcal C(X_1,\ldots,X_n)$ appear always to belong
+to the padded binomial family \eqref{eq:padded-binomial-array}. To analyze
+this phenomenon precisely, one must keep three questions distinct:
+
+\begin{enumerate}[label=\textbf{Question \arabic*.},ref=\arabic*,leftmargin=6.5em]
+\item\label{q:value} \textbf{(Optimal value)}
+\emph{Does $C_n=P_n$ hold for a given $n\ge1$, and does $\Cind=\ce$ hold
+across all $n$?}
+
+This is an inequality statement: it asks whether $\Delta(S)\le P_n L$ holds
+for every $n$-summand array (and $\Delta(S)\le\ce L$ for all finite arrays).
+Because $P_n<\ce$ for every $n$ and $\lim_{n\to\infty}P_n=\ce$, the equality
+$C_n=P_n$ for all $n\ge1$ would immediately imply $\Cind=\ce$, whereas
+$\Cind=\ce$ is weaker than $C_n=P_n$ at finite $n$.
+
+\item\label{q:structure} \textbf{(Classification of maximizing arrays)}
+\emph{Does every $n$-summand array attaining $C_n$ have the form
+\eqref{eq:padded-binomial-array} up to common scaling, reflection, and
+coordinate permutation?}
+
+Proving an upper bound on $C_n$, or even proving $C_n=P_n$, does not by
+itself classify all arrays that attain the maximum; conversely, knowing that
+every maximizer of $C_n$ has the form \eqref{eq:padded-binomial-array}
+immediately implies $C_n=P_n$. Classification requires showing both that
+every nonzero summand is supported on two points and that all nonzero
+summands share the same support diameter $h$ and the same success probability
+$p$ (with the same orientation).
+
+\item\label{q:uniqueness} \textbf{(Uniqueness of the binomial parameters)}
+\emph{Within the padded binomial family \eqref{eq:padded-binomial-array}, is
+the maximizing active count $m_n\in\{1,\ldots,n\}$ in
+$P_n=\max_{1\le m\le n}B_m$ unique, and for a given $m$, is the maximizing
+probability $p_m\in(0,1/2]$ in $B_m=\max_{0<p\le1/2}R_m(p)$ unique?}
+
+Even after an $n$-summand maximizer is shown to belong to the family
+\eqref{eq:padded-binomial-array}, determining how many summands are zero and
+whether two distinct probabilities or two distinct active counts $m\ne m'$
+can tie for the maximum $P_n$ is a separate analytical problem in the
+one-variable family $R_m(p)$.
+\end{enumerate}
+
+Why can a maximizer at horizon $n$ set $n-m>0$ coordinates to zero instead of
+using all $n$ available summands? As already occurs at $n=2$, where
+$B_2\approx0.355891<B_1\approx0.370352$, and as persists for arbitrarily
+large $n$, the Kolmogorov distance of a binomial sum $\Bin(m,p)$ is evaluated
+at an integer threshold $k\in\{0,\ldots,m\}$. When $m$ is large, the
+optimal probability $p$ lies within $O(m^{-1})$ of Esseen's probability
+$\pe$, and the optimal fractional offset $mp-k$ between the mean and the
+integer threshold converges to $c_*=(20+\sqrt{10})/72\approx0.321698$.
+Because $k$ must be an integer, $mp-k$ cannot be well aligned with $c_*$ near
+$p=\pe$ at every integer $m$. Since $B_m=\ce-Q_*/m+O(m^{-2})$, reducing the
+active sample size from $n$ to $m=n-j$ ($j\in\{0,1,2,3,4\}$) incurs an
+$O(n^{-2})$ penalty $Q_*j/n^2$ in the leading $-Q_*/m$ term while shifting
+the fractional lattice phase $(n-j)\pe\bmod1$ to reduce the $O(n^{-2})$
+threshold-quantization loss, strictly increasing the Berry--Esseen ratio
+whenever $n\pe\bmod1$ lies in specific phase intervals
+\citep[Section~4]{BellBernoulli2026}.
+
+\subsection{Outline of the paper}
+
+The purpose of this paper is to give a self-contained account of the
+structural theory surrounding Questions~\ref{q:value}--\ref{q:uniqueness},
+connecting the theorems proved in the seven companion manuscripts
+\citep{BellIndependent2026,BellFinite2026,BellSmall2026,BellTransport2026,BellBernoulli2026,BellSmallStructure2026,BellExtremizers2026}
+with two exact structural mechanisms and with the repository's computational
+records:
+
+\begin{itemize}[leftmargin=2em]
+\item In \textbf{Section~\ref{sec:factorization}} we examine how choosing the
+marginal distribution $\mu=\Law(S)$ of the sum differs from choosing the
+independent summands $(X_1,\ldots,X_n)$ that produce $\mu$. The numerator
+$\Delta(S)$ and total variance $V$ depend only on $\mu$, so for any non-normal
+sum distribution $\mu$ (where $\Delta(\mu)>0$), maximizing
+$\mathcal C(X_1,\ldots,X_n)$ among independent factorizations of $\mu$ is
+equivalent to minimizing the third-moment sum $\sum_{i=1}^n\E|X_i|^3$ over all
+$n$-summand independent factorizations of $\mu$. Using an elementary
+third-moment splitting identity (Proposition~\ref{prop:splitting}), we prove
+that the minimum third-moment functional $\mathcal M_n(\mu)$ is attained and
+lower semicontinuous in $W_3$, but for $n\ge2$ is continuous at $\mu$ if and
+only if $\mu$ is convolution-indecomposable (Theorem~\ref{thm:fiber-regularity}).
+Using probability generating functions, we solve the factorization problem
+explicitly when $\mu$ is a Poisson-binomial or binomial law and deduce that
+an $n$-summand maximizer of $C_n$ has the padded i.i.d.\ two-point form
+\eqref{eq:padded-binomial-array} if and only if its sum $S$ has a centered
+binomial distribution of order $m\le n$ (Theorem~\ref{thm:binomial-fiber}).
+
+\item In \textbf{Section~\ref{sec:criteria}} we establish exact moment and
+characteristic-function criteria that single out padded i.i.d.\ two-point
+arrays across all finite or countable independent arrays. First, for
+summands whose supports have spacing at least $h>0$, a size-biased
+decomposition yields a sharp two-parameter family of linear inequalities
+between $R$, $hV$, and the signed third moment $K_3=\sum_i\E X_i^3$, with
+equality if and only if all nonzero summands share a single two-point law
+(Theorem~\ref{thm:separated-moment}). Second, without assuming discreteness or
+support separation, the moments $V$, $R$, and $K_3$ define a canonical scale
+$\widehat h=(R+D)/V$ and effective active count $\widehat m=2V^3/(D(R+D))\le n$
+such that the characteristic-function deficit
+$\mathcal J=1-|\E e^{2\pi\ii S/\widehat h}|^2$ vanishes if and only if the
+array is a finite i.i.d.\ two-point core with zero padding
+(Theorem~\ref{thm:fourier-criterion}). We then compare these criteria with
+the zero-bias Wasserstein transport inequality $2VW_1(S,S^*)\le R$ of
+\citet{BellTransport2026}.
+
+\item In \textbf{Section~\ref{sec:known}} we review the quantitative bounds
+and partial structural classifications proved in the companion papers,
+showing how the general three-point variational reduction
+\citep{BellExtremizers2026}, the common-diameter Bernoulli classification and
+phase expansion \citep{BellBernoulli2026}, and the small-Lyapunov global
+maximizer classification \citep{BellSmallStructure2026} fit together.
+
+\item In \textbf{Section~\ref{sec:computations}} we explain what the stored
+computational datasets actually establish, distinguishing the floating-point
+binomial evaluations through $m=3000$ and compound-Poisson comparisons from
+the rigorous 320-bit interval certificate for a strict local maximizer at
+$n=4$ with unequal support diameters $h=(1,1,1,2)$.
+
+\item In \textbf{Section~\ref{sec:open}} we formulate the open finite-$n$
+value, classification, and uniqueness conjectures and discuss the specific
+analytical obstacles that remain between the proved regimes and the general
+problem.
+\end{itemize}
+
+\section{Sum distributions versus independent summands}\label{sec:factorization}
+
+\subsection{The minimum third-moment functional on a convolution fiber}
+
+In the Berry--Esseen ratio
+\[
+ \mathcal C(X_1,\ldots,X_n)=\frac{V^{3/2}\Delta(S)}{R},
+\]
+the total variance $V=\Var(S)$ and the Kolmogorov discrepancy $\Delta(S)$
+depend only on the marginal distribution $\mu=\Law(S)$ of the sum. The
+individual laws $\mu_i=\Law(X_i)$ affect $\mathcal C(X_1,\ldots,X_n)$ solely
+through the denominator $R=\sum_{i=1}^n\E|X_i|^3$ and the constraint that
+their convolution $\mu_1*\cdots*\mu_n$ equals $\mu$.
+
+Let $\mathcal P_3^0(\R)$ denote the space of centered Borel probability
+measures on $\R$ with finite third absolute moment, equipped with the
+$L^3$-Wasserstein distance
+\[
+ W_3(\mu,\nu)=\inf\bigl\{\bigl(\E|U-W|^3\bigr)^{1/3}:\Law(U)=\mu,\ \Law(W)=\nu\bigr\}.
+\]
+For $\mu\in\mathcal P_3^0(\R)$, write
+\[
+ V(\mu)=\int_\R x^2\,\mu(dx),\qquad
+ \rho(\mu)=\int_\R |x|^3\,\mu(dx),
+\]
+and when $V(\mu)>0$, write
+\[
+ \Delta(\mu)=\sup_{x\in\R}\left|\mu\bigl((-\infty,x]\bigr)-\Phi\!\left(\frac{x}{\sqrt{V(\mu)}}\right)\right|.
+\]
+For each integer $n\ge1$ and each $\mu\in\mathcal P_3^0(\R)$, define the
+\emph{convolution fiber}
+\begin{equation}\label{eq:fiber-def}
+ \mathcal F_n(\mu)=\bigl\{(\mu_1,\ldots,\mu_n)\in\mathcal P_3^0(\R)^n:
+ \mu_1*\cdots*\mu_n=\mu\bigr\}
+\end{equation}
+and the \emph{minimum third-moment functional}
+\begin{equation}\label{eq:mn-def}
+ \mathcal M_n(\mu)=\inf_{(\mu_1,\ldots,\mu_n)\in\mathcal F_n(\mu)}
+ \sum_{i=1}^n\rho(\mu_i).
+\end{equation}
+Because the Dirac mass $\delta_0$ belongs to $\mathcal P_3^0(\R)$ with
+$\rho(\delta_0)=0$, the tuple $(\mu,\delta_0,\ldots,\delta_0)$ always belongs
+to $\mathcal F_n(\mu)$, so $\mathcal F_n(\mu)$ is nonempty and
+$\mathcal M_n(\mu)$ is nonincreasing in $n$:
+\begin{equation}\label{eq:mn-bounds}
+ \frac{V(\mu)^{3/2}}{\sqrt n}\le \mathcal M_n(\mu)\le \rho(\mu).
+\end{equation}
+Indeed, for any $(\mu_1,\ldots,\mu_n)\in\mathcal F_n(\mu)$ with variances
+$v_i=V(\mu_i)$, Lyapunov's inequality $\rho(\mu_i)\ge v_i^{3/2}$ and H\"older's
+inequality $\sum_{i=1}^n v_i\le n^{1/3}\bigl(\sum_{i=1}^n v_i^{3/2}\bigr)^{2/3}$
+give the lower bound in \eqref{eq:mn-bounds}, with equality if and only if
+$v_1=\cdots=v_n=V(\mu)/n$ and each $\mu_i$ is supported on
+$\{\pm\sqrt{V(\mu)/n}\}$ with equal probabilities $1/2$.
+
+Decomposing the supremum in \eqref{eq:cn-cind} first over the sum distribution
+$\mu=\Law(S)$ and then over its convolution fiber $\mathcal F_n(\mu)$ gives
+\begin{equation}\label{eq:two-stage-opt}
+ C_n=\sup_{\substack{\mu\in\mathcal P_3^0(\R)\\ V(\mu)>0}}
+ \frac{V(\mu)^{3/2}\Delta(\mu)}{\mathcal M_n(\mu)}.
+\end{equation}
+In particular, if $(X_1,\ldots,X_n)$ is any array attaining $C_n$ with sum
+distribution $\mu=\Law(X_1+\cdots+X_n)$, then since $C_n\ge C_1>0$ implies
+$\Delta(\mu)>0$, the summand distributions $\mu_i=\Law(X_i)$ must minimize
+$\sum_{i=1}^n\rho(\mu_i)$ over $\mathcal F_n(\mu)$:
+\begin{equation}\label{eq:maximizer-minimizes-price}
+ \sum_{i=1}^n\E|X_i|^3=\mathcal M_n(\mu).
+\end{equation}
+
+\subsection{The third-moment splitting identity}
+
+To understand which factorizations minimize $\sum_{i=1}^n\rho(\mu_i)$ on a
+fixed fiber $\mathcal F_n(\mu)$, the basic tool is the strict superadditivity
+of the third absolute moment under convolution of independent centered
+variables \citep[Theorem~(2.6)]{CoxKemperman1983,Ruzankin2014}. The following
+elementary identity makes the exact convolution excess completely explicit
+without requiring symmetry or decomposition into two-point mixtures.
+
+\begin{proposition}[Third-moment splitting identity]\label{prop:splitting}
+Let $X$ and $Y$ be independent centered real random variables with finite
+third absolute moments, and set $m=\min(|X|,|Y|)$ and $M=\max(|X|,|Y|)$. Then
+\begin{equation}\label{eq:splitting-identity}
+ \E|X+Y|^3-\E|X|^3-\E|Y|^3
+ =2\,\E\bigl[\ind_{\{XY<0\}}m^2(3M-m)\bigr]\ge0.
+\end{equation}
+Moreover, equality holds in \eqref{eq:splitting-identity} if and only if at
+least one of $X$ and $Y$ is zero almost surely.
+\end{proposition}
+
+\begin{proof}
+We first verify that for all real numbers $x,y\in\R$,
+\begin{equation}\label{eq:pointwise-cubic}
+ |x+y|^3-|x|^3-|y|^3-3xy(|x|+|y|)
+ =2\ind_{\{xy<0\}}\min(|x|,|y|)^2\bigl(3\max(|x|,|y|)-\min(|x|,|y|)\bigr).
+\end{equation}
+If $xy\ge0$, then $|x+y|=|x|+|y|$, so
+$|x+y|^3-|x|^3-|y|^3=3|x|\,|y|(|x|+|y|)=3xy(|x|+|y|)$, and both sides of
+\eqref{eq:pointwise-cubic} vanish. If $xy<0$, then by symmetry we may assume
+$a=|x|\ge b=|y|>0$, so that $xy=-ab$ and $|x+y|=a-b$; the left-hand side of
+\eqref{eq:pointwise-cubic} is then
+\[
+ (a-b)^3-a^3-b^3+3ab(a+b)=2b^2(3a-b),
+\]
+which coincides with the right-hand side of \eqref{eq:pointwise-cubic}.
+
+Since $\E|X|^3<\infty$ and $\E|Y|^3<\infty$, every term in
+\eqref{eq:pointwise-cubic} is integrable when evaluated at $(X,Y)$. Because
+$X$ and $Y$ are independent and centered,
+\[
+ \E\bigl[XY|X|\bigr]=\E\bigl[X|X|\bigr]\,\E Y=0,\qquad
+ \E\bigl[XY|Y|\bigr]=\E X\,\E\bigl[Y|Y|\bigr]=0.
+\]
+Taking expectations in \eqref{eq:pointwise-cubic} therefore yields
+\eqref{eq:splitting-identity}.
+
+On the event $\{XY<0\}$ we have $M\ge m>0$, so $m^2(3M-m)\ge2m^3>0$. If
+neither $X$ nor $Y$ is zero almost surely, then since $\E X=\E Y=0$, each of
+$X$ and $Y$ takes both strictly positive and strictly negative values with
+positive probability; by independence, $\Pp(XY<0)=\Pp(X>0)\Pp(Y<0)+\Pp(X<0)\Pp(Y>0)>0$,
+and therefore the right-hand side of \eqref{eq:splitting-identity} is
+strictly positive.
+\end{proof}
+
+\subsection{Compactness, attainment, and discontinuity of the fiber minimum}
+
+A measure $\mu\in\mathcal P_3^0(\R)$ is called \emph{convolution-indecomposable}
+(or simply \emph{indecomposable} in $\mathcal P_3^0(\R)$) if every
+factorization $\mu=\mu_1*\mu_2$ with $\mu_1,\mu_2\in\mathcal P_3^0(\R)$ has
+$\mu_1=\delta_0$ or $\mu_2=\delta_0$. By Proposition~\ref{prop:splitting},
+splitting a decomposable summand into two nonconstant independent centered
+factors preserves the distribution of the sum $S$ while strictly decreasing
+the sum of third absolute moments. This strict decrease has a striking
+consequence for the regularity of $\mathcal M_n(\mu)$ as a function of the
+sum law $\mu$: although $\mathcal M_n$ is attained on every fiber and is
+lower semicontinuous, it is discontinuous at every decomposable distribution
+whenever $n\ge2$.
+
+\begin{theorem}[Compactness, attainment, and continuity of $\mathcal M_n$]\label{thm:fiber-regularity}
+Fix an integer $n\ge1$.
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item\label{it:fiber-compact} For every $W_3$-compact subset
+$\mathcal K\subset\mathcal P_3^0(\R)$, the union of convolution fibers
+$\bigcup_{\mu\in\mathcal K}\mathcal F_n(\mu)$ is compact in
+$\mathcal P_3^0(\R)^n$ under the product $W_3$ topology. In particular, for
+every $\mu\in\mathcal P_3^0(\R)$, the fiber $\mathcal F_n(\mu)$ is
+$W_3^n$-compact, the infimum $\mathcal M_n(\mu)$ in \eqref{eq:mn-def} is
+attained, and $\mu\mapsto\mathcal M_n(\mu)$ is lower semicontinuous on
+$(\mathcal P_3^0(\R),W_3)$.
+\item\label{it:indecomp-criterion} If $n\ge2$, then for every
+$\mu\in\mathcal P_3^0(\R)$,
+\begin{equation}\label{eq:mn-equals-rho}
+ \mathcal M_n(\mu)=\rho(\mu)
+ \quad\Longleftrightarrow\quad
+ \mu\text{ is convolution-indecomposable}.
+\end{equation}
+\item\label{it:dense-indecomp} Convolution-indecomposable finitely supported
+measures are dense in $(\mathcal P_3^0(\R),W_3)$. Consequently, for fixed
+$n\ge2$, the functional $\mathcal M_n$ is continuous at
+$\mu\in\mathcal P_3^0(\R)$ if and only if $\mu$ is convolution-indecomposable.
+\item\label{it:ratio-continuity} On the open domain
+$\{\mu\in\mathcal P_3^0(\R):V(\mu)>0\}$, the optimized Berry--Esseen ratio
+\[
+ \mathcal Q_n(\mu)=\frac{V(\mu)^{3/2}\Delta(\mu)}{\mathcal M_n(\mu)}
+\]
+is upper semicontinuous in $W_3$. For fixed $n\ge2$, $\mathcal Q_n$ is
+continuous at $\mu$ if and only if either $\mu$ is convolution-indecomposable
+or $\mu$ is a centered normal distribution $N(0,V)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\ref{it:fiber-compact} Let $(X_1,\ldots,X_n)$ be independent centered random
+variables with $\Law(X_i)=\mu_i$ and $\Law(S)=\mu\in\mathcal K$, where
+$S=X_1+\cdots+X_n$. Because the summands are independent and centered,
+$\E[S\mid X_i]=X_i$ almost surely for each $i\in\{1,\ldots,n\}$. For every
+$A\ge0$, the function $f_A(x)=(|x|-A)_+^3$ is convex on $\R$, and
+$|x|^3\ind_{\{|x|>2A\}}\le8f_A(x)$ since $|x|>2A$ implies $|x|-A>|x|/2$.
+Conditional Jensen's inequality therefore gives
+\begin{equation}\label{eq:convex-tail}
+ \int_{\{|x|>2A\}}|x|^3\,\mu_i(dx)
+ =\E\bigl[|X_i|^3\ind_{\{|X_i|>2A\}}\bigr]
+ \le 8\,\E f_A(X_i)\le 8\,\E f_A(S)
+ =8\int_{\{|x|>A\}}(|x|-A)^3\,\mu(dx).
+\end{equation}
+Since $\mathcal K$ is $W_3$-compact, its third absolute moments are bounded
+and uniformly integrable, so the right-hand side of \eqref{eq:convex-tail}
+tends to $0$ as $A\to\infty$ uniformly over $\mu\in\mathcal K$. Hence each
+marginal coordinate projection of $\bigcup_{\mu\in\mathcal K}\mathcal F_n(\mu)$
+is tight with uniformly integrable third absolute moments, and is therefore
+relatively compact in $(\mathcal P_3^0(\R),W_3)$. Because convergence in
+$W_3$ preserves zero mean and convolution $(\mu_1,\ldots,\mu_n)\mapsto\mu_1*\cdots*\mu_n$
+is continuous in $W_3$ (by coupling each coordinate independently and using
+Minkowski's inequality), $\bigcup_{\mu\in\mathcal K}\mathcal F_n(\mu)$ is
+closed and hence compact in $W_3^n$. Taking $\mathcal K=\{\mu\}$ shows that
+$\mathcal F_n(\mu)$ is compact, and since $(\mu_1,\ldots,\mu_n)\mapsto\sum_{i=1}^n\rho(\mu_i)$
+is continuous on $W_3^n$, the infimum $\mathcal M_n(\mu)$ is attained. If
+$\mu^{(k)}\to\mu$ in $W_3$, applying compactness to the $W_3$-compact set
+$\mathcal K=\{\mu\}\cup\{\mu^{(k)}:k\ge1\}$ and extracting a convergent
+subsequence of attaining tuples $(\mu_1^{(k)},\ldots,\mu_n^{(k)})\in\mathcal F_n(\mu^{(k)})$
+yields $\mathcal M_n(\mu)\le\liminf_{k\to\infty}\mathcal M_n(\mu^{(k)})$.
+
+\ref{it:indecomp-criterion} Let $n\ge2$. If $\mu=\nu_1*\nu_2$ with
+$\nu_1,\nu_2\in\mathcal P_3^0(\R)\setminus\{\delta_0\}$, then
+$(\nu_1,\nu_2,\delta_0,\ldots,\delta_0)\in\mathcal F_n(\mu)$ has third-moment
+sum $\rho(\nu_1)+\rho(\nu_2)<\rho(\mu)$ by Proposition~\ref{prop:splitting},
+so $\mathcal M_n(\mu)<\rho(\mu)$. Conversely, if $(\mu_1,\ldots,\mu_n)\in\mathcal F_n(\mu)$
+has at least two nondegenerate components, say $\mu_1\ne\delta_0$ and
+$\mu_2\ne\delta_0$, then grouping $\nu_1=\mu_1$ and
+$\nu_2=\mu_2*\cdots*\mu_n$ gives a nontrivial factorization $\mu=\nu_1*\nu_2$
+(since $\Var(\nu_2)=\sum_{i=2}^n\Var(\mu_i)\ge\Var(\mu_2)>0$), so $\mu$ is
+decomposable. Thus when $\mu$ is indecomposable, every tuple in
+$\mathcal F_n(\mu)$ has at most one nonzero component, which must equal $\mu$,
+and hence $\mathcal M_n(\mu)=\rho(\mu)$.
+
+\ref{it:dense-indecomp} Suppose $\nu\in\mathcal P_3^0(\R)$ is supported on a
+finite set $S=\{x_1<\cdots<x_s\}$ with $\nu(\{x_j\})>0$ for all $j$, and
+suppose that all $\binom{s}{2}$ positive differences $x_r-x_j$ ($1\le j<r\le s$)
+are distinct. We claim that $\nu$ is convolution-indecomposable. Indeed, if
+$\nu=\nu_1*\nu_2$ with neither factor degenerate, then $\supp(\nu_1)$ contains
+at least two points $a_0<a_1$ and $\supp(\nu_2)$ contains at least two points
+$b_0<b_1$. Because all four sums $a_0+b_0$, $a_1+b_0$, $a_0+b_1$, $a_1+b_1$
+belong to $\supp(\nu)=S$, either $a_1+b_0=a_0+b_1$ (in which case the three
+distinct points $a_0+b_0<a_1+b_0<a_1+b_1$ of $S$ repeat the positive
+difference $a_1-a_0=b_1-b_0$) or the four sums are four distinct points of $S$
+among which the positive difference $a_1-a_0=(a_1+b_0)-(a_0+b_0)=(a_1+b_1)-(a_0+b_1)$
+occurs twice, contradicting the assumption that all positive differences in
+$S$ are distinct.
+
+Any $\mu\in\mathcal P_3^0(\R)$ can be approximated arbitrarily closely in
+$W_3$ by finitely supported centered measures, and an arbitrarily small
+perturbation of the support points outside the finite union of hyperplanes
+where two coordinates or two pairwise differences coincide (followed by
+subtracting the perturbed mean, which shifts all support points by the same
+constant and preserves all pairwise differences) produces a sequence
+$\mu^{(k)}\to\mu$ in $W_3$ of finitely supported indecomposable measures. For
+fixed $n\ge2$, if $\mu$ is indecomposable, then for any sequence $\nu^{(k)}\to\mu$
+in $W_3$, lower semicontinuity and the upper bound
+$\mathcal M_n(\nu^{(k)})\le\rho(\nu^{(k)})\to\rho(\mu)=\mathcal M_n(\mu)$
+force $\mathcal M_n(\nu^{(k)})\to\mathcal M_n(\mu)$. Conversely, if $\mu$ is
+decomposable, then $\mathcal M_n(\mu)<\rho(\mu)$ by \ref{it:indecomp-criterion},
+whereas along a sequence of indecomposable measures $\mu^{(k)}\to\mu$ in $W_3$
+we have $\mathcal M_n(\mu^{(k)})=\rho(\mu^{(k)})\to\rho(\mu)>\mathcal M_n(\mu)$,
+so $\mathcal M_n$ is discontinuous at $\mu$.
+
+\ref{it:ratio-continuity} For any two centered probability measures $\mu,\nu$
+with finite first moments and any coupling $(U,W)$ with
+$\E|U-W|=W_1(\mu,\nu)$, centering gives
+$\E(W-U)_+=\E(U-W)_+=\frac12\E|U-W|=\frac12 W_1(\mu,\nu)$. By Markov's
+inequality and the bound $\|\Phi'\|_\infty=\phz$, for every $x\in\R$ and
+$\delta>0$,
+\[
+ \Pp(U\le x)-\Phi(x)
+ \le \Pp(W\le x+\delta)-\Phi(x+\delta)+\phz\delta+\frac{\E(W-U)_+}{\delta}.
+\]
+Choosing $\delta=\sqrt{W_1(\mu,\nu)/(2\phz)}$ and repeating the argument for
+the opposite sign and with $U$ and $W$ interchanged yields
+\[
+ \left|\sup_{x\in\R}\bigl|\Pp(U\le x)-\Phi(x)\bigr|
+      -\sup_{x\in\R}\bigl|\Pp(W\le x)-\Phi(x)\bigr|\right|
+ \le\sqrt{2\phz W_1(\mu,\nu)}.
+\]
+Since standardization $\mu\mapsto\Law(S/\sqrt{V(\mu)})$ is continuous in $W_3$
+on $\{V(\mu)>0\}$, the numerator $V(\mu)^{3/2}\Delta(\mu)$ is continuous in
+$W_3$. Because $\mathcal M_n(\mu)\ge V(\mu)^{3/2}/\sqrt n>0$ is lower
+semicontinuous by \ref{it:fiber-compact}, the quotient $\mathcal Q_n(\mu)$ is
+upper semicontinuous.
+
+If $\mu$ is indecomposable, both numerator and denominator of $\mathcal Q_n$
+are continuous at $\mu$. If $\mu=N(0,V)$, then $\Delta(\mu)=0$, and as
+$\nu\to\mu$ in $W_3$ the bound $\mathcal M_n(\nu)\ge V(\nu)^{3/2}/\sqrt n$
+gives $0\le\mathcal Q_n(\nu)\le\sqrt n\,\Delta(\nu)\to0=\mathcal Q_n(\mu)$,
+so $\mathcal Q_n$ is continuous at $\mu$ even though $\mathcal M_n$ jumps from
+$\rho(N(0,V))$ along indecomposable approximants to
+$\mathcal M_n(N(0,V))=\rho(N(0,V))/\sqrt n$. Finally, if $\mu$ is decomposable
+and not normal, then $\Delta(\mu)>0$ while $\mathcal M_n(\mu)<\rho(\mu)$;
+along indecomposable approximants $\mu^{(k)}\to\mu$ in $W_3$,
+\[
+ \lim_{k\to\infty}\mathcal Q_n(\mu^{(k)})
+ =\frac{V(\mu)^{3/2}\Delta(\mu)}{\rho(\mu)}
+ <\frac{V(\mu)^{3/2}\Delta(\mu)}{\mathcal M_n(\mu)}=\mathcal Q_n(\mu),
+\]
+so $\mathcal Q_n$ is discontinuous at $\mu$.
+\end{proof}
+
+Theorem~\ref{thm:fiber-regularity} explains why the reformulation
+\eqref{eq:two-stage-opt} over marginal sum laws $\mu$ cannot be treated as a
+smooth variational problem on $\mathcal P_3^0(\R)$: the denominator
+$\mathcal M_n(\mu)$ drops downward precisely on the thin locus of
+distributions $\mu$ that admit nontrivial independent factorizations.
+
+\subsection{Factorizations of Poisson-binomial and binomial sum distributions}
+
+When the sum distribution $\mu$ is a centered Poisson-binomial or binomial
+distribution, we can determine all elements of the convolution fiber
+$\mathcal F_n(\mu)$ explicitly and identify the unique factorizations that
+achieve $\mathcal M_n(\mu)$.
+
+\begin{theorem}[Factorizations of Poisson-binomial and binomial laws]\label{thm:binomial-fiber}
+Fix an integer $n\ge1$ and a lattice span $g>0$.
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item\label{it:pb-fiber} Let $\mu=\Law\bigl(g\sum_{j=1}^k(B_j-p_j)\bigr)$,
+where $B_1,\ldots,B_k$ are independent with $B_j\sim\Bern(p_j)$ and
+$0<p_j<1$. Then $(\mu_1,\ldots,\mu_n)\in\mathcal F_n(\mu)$ if and only if
+there exists a partition of $\{1,\ldots,k\}$ into $n$ (possibly empty)
+disjoint subsets $A_1,\ldots,A_n$ such that
+\begin{equation}\label{eq:pb-factor-form}
+ \mu_i=\Law\left(g\sum_{j\in A_i}(B_j-p_j)\right)\qquad(1\le i\le n),
+\end{equation}
+where an empty sum denotes $0$. If $n\ge k$, then $\mathcal M_n(\mu)$ is
+equal to
+\begin{equation}\label{eq:pb-min-price}
+ \mathcal M_n(\mu)=g^3\sum_{j=1}^k p_j(1-p_j)\bigl(p_j^2+(1-p_j)^2\bigr),
+\end{equation}
+and the minimum is attained if and only if $(\mu_1,\ldots,\mu_n)$ is a
+permutation of the $k$ singleton two-point laws $\Law(g(B_j-p_j))$ ($1\le j\le k$)
+together with $n-k$ Dirac masses at $0$.
+
+\item\label{it:binomial-equivalence} In particular, for any $n$-summand
+independent array $(X_1,\ldots,X_n)$ that attains the $n$-summand supremum
+$C_n$, the following two statements are equivalent:
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item $(X_1,\ldots,X_n)$ consists of $m\in\{1,\ldots,n\}$ identically
+distributed nondegenerate two-point summands and $n-m$ zero summands;
+\item the marginal distribution of the sum $S=X_1+\cdots+X_n$ is a centered
+binomial distribution $\Law(g(\Bin(m,p)-mp))$ for some integer
+$m\in\{1,\ldots,n\}$, some $g>0$, and some $p\in(0,1)$.
+\end{enumerate}
+
+\item\label{it:fair-binomial-oversized} For each integer $N\ge1$, let
+$\mu_N=\Law\bigl((\Bin(N,1/2)-N/2)/\sqrt{N/4}\bigr)$ denote the standardized
+symmetric binomial distribution of order $N$. Then for every capacity $n\ge1$,
+every oversized symmetric binomial sum law ($N>n$) has strictly smaller
+optimized ratio $\mathcal Q_n(\mu_N)=\Delta(\mu_N)/\mathcal M_n(\mu_N)$ than
+$\mu_n$, and
+\begin{equation}\label{eq:fair-binomial-sup}
+ \sup_{N\ge1}\mathcal Q_n(\mu_N)
+ =\begin{cases}
+ R_1(1/2)=\Phi(1)-1/2 & \text{if }n=1,\\[3pt]
+ \max\bigl\{R_n(1/2),\,R_{n-1}(1/2)\bigr\} & \text{if }n\ge2.
+ \end{cases}
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\ref{it:pb-fiber} Let $(X_1,\ldots,X_n)$ be independent centered random
+variables with $\Law(X_i)=\mu_i$ and $\Law(X_1+\cdots+X_n)=\mu$. The support
+of $\mu$ is the finite arithmetic progression
+$-g\sum_{j=1}^k p_j+g\{0,1,\ldots,k\}$. Fixing one point in $\supp(X_r)$ for
+each $r\ne i$, the sum of any point in $\supp(X_i)$ with those fixed points
+lies in $\supp(\mu)$ because the $X_r$ are independent. Consequently,
+$\supp(X_i)$ is finite and all differences between points of $\supp(X_i)$
+belong to $g\Z$. Let $a_i=\min\supp(X_i)$; then $Y_i=(X_i-a_i)/g$ takes
+nonnegative integer values with $\Pp(Y_i=0)>0$, and independence gives
+$\sum_{i=1}^n a_i=\min\supp(\mu)=-g\sum_{j=1}^k p_j$ and
+$\Law(Y_1+\cdots+Y_n)=\Law(B_1+\cdots+B_k)$.
+
+Let $P_i(z)=\E z^{Y_i}$ ($1\le i\le n$) be the probability generating
+polynomials of $Y_1,\ldots,Y_n$. Then
+\[
+ \prod_{i=1}^n P_i(z)=\prod_{j=1}^k(1-p_j+p_j z)\qquad(z\in\mathbb C).
+\]
+By unique factorization in $\mathbb C[z]$ and the normalization $P_i(1)=1$,
+each polynomial $P_i(z)$ is the product of $(1-p_j+p_j z)$ over a subset
+$A_i\subseteq\{1,\ldots,k\}$, where $A_1,\ldots,A_n$ form a partition of
+$\{1,\ldots,k\}$. Since $\E X_i=0$ determines the translation $a_i=-g\sum_{j\in A_i}p_j$,
+the representation \eqref{eq:pb-factor-form} follows.
+
+Now suppose $n\ge k$. By repeated application of
+Proposition~\ref{prop:splitting}, for every subset $A_i\subseteq\{1,\ldots,k\}$,
+\[
+ \E\left|g\sum_{j\in A_i}(B_j-p_j)\right|^3
+ \ge g^3\sum_{j\in A_i}\E|B_j-p_j|^3,
+\]
+with equality if and only if $|A_i|\le1$. Summing over $i=1,\ldots,n$ yields
+\eqref{eq:pb-min-price}, with equality if and only if every $A_i$ has
+cardinality $0$ or $1$---that is, $k$ of the subsets $A_i$ are singletons and
+the remaining $n-k$ are empty.
+
+\ref{it:binomial-equivalence} Implication (a)$\implies$(b) is immediate from
+the definition of the binomial distribution. Conversely, suppose
+$(X_1,\ldots,X_n)$ attains $C_n$ and its sum $S$ has distribution
+$\mu=\Law(g(\Bin(m,p)-mp))$ with $1\le m\le n$, $g>0$, and $0<p<1$. By
+\eqref{eq:maximizer-minimizes-price}, the summand laws $\mu_i=\Law(X_i)$ must
+achieve the minimum $\mathcal M_n(\mu)$ on $\mathcal F_n(\mu)$. Applying
+part~\ref{it:pb-fiber} with $k=m$ and $p_1=\cdots=p_m=p$ shows that the
+unique minimizers of $\sum_{i=1}^n\rho(\mu_i)$ on $\mathcal F_n(\mu)$ up to
+coordinate permutation are $m$ copies of $\Law(g(B_1-p))$ and $n-m$ copies of
+$\delta_0$, which is (a).
+
+\ref{it:fair-binomial-oversized} By \citet[Theorem~1.3(a)]{MattnerSchulz2018},
+for the standardized symmetric binomial law $\mu_N$ ($p=1/2$), the maximum
+Kolmogorov discrepancy $d_N:=\Delta(\mu_N)$ is attained at the central
+thresholds $\lfloor N/2\rfloor$ (on the right-continuous branch) and
+$\lceil N/2\rceil$ (on the left-continuous branch), and equals
+\begin{equation}\label{eq:dn-exact}
+ d_{2k}=\frac12\binom{2k}{k}2^{-2k},\qquad
+ d_{2k+1}=\Phi\!\left(\frac{1}{\sqrt{2k+1}}\right)-\frac12
+ =\int_0^{1/\sqrt{2k+1}}\phi(u)\,du.
+\end{equation}
+We first verify that $d_N$ is strictly decreasing in $N\ge1$:
+$d_1>d_2>d_3>\cdots$. Writing $u_k=\binom{2k}{k}2^{-2k}$ and
+$I_r=\int_0^{\pi/2}\sin^r\theta\,d\theta$, integration by parts gives
+$I_{2k}=(\pi/2)u_k$, $I_{2k+1}=1/\bigl((2k+1)u_k\bigr)$, and
+$I_{2k-1}=1/(2ku_k)$; since $I_{2k+1}<I_{2k}<I_{2k-1}$ for all $k\ge1$,
+Wallis's inequalities
+\[
+ \frac{1}{\sqrt{\pi(k+1/2)}}<u_k<\frac{1}{\sqrt{\pi k}}
+\]
+hold for all $k\ge1$. Since $\phz=1/\sqrt{2\pi}$, the left inequality gives
+\[
+ d_{2k}=\frac{u_k}{2}>\frac{\phz}{\sqrt{2k+1}}
+ >\int_0^{1/\sqrt{2k+1}}\phi(u)\,du=d_{2k+1}.
+\]
+On the other hand, for every odd $r=2k-1\ge1$, the inequality
+$e^{-u^2/2}\ge 1-u^2/2$ and the upper Wallis bound give
+\[
+ d_r=\int_0^{1/\sqrt r}\phi(u)\,du
+ \ge\frac{\phz}{\sqrt r}\left(1-\frac{1}{6r}\right)
+ >\frac{\phz}{\sqrt{r+1}}>\frac{u_k}{2}=d_{r+1},
+\]
+because $(1+1/r)(1-1/(6r))^2-1=(24r^2-11r+1)/(36r^3)>0$ for $r\ge1$. Thus
+$d_N>d_{N+1}$ for all $N\ge1$.
+
+Now let $N>n$. By \eqref{eq:mn-bounds}, $\mathcal M_n(\mu_N)\ge 1/\sqrt n$,
+whereas for $N=n$ part~\ref{it:pb-fiber} gives $\mathcal M_n(\mu_n)=1/\sqrt n$.
+Since $d_N<d_n$, we obtain
+\[
+ \mathcal Q_n(\mu_N)=\frac{d_N}{\mathcal M_n(\mu_N)}
+ \le\sqrt n\,d_N<\sqrt n\,d_n=\frac{d_n}{\mathcal M_n(\mu_n)}=R_n(1/2).
+\]
+For $1\le N\le n$, part~\ref{it:pb-fiber} gives $\mathcal M_n(\mu_N)=1/\sqrt N$,
+so $\mathcal Q_n(\mu_N)=\sqrt N\,d_N=R_N(1/2)$. When $n=1$ this leaves only
+$R_1(1/2)$. When $n\ge2$, within each parity $R_N(1/2)$ is strictly
+increasing in $N$: for odd $N$,
+$R_N(1/2)=\sqrt N\int_0^{1/\sqrt N}\phi(u)\,du=\int_0^1\phi(v/\sqrt N)\,dv$
+increases strictly with $N$, and for even $N=2k$,
+$R_{2k+2}(1/2)/R_{2k}(1/2)=(2k+1)/\bigl(2\sqrt{k(k+1)}\bigr)>1$. Therefore
+$\max_{1\le N\le n}R_N(1/2)=\max\{R_n(1/2),R_{n-1}(1/2)\}$, proving
+\eqref{eq:fair-binomial-sup}.
+\end{proof}
+
+\begin{remark}[Balanced groupings for general $N>n$, and Gaussian and Poisson fibers]\label{rem:balanced-and-id}
+When $\mu=\Law(g(\Bin(N,p)-Np))$ with $N>n$ and $0<p<1$,
+Theorem~\ref{thm:binomial-fiber}\ref{it:pb-fiber} shows that every
+factorization in $\mathcal F_n(\mu)$ has the form
+$\mu_i=\Law(g(\Bin(k_i,p)-k_ip))$ with nonnegative integers
+$k_1+\cdots+k_n=N$. Writing $c_p(k)=\E|\Bin(k,p)-kp|^3$ and $U\sim\Bern(p)-p$,
+the identity $\frac{d^2}{dx^2}\bigl(\E|x+U|^3-|x|^3\bigr)=6\bigl(\E|x+U|-|x|\bigr)\ge0$
+and conditional Jensen's inequality imply that $k\mapsto c_p(k+1)-c_p(k)$ is
+nondecreasing, so $c_p$ is convex on $\Z_{\ge0}$ and $\mathcal M_n(\mu)$ is
+attained by balanced group sizes $k_i\in\{\lfloor N/n\rfloor,\lceil N/n\rceil\}$.
+
+By contrast, for infinitely divisible sum laws $\mu$, the fiber minimum
+$\mathcal M_n(\mu)$ behaves quite differently from the finite-lattice case:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item If $\mu=N(0,V)$, then by Cram\'er's theorem \citep{Cramer1936} every
+factor in $\mathcal F_n(\mu)$ is normal $N(0,v_i)$ with $\sum_{i=1}^n v_i=V$,
+and by strict convexity of $v\mapsto v^{3/2}$ the unique minimizer of
+$\sum_{i=1}^n\rho(\mu_i)=\rho(N(0,1))\sum_{i=1}^n v_i^{3/2}$ consists of $n$
+identically distributed $N(0,V/n)$ summands (with $\mathcal M_n(N(0,V))=\rho(N(0,V))/\sqrt n$).
+\item If $\mu=\Law(N_T-T)$ with $N_T\sim\Pois(T)$ ($T>0$), then for any
+factorization $(X_1,\ldots,X_n)$ of $N_T-T$ the signed third moments add
+($\sum_{i=1}^n\E X_i^3=\E(N_T-T)^3=T$), so
+\[
+ \sum_{i=1}^n\E|X_i|^3-T
+ =\sum_{i=1}^n\bigl(\E|X_i|^3-\E X_i^3\bigr)
+ =2\sum_{i=1}^n\E(X_i)_-^3>0,
+\]
+because every nonconstant centered variable takes strictly negative values
+with positive probability. On the other hand, taking $n$ independent copies
+of $N_{T/n}-T/n$ gives, for $n\ge T$,
+\[
+ \mathcal M_n(\mu)\le n\,\E|N_{T/n}-T/n|^3
+ =T+\frac{2T^3}{n^2}e^{-T/n}\longrightarrow T\qquad(n\to\infty),
+\]
+so $\mathcal M_n(\mu)>T$ for every finite $n$ while
+$\inf_{n\ge1}\mathcal M_n(\mu)=T$. (By Raikov's theorem \citep{Raikov1938},
+every factor in $\mathcal F_n(\mu)$ is a centered Poisson law
+$N_{t_i}-t_i$ with $\sum_{i=1}^n t_i=T$.) Notice that the limiting quantity
+$T=\int y^3\,\nu(dy)$ is the third moment of the L\'evy jump measure
+$\nu=T\delta_1$ arising from $n\to\infty$ rare summands, whereas at any fixed
+finite $n$ every independent factorization of $N_T-T$ has third-moment sum
+strictly greater than $T$.
+\end{enumerate}
+\end{remark}
+
+Theorem~\ref{thm:binomial-fiber}\ref{it:binomial-equivalence} clarifies what
+the structural classification question (Question~\ref{q:structure}) actually
+requires: because exact-fiber third-moment minimization forces every
+third-moment-minimizing factorization of $g(\Bin(m,p)-mp)$ ($m\le n$) in
+$\mathcal F_n(\mu)$ to consist of $m$ identically distributed two-point
+summands and $n-m$ zeros, proving that an $n$-summand maximizer of $C_n$ has
+the padded i.i.d.\ two-point form \eqref{eq:padded-binomial-array} is
+equivalent to proving that the marginal distribution of its sum $S$ is a
+centered binomial distribution of order $m\le n$.
+
+\section{Moment, transport, and characteristic-function criteria for identical two-point summands}\label{sec:criteria}
+
+\subsection{The separated-support moment inequality}
+
+Why do identically distributed two-point summands emerge when one compares
+Kolmogorov discrepancy with the third absolute moment sum $R$? In his 1956
+construction, \citet[Lemma~1, pp.~162--163]{Esseen1956} proved that for any
+purely atomic random variable $X$ whose support points are separated by at
+least $h>0$,
+\begin{equation}\label{eq:esseen-moment-ineq}
+ 3h\Var(X)+\bigl|\E(X-\E X)^3\bigr|
+ \le (3+\sqrt{10})\,\E|X-\E X|^3,
+\end{equation}
+with equality for nonconstant $X$ if and only if $X-\E X$ is a two-point
+random variable of support span $h$ and upper probability $\pe$ or $1-\pe$.
+By decomposing a centered distribution into its size-biased positive and
+negative parts, we obtain an exact two-parameter family of sum-of-squares
+identities containing \eqref{eq:esseen-moment-ineq} that classifies all
+two-point equality laws of arbitrary skewness.
+
+\begin{theorem}[Separated-support moment inequality and equality cases]\label{thm:separated-moment}
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item\label{it:one-law-moment} Let $X$ be a nonconstant centered real random
+variable with finite third absolute moment whose support $\supp(X)$ satisfies
+$|x-y|\ge h>0$ for all distinct $x,y\in\supp(X)$. Set
+\[
+ v=\E X^2,\qquad
+ \kappa=\E X^3,\qquad
+ M_+=\E(X_+)^3,\qquad
+ M_-=\E(X_-)^3,\qquad
+ \rho=\E|X|^3=M_++M_-,
+\]
+where $X_+=\max(X,0)$ and $X_-=\max(-X,0)$. Then
+\begin{equation}\label{eq:geometric-gap-bound}
+ hv\le\bigl(\sqrt{M_+}+\sqrt{M_-}\bigr)^2=\rho+2\sqrt{M_+M_-},
+\end{equation}
+and for every $\lambda>0$ and $\nu\in\R$, setting $d=\sqrt{\lambda^2+\nu^2}$,
+\begin{equation}\label{eq:moment-sos}
+ (\lambda+d)\rho-\lambda hv-\nu\kappa
+ =\lambda\Bigl(\bigl(\sqrt{M_+}+\sqrt{M_-}\bigr)^2-hv\Bigr)
+ +\Bigl(\sqrt{d-\nu}\sqrt{M_+}-\sqrt{d+\nu}\sqrt{M_-}\Bigr)^2\ge0.
+\end{equation}
+Equality holds in \eqref{eq:moment-sos} if and only if $X$ is supported on
+two points $\{-a,b\}$ with $a,b>0$, $a+b=h$, and upper atom probability
+\begin{equation}\label{eq:equality-prob}
+ p=\Pp(X=b)=\frac{a}{h}=\frac12\left(1-\frac{\nu}{\lambda+d}\right).
+\end{equation}
+
+\item\label{it:array-moment} Let $(X_i)_{i\in I}$ be a finite or countable
+collection of independent centered real random variables with
+$0<V=\sum_{i\in I}\E X_i^2<\infty$ and $R=\sum_{i\in I}\E|X_i|^3<\infty$, and
+suppose that for every nonconstant $X_i$ the points of $\supp(X_i)$ are
+separated by at least the same $h>0$. Set $K_3=\sum_{i\in I}\E X_i^3$. Then
+for every $\lambda>0$ and $\nu\in\R$ with $d=\sqrt{\lambda^2+\nu^2}$,
+\begin{equation}\label{eq:array-moment-ineq}
+ (\lambda+d)R-\lambda hV-\nu K_3\ge0,
+\end{equation}
+with equality if and only if $(X_i)_{i\in I}$ consists of finitely many
+identically distributed two-point random variables of support span $h$ and
+upper atom probability \eqref{eq:equality-prob}, together with deterministic
+zero variables.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\ref{it:one-law-moment} Because $X$ is centered and nonconstant,
+$m:=\E X_+=\E X_->0$. Define positive random variables $B$ and $A$ with
+distributions
+\[
+ \Pp(B\in E)=\frac{1}{m}\E\bigl[X_+\ind_{\{X\in E\cap(0,\infty)\}}\bigr],\qquad
+ \Pp(A\in E)=\frac{1}{m}\E\bigl[X_-\ind_{\{-X\in E\cap(0,\infty)\}}\bigr].
+\]
+Then $v=\E X_+^2+\E X_-^2=m(\E B+\E A)$, $M_+=m\,\E B^2$, and
+$M_-=m\,\E A^2$. For every $b\in\supp(B)\subset\supp(X)\cap(0,\infty)$ and
+$a\in\supp(A)\subset(-\supp(X))\cap(0,\infty)$, the points $b>0$ and $-a<0$
+are distinct elements of $\supp(X)$, so the separation hypothesis gives
+$a+b\ge h$. Hence $\E A+\E B\ge h$, and the Cauchy--Schwarz inequality
+$\E B\le\sqrt{\E B^2}$, $\E A\le\sqrt{\E A^2}$ yields
+\[
+ hv\le m(\E A+\E B)^2
+ \le m\Bigl(\sqrt{\E A^2}+\sqrt{\E B^2}\Bigr)^2
+ =\bigl(\sqrt{M_-}+\sqrt{M_+}\bigr)^2,
+\]
+which is \eqref{eq:geometric-gap-bound}. Expanding the two terms on the
+right-hand side of \eqref{eq:moment-sos} and using $\rho=M_++M_-$,
+$\kappa=M_+-M_-$, and $\sqrt{(d-\nu)(d+\nu)}=\lambda$ gives the identity
+\eqref{eq:moment-sos}.
+
+Both terms on the right-hand side of \eqref{eq:moment-sos} are nonnegative.
+The first term vanishes if and only if $\E A+\E B=h$, $\Var(A)=0$, and
+$\Var(B)=0$, which means that $A=a>0$ and $B=b>0$ are deterministic constants
+with $a+b=h$. In that case $\supp(X)\setminus\{0\}=\{-a,b\}$; since $0<a,b<h$,
+the point $0$ has distance $\min(a,b)<h$ to $\{-a,b\}$ and therefore cannot
+belong to $\supp(X)$ under the hypothesis that all points of $\supp(X)$ are
+separated by at least $h$. Thus $\supp(X)=\{-a,b\}$, and $\E X=0$ forces
+$p=\Pp(X=b)=a/h$ and $q=\Pp(X=-a)=b/h$, with $M_+=p b^3=h^3pq^3$ and
+$M_-=q a^3=h^3p^3q$. The second term on the right-hand side of
+\eqref{eq:moment-sos} vanishes if and only if
+\[
+ \frac{q}{p}=\frac{b}{a}=\sqrt{\frac{M_+}{M_-}}
+ =\sqrt{\frac{d+\nu}{d-\nu}}=\frac{d+\nu}{\lambda},
+\]
+which is equivalent to $q-p=(d+\nu-\lambda)/(d+\nu+\lambda)=\nu/(\lambda+d)$,
+giving \eqref{eq:equality-prob}.
+
+\ref{it:array-moment} Summing \eqref{eq:moment-sos} over all nonconstant
+summands $X_i$ (while zero summands contribute $0$ to $R$, $V$, and $K_3$)
+gives \eqref{eq:array-moment-ineq}. Equality holds if and only if every
+nonconstant summand achieves equality in \eqref{eq:moment-sos} with the same
+parameters $(h,\lambda,\nu)$, and hence has the same two-point distribution
+of span $h$ and upper atom probability \eqref{eq:equality-prob}. Since each
+such nonconstant summand has variance $h^2pq>0$ and $V=\sum_{i\in I}\E X_i^2<\infty$,
+only finitely many summands can be nonconstant.
+\end{proof}
+
+\begin{remark}[Classical specializations]\label{rem:moment-specializations}
+Setting $\lambda=3$ and $\nu=\pm1$ in Theorem~\ref{thm:separated-moment} gives
+$d=\sqrt{10}$, $\lambda+d=3+\sqrt{10}$, and upper atom probability
+$p=\frac12\bigl(1\mp 1/(3+\sqrt{10})\bigr)\in\{\pe,1-\pe\}$, recovering
+Esseen's inequality \eqref{eq:esseen-moment-ineq} (which governs the leading
+Edgeworth--Euler--Maclaurin term for half-line probabilities $\Pp(S\le x)$).
+Setting $\lambda=1$ and $\nu=0$ gives $d=1$, $\lambda+d=2$, and $hv\le2\rho$,
+with equality uniquely at symmetric two-point laws ($p=1/2$); this is the
+moment inequality governing the asymptotic Berry--Esseen constant
+$\sqrt{2/\pi}$ for interval probabilities $\Pp(a<S\le b)$ established by
+\citet[Theorem~2.1 and Corollary~2.3]{DinevMattner2013}. Note also that the
+assumption in Theorem~\ref{thm:separated-moment}\ref{it:one-law-moment} that
+\emph{all} support points of $X$ are separated by at least $h$ (and not
+merely that opposite-signed support points satisfy $a+b\ge h$) is necessary
+for the two-point equality conclusion: if an atom at $0$ with probability
+$r\in(0,1)$ is permitted at distance less than $h$ from $\{-a,b\}$, then the
+centered three-point distribution assigning probabilities $(1-r)b/h$ to $-a$,
+$r$ to $0$, and $(1-r)a/h$ to $b$ (where $a,b>0$, $a+b=h$, and
+$b/a=(d+\nu)/\lambda$) also makes the right-hand side of
+\eqref{eq:moment-sos} vanish.
+\end{remark}
+
+\subsection{An endogenous characteristic-function criterion}
+
+Theorem~\ref{thm:separated-moment} assumes a common lower bound $h>0$ on the
+support spacings of the summands. Remarkably, the moments of an arbitrary
+independent array determine a canonical scale $\widehat h$ and a single
+characteristic-function value whose modulus equals $1$ if and only if the
+array is a finite i.i.d.\ two-point core with zero padding---without any a
+priori discreteness, lattice, or support-separation assumption.
+
+\begin{theorem}[Characteristic-function criterion and moment capacity bound]\label{thm:fourier-criterion}
+Let $(X_i)_{i\in I}$ be a finite or countable collection of independent
+centered real random variables with $0<V=\sum_{i\in I}\E X_i^2<\infty$ and
+$R=\sum_{i\in I}\E|X_i|^3<\infty$, and let $S=\sum_{i\in I}X_i$ (converging
+in $L^2$ and almost surely). Set
+\begin{equation}\label{eq:moment-aggregates}
+\begin{aligned}
+ A&=\sum_{i\in I}\E(X_{i,+})^3,&
+ B&=\sum_{i\in I}\E(X_{i,-})^3,\\
+ K_3&=A-B=\sum_{i\in I}\E X_i^3,\qquad&
+ D&=2\sqrt{AB}=\sqrt{R^2-K_3^2}>0,
+\end{aligned}
+\end{equation}
+and define the moment-determined span, skewness, effective active count, and
+characteristic-function deficit by
+\begin{equation}\label{eq:endogenous-quantities}
+\begin{aligned}
+ \widehat h&=\frac{R+D}{V},&
+ \widehat s&=\frac{K_3}{R+D}\in(-1,1),\\
+ \widehat m&=\frac{2V^3}{D(R+D)},\qquad&
+ \mathcal J&=1-\left|\E\exp\!\left(\frac{2\pi\ii S}{\widehat h}\right)\right|^2\ge0.
+\end{aligned}
+\end{equation}
+Then:
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item\label{it:mhat-bound} If the index set $I=\{1,\ldots,n\}$ is finite, then
+\begin{equation}\label{eq:mhat-le-n}
+ 0<\widehat m\le n,
+\end{equation}
+with equality $\widehat m=n$ if and only if all $n$ summands $X_1,\ldots,X_n$
+are identically distributed nondegenerate two-point random variables.
+
+\item\label{it:j-zero} For any finite or countable index set $I$,
+\begin{equation}\label{eq:j-zero-equiv}
+ \mathcal J=0
+ \quad\Longleftrightarrow\quad
+ \begin{aligned}[t]
+ &(X_i)_{i\in I}\text{ consists of finitely many i.i.d.}\\
+ &\text{nondegenerate two-point summands and zeros.}
+ \end{aligned}
+\end{equation}
+When $\mathcal J=0$, the number of nondegenerate summands equals
+$\widehat m\in\N$, their common support diameter is $\widehat h$, and their
+common upper atom probability is $p=(1-\widehat s)/2$.
+
+\item\label{it:j-stability} Fix a finite horizon $n\ge1$ and $L_0<\infty$. If
+$(X_1^{(k)},\ldots,X_n^{(k)})$ is a sequence of $n$-summand independent
+centered arrays with $V^{(k)}=1$, $R^{(k)}\le L_0$, and
+$\mathcal J^{(k)}\to0$ as $k\to\infty$, then every subsequence has a further
+subsequence converging coordinatewise in $W_3$ to an array consisting of
+$m\in\{1,\ldots,n\}$ identically distributed nondegenerate two-point summands
+and $n-m$ zeros.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+First note that since $V>0$ and $\E X_i=0$, at least one $X_i$ is nonconstant
+and takes both positive and negative values with positive probability, so
+$A>0$, $B>0$, and $D=2\sqrt{AB}>0$.
+
+\ref{it:mhat-bound} For a single nonconstant centered summand $X_i$, write
+$v_i=\E X_i^2$, $A_i=\E(X_{i,+})^3$, $B_i=\E(X_{i,-})^3$,
+$\rho_i=A_i+B_i$, $\delta_i=2\sqrt{A_iB_i}$, and $m_i=\E X_{i,+}=\E X_{i,-}>0$.
+By H\"older's inequality on $\{X_i>0\}$ and $\{X_i<0\}$,
+\[
+ m_i=\E\bigl[X_{i,+}\ind_{\{X_i>0\}}\bigr]\le A_i^{1/3}\Pp(X_i>0)^{2/3},\qquad
+ m_i=\E\bigl[X_{i,-}\ind_{\{X_i<0\}}\bigr]\le B_i^{1/3}\Pp(X_i<0)^{2/3}.
+\]
+Since $\Pp(X_i>0)+\Pp(X_i<0)\le1$, summing the $3/2$-powers gives
+\[
+ m_i^{3/2}\left(\frac{1}{\sqrt{A_i}}+\frac{1}{\sqrt{B_i}}\right)\le 1,
+ \qquad\text{or}\qquad
+ m_i\le\left(\frac{\sqrt{A_iB_i}}{\sqrt{A_i}+\sqrt{B_i}}\right)^{2/3}.
+\]
+Meanwhile, Cauchy--Schwarz gives
+$v_i=\E X_{i,+}^2+\E X_{i,-}^2\le\sqrt{m_i}\bigl(\sqrt{A_i}+\sqrt{B_i}\bigr)$.
+Raising to the power $3/2$ and substituting the bound on $m_i$ yields
+\begin{equation}\label{eq:vi-three-halves}
+ v_i^{3/2}\le m_i^{3/4}\bigl(\sqrt{A_i}+\sqrt{B_i}\bigr)^{3/2}
+ \le\sqrt{\sqrt{A_iB_i}}\,\bigl(\sqrt{A_i}+\sqrt{B_i}\bigr)
+ =\sqrt{\frac{\delta_i(\rho_i+\delta_i)}{2}},
+\end{equation}
+which also holds trivially when $X_i=0$. Equality holds in
+\eqref{eq:vi-three-halves} for $v_i>0$ if and only if $\Pp(X_i=0)=0$ and
+$X_{i,+}$, $X_{i,-}$ are constant on $\{X_i>0\}$ and $\{X_i<0\}$, meaning
+that $X_i$ is a two-point random variable. By Cauchy--Schwarz and Minkowski's
+inequality $\sum_{i=1}^n\delta_i=2\sum_{i=1}^n\sqrt{A_iB_i}\le 2\sqrt{AB}=D$,
+summing \eqref{eq:vi-three-halves} over $i=1,\ldots,n$ gives
+\[
+ \frac{V^{3/2}}{\sqrt n}
+ \le\sum_{i=1}^n v_i^{3/2}
+ \le\sqrt{\frac12\left(\sum_{i=1}^n\delta_i\right)\left(R+\sum_{i=1}^n\delta_i\right)}
+ \le\sqrt{\frac{D(R+D)}{2}},
+\]
+which rearranges to $\widehat m=2V^3/\bigl(D(R+D)\bigr)\le n$. Equality
+$\widehat m=n$ requires $v_1=\cdots=v_n=V/n>0$, each $X_i$ two-point, and
+$(A_i,B_i)$ proportional across all $i$, which forces all $n$ two-point
+summands to be identically distributed.
+
+\ref{it:j-zero} If $(X_i)_{i\in I}$ consists of $m\ge1$ identically
+distributed two-point summands $g(B_i-p)$ ($g>0$, $0<p<1$, $q=1-p$) and zeros,
+then $V=mg^2pq$, $A=mg^3pq^3$, $B=mg^3p^3q$, $R=mg^3pq(p^2+q^2)$,
+$K_3=mg^3pq(q-p)$, and $D=2mg^3p^2q^2$, so $R+D=mg^3pq(p+q)^2=mg^3pq$. Hence
+$\widehat h=(R+D)/V=g$, $\widehat s=q-p$, $\widehat m=m$, and since every
+summand is supported on a coset of $g\Z$,
+$\bigl|\E e^{2\pi\ii S/g}\bigr|=\prod_{i\in I}\bigl|\E e^{2\pi\ii X_i/g}\bigr|=1$,
+so $\mathcal J=0$.
+
+Conversely, suppose $\mathcal J=0$. By independence,
+\[
+ 1=\left|\E\exp\!\left(\frac{2\pi\ii S}{\widehat h}\right)\right|^2
+ =\prod_{i\in I}\left|\E\exp\!\left(\frac{2\pi\ii X_i}{\widehat h}\right)\right|^2,
+\]
+so $\bigl|\E\exp(2\pi\ii X_i/\widehat h)\bigr|=1$ for every $i\in I$. Thus
+for each $i\in I$, $\exp(2\pi\ii X_i/\widehat h)$ is almost surely constant,
+so $\supp(X_i)$ is contained in a single coset of $\widehat h\Z$. In
+particular, for every nonconstant $X_i$, the points of $\supp(X_i)$ are
+separated by at least $\widehat h$. Applying
+Theorem~\ref{thm:separated-moment}\ref{it:array-moment} with span
+$h=\widehat h$, $\lambda=1$, and $\nu=K_3/D$, we have
+$d=\sqrt{1+K_3^2/D^2}=R/D$ and $\lambda+d=(R+D)/D$, so the left-hand side of
+\eqref{eq:array-moment-ineq} equals
+\[
+ \frac{R+D}{D}R-\frac{R+D}{V}V-\frac{K_3}{D}K_3
+ =\frac{R(R+D)-K_3^2}{D}-(R+D)
+ =\frac{R^2-K_3^2+RD}{D}-(R+D)=0,
+\]
+because $R^2-K_3^2=D^2$. Therefore equality holds in
+\eqref{eq:array-moment-ineq}, and Theorem~\ref{thm:separated-moment}\ref{it:array-moment}
+implies that $(X_i)_{i\in I}$ consists of finitely many identically
+distributed two-point summands of span $\widehat h$ and upper probability
+$p=\frac12(1-\nu/(\lambda+d))=(1-\widehat s)/2$, together with zeros.
+
+\ref{it:j-stability} Let $(X_1^{(k)},\ldots,X_n^{(k)})$ have $V^{(k)}=1$,
+$R^{(k)}\le L_0$, and $\mathcal J^{(k)}\to0$. Because
+$\sum_{i=1}^n\E|X_i^{(k)}|^3\le L_0$, the sequence of $n$-tuples is tight in
+$\R^n$ with uniformly integrable second moments. Passing to a subsequence, we
+may assume that $X_i^{(k)}\Rightarrow X_i^{(\infty)}$ weakly with
+$\E X_i^{(\infty)}=0$ and $\sum_{i=1}^n\E(X_i^{(\infty)})^2=1$, while
+$A_i^{(k)}=\E(X_{i,+}^{(k)})^3\to a_i$ and
+$B_i^{(k)}=\E(X_{i,-}^{(k)})^3\to b_i$. By Fatou's lemma for weak convergence,
+$A_i':=\E(X_{i,+}^{(\infty)})^3\le a_i$ and
+$B_i':=\E(X_{i,-}^{(\infty)})^3\le b_i$. Let $A'=\sum_{i=1}^n A_i'>0$,
+$B'=\sum_{i=1}^n B_i'>0$, $a=\sum_{i=1}^n a_i\ge A'$, and
+$b=\sum_{i=1}^n b_i\ge B'$. Then
+\[
+ \widehat h^{(k)}=\bigl(\sqrt{\textstyle\sum_i A_i^{(k)}}+\sqrt{\textstyle\sum_i B_i^{(k)}}\bigr)^2
+ \longrightarrow H:=\bigl(\sqrt a+\sqrt b\bigr)^2\in\bigl[n^{-1/2},2L_0\bigr].
+\]
+Since $|\E e^{\ii t X_i^{(k)}}-\E e^{\ii u X_i^{(k)}}|\le|t-u|\,\E|X_i^{(k)}|\le|t-u|$,
+weak convergence $X_i^{(k)}\Rightarrow X_i^{(\infty)}$ and
+$\widehat h^{(k)}\to H>0$ imply
+$|\E e^{2\pi\ii S^{(\infty)}/H}|^2=\lim_{k\to\infty}(1-\mathcal J^{(k)})=1$.
+Thus each nonconstant limiting summand $X_i^{(\infty)}$ is supported on a
+coset of $H\Z$ and has support spacing at least $H$. Summing
+\eqref{eq:geometric-gap-bound} of Theorem~\ref{thm:separated-moment} over the
+nonconstant limiting summands (with total variance $1$) and using Minkowski's
+inequality gives
+\[
+ H=H\sum_{i=1}^n\E(X_i^{(\infty)})^2
+ \le\sum_{i=1}^n\Bigl(\sqrt{A_i'}+\sqrt{B_i'}\Bigr)^2
+ \le\Bigl(\sqrt{A'}+\sqrt{B'}\Bigr)^2
+ \le\Bigl(\sqrt a+\sqrt b\Bigr)^2=H.
+\]
+Hence every inequality in this chain is an equality: $A'=a$, $B'=b$, and so
+$A_i'=a_i$ and $B_i'=b_i$ for each $i=1,\ldots,n$. Thus
+$\E|X_i^{(k)}|^3\to\E|X_i^{(\infty)}|^3$ alongside weak convergence, which
+implies $W_3(X_i^{(k)},X_i^{(\infty)})\to0$, and $\mathcal J^{(\infty)}=0$
+together with part~\ref{it:j-zero} shows that $(X_1^{(\infty)},\ldots,X_n^{(\infty)})$
+is a padded i.i.d.\ two-point array.
+\end{proof}
+
+\begin{remark}[Diagnostic equality criteria versus objective monotonicity]\label{rem:j-not-monotone}
+Theorem~\ref{thm:fourier-criterion} characterizes the exact zero set
+$\mathcal J=0$ across the entire domain of independent arrays, without any
+prior restriction to discrete or common-diameter distributions. However,
+$\mathcal J=0$ is a structural equality criterion rather than a monotonicity
+statement for the Berry--Esseen ratio $\mathcal C$: neither
+Theorem~\ref{thm:separated-moment} nor Theorem~\ref{thm:fourier-criterion}
+proves that a global maximizer of $\mathcal C$ must satisfy $\mathcal J=0$,
+or that decreasing $\mathcal J$ increases $\mathcal C$. As we discuss in
+Section~\ref{sec:open}, proving the structural conjecture by this route
+requires supplying the missing global implication---namely, showing that every
+$n$-summand array with $\mathcal J>0$ admits an admissible replacement with
+strictly larger Berry--Esseen ratio $\mathcal C$.
+\end{remark}
+
+\subsection{Comparison with zero-bias Wasserstein transport}\label{subsec:transport-comparison}
+
+A third global characterization of padded i.i.d.\ two-point arrays comes from
+Stein's method and the zero-bias transformation \citep{GoldsteinReinert1997}.
+For a centered random variable $X$ with variance $v=\E X^2>0$, its
+\emph{zero-biased distribution} $X^*$ is characterized by the identity
+$\E[Xf(X)]=v\,\E f'(X^*)$ for all absolutely continuous functions $f:\R\to\R$
+with bounded derivative. For a finite independent array $(X_1,\ldots,X_n)$
+with sum $S$, total variance $V>0$, and third-moment sum $R<\infty$, the
+$L^1$-Wasserstein distance $W_1(S,S^*)=\int_\R|\Pp(S\le x)-\Pp(S^*\le x)|\,dx$
+satisfies the normalized transport inequality
+\begin{equation}\label{eq:transport-ineq}
+ \mathcal B(X_1,\ldots,X_n):=\frac{2VW_1(S,S^*)}{R}\le 1
+\end{equation}
+\citep{Goldstein2010,Tyurin2009}. In the companion paper
+\citet[Theorem~1.1]{BellTransport2026}, it is proved via Choquet's theorem on
+fixed-variance moment sets and a conditional-variance identity that
+\begin{equation}\label{eq:transport-rigidity}
+ \mathcal B(X_1,\ldots,X_n)=1
+ \quad\Longleftrightarrow\quad
+ \begin{aligned}[t]
+ &(X_1,\ldots,X_n)\text{ consists of i.i.d.}\\
+ &\text{nondegenerate two-point summands and zeros.}
+ \end{aligned}
+\end{equation}
+Furthermore, let $S_1,S_2,\ldots$ be independent copies of the block sum
+$S=X_1+\cdots+X_n$, and define the $m$-fold repeated-block Berry--Esseen
+ratio (which is distinct from the unrestricted $m$-summand supremum $C_m$) by
+\begin{equation}\label{eq:repeated-block-def}
+\begin{aligned}
+ \mathcal C_{\mathrm{rep},m}(X_1,\ldots,X_n)
+ &:=\frac{(mV)^{3/2}\Delta(S_1+\cdots+S_m)}{mR}\\
+ &=\frac{\sqrt m\,V^{3/2}}{R}\sup_{x\in\R}\left|\Pp\left\{\frac{S_1+\cdots+S_m}{\sqrt{mV}}\le x\right\}-\Phi(x)\right|.
+\end{aligned}
+\end{equation}
+Combining \eqref{eq:transport-rigidity} with the sharp lattice transport
+inequality
+\[
+ |\E X^3|+3h\Var(X)\le(3+\sqrt{10})\,2\Var(X)W_1(X,X^*)
+\]
+for variables supported on a coset of $h\Z$ proves that for any fixed finite
+block $(X_1,\ldots,X_n)$,
+\begin{equation}\label{eq:repeated-block-bound}
+ \lim_{m\to\infty}\mathcal C_{\mathrm{rep},m}(X_1,\ldots,X_n)
+ \le\ce\,\mathcal B(X_1,\ldots,X_n)\le\ce,
+\end{equation}
+with equality in \eqref{eq:repeated-block-bound} if and only if all
+nonconstant summands in the block share a single Esseen two-point law with
+probability $\pe$ or $1-\pe$ \citep[Theorem~1.2]{BellTransport2026}. Along any
+sequence of independent arrays with $L_n\to0$ and $\mathcal C_n\to\ce$, one
+likewise has $\mathcal B_n\to1$ \citep[Theorem~1.1]{BellSmallStructure2026}.
+
+One might ask whether the asymptotic bound \eqref{eq:repeated-block-bound}
+holds pointwise for finite arrays---that is, whether
+$\mathcal C(X_1,\ldots,X_n)\le\ce\,\mathcal B(X_1,\ldots,X_n)$ holds for all
+independent arrays. The following explicit one-summand family shows that no
+constant $K<\infty$ can satisfy $\mathcal C(X)\le K\,\mathcal B(X)$ for all
+centered distributions $X$.
+
+\begin{proposition}[Failure of pointwise domination by zero-bias transport]\label{prop:transport-counterexample}
+For each $a>0$, let $X_a$ be the centered real random variable that agrees
+with $Z\sim N(0,1)$ on $\{|x|>a\}$ and replaces the restriction of $Z$ to
+$[-a,a]$ by three atoms at $\{-a,0,a\}$ having the same total mass, zero
+mean, and second moment as $Z\ind_{\{|Z|\le a\}}$. Then $\E X_a=0$,
+$\Var(X_a)=1$, and as $a\downarrow0$,
+\begin{equation}\label{eq:xa-asymptotics}
+ \mathcal C(X_a)=\frac{a}{6}+O(a^3),\qquad
+ \mathcal B(X_a)=\frac{5a^2}{18}+O(a^4),\qquad
+ \frac{\mathcal C(X_a)}{\mathcal B(X_a)}=\frac{3}{5a}+O(a)\longrightarrow\infty.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $m_a=\int_{-a}^a\phi(u)\,du=2a\phz+O(a^3)$ and
+$v_a=\int_{-a}^a u^2\phi(u)\,du=\frac23 a^3\phz+O(a^5)$. To match the mass,
+zero mean, and second moment of $Z\ind_{\{|Z|\le a\}}$ on $\{-a,0,a\}$, $X_a$
+places mass $w_a=v_a/(2a^2)=\frac13 a\phz+O(a^3)$ at $-a$ and at $+a$, and
+mass $m_a-2w_a=\frac43 a\phz+O(a^3)$ at $0$. Then $\Var(X_a)=\Var(Z)=1$, and
+\[
+ R_a=\E|X_a|^3=\E|Z|^3+2a^3 w_a-\int_{-a}^a|u|^3\phi(u)\,du
+ =4\phz+O(a^4).
+\]
+Outside $(-a,a)$, the distribution function $F_{X_a}(x)$ coincides with
+$\Phi(x)$. On $(-a,0)$ it is constant and equal to $\Phi(-a)+w_a$, while on
+$[0,a)$ it equals $\Phi(a)-w_a$. Thus the maximum of $|F_{X_a}(x)-\Phi(x)|$ is
+attained as $x\uparrow0$ (and by symmetry at $x=0$):
+\[
+ \Delta(X_a)=\Phi(0)-\bigl(\Phi(-a)+w_a\bigr)
+ =\frac12 m_a-w_a=\frac23 a\phz+O(a^3),
+\]
+giving $\mathcal C(X_a)=\Delta(X_a)/R_a=a/6+O(a^3)$.
+
+On the other hand, because $\Var(X_a)=1$, the zero-biased distribution
+$X_a^*$ has Lebesgue density $f_{X_a^*}(x)=\E[X_a\ind_{\{X_a>x\}}]$. For
+$|x|>a$, $\E[X_a\ind_{\{|X_a|\le a\}}]=0$ implies
+$f_{X_a^*}(x)=\int_x^\infty u\phi(u)\,du=\phi(x)$. For $x\in(-a,0)\cup(0,a)$,
+\[
+ f_{X_a^*}(x)=\int_a^\infty u\phi(u)\,du+a w_a=\phi(a)+\frac{v_a}{2a}.
+\]
+Consequently, $F_{X_a^*}(x)=\Phi(x)$ for $|x|\ge a$, and on $[-a,a]$ the
+distribution function $F_{X_a^*}$ is affine with slope
+$\phi(a)+v_a/(2a)=\phz+O(a^2)$, interpolating from $\Phi(-a)$ at $-a$ to
+$\Phi(a)$ at $a$. Hence
+\begin{align*}
+ W_1(X_a,X_a^*)&=\int_{-a}^a\bigl|F_{X_a}(x)-F_{X_a^*}(x)\bigr|\,dx\\
+ &=2\int_{-a}^0\bigl|w_a-(x+a)\bigl(\phz+O(a^2)\bigr)\bigr|\,dx\\
+ &=2\phz\int_0^a\left|\frac{a}{3}-u\right|\,du+O(a^4)
+ =2\phz\left(\frac{a^2}{18}+\frac{4a^2}{18}\right)+O(a^4)
+ =\frac59 a^2\phz+O(a^4).
+\end{align*}
+Dividing $2W_1(X_a,X_a^*)$ by $R_a=4\phz+O(a^4)$ gives
+$\mathcal B(X_a)=5a^2/18+O(a^4)$ and completes the proof of
+\eqref{eq:xa-asymptotics}.
+\end{proof}
+
+\section{Known value bounds and partial classifications of maximizers}\label{sec:known}
+
+\subsection{Attainment of $C_n$ and equivalence with positive-variance arrays}\label{subsec:attainment}
+
+Before reviewing the known upper bounds and structural classifications, we
+record the basic existence theorem for fixed-$n$ maximizers (see also
+\citealp[Lemma~2.1]{BellSmallStructure2026}) and verify that permitting
+deterministic zero summands does not enlarge the $n$-summand supremum $C_n$.
+
+\begin{proposition}[Attainment of $C_n$ and positive-variance approximation]\label{prop:cn-attainment}
+For every integer $n\ge1$:
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item\label{it:cn-attained} The supremum $C_n=\sup\mathcal C(X_1,\ldots,X_n)$
+over $n$-tuples of independent centered real random variables with $V>0$ and
+$R<\infty$ (permitting zero summands) is attained, and every maximizing
+sequence normalized to $V=1$ has a subsequence converging coordinatewise in
+$W_3$ to a maximizing array.
+\item\label{it:cn-pos-var} The supremum of $\mathcal C(X_1,\ldots,X_n)$ over
+$n$-tuples of independent centered real random variables satisfying
+$\Var(X_i)>0$ and $\E|X_i|^3<\infty$ for every $i\in\{1,\ldots,n\}$ equals
+$C_n$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\ref{it:cn-attained} Let $(X_1^{(k)},\ldots,X_n^{(k)})$ be a maximizing
+sequence for $C_n$. By scale invariance we may assume
+$V^{(k)}=\sum_{i=1}^n\E(X_i^{(k)})^2=1$. Since $C_n\ge C_1>0$ and
+$\Delta(S^{(k)})\le1$, for all large $k$ we have
+\[
+ n^{-1/2}\le R^{(k)}=\frac{\Delta(S^{(k)})}{\mathcal C(X_1^{(k)},\ldots,X_n^{(k)})}
+ \le\frac{2}{C_1}<\infty.
+\]
+For each coordinate $i\in\{1,\ldots,n\}$ and any $M>0$, Markov's inequality
+gives
+\[
+ \E\bigl[(X_i^{(k)})^2\ind_{\{|X_i^{(k)}|>M\}}\bigr]
+ \le\frac{R^{(k)}}{M}\le\frac{2}{MC_1}.
+\]
+Hence the laws of $X_i^{(k)}$ are tight with uniformly integrable first and
+second moments. Passing to a subsequence, we may assume that
+$X_i^{(k)}\Rightarrow X_i^{(\infty)}$ weakly as $k\to\infty$ for each
+$i=1,\ldots,n$, with $\E X_i^{(\infty)}=0$,
+$V^{(\infty)}=\sum_{i=1}^n\E(X_i^{(\infty)})^2=1$, and, by Fatou's lemma,
+\[
+ \E|X_i^{(\infty)}|^3\le\liminf_{k\to\infty}\E|X_i^{(k)}|^3\qquad(1\le i\le n).
+\]
+By independence, the sums $S^{(k)}=\sum_{i=1}^n X_i^{(k)}$ converge weakly and
+in $W_1$ to $S^{(\infty)}=\sum_{i=1}^n X_i^{(\infty)}$. Because the normal
+distribution function $\Phi$ is continuous with $\|\Phi'\|_\infty=\phz$, the
+estimate $\bigl|\Delta(S^{(k)})-\Delta(S^{(\infty)})\bigr|\le\sqrt{2\phz W_1(S^{(k)},S^{(\infty)})}$
+established in the proof of Theorem~\ref{thm:fiber-regularity}\ref{it:ratio-continuity}
+(which includes both closed and strict traces at any atoms of $S^{(\infty)}$)
+implies that $\Delta(S^{(k)})\to\Delta(S^{(\infty)})=C_n\lim_{k\to\infty}R^{(k)}>0$.
+Consequently,
+\[
+ C_n=\frac{\Delta(S^{(\infty)})}{\lim_{k\to\infty}R^{(k)}}
+ \le\frac{\Delta(S^{(\infty)})}{\sum_{i=1}^n\E|X_i^{(\infty)}|^3}\le C_n.
+\]
+Both inequalities must be equalities, so $(X_1^{(\infty)},\ldots,X_n^{(\infty)})$
+attains $C_n$ and $\lim_{k\to\infty}\E|X_i^{(k)}|^3=\E|X_i^{(\infty)}|^3$ for
+every $i=1,\ldots,n$, which together with weak convergence gives
+$W_3(X_i^{(k)},X_i^{(\infty)})\to0$.
+
+\ref{it:cn-pos-var} Let $(X_1,\ldots,X_n)$ be an array attaining $C_n$ with
+$V=1$. For each $\eps>0$, define $X_i^{(\eps)}=X_i$ if $\Var(X_i)>0$ and let
+$X_i^{(\eps)}\sim N(0,\eps)$ (independent of all other coordinates) if
+$X_i=0$. Then $\Var(X_i^{(\eps)})>0$ for all $i=1,\ldots,n$, while as
+$\eps\downarrow0$ we have $V^{(\eps)}\to 1$,
+$R^{(\eps)}=R+O(\eps^{3/2})\to R$, and
+$\Delta(S^{(\eps)})\to\Delta(S)$, so
+$\mathcal C(X_1^{(\eps)},\ldots,X_n^{(\eps)})\to C_n$.
+\end{proof}
+
+Allowing zero summands is therefore the natural closed compactification of the
+fixed-$n$ domain: as \citet[Theorem~1.2]{BellBernoulli2026} shows for $n=2$
+two-point summands, the supremum over strictly positive-variance two-point
+arrays equals $C_1$ because one summand's variance can degenerate to $0$, and
+that supremum is attained only when the zero summand is included in the
+domain.
+
+\subsection{Quantitative upper bounds on $C_n$ and $\Cind$}\label{subsec:value-bounds}
+
+We next summarize the quantitative upper bounds on $C_n$ and $\Cind$
+established in the literature and in Manuscripts~1--3
+\citep{BellIndependent2026,BellFinite2026,BellSmall2026}:
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{One summand ($n=1$):} \citet[Theorem~1]{BentkusKirsa1989} proved
+that for a single centered random variable $X_1$,
+\begin{equation}\label{eq:c1-bound}
+ C_1=B_1=\max_{0<p<1}\frac{\sqrt{p(1-p)}}{p^2+(1-p)^2}
+ \left\{\Phi\!\left(\sqrt{\frac{p}{1-p}}\right)-p\right\}
+ =0.370351523474378920\ldots<\ce,
+\end{equation}
+attained up to scale and sign reflection only by the two-point distribution at
+$p_1=0.390958631281332815\ldots$.
+
+\item \emph{Two arbitrary summands ($n=2$):} \citet[Theorem~1.1]{BellFinite2026}
+proves that over all pairs of independent centered random variables,
+\begin{equation}\label{eq:c2-bound}
+ C_2<\frac{49}{120}=0.408333\ldots<\ce.
+\end{equation}
+The proof fixes the threshold and individual variances, uses strong quadratic
+moment duality \citep{Winkler1988,BertsimasPopescu2005} to reduce each summand
+to at most three support points, and rules out all combinatorial contact
+configurations above $49/120$ by variational identities and certified interval
+enclosures.
+
+\item \emph{Two-point arrays and variance-concentrated arrays:} For $n$
+identically distributed two-point summands, \citet[Theorem~1]{Schulz2016}
+proved the strict binomial bound $B_n<\ce$. \citet[Theorems~1.2 and~1.3]{BellFinite2026}
+extend the sharp inequality $\Delta(S)\le\ce L$ to two broader classes of
+non-identically distributed two-point arrays:
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item arbitrary numbers $n\ge1$ of independent two-point summands whose
+nondegenerate members share a common support diameter $h>0$;
+\item at most three independent two-point summands ($n\le3$) with arbitrary
+support diameters (with the uniform strict gap $\ce L-\Delta(S)>3/80$ when
+$n\le2$).
+\end{enumerate}
+Combining these bounds with a Stein--Ornstein--Uhlenbeck normal comparison for
+the remaining summands yields $\Delta(S)\le\ce L$ for any finite independent
+array in which two two-point summands carry at least $22/23$ of the total
+variance $V$, or two arbitrary summands carry at least $439/440$ of $V$
+\citep[Corollary~1.4]{BellFinite2026}.
+
+\item \emph{General independent arrays with small Lyapunov ratio:}
+Adapting the large-sample i.i.d.\ method of \citet{HeCheng2026} to
+non-identically distributed summands, \citet[Theorem~1.1]{BellSmall2026}
+proves that for every finite independent array,
+\begin{equation}\label{eq:small-lyapunov-value}
+ L\le\exp\bigl(-\exp(97)\bigr)
+ \quad\Longrightarrow\quad
+ \Delta(S)\le\ce L.
+\end{equation}
+If a counterexample existed below this threshold, maximizing $\Delta/L$ minus
+a smooth localization penalty (bounded using the asymptotic smoothing
+inequality $\Delta\le\ce L+0.2538L^{4/3}$ of \citealp[Corollary~4.18]{Shevtsova2012})
+would produce an attained extremal array with $|X_i|\le 8L\sqrt V$; uniform
+jitter smoothing, quantitative stability in Esseen's moment inequality
+\eqref{eq:esseen-moment-ineq}, and conditional Fourier and clipping
+comparisons against a common-diameter two-point array (bounded by $\ce L$ via
+\citealp[Theorem~1.2(ii)]{BellFinite2026}) then rule out any violation.
+
+\item \emph{Unconditional upper bound across all independent arrays:}
+\citet[Theorem~1.1]{BellIndependent2026} proves that for every $n\ge1$ and
+every independent array,
+\begin{equation}\label{eq:unconditional-upper}
+ \Cind\le U_*<0.44988,
+\end{equation}
+improving upon the bound $0.5583$ of \citet{Shevtsova2013} by combining a
+zero-bias characteristic-function differential inequality, a signed cosine-product
+reference \citep{MattnerShevtsova2019}, isolation of the largest-variance
+summand, and outward-rounded interval subdivision over the moment parameter
+space.
+\end{enumerate}
+
+\subsection{General variational support reductions and compactification}\label{subsec:variational}
+
+What can be proved about maximizing arrays without restricting either the
+support of the summands or the size of the Lyapunov ratio $L$? In
+Manuscript~7 \citep{BellExtremizers2026}, variational perturbations of a
+single summand's distribution---fixing the maximizing threshold $z$ and the
+deleted sum $T_i=\sum_{j\ne i}X_j$---establish two general necessary
+conditions:
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Four-point and three-point support reduction}
+\citep[Theorem~3.2]{BellExtremizers2026}: At any local maximum of $\mathcal C$
+with respect to two-sided probability perturbations of $X_i$ preserving total
+mass $1$ and mean $0$ (while allowing $v_i=\E X_i^2$ and $\rho_i=\E|X_i|^3$
+to vary), the second logarithmic derivative of $\mathcal C$ restricts the
+linear span of the moment vectors $(1,u,u^2,|u|^3)$ on $\supp(X_i)$, proving
+that every summand of a maximizer is supported on at most four points. At a
+global maximum, any four-point summand lies on a flat probability segment
+whose endpoint replaces $X_i$ by a three-point summand with the exact same
+variance $v_i$ and third absolute moment $\rho_i$ (and the same ratio
+$\mathcal C$).
+
+\item \emph{Convolution indecomposability when a spare slot is available}
+\citep[Corollary~3.4]{BellExtremizers2026}: By the third-moment splitting
+identity (Proposition~\ref{prop:splitting}), every nonconstant summand $X_i$
+of an unrestricted-horizon maximizer---or of a fixed-$n$ maximizer that has at
+least one zero summand---is convolution-indecomposable, since splitting a
+decomposable summand into two nonconstant independent centered factors
+preserves the sum $S$ and total variance $V$ while strictly decreasing $R$.
+In particular, if such a maximizer has a three-point summand supported on an
+arithmetic progression $\{x_0,x_0+g,x_0+2g\}$ ($g>0$) with probabilities
+$(m_0,m_1,m_2)$, then $m_1^2<4m_0m_2$ (equivalently, $\Var(X_i)>ab/2$ when
+the centered endpoints are $-a<0<b$), since otherwise its probability
+generating polynomial factors into two nondegenerate two-point laws of
+diameter $g$.
+\end{enumerate}
+
+When studying the universal constant $\Cind=\sup_{n\ge1}C_n$, if $\Cind>\ce$
+then the small-Lyapunov bound \eqref{eq:small-lyapunov-value} forces every
+unit-variance maximizing sequence to satisfy $R^{(k)}>\exp(-\exp(97))$.
+Passing to the limit along variances ordered nonincreasingly produces an
+attained maximizer in a L\'evy--Khintchine compactification
+\citep[Definition~1.1 and Theorem~1.1]{BellExtremizers2026}:
+\begin{equation}\label{eq:compactified-rep}
+\begin{aligned}
+ S&=\sum_{i\ge1}X_i+Y,\qquad
+ \sum_{i\ge1}\Var(X_i)+a+\int_{\R\setminus\{0\}}y^2\,\nu(dy)=1,\\
+ \beta&=\sum_{i\ge1}\E|X_i|^3+\int_{\R\setminus\{0\}}|y|^3\,\nu(dy),
+\end{aligned}
+\end{equation}
+where $(X_i)_{i\ge1}$ are independent centered discrete summands (each
+reducible to at most three support points), $Y$ is an independent centered
+infinitely divisible random variable with Gaussian variance $a\ge0$ and
+L\'evy measure $\nu$, and $\Delta(S)=\Cind\beta$. Notice that in
+\eqref{eq:compactified-rep}, the Gaussian component $a$ contributes $0$ to
+$\beta$ (as a limit of $N\to\infty$ summands of variance $a/N$ whose
+third-moment sum $O(N^{-1/2})$ vanishes), while the jump measure $\nu$
+contributes the limiting rare-summand sum $\int|y|^3\,\nu(dy)$. Even in this
+enlarged compactification, \citet[Theorems~1.1 and~1.2]{BellExtremizers2026}
+prove that every three-point maximizing representation satisfies $a=0$,
+$\nu=0$, and $\operatorname{diam}(\supp X_i)\to0$; if infinitely many $X_i$
+are nonconstant, then $S$ is nonatomic, and under $\beta\le18481/25000$ the
+variances satisfy
+\[
+ \sum_{i\ge1}\Var(X_i)\operatorname{diam}(\supp X_i)^{-\gamma}<\infty
+\]
+for all $0<\gamma<\sqrt5-1$ (and all $0<\gamma<\sqrt{21}-3$ when all but
+finitely many summands are two-point), ruling out two-sided $C^{1,1}$
+regularity of $F_S$ at a maximizing threshold.
+
+\subsection{Proved classifications of maximizers and the binomial phase law}\label{subsec:proved-classifications}
+
+In Manuscripts~5 and~6 \citep{BellBernoulli2026,BellSmallStructure2026}, the
+structural classification question (Question~\ref{q:structure}) is solved
+completely in three regimes, and the asymptotic behavior of the optimal zero
+padding in $P_n=\max_{1\le m\le n}B_m$ is determined:
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Common-diameter two-point arrays at every horizon $n\ge1$}
+\citep[Theorem~1.1]{BellBernoulli2026}: Let $C_n^{\mathrm{com}}$ denote the
+maximum of $\mathcal C(X_1,\ldots,X_n)$ over $n$-summand two-point arrays
+whose nondegenerate members share a common support diameter $h>0$ (permitting
+zero summands). Then for every $n\ge1$,
+\begin{equation}\label{eq:cn-com-theorem}
+ C_n^{\mathrm{com}}=P_n=\max_{1\le m\le n}B_m,
+\end{equation}
+and every common-diameter array attaining $C_n^{\mathrm{com}}$ consists of
+$m\in\{1,\ldots,n\}$ identically distributed nondegenerate two-point summands
+and $n-m$ zero summands. The proof expresses the convolution probabilities as
+affine functions of the elementary symmetric polynomials of the success
+probabilities $(p_1,\ldots,p_m)$ and combines Hoeffding's fiber theorem
+\citep{Hoeffding1956} with certified negative-curvature enclosures along
+constant-mean probability fibers.
+
+\item \emph{Two two-point summands with arbitrary diameters ($n=2$)}
+\citep[Theorem~1.2]{BellBernoulli2026}: Over arrays of at most two independent
+two-point summands with arbitrary support diameters $h_1,h_2>0$, the maximum
+of $\mathcal C(X_1,X_2)$ equals $C_1=B_1\approx0.3703515235$, and every
+attaining array has exactly one nonconstant summand (so $C_2^{\mathrm{bin}}=P_2=B_1$).
+If both summands are required to have strictly positive variance, the supremum
+remains $C_1$ and is not attained.
+
+\item \emph{Strict local improvement under common-diameter replacement}
+\citep[Theorem~1.3]{BellBernoulli2026}: Fix $c_0>0$. There exist constants
+$A_0,\sigma_0,\eta_0,\kappa>0$, depending only on $c_0$, with the following
+property. Let $X_i=g_i(B_i-p_i)$ ($1\le i\le n$) be independent nondegenerate
+two-point summands with $g_i>0$ and $0<p_i<1$, and set
+\[
+ a_i=p_i(1-p_i),\qquad
+ A=\sum_{i=1}^n a_i,\qquad
+ h_0=\frac1A\sum_{i=1}^n a_i g_i,\qquad
+ e_i=\frac{g_i}{h_0}-1,
+\]
+\[
+ \sigma=\left(\sum_{i=1}^n a_i e_i^2\right)^{1/2},\qquad
+ \eta=\max_{1\le i\le n}|e_i|.
+\]
+If $A\ge A_0$, $0<\sigma\le\sigma_0$, $\eta\le\eta_0$, and
+$\mathcal C(X_1,\ldots,X_n)\ge c_0$, then replacing all diameters $g_i$ by
+their variance-weighted mean $h_0$ while keeping $(p_1,\ldots,p_n)$ fixed
+strictly increases the Berry--Esseen ratio:
+\begin{equation}\label{eq:local-diameter-gain}
+ \mathcal C(B_1-p_1,\ldots,B_n-p_n)-\mathcal C(X_1,\ldots,X_n)
+ \ge\kappa\frac{\sigma^2}{\sigma+\eta}>0.
+\end{equation}
+If in addition all $p_i$ lie in a fixed compact subset $J\subset(0,1)$, the
+gain is at least $\kappa_J\sigma$, whereas when rare probabilities $p_i\to0$
+are permitted the rate $\sigma^2/(\sigma+\eta)$ is sharp. (Note that the
+strict positivity hypothesis $0<\sigma$ is essential, since $\sigma=0$ means
+$g_1=\cdots=g_n=h_0$ where the two sides of \eqref{eq:local-diameter-gain}
+are equal.)
+
+\item \emph{Asymptotic lattice structure and exact classification for
+small Lyapunov ratio} \citep[Theorems~1.1 and~1.2]{BellSmallStructure2026}:
+First, along any sequence of finite independent arrays with $L_n\to0$ and
+$\mathcal C_n\to\ce$, there exist lattice spacings
+$h_n\sim R_n/\bigl((\pe^2+\qe^2)V_n\bigr)$ and centered laws $X_{n,i}^{\mathrm{lat}}$
+supported on cosets of $h_n\Z$ such that
+\[
+ \sum_i W_2^2(X_{n,i},X_{n,i}^{\mathrm{lat}})=o(h_n^2),\qquad
+ \sum_i W_3^3(X_{n,i},X_{n,i}^{\mathrm{lat}})=o(h_n^3),
+\]
+while $\mathcal B(X_n)\to1$ and a core of
+$m_n\sim(\pe^2+\qe^2)^2/(\pe\qe L_n^2)$ summands carries $1-o(1)$ of $V_n$ and
+$R_n$ and is $W_3$-close to scaled Esseen two-point laws. Second, there exists
+an absolute constant $\eps_0>0$
+(established by compactness and not effective) such that \emph{every}
+independent array $(X_1,\ldots,X_n)$ attaining the unrestricted $n$-summand
+maximum $C_n$ with $L<\eps_0$ consists of $m\in\{1,\ldots,n\}$ identically
+distributed nondegenerate two-point summands and $n-m$ zero summands. To
+eliminate arbitrarily small rounding residuals $T=\sum_i Z_i$ modulo $h_n\Z$
+that cannot be ruled out by asymptotic $o(h_n^2)$ bounds alone, the proof
+establishes a relative conditional first-moment bound
+$\E(|T|\mid K=k)\ge c\,\E|T|$ valid for arbitrarily small $\E|T|>0$, proving
+that exact lattice rounding strictly increases $\mathcal C$ whenever $T\ne0$;
+discrete Green-function concavity on $h_n\Z$ then reduces each summand to two
+adjacent lattice points, where \eqref{eq:cn-com-theorem} completes the
+classification.
+
+\item \emph{Asymptotic phase expansion of $B_m$ and optimal zero summands}
+\citep[Theorem~4.1]{BellBernoulli2026}: A uniform seventh-order
+Edgeworth--Euler--Maclaurin expansion of $R_m(p)$ around $p=\pe$ shows that
+as $m\to\infty$,
+\begin{equation}\label{eq:bm-phase-expansion}
+ B_m=\ce-\frac{Q_*}{m}
+ -\frac{H_*+\alpha\dist(m\pe-\delta_0,\Z)^2}{m^2}+O(m^{-3}),
+\end{equation}
+where $H_*$ is an explicit constant independent of $m$, and
+\begin{equation}\label{eq:phase-constants}
+ Q_*=\frac{\phz(867+287\sqrt{10})}{25920},\qquad
+ \alpha=\frac{\phz(60+19\sqrt{10})}{30},\qquad
+ \delta_0=\frac{2590+577\sqrt{10}}{12960}.
+\end{equation}
+Consequently, when comparing $m=n-j$ active summands ($j\ge0$ bounded)
+against $n$, choosing $j$ zero summands minimizes the second-order loss
+\begin{equation}\label{eq:parabola-envelope}
+ \eta j+\dist(\theta_n+j\pe,\Z)^2,\qquad
+ \eta=\frac{Q_*}{\alpha}=\frac{2510-747\sqrt{10}}{8640}\approx0.017104003,
+\end{equation}
+where $\theta_n=\operatorname{round}(n\pe-\delta_0)-(n\pe-\delta_0)\in[-1/2,1/2]$.
+Because $5\eta$ strictly exceeds the maximum over $\theta\in[-1/2,1/2]$ of the
+lower envelope of the first five parabolas $j\in\{0,1,2,3,4\}$, at most four
+zero summands are ever optimal for sufficiently large $n$. Extending the
+expansion to $O(m^{-3})$ and using a quadratic-field norm bound in
+$\mathbb Q(\sqrt{10})$ to rule out exact ties between distinct branches
+$j\ne j'$ proves that for all sufficiently large $n$:
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item the maximizing active count $m_n$ in $P_n=\max_{1\le m\le n}B_m$ is
+unique;
+\item the number of zero summands $j_n=n-m_n$ belongs to $\{0,1,2,3,4\}$, and
+by Weyl equidistribution of the irrational rotation $n\pe\bmod1$ the
+asymptotic frequencies of $j_n=0,1,2,3,4$ are respectively
+\begin{equation}\label{eq:padding-frequencies}
+ \pe-\omega,\quad
+ \pe-\omega,\quad
+ \sqrt{10}-3,\quad
+ \omega,\quad
+ \omega,
+\end{equation}
+where $\omega=(7773-2447\sqrt{10})/8640\approx0.00404464$;
+\item the gaps between successive record active counts $m$ (those $m$ for
+which $B_m>P_{m-1}$) belong to $\{2,3,5\}$.
+\end{enumerate}
+\end{enumerate}
+
+\section{Computational evidence and certified local obstructions}\label{sec:computations}
+
+\subsection{Scope of the stored computations}\label{subsec:comp-scope}
+
+To interpret the numerical evidence in this repository accurately, one must
+distinguish three different kinds of computation:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{High-precision floating-point evaluations in low-dimensional
+parametric families:} The file \texttt{data/\allowbreak empirical-observations.json}
+records deterministic evaluations of the one-variable binomial ratio $R_m(p)$
+for $1\le m\le3000$ and of finite binomial-plus-compound-Poisson families.
+These computations evaluate explicit closed-form or series expressions at
+high precision within specified parametric families; they are neither interval
+root-count certificates nor searches over arbitrary $n$-summand distributions.
+\item \emph{Rigorous interval arithmetic certificates:} The certificate file
+\texttt{certificates/\allowbreak observations/\allowbreak local-trap.json},
+verified by \texttt{verify/\allowbreak observations/\allowbreak local\_trap.py}
+in 320-bit Arb ball arithmetic \citep{Johansson2017,Johansson2018} (alongside
+the interval certificates for Manuscripts~1, 2, and~5 under
+\texttt{certificates/}), provides outward-rounded
+computer-assisted mathematical proofs of specific inequalities, root
+enclosures, and Hessian sign conditions.
+\item \emph{Unrestricted multi-summand numerical optimization:} No general
+numerical search over unrestricted multi-atom or arbitrary-diameter
+$n$-summand arrays is included in the verified repository records, and no
+claim in this paper or the companion manuscripts relies on uncertified
+exploratory searches.
+\end{enumerate}
+
+\subsection{High-precision binomial evaluations and zero padding through $m=3000$}\label{subsec:binomial-data}
+
+The dataset \texttt{data/\allowbreak empirical-observations.json} evaluates the i.i.d.\
+binomial maxima $B_m=\max_{0<p<1}R_m(p)$ and the padded binomial envelope
+$P_n=\max_{1\le m\le n}B_m$ for $1\le m\le3000$ in two regimes:
+\begin{itemize}[leftmargin=2em]
+\item \emph{Exhaustive threshold evaluation ($1\le m\le100$):} For each
+$m\in\{1,\ldots,100\}$, a uniform grid of $4096$ probabilities in $(0,1/2]$
+(which covers $(0,1)$ by reflection $p\leftrightarrow 1-p$) evaluates every
+threshold index $0\le k\le m$ and both one-sided CDF branches in
+\eqref{eq:rmp}. Visible local maxima are bracketed and refined by golden-section
+and stationary-root iteration to $60$ decimal places, with stationarity
+residuals at most $2.61\times10^{-59}$.
+\item \emph{Central-threshold scan ($101\le m\le3000$):} For each
+$m\in\{101,\ldots,3000\}$, the seven central threshold indices $k$ nearest
+$mp$ are evaluated and bracketed at cell endpoints. As a consistency check,
+for $101\le m\le450$ a denser control scan evaluates all central threshold
+cells, both CDF branches, and $17$-point sub-meshes per cell with zero
+discrepancies; for ratios exceeding $0.4045$, the tail bounds of
+\citet{Schulz2016} rigorously exclude noncentral thresholds.
+\end{itemize}
+
+\begin{table}[t]
+\centering
+\caption{Selected values of the padded binomial envelope
+$P_n=\max_{1\le m\le n}B_m=B_{m_n}$ from
+\texttt{data/empirical-observations.json},
+showing the maximizing active count $m_n$, the number of zero summands
+$j_n=n-m_n$, the optimal success probability $p<\frac12$, the normalized
+support diameter $h=1/\sqrt{m_n p(1-p)}$, the Lyapunov ratio $L$, and the
+ratio $P_n$. Values for $m_n\le100$ and $m_n\in\{409,412,413\}$ are rounded
+from 60-digit stationary-root refinements; $n=414$ and $n=3000$ are binary64
+central-cell evaluations.}
+\label{tab:binomial-optima}
+\smallskip
+\small
+\begin{tabular}{@{}rrrllll@{}}
+\toprule
+$n$ & $m_n$ & $j_n=n-m_n$ & Probability $p$ & Diameter $h$ & Lyapunov $L$ & Ratio $P_n=B_{m_n}$ \\
+\midrule
+1    & 1    & 0 & 0.390958631281333 & 2.049327 & 1.073396 & 0.370351523474379 \\
+2    & 1    & 1 & 0.390958631281333 & 2.049327 & 1.073396 & 0.370351523474379 \\
+3    & 3    & 0 & 0.431607387750433 & 1.165657 & 0.593733 & 0.398156326353304 \\
+4    & 3    & 1 & 0.431607387750433 & 1.165657 & 0.593733 & 0.398156326353304 \\
+10   & 10   & 0 & 0.429865759681911 & 0.638771 & 0.325669 & 0.406507736905768 \\
+12   & 10   & 2 & 0.429865759681911 & 0.638771 & 0.325669 & 0.406507736905768 \\
+50   & 49   & 1 & 0.414895409236786 & 0.289945 & 0.149173 & 0.409145180658100 \\
+100  & 99   & 1 & 0.417421147624576 & 0.203806 & 0.104683 & 0.409451697372009 \\
+409  & 409  & 0 & 0.418879394858355 & 0.100221 & 0.051430 & 0.409665276377194 \\
+412  & 409  & 3 & 0.418879394858355 & 0.100221 & 0.051430 & 0.409665276377194 \\
+413  & 409  & 4 & 0.418879394858355 & 0.100221 & 0.051430 & 0.409665276377194 \\
+414  & 414  & 0 & 0.418652506346914 & 0.099622 & 0.051129 & 0.409666049802979 \\
+3000 & 2999 & 1 & 0.418913502013957 & 0.037011 & 0.018992 & 0.409723068705426 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:binomial-optima} displays representative values of $P_n$ and
+the optimal zero padding $j_n=n-m_n$. Several features merit emphasis:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item Across the entire scan $1\le n\le3000$, the observed number of zero
+summands $j_n=n-m_n$ takes only the five values $\{0,1,2,3,4\}$ proved
+asymptotically in \citet[Theorem~4.1]{BellBernoulli2026}. At small horizons,
+successive record active counts $m$ (those $m$ with $B_m>P_{m-1}$) include
+consecutive integers with gap $1$ (such as $m=5,6$, $m=17,18$, and $m=29,30$)
+before settling into the asymptotic gap set $\{2,3,5\}$ proved for large $n$
+in \citet[Theorem~4.1]{BellBernoulli2026}.
+\item The horizons $n=412$ and $n=413$ are the first values of $n$ at which
+three and four zero summands occur: both retain the active count $m=409$,
+whose 60-digit refined ratio compares with $B_{412}$ and $B_{413}$ as
+\begin{align*}
+ B_{409}&=0.40966527637719430986\ldots,\\
+ B_{412}&=0.40966527592709729990\ldots\quad(B_{409}-B_{412}\approx 4.501\times10^{-10}),\\
+ B_{413}&=0.40966478482671455982\ldots\quad(B_{409}-B_{413}\approx 4.916\times10^{-7}).
+\end{align*}
+\item Comparing the empirical padding $j_n$ with the leading quadratic phase
+rule \eqref{eq:parabola-envelope} illustrates the role of the $O(m^{-3})$
+error term in \eqref{eq:bm-phase-expansion} near the narrow phase windows of
+width $\omega\approx0.004045$ where $j\in\{3,4\}$. Across the transition
+block $n=409,410,411,412,413,414$ (where $j_n=0,1,2,3,4,0$, respectively) and
+at $n=2957,2958$ (where $j_n=3,4$), the leading phase formula
+\eqref{eq:parabola-envelope} already agrees with the observed padding $j_n$.
+At smaller or borderline horizons such as $n\in\{147,148\}$, $n\in\{677,678\}$,
+and $n\in\{1780,1781\}$, the $O(1)$ leading phase formula lies near the
+boundary of the $\{3,4\}$ window, and including the finite-$m$ probability
+drift shifts the maximizer to $j_n\in\{1,2\}$ (for $n=147,148$ and
+$1780,1781$) or $j_n\in\{0,1\}$ (for $n=677,678$), matching the observed
+active counts.
+\end{enumerate}
+
+\subsection{A certified strict local maximizer with unequal diameters}\label{subsec:local-trap}
+
+Why does the local diameter-equalization theorem
+(Theorem~1.3 of \citealp{BellBernoulli2026}, recalled in
+\eqref{eq:local-diameter-gain}) require the diameter spread $\sigma$ and
+maximum relative deviation $\eta$ to be small? When all nondegenerate
+two-point summands share a common diameter $h$, the $2^m$ atoms of the
+convolution sum $S=\sum_{i=1}^m h(B_i-p_i)$ coalesce into $m+1$ lattice points.
+Perturbing $h_i$ splits the colliding atoms at the maximizing threshold and
+produces a downward directional cusp in $\mathcal C$. However, atom collisions
+also occur when unequal diameters have \emph{rational ratios}, and such
+collisions can lock unequal diameters into a strict local maximum.
+
+Consider $n=4$ independent two-point summands $X_i=h_i(B_i-p_i)$ with support
+diameters
+\begin{equation}\label{eq:trap-diameters}
+ h=(1,1,1,2),
+\end{equation}
+upper atom probabilities $(p_1,p_2,p_3,p_4)=(p,p,p,r)$ near
+\begin{equation}\label{eq:trap-probs}
+ p=0.572751600606024506947692808\ldots,\qquad
+ r=0.337472966089985017834868704\ldots,
+\end{equation}
+and raw threshold $k=2$ on the closed branch
+$\Pp(\sum_{i=1}^4 h_i B_i\le 2)-\Phi(z_2)$, where
+$z_2=(2-3p-2r)/\sqrt{3p(1-p)+4r(1-r)}$. At the raw sum value
+$\sum_{i=1}^4 h_i B_i=2$, four binary configurations $v=(B_1,B_2,B_3,B_4)\in\{0,1\}^4$
+collide:
+\begin{equation}\label{eq:collision-vertices}
+ v^{(1)}=(1,1,0,0),\qquad
+ v^{(2)}=(1,0,1,0),\qquad
+ v^{(3)}=(0,1,1,0),\qquad
+ v^{(4)}=(0,0,0,1).
+\end{equation}
+These four vectors satisfy $v^{(j)}\cdot h=2$ and form the vertices of a
+nondegenerate three-dimensional tetrahedron in the hyperplane
+$\{v\in\R^4:v\cdot h=2\}$.
+
+Using 320-bit Arb ball arithmetic on the closed box of radius $10^{-28}$ around
+\eqref{eq:trap-probs}, the verification script
+\texttt{verify/\allowbreak observations/\allowbreak local\_\allowbreak trap.py}
+checks the interval certificate
+\texttt{certificates/\allowbreak observations/\allowbreak local-\allowbreak trap.json}
+and establishes the following theorem:
+
+\begin{theorem}[Certified unequal-diameter strict local maximizer]\label{thm:local-trap}
+In the four-summand two-point family $X_i=h_i(B_i-p_i)$ with $h=(1,1,1,2)$,
+the closed box of radius $10^{-28}$ around $(p,r)$ in \eqref{eq:trap-probs}
+contains a unique point $(p_*,r_*)$ at which the probabilities
+$p^{(0)}=(p_*,p_*,p_*,r_*)$ are stationary for the closed-branch ratio at raw
+threshold $k=2$. At $(h;p^{(0)})$:
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item The Kolmogorov distance $\Delta(S)$ is uniquely attained at the raw
+threshold $k=2$ on the closed branch, and the Berry--Esseen ratio satisfies
+\begin{equation}\label{eq:trap-ratio}
+ \mathcal C\in 0.28248894967964153979405802\pm 5.54\times10^{-27}.
+\end{equation}
+\item The $4\times4$ Hessian $H_p=\nabla_p^2\mathcal C(h;p^{(0)})$ with
+respect to the probabilities $(p_1,p_2,p_3,p_4)$ at fixed diameters
+$h=(1,1,1,2)$ is strictly negative definite.
+\item Under any perturbation $h\mapsto h+d$ ($d\in\R^4$ small) of the support
+diameters, the four colliding configurations \eqref{eq:collision-vertices} move
+to the raw sum values $v^{(j)}\cdot(h+d)=2+v^{(j)}\cdot d$ ($1\le j\le 4$). Any
+candidate threshold near $2$ that retains all four colliding configurations in
+the closed ray has the form $2+v^{(j_*)}\cdot d$ for an active index
+$j_*\in\{1,2,3,4\}$ maximizing $v^{(j)}\cdot d$ (any lower threshold omits at
+least one colliding configuration of positive probability). Along each smooth
+branch function $f_j(h+d,p^{(0)}+\delta p)$ corresponding to the threshold
+$v^{(j)}\cdot(h+d)=2+v^{(j)}\cdot d$, the diameter gradient at $(0,p^{(0)})$ is
+$c_1(\beta-v^{(j)})$ with $c_1>0$, where $\beta=\sum_{j=1}^4 w_j v^{(j)}$ lies
+in the strict interior of the tetrahedron
+$\operatorname{conv}\{v^{(1)},v^{(2)},v^{(3)},v^{(4)}\}$ with barycentric
+weights $w_1=w_2=w_3\in 0.31153\pm 10^{-5}$ and $w_4\in 0.06541\pm 10^{-5}$.
+Consequently, for every $d=d_\perp$ orthogonal to $h=(1,1,1,2)$ and any active
+index $j_*$ maximizing $v^{(j)}\cdot d_\perp$,
+\begin{equation}\label{eq:trap-cusp}
+ \nabla_d f_{j_*}(0,p^{(0)})\cdot d_\perp
+ =c_1\Bigl(\beta\cdot d_\perp-\max_{1\le j\le 4}v^{(j)}\cdot d_\perp\Bigr)
+ \le -c_2\|d_\perp\|,
+\end{equation}
+with $c_2>0$. Since $f_j(0,p)=\mathcal C(h;p)$ has vanishing probability
+gradient $\nabla_p\mathcal C(h;p^{(0)})=0$ and negative-definite probability
+Hessian $H_p\preceq -c_H I<0$, a second-order Taylor expansion of $f_{j_*}$
+around $(0,p^{(0)})$ with $a=\|d_\perp\|$ and $b=\|\delta p\|$ gives
+\[
+ \mathcal C(h+d_\perp;p^{(0)}+\delta p)-\mathcal C(h;p^{(0)})
+ \le -c_2 a-\frac{c_H}{2}b^2+O(ab+a^2+b^3)<0
+\]
+for all sufficiently small $(d_\perp,\delta p)\ne(0,0)$, because
+$ab\le b(a+b^2)=o(a+b^2)$ and $a^2+b^3=o(a+b^2)$ as $a,b\to0$.
+\item For both the unit-diameter summands ($i=1,2,3$) and the diameter-$2$
+summand ($i=4$), the single-coordinate variational contact cubic majorants
+hold globally on $\R$, with certified strictly positive gaps at all
+non-contact breakpoints of the deleted-sum distribution functions.
+\end{enumerate}
+\end{theorem}
+
+Theorem~\ref{thm:local-trap} shows that $(h;p^{(0)})$ is a strict local
+maximizer of $\mathcal C$ under joint perturbations of $(h_1,h_2,h_3,h_4)$ and
+$(p_1,p_2,p_3,p_4)$ modulo common scaling, and satisfies all single-coordinate
+variational contact inequalities on $\R$. Yet its Berry--Esseen ratio
+$0.282489\ldots$ is substantially smaller than the ratio
+$\sqrt2/4\approx0.353553$ of two symmetric Bernoulli summands and two zeros
+(evaluated at threshold $0$), and far below the four-summand common-diameter
+maximum $P_4=B_3\approx0.398156$. This example demonstrates that local
+stationarity and single-coordinate contact conditions cannot by themselves
+force support diameters to be equal when $n\ge3$.
+
+\subsection{Binomial sums with a compound-Poisson jump component}\label{subsec:cp-data}
+
+The dataset \texttt{data/\allowbreak empirical-observations.json} (under
+\texttt{mixed\_core\_cp}) also records numerical comparisons for centered sums
+of the form
+\begin{equation}\label{eq:mixed-cp-law}
+ S_{\mathrm{raw}}=\bigl(\Bin(M,p)-Mp\bigr)+g\bigl((N_+-\ell_+)-(N_--\ell_-)\bigr),
+\end{equation}
+where $N_\pm\sim\Pois(\ell_\pm)$ are independent of $\Bin(M,p)$, across $18$
+parameter profiles with $M\in\{1,2,3,5,10,20\}$, jump step $g\in\{1/2,1,2\}$,
+$p\in[0.05,0.5]$, and total intensity $10^{-6}\le\ell_++\ell_-\le12$. In this
+experiment, the variance and the third-moment functional are taken to be
+\begin{equation}\label{eq:mixed-cp-price}
+ V=Mp(1-p)+g^2(\ell_++\ell_-),\qquad
+ \beta=Mp(1-p)\bigl(p^2+(1-p)^2\bigr)+g^3(\ell_++\ell_-).
+\end{equation}
+As emphasized in Remark~\ref{rem:balanced-and-id} and
+Section~\ref{subsec:variational}, the term $g^3(\ell_++\ell_-)$ in
+\eqref{eq:mixed-cp-price} is the L\'evy jump integral
+$\int_{\R\setminus\{0\}}|y|^3\,\nu(dy)$ representing the limiting sum of third
+absolute moments of arbitrarily many rare two-point summands of step sizes
+$\pm g$ in the all-horizon compactification \eqref{eq:compactified-rep}. It is
+not the third absolute moment of a single centered Poisson variable, and by
+Remark~\ref{rem:balanced-and-id}(2) it is strictly smaller than the minimum
+third-moment sum $\mathcal M_{n-M}$ of any finite $(n-M)$-summand independent
+factorization of the compound-Poisson component.
+
+Even when the compound-Poisson component is charged only this smaller limiting
+third-moment cost $g^3(\ell_++\ell_-)$, across all $18$ tested profiles every
+candidate with $\ell_++\ell_->0$ has ratio $\Delta(S_{\mathrm{raw}})/(\beta/V^{3/2})$
+strictly smaller than the pure binomial ratio $R_M(p)$ ($\ell_+=\ell_-=0$) at
+the same probability $p$. This provides a finite-$M$ numerical illustration of
+the theorem $\nu=0$ proved for compactified global maximizers in
+\citet[Theorem~1.1]{BellExtremizers2026}.
+
+\section{What remains open}\label{sec:open}
+
+\subsection{The finite-$n$ conjectures}\label{subsec:open-conjectures}
+
+Combining the theoretical results of Sections~\ref{sec:factorization}--\ref{sec:known}
+and the numerical evidence of Section~\ref{sec:computations}, we can state the
+three open finite-$n$ conjectures corresponding to
+Questions~\ref{q:value}--\ref{q:uniqueness}.
+
+\begin{conjecture}[Finite-$n$ value conjecture]\label{conj:value}
+For every integer $n\ge1$,
+\[
+ C_n=P_n=\max_{1\le m\le n}B_m.
+\]
+In particular, $\Cind=\sup_{n\ge1}C_n=\lim_{m\to\infty}B_m=\ce$.
+\end{conjecture}
+
+\begin{conjecture}[Finite-$n$ extremizer classification conjecture]\label{conj:structure}
+For every integer $n\ge1$, every $n$-summand independent array
+$(X_1,\ldots,X_n)$ attaining $C_n$ consists of $m\in\{1,\ldots,n\}$
+identically distributed nondegenerate two-point random variables and $n-m$
+zero variables, up to a common nonzero scale factor, sign reflection, and
+permutation of coordinates.
+\end{conjecture}
+
+\begin{conjecture}[Uniqueness of the binomial maximizer]\label{conj:uniqueness}
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item For every integer $m\ge1$, the function $p\mapsto R_m(p)$ in
+\eqref{eq:rmp} attains its maximum $B_m$ on $(0,1/2]$ at a unique probability
+$p_m\in(0,1/2)$.
+\item For every integer $n\ge1$, the padded binomial envelope
+$P_n=\max_{1\le m\le n}B_m$ is attained at a unique active count
+$m_n\in\{1,\ldots,n\}$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{table}[t]
+\centering
+\caption{Summary of what is currently proved toward Conjectures~\ref{conj:value}--\ref{conj:uniqueness}.}
+\label{tab:status-summary}
+\smallskip
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Regime & Proved result & Reference \\
+\midrule
+$n=1$, unrestricted & $C_1=B_1$; unique two-point maximizer & \citet{BentkusKirsa1989} \\
+$n=2$, two-point & $C_{2,\mathrm{bin}}=P_2=B_1$; one summand zero & \citet[Thm.~1.2]{BellBernoulli2026} \\
+$n=2$, unrestricted & $C_2<49/120<\ce$ ($C_2=B_1$ open) & \citet[Thm.~1.1]{BellFinite2026} \\
+$n=3$, two-point & $\Delta\le\ce L$ ($\sup\mathcal C=B_3$ open) & \citet[Thm.~1.2(i)]{BellFinite2026} \\
+All $n\ge1$, common-diam.\ two-point & $C_n^{\mathrm{com}}=P_n$; maximizers padded i.i.d. & \citet[Thm.~1.1]{BellBernoulli2026} \\
+All $n\ge1$, $L\le\exp(-\exp(97))$ & $\Delta\le\ce L$ & \citet[Thm.~1.1]{BellSmall2026} \\
+All $n\ge1$, maximizers with $L<\eps_0$ & $C_n=P_n$; maximizers padded i.i.d. & \citet[Thm.~1.2]{BellSmallStructure2026} \\
+All $n\ge1$, unrestricted & $\Cind<0.44988$; $\le4$ pts ($\le3$-pt rep.) & \citet{BellIndependent2026,BellExtremizers2026} \\
+Large $n$, binomial envelope $P_n$ & Unique $m_n$; $n-m_n\in\{0,1,2,3,4\}$ & \citet[Thm.~4.1]{BellBernoulli2026} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:status-summary} summarizes the proved cases. Note that
+Conjecture~\ref{conj:structure} at a given $n$ immediately implies
+Conjecture~\ref{conj:value} at that $n$.
+
+\subsection{Overall proof architecture and the missing global implication}\label{subsec:missing-implication}
+
+The results of this paper and the companion manuscripts assemble the
+machinery for two complementary approaches to Conjecture~\ref{conj:structure},
+and make it transparent which implications are established and which remain
+open in each:
+
+\begin{enumerate}[label=\textbf{Route \arabic*.},ref=\arabic*,leftmargin=5.5em]
+\item\label{route:sum-law} \textbf{(Reduction to sum-law selection via exact-fiber factorization)}
+In Section~\ref{sec:factorization}, we separated the optimization of
+$\mathcal C(X_1,\ldots,X_n)$ into two stages:
+\[
+ C_n=\sup_{\mu}\mathcal Q_n(\mu),\qquad
+ \mathcal Q_n(\mu)=\frac{V(\mu)^{3/2}\Delta(\mu)}{\mathcal M_n(\mu)},
+\]
+where $\mu=\Law(S)$ is the distribution of the sum and $\mathcal M_n(\mu)$ is
+the minimum third-moment sum over all $n$-summand independent factorizations
+of $\mu$. By Theorem~\ref{thm:binomial-fiber}\ref{it:binomial-equivalence},
+once $\mu$ is known to be a centered binomial law $\Law(g(\Bin(m,p)-mp))$ of
+order $m\le n$, minimizing $\sum_{i=1}^n\E|X_i|^3$ on the fiber
+$\mathcal F_n(\mu)$ \emph{automatically} forces the summands $(X_1,\ldots,X_n)$
+to consist of $m$ identically distributed two-point variables and $n-m$ zeros.
+More generally, by Theorem~\ref{thm:binomial-fiber}\ref{it:pb-fiber}, if
+$\mu$ is any Poisson-binomial law of order $k\le n$, fiber minimization forces
+every nonconstant summand to be a two-point variable of common diameter $g$,
+and Theorem~1.1 of \citet{BellBernoulli2026} then forces their probabilities
+$p_j$ to be equal.
+
+\emph{What remains unproved in Route~\ref{route:sum-law}:} Proving that the
+sum distribution $\mu=\Law(S)$ of every global maximizer of $C_n$ is a
+Poisson-binomial (or binomial) law of order at most $n$. Minimizing the
+factorization cost $\mathcal M_n(\mu)$ for a fixed $\mu$ operates within a
+single convolution fiber $\mathcal F_n(\mu)$; it does not compare
+$\mathcal Q_n(\mu)$ across different sum distributions $\mu$.
+
+\item\label{route:coherence} \textbf{(Reduction to characteristic-function coherence)}
+In Section~\ref{sec:criteria}, Theorem~\ref{thm:fourier-criterion} showed that
+for any independent array $(X_1,\ldots,X_n)$, the moment-determined span
+$\widehat h=(R+D)/V$ defines a nonnegative characteristic-function deficit
+$\mathcal J=1-|\E e^{2\pi\ii S/\widehat h}|^2\ge0$ such that $\mathcal J=0$ if
+and only if $(X_1,\ldots,X_n)$ is a padded i.i.d.\ two-point array. Notice
+that $\mathcal J=0$ combines two properties simultaneously: it places the
+support of every summand on a coset of $\widehat h\Z$ and saturates the
+separated-support moment inequality of Theorem~\ref{thm:separated-moment} at
+the same span $\widehat h$. (By contrast, merely knowing that the summands of
+a fixed-$n$ maximizer are supported on cosets of some common lattice $h\Z$
+does not by itself reduce them to two-point laws without an additional step:
+the discrete Green-function concavity argument of
+\citealp[Section~9]{BellSmallStructure2026} requires $L<\eps_0$ to supply
+asymptotic local limit estimates for the deleted sum, while
+Theorem~\ref{thm:separated-moment} requires equality in the moment bound
+\eqref{eq:array-moment-ineq} in addition to support separation $h$.)
+
+\emph{What remains unproved in Route~\ref{route:coherence}:} Proving that
+global optimality for $\mathcal C(X_1,\ldots,X_n)$ forces $\mathcal J=0$. As
+emphasized in Remark~\ref{rem:j-not-monotone}, Theorem~\ref{thm:fourier-criterion}
+is an equality characterization for $\mathcal J=0$, not an inequality bounding
+$\mathcal C$ by a decreasing function of $\mathcal J$. Moreover, while
+\citet[Theorem~3.2]{BellExtremizers2026} guarantees that every fixed-$n$
+maximizer has at most four support points per summand and admits an equally
+maximizing replacement with at most three support points per summand (which is
+convolution-indecomposable when at least one zero slot is present), proving
+the value conjecture $C_n=P_n$ by this route suffices if at least one
+three-point maximizing representative for each $n$ satisfies $\mathcal J=0$,
+whereas proving the full classification conjecture
+(Conjecture~\ref{conj:structure}) requires showing that every three-point
+maximizing representative satisfies $\mathcal J=0$ and that no four-point
+flat-segment maximizer can exist.
+\end{enumerate}
+
+\subsection{Specific analytical obstacles in the remaining regimes}\label{subsec:obstacles}
+
+Three concrete analytical phenomena explain why extending the proved
+classifications to all $n\ge2$ (for general summands) and all $n\ge3$ (for
+two-point summands with arbitrary diameters) requires new global arguments:
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Zero summands decouple the horizon $n$ from the Lyapunov ratio $L$:}
+Theorem~1.2 of \citet{BellSmallStructure2026} proves
+Conjectures~\ref{conj:value} and~\ref{conj:structure} for any maximizer of
+$C_n$ whose Lyapunov ratio satisfies $L<\eps_0$. In the i.i.d.\ setting,
+$L_n=(p^2+q^2)/\sqrt{npq}\to0$ automatically as $n\to\infty$. In the
+independent setting, however, adjoining zero summands increases $n$ without
+changing $L$: an $n$-summand array can have $L\ge\eps_0$ for arbitrarily large
+$n$ if all but a bounded number of summands have zero or negligible variance.
+Because $\eps_0>0$ in \citet{BellSmallStructure2026} is obtained by a
+compactness contradiction argument and is not effective, ruling out
+maximizers with $L\ge\eps_0$ requires a finite-$n$ classification at moderate
+Lyapunov ratios.
+
+\item \emph{Atom collisions at rational diameter ratios create strict local
+traps:}
+For two-point summands with arbitrary support diameters $h=(h_1,\ldots,h_n)$,
+Theorem~\ref{thm:local-trap} proves that at $n=4$ the unequal-diameter
+configuration $h=(1,1,1,2)$ is a strict local maximizer of $\mathcal C$ that
+satisfies every single-coordinate variational contact inequality globally on
+$\R$. Whenever a subset of diameters has rational ratios, multiple binary
+configurations can collide at the maximizing threshold and place the effective
+weight vector $\beta$ in the interior of the collision polytope in
+\eqref{eq:trap-cusp}, locking the diameters against all local perturbations.
+Thus any proof that $C_n^{\mathrm{bin}}=P_n$ for $n\ge3$ must use a global
+replacement (capable of jumping across collision hyperplanes or comparing the
+multi-collision value against $P_n$) rather than local gradient ascent.
+
+\item \emph{Dependence of single-summand replacements on the deleted-sum
+distribution:}
+When one modifies a single summand $X_i$ while holding the remaining summands
+fixed, the numerator of $\mathcal C$ at a threshold $x$ is
+$\bigl|\E F_{T_i}(x-X_i)-\Phi(x/\sqrt V)\bigr|$, where $F_{T_i}$ is the
+distribution function of the deleted sum $T_i=\sum_{j\ne i}X_j$. Unlike the
+third-moment sum $R=\sum_{i=1}^n\E|X_i|^3$, which is additive across
+coordinates, $\E F_{T_i}(x-X_i)$ couples $X_i$ to the step locations and jump
+sizes of $T_i$. As Proposition~\ref{prop:transport-counterexample}
+illustrates for zero-bias transport, and as Theorem~\ref{thm:local-trap}
+illustrates for unequal-diameter two-point arrays, a marginal replacement that
+does not account for the alignment of atoms with the threshold $x$ and the
+deleted sum $T_i$ can decrease $\mathcal C$ even when it moves $X_i$ toward a
+two-point or equal-diameter law. Establishing an admissible global comparison
+that overcomes this coupling is the central open problem in the finite-$n$
+theory of the independent Berry--Esseen inequality.
+\end{enumerate}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}
