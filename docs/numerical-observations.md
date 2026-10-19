@@ -130,7 +130,7 @@ The verifier [`verify/observations/local_trap.py`](../verify/observations/local_
 2. The first-order diameter derivative is a positive multiple of $`\beta \cdot d - \max_{v} v \cdot d`$, where $`\beta`$ lies strictly in the interior of the tetrahedron of colliding configurations with barycentric weights $`(0.31153, 0.31153, 0.31153, 0.06541)`$. Consequently, every diameter perturbation $`d`$ transverse to overall scaling strictly decreases the ratio at linear rate $`-c \|d_\perp\|`$.
 3. Every single-summand variational contact majorant holds globally on $`\mathbb{R}`$.
 
-Thus this unequal-diameter configuration is a strict local maximizer among four-summand two-point arrays (and satisfies the single-coordinate variational conditions), yet its ratio $`0.282489\ldots`$ is far below the ratio $`\sqrt{2}/4 \approx 0.353553`$ of two symmetric Bernoulli summands and two zeros, and below the four-summand optimum $`P_4 = B_4 \approx 0.400892`$. This example illustrates why the global classification theorems in Manuscripts 5 and 6 combine local variational conditions with global replacement arguments.
+Thus this unequal-diameter configuration is a strict local maximizer among four-summand two-point arrays (and satisfies the single-coordinate variational conditions), yet its ratio $`0.282489\ldots`$ is far below the ratio $`\sqrt{2}/4 \approx 0.353553`$ of two symmetric Bernoulli summands and two zeros, and below the ratio $`\approx 0.398156`$ achieved by three identically distributed Bernoulli summands and one zero summand. This example illustrates why the global classification theorems in Manuscripts 5 and 6 combine local variational conditions with global replacement arguments.
 
 ### Binomial arrays with a compound-Poisson component
 
