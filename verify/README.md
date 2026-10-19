@@ -1,4 +1,10 @@
-# Checking the upper-bound calculation
+# Verification Guide
+
+Navigation: [Repository Root](../README.md) · [Overview & Reading Guide](../docs/overview.md) · [Summary of Bounds](../docs/bounds.md) · [Scalar Certificates](../certificates/scalar/README.md) · [Finite-Array Certificates](../certificates/finite/README.md) · [Bernoulli Structure Certificates](../certificates/structure/README.md) · [Interval Kernel](kernel/README.md)
+
+---
+
+## 1. Running the Default Verification Suite
 
 From the repository root, run:
 
@@ -6,109 +12,62 @@ From the repository root, run:
 ./verify.sh --no-latex
 ```
 
-This checks the file hashes, the closed partition of the moment parameters,
-the supplied Gaussian interpolation bounds, and the comparison of every
-stored upper bound with
+This command runs in the pinned Python 3.12 environment managed by `uv` and performs the following checks:
 
-$$
-U_* = \frac{1013039690742047}{2251799813685248}<0.44988.
-$$
+1. **Manifest integrity (`SHA256SUMS`):** Verifies the SHA-256 digest of every file in the repository.
+2. **Unit and regression tests (`verify/test_*.py`):** Verifies the partition validator, evaluator parameter bindings, nested moment-proof consumers, and failure-rejection controls.
+3. **Moment-domain cover (`verify/check_saved.py` and `verify/check_replays.py`):** Reconstructs all 1,670 closed intervals of the Lyapunov ratio $L$ and their binary partition trees in [`certificates/cover.json`](../certificates/cover.json) and `certificates/cover.zip`, verifies every infeasibility exclusion and nested moment proof, checks the Gaussian defect interpolation tables in `certificates/gaussian-*.zip`, and confirms that every accepted region satisfies
+   ```math
+   \frac{\Delta}{L} \le U_* = \frac{1013039690742047}{2251799813685248} < 0.44988,
+   ```
+   together with the small-$L$ and large-$L$ analytic complements (`verify/scalars.py`) and manuscript constants (`verify/paper_values.py`).
+4. **Scalar majorant certificates (`verify/check_scalar_certificates.py`):** Verifies the polynomial, logarithmic, directional, disk, and cosine-comparison scalar certificates used in [Manuscript 1](../paper/independent-berry-esseen.pdf); see [Scalar Certificates](../certificates/scalar/README.md).
+5. **Two-summand and three-Bernoulli certificates (`verify/finite/check.py`):** Verifies the partition trees, recipes, and exact Bernstein odds certificates used in [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf); see [Finite-Array Certificates](../certificates/finite/README.md).
+6. **Bernoulli structure certificates (`verify/structure/check.py`):** Verifies the common-diameter and two-Bernoulli partitions and rational benchmarks used in [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf); see [Bernoulli Structure Certificates](../certificates/structure/README.md).
+7. **Gaussian window certificate (`paper/extremizers/gaussian_window_certificate.py`):** Executes the exact rational arithmetic verification for Lemma 5.3 of [Manuscript 7](../paper/extremizers/extremizers.pdf).
+8. **Four-summand local maximizer certificate (`verify/observations/local_trap.py`):** Re-evaluates the 320-bit Arb interval certificate [`certificates/observations/local-trap.json`](../certificates/observations/local-trap.json) described in [Numerical Studies & Conjectures](../docs/numerical-observations.md).
 
-It also checks the endpoint estimates, the
-[scalar certificates](../certificates/scalar/README.md), the default
-[finite-array certificates](../certificates/finite/README.md), the
-[Bernoulli certificates](../certificates/structure/README.md), and the
-extremizer paper's
-[exact rational Gaussian certificate](../paper/extremizers/gaussian_window_certificate.py).
-Running `./verify.sh` adds the PDF builds. The locked environment uses
-Python 3.12.
+Running `./verify.sh` without `--no-latex` additionally compiles all seven LaTeX manuscripts into `dist/` via `./build.sh`.
 
-The default also rechecks the [fixed unequal-gap example](observations/local_trap.py)
-against its [interval certificate](../certificates/observations/local-trap.json),
-using the saved probability box and 320-bit Arb arithmetic. This is a fixed-box
-verification, with no root search. To print every rechecked enclosure, run:
+---
 
-```sh
-uv run --frozen python verify/observations/local_trap.py --json
-```
+## 2. Structure of the Moment-Domain Certificate (Manuscript 1)
 
-The hashes also cover the [numerical observations](../docs/numerical-observations.md)
-and their [data](../data/empirical-observations.json). These are stored
-candidate searches and numerical controls, with their coverage stated in
-the note. The default checks do not repeat those optimizations or turn
-their probability grids into interval root-count certificates. The
-binomial phase and general structure theorems are analytic arguments in
-their respective manuscripts.
+After normalizing total variance to $V = 1$, the upper-bound calculation in [Manuscript 1](../paper/independent-berry-esseen.pdf) parameterizes each independent array by four moment quantities:
 
-## The supplied certificate
+- $L = \sum_i \mathbb{E}|X_i|^3$, the Lyapunov ratio;
+- $d = \max_i \mathbb{E} X_i^2$, the largest individual summand variance;
+- $b = \mathbb{E}|X_1|^3$, the third absolute moment of a summand achieving variance $d$; and
+- $\tau = \sum_i (\mathbb{E} X_i^2)^{3/2}$.
 
-After normalizing total variance to one, the calculation uses the
-third-moment sum $L$ and three further parameters: the largest summand
-variance $d$, the third absolute moment $b$ of that summand, and
-$\tau=\sum_i v_i^{3/2}$, where $v_i$ are the individual variances.
-For each interval of $L$, a binary tree subdivides a containing region
-in $(d,b,\tau)$ into closed boxes. Each final box either has an upper
-bound for $\Delta/L$ or is excluded by the moment constraints.
+The index [`certificates/cover.json`](../certificates/cover.json) divides $[L_-, L_+]$ into 1,670 closed intervals of $L$ (called *moment bands*), whose partition trees are stored in `certificates/cover.zip`. Summary totals are recorded in [`result.json`](../result.json):
 
-The [cover index](../certificates/cover.json) lists 1,670 closed intervals
-of $L$, with exact endpoints, record hashes, and evaluator settings.
-Their trees and final boxes are in `certificates/cover.zip`. The index
-also identifies the Gaussian interpolation partitions and smoothing
-weights in the numbered `certificates/gaussian-NNN.zip` archives. The
-[result metadata](../result.json) gives the total counts and the exact
-maximum.
+- **1,670** closed intervals of $L$ covering $[L_-, L_+]$ without gaps;
+- **472,854** total tree nodes across the outer moment partitions;
+- **235,659** accepted leaf boxes (comprising **143,618** individually evaluated leaf bounds and **92,041** leaves bounded by a uniform enclosure valid on the entire $L$ band); and
+- **1,468** leaves excluded by necessary moment inequalities ($b \ge d^{3/2}$, $d^{3/2} \le \tau \le \min\{L - b + d^{3/2}, \sqrt{d}\}$, and $\tau \le L$).
 
-A final box records either its own evaluated upper bound or a bound valid
-on its entire containing interval. The record identifies the choice.
-The certificate contains 143,618 individual values and 92,041 bounds valid
-on their entire containing intervals. Within 10,238 final boxes, a further
-complete proof covers the feasible third-moment interval or partitions the
-largest-variance interval. These proofs retain containing parent bounds,
-exact closed children, and the moment inequalities used to exclude empty
-children. Their numerical nodes specify fixed evaluator inputs. They may
-also use a complete signed threshold partition, a rational split between
-two characteristic-function disks, or a forcing bound obtained by convex maximization over the moment
-weights, as derived in the paper. Every signed partition includes its outside-tail bound.
+Within **10,238** of the accepted leaf boxes (counted under `complete_owner_proofs` in `result.json`), a nested partition tree subdivides the feasible interval of $b$ or $d$ and records fixed evaluator inputs—including signed threshold partitions on $[-2, 2]$ or $[-69/32, 69/32]$, two-disk support interpolations, or split Cauchy–Schwarz forcing bounds—that certify $\Delta / L \le U_*$ across the leaf.
 
-The counts of nodes and final boxes in `result.json` describe the outer
-moment trees. Nested proof records do not increase those counts. The
-`complete_owner_proofs` field counts these nested moment proofs. The
-default checks reconstruct both levels of coverage and check the stored
-Gaussian and scalar certificates. The commands below recompute the
-fixed numerical inputs, including each selected nested proof.
+---
 
-The [paper](../paper/independent-berry-esseen.pdf) gives the enclosure
-formulas and arithmetic assumptions. The
-[scalar guide](../certificates/scalar/README.md) describes the coefficient
-tables used by those formulas.
+## 3. Recomputing Numerical Enclosures
 
-## Numerical reevaluation
-
-To recompute the first interval:
+The default `./verify.sh --no-latex` run checks the completeness of every partition tree and verifies the stored upper bounds against $U_*$, while reading the precomputed leaf integral enclosures from the certificate archives. To recompute the leaf integrals directly from the interval and ball-arithmetic evaluators in [`verify/kernel/`](kernel/README.md), use `verify/replay.py`:
 
 ```sh
+# Recompute all leaves (including nested moment proofs) in band 0
 uv run --frozen python verify/replay.py --band-index 0
-```
 
-An interval's zero-based index is given in the cover index. To recompute
-only its first ten final boxes:
-
-```sh
+# Recompute a slice of leaves in band 0
 uv run --frozen python verify/replay.py --band-index 0 --first-leaf 0 --max-leaves 10
 ```
 
-The output reports the interval and the range of boxes evaluated. For
-an individual stored value, the new calculation must agree exactly.
-For a containing-interval bound, the new value must be no larger than
-that bound. Each evaluator retains the precision, smoothing parameters,
-and early-stopping level that affect its numerical output. A nested proof
-retains the completed subdivisions and evaluated parent bounds, so its
-reevaluation does not choose a new subdivision or stop at a new target.
+For each reevaluated leaf, `verify/replay.py` verifies that individually stored leaf bounds are reproduced identically and that containing-band bounds are not exceeded.
 
-Numerical reevaluation uses one thread. Large intervals can take
-substantially longer than the default checks. The evaluators use
-[NumPy](https://numpy.org/doc/), [SciPy](https://docs.scipy.org/doc/scipy/),
-and [python-flint](https://python-flint.readthedocs.io/) for Arb arithmetic.
-The paper states the bounds used for binary64 rounding and integration;
-see Johansson's papers on [Arb](https://doi.org/10.1109/TC.2017.2690633)
-and [ball arithmetic integration](https://doi.org/10.1007/978-3-319-96418-8_30).
+Commands for recomputing the scalar, finite-array, and Bernoulli-structure interval enclosures are documented in their respective guides:
+
+- [Scalar Certificates (`verify/check_scalar_certificates.py --replay ...`)](../certificates/scalar/README.md)
+- [Finite-Array Certificates (`verify/finite/current/check.py --arithmetic`)](../certificates/finite/README.md)
+- [Bernoulli Structure Certificates (`verify/structure/check.py --arithmetic`)](../certificates/structure/README.md)
+- [Four-Summand Local Maximizer (`verify/observations/local_trap.py --json`)](../docs/numerical-observations.md)

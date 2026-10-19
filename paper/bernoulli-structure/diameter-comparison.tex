@@ -1,317 +1,139 @@
-\section{Exact replacement of nearby diameters}\label{sec:spread}
-The comparator preserves the individual probability vector. Unequal
-probabilities make the conditional law given the count nonuniform;
-small probabilities also change the scale of the possible improvement.
-We keep weighted count moments throughout the proof and condition only
-after locating a competitive threshold.
+\section{Local replacement of nearby support diameters}\label{sec:spread}
 
-Scale by $h_0$ from Theorem~\ref{thm:spread}, and put
+In this section we prove Theorem~\ref{thm:spread}. Dividing all summands by
+the variance-weighted mean diameter $h_0$, we set
 \[
- q_i=1-p_i,\quad r_i=p_i^2+q_i^2,\quad
- R_0=\sum_i a_i r_i,\quad\mu=\sum_i p_i,
- \quad\ell=\sum_i a_i|e_i|.
+ q_i=1-p_i,\qquad r_i=p_i^2+q_i^2,\qquad
+ R_0=\sum_{i=1}^n a_i r_i,\qquad\mu=\sum_{i=1}^n p_i,
+ \qquad\ell=\sum_{i=1}^n a_i|e_i|\le\sqrt A\,\sigma,
 \]
-Then $\sum_i a_i e_i=0$, $A/2\le R_0\le A$ and
-$\ell\le\sqrt A\sigma$. With
-\[
- K=\sum_i B_i,\qquad T=\sum_i e_i(B_i-p_i),
-\]
-the original centered sum is $K-\mu+T$, and its variance is
-$A+\sigma^2$. Write $c_k=\Pp(K=k)$ and
+where $\sum_{i=1}^n a_i e_i=0$ and $A/2\le R_0\le A$. Writing
+$K=\sum_{i=1}^n B_i$ and $T=\sum_{i=1}^n e_i(B_i-p_i)$, the centered sum is
+$S=K-\mu+T$ with variance $A+\sigma^2$. Set $c_k=\Pp(K=k)$ and
 $N_j(k)=\E[T^j\ind_{\{K=k\}}]$.
 
-\subsection{Count estimates with no probability floor}
-Uniformly over all individual probabilities and every integer $k$,
-as $A\to\infty$,
+\subsection{Probability-free Poisson-binomial and weighted-moment bounds}
+
+Uniformly over all probabilities $p_i\in(0,1)$ and all $k\in\Z$, as
+$A\to\infty$,
 \begin{align}
  c_k&=\frac{\phi(x_k)}{\sqrt A}+O(A^{-1}),\notag\\
  F_K(k)-\Phi(x_k)
    &=\frac{\phi(x_k)}{\sqrt A}
       \left\{\frac12+\frac{\gamma_3}{6}(1-x_k^2)\right\}
            +O(A^{-1}),                              \label{eq:pb-grid}\\
- x_k&=(k-\mu)/\sqrt A,\qquad
- \gamma_3=A^{-1}\sum_i a_i(1-2p_i),\quad|\gamma_3|\le1.\notag
+ x_k&=\frac{k-\mu}{\sqrt A},\qquad
+ \gamma_3=\frac1A\sum_{i=1}^n a_i(1-2p_i)\in[-1,1],\notag
 \end{align}
-All constants here are absolute. To prove the mass formula, use
-Fourier inversion, the local cumulant expansion, and
-\[
- \left|\prod_{i\notin F}(q_i+p_i e^{it})\right|
- \le\exp\left\{-2\left(A-\sum_{i\in F}a_i\right)\sin^2(t/2)\right\}.
-\]
-For at most four deletions, $\sum_{i\in F}a_i\le1$.
-Every fixed-order Bernoulli cumulant of order at least two is bounded
-by a constant times $a_i$. The local Taylor remainders have the same
-bound because $q_i+p_i e^{it}$ stays uniformly away from zero near
-zero. Thus the Fourier integral of the error from the leading Gaussian
-is $O(A^{-1})$, independently of $k$.
-
-For the CDF introduce independent $U\sim\mathrm{Unif}[-1/2,1/2]$.
-The exact identity is $F_K(k)=F_{K+U}(k+1/2)$.
-Near zero, comparison of the characteristic function with
-\[
- e^{-At^2/2}\{1+\kappa_3(it)^3/6\},\qquad\kappa_3=A\gamma_3,
-\]
-has CDF-inversion error bounded by a constant times
-\[
- \int (A|t|^3+A^2|t|^5+t^2/|t|)e^{-cAt^2}\,dt=O(A^{-1}).
-\]
-The last term is the error from the jitter factor $\sinc(t/2)$.
-At every nonzero peak $t=2\pi j+u$, $|u|\le\pi$,
-\[
- |\sinc(t/2)/t|\le C|u|/j^2.
-\]
-The product modulus therefore bounds that peak by $O(1/(Aj^2))$.
-Summing these bounds and using the Gaussian tails proves the jittered
-CDF expansion uniformly in the threshold. Expanding its half-grid
-shift gives \eqref{eq:pb-grid}. This proof uses a continuous jittered
-CDF and actual integer-grid values of $F_K$.
-
-The required weighted moments satisfy, uniformly for every $k$,
+and the unconditioned weighted moments $N_j(k)=\E[T^j\ind_{\{K=k\}}]$ satisfy
 \begin{align}
  |N_1(k)|&\le C\ell A^{-3/2},\notag\\
- |N_2(k)-\sigma^2c_k|&\le C\sigma^2/A,\notag\\
- 0\le N_4(k)&\le C(\sigma^4+\eta^2\sigma^2)/\sqrt A.
+ |N_2(k)-\sigma^2c_k|&\le \frac{C\sigma^2}{A},\notag\\
+ 0\le N_4(k)&\le \frac{C(\sigma^4+\eta^2\sigma^2)}{\sqrt A}.
                                                     \label{eq:weighted-coefficients}
 \end{align}
-Here is a direct Fourier proof retaining the vanishing spread factors.
-Put $f_i=q_i+p_i e^{it}$, $s=e^{it}-1$, $\Psi=\prod f_i$, and let
-$\Psi_i,\Psi_{ij}$ denote deleted products. For $Y_i=B_i-p_i$,
-\[
- \E[Y_i e^{itB_i}]=a_i s,\qquad
- \E[Y_i^2 e^{itB_i}]=a_i f_i+(1-2p_i)a_i s,
- \qquad |\E[Y_i^j e^{itB_i}]|\le a_i\quad(j\ge2).
-\]
-Weighted orthogonality gives the exact cancellation
-\[
- \widehat N_1=s\sum_i a_i e_i\Psi_i
-                  =-s^2\sum_i a_i p_i e_i\Psi_i.
-\]
-Its absolute integral is $O(\ell A^{-3/2})$.
-For the second moment, subtracting $\sigma^2\Psi$ leaves
-\[
- s\sum_i e_i^2(1-2p_i)a_i\Psi_i
-       +s^2\sum_{i\ne j}u_i u_j\Psi_{ij},
- \qquad u_i=a_i e_i,\quad\sum_i u_i=0.
-\]
-Use the exact identity
-\[
- \Psi_{ij}=\Psi+(1-f_i)\Psi_i+(1-f_j)\Psi_j
-                         +(1-f_i)(1-f_j)\Psi_{ij}.
-\]
-The cross term is bounded by
-$C\sigma^2(t^2+|t|^3+At^4)e^{-cAt^2}$; the singleton term has
-integral $O(\sigma^2/A)$. This proves the second estimate without
-dividing by an individual characteristic function.
-For the fourth moment, the index partitions $4,31,22,211,1111$ and
-\[
- \sum_i a_i e_i^4\le\eta^2\sigma^2,\quad
- \sum_i a_i|e_i|^3\le\eta\sigma^2,\quad
- \ell\le\sqrt A\sigma
-\]
-give respective absolute integral bounds controlled by
-$C(\sigma^4+\eta^2\sigma^2)/\sqrt A$.
-For example, the $31$ term is at most $C\eta\sigma^3/\sqrt A$;
-$2\eta\sigma^3\le\sigma^4+\eta^2\sigma^2$ absorbs it.
-Fourier inversion proves \eqref{eq:weighted-coefficients}, including
-rare layers and layers of probability zero.
+To prove \eqref{eq:weighted-coefficients} without dividing by individual
+characteristic functions, write $f_i(t)=q_i+p_i e^{\ii t}$, $s=e^{\ii t}-1$,
+$\Psi=\prod_{i=1}^nf_i$, and $\Psi_i,\Psi_{ij}$ for the products with one or
+two factors omitted. Because $\sum_{i=1}^n a_ie_i=0$, the Fourier transform
+of $N_1$ is $\widehat N_1(t)=s\sum_i a_ie_i\Psi_i=-s^2\sum_i a_ip_ie_i\Psi_i$,
+whose $L^1([-\pi,\pi])$ norm is $O(\ell A^{-3/2})$. Similarly, using
+$\Psi_{ij}=\Psi+(1-f_i)\Psi_i+(1-f_j)\Psi_j+(1-f_i)(1-f_j)\Psi_{ij}$ and
+$u_i=a_ie_i$ ($\sum_i u_i=0$) bounds $\|\widehat N_2-\sigma^2\Psi\|_1=O(\sigma^2/A)$,
+and expanding $T^4$ into index partitions $(4),(3,1),(2,2),(2,1,1),(1,1,1,1)$
+bounds $\|\widehat N_4\|_1=O((\sigma^4+\eta^2\sigma^2)/\sqrt A)$.
 
-\subsection{Locating thresholds before conditioning}
-At an actual positive closed threshold $y$, write
-$y=k-\mu+\theta$, with $k$ nearest to $y+\mu$ and $|\theta|\le1/2$.
-The exact decomposition is
+\subsection{Threshold localization prior to conditioning}
+
+At any threshold $y=k-\mu+\theta$ with $k=\operatorname{round}(y+\mu)$ and
+$|\theta|\le1/2$, decomposing $\{S\le y\}$ by the value of $K$ and summing
+$N_4(j)/(|j-k|-1/2)^4$ over $j\ne k$ gives
 \begin{equation}\label{eq:crossing-decomposition}
  F_h(y)=F_K(k)-c_k\Pp(T>\theta\mid K=k)+E_{k,\theta},
- \quad |E_{k,\theta}|\le
-             \frac{C(\sigma^4+\eta^2\sigma^2)}{\sqrt A}.
+ \qquad |E_{k,\theta}|\le
+             \frac{C(\sigma^4+\eta^2\sigma^2)}{\sqrt A},
 \end{equation}
-When $c_k=0$ the subtracted product is zero. To bound the remainder,
-sum $N_4(j)/(|j-k|-1/2)^4$ over all $j\ne k$.
-This retains all interleaving count layers and the closed convention.
-
-The original denominator is
+while the third-moment sum $R_h$ satisfies
 \begin{equation}\label{eq:resource-change}
- R_h-R_0=3\sum_i a_i r_i e_i+3\sum_i a_i r_i e_i^2
-                                     +\sum_i a_i r_i e_i^3,
- \quad |R_h-R_0|\le C(\ell+\sigma^2+\eta\sigma^2).
+ R_h-R_0=3\sum_{i=1}^n a_i r_i e_i+3\sum_{i=1}^n a_i r_i e_i^2
+                                     +\sum_{i=1}^n a_i r_i e_i^3,
+ \qquad |R_h-R_0|\le C(\ell+\sigma^2+\eta\sigma^2).
 \end{equation}
-Consequently, for $P_h=(A+\sigma^2)^{3/2}/R_h$ and
-$P_0=A^{3/2}/R_0$,
-$P_h/P_0=1+O(\ell/A+\sigma^2/A)$ when $\sigma,\eta$ are small.
-Dropping the nonpositive term in \eqref{eq:crossing-decomposition},
-using \eqref{eq:pb-grid} and globally bounded normal derivatives,
-first gives every positive discrepancy as $O(A^{-1/2})$.
-The corresponding global ratio bound is
-\[
- \mathcal C_h(y)\le C(1+x_k^2)\phi(x_k)
-       +C(\sigma^4+\eta^2\sigma^2)+O((1+\sigma)/\sqrt A).
-\]
-Choose the spread bounds small and then $A$ large, depending on $c_0$.
-Any active threshold with ratio at least $c_0$ has bounded $x_k$.
-Thus $c_k\ge c_{c_0}/\sqrt A$ and
+Thus any threshold achieving $\mathcal C_h(y)\ge c_0$ has bounded $|x_k|$,
+so $c_k\ge c_{c_0}/\sqrt A$, and dividing \eqref{eq:weighted-coefficients}
+by $c_k$ yields
 \begin{align}
- |\E(T\mid K=k)|&\le C\ell/A,\notag\\
- \E(T^2\mid K=k)&=\sigma^2\{1+O(A^{-1/2})\},\notag\\
+ |\E(T\mid K=k)|&\le \frac{C\ell}{A},\notag\\
+ \E(T^2\mid K=k)&=\sigma^2\bigl\{1+O(A^{-1/2})\bigr\},\notag\\
  \E(T^4\mid K=k)&\le C(\sigma^4+\eta^2\sigma^2).
                                                     \label{eq:conditional-bulk}
 \end{align}
-Only at this stage have we divided the weighted estimates by $c_k$.
 
-\subsection{An absolute-moment bound from two conditional samples}
-At the localized count, we need the bound
+\subsection{Conditional $L^1$ lower bound via rejective-sampling matchings}
+
+We next prove that at any localized count $k$,
 \begin{equation}\label{eq:conditional-l1}
-                   \E(|T|\mid K=k)\ge c\ell/\sqrt A.
+                   \E(|T|\mid K=k)\ge \frac{c\ell}{\sqrt A}.
 \end{equation}
-The count-conditioned law is the classical rejective sampling law
-\cite[Section~2]{BoistardLopuhaaRuizGazen2012}.
-The relative estimates used here follow directly from our grid formula.
-For at most three fixed coordinates $F$, direct factorization gives
-\[
- \Pp(B_F=b_F\mid K=k)
-  =\Pp(B_F=b_F)\frac{c_{-F}(k-\sum b_F)}{c_k}.
-\]
-The deleted variance differs by at most $3/4$ and the standardized
-argument by $O(A^{-1/2})$. The mass estimate in \eqref{eq:pb-grid}
-therefore makes the ratio $1+O(A^{-1/2})$, uniformly even when the
-configuration probability tends to zero.
-
-Take two independent copies $B,B'$ of the count-conditioned law.
-Let $C=\{i:B_i\ne B'_i\}$ and $m=|C|$, an even integer.
-Given $C$ and the common successes outside $C$, the change signs are
-uniform balanced signs: the product of their odds has one factor
-$p_i/q_i$ for every changed coordinate, independently of the sign.
-Generate these signs by a uniform perfect matching of $C$ and
-independent opposite Rademacher signs in each pair.
-For a fixed matching, moment interpolation gives mean absolute value
-at least $1/\sqrt3$ times the Euclidean norm of its coefficients
-$e_i-e_j$. Averaging matchings gives, for $m\ge2$,
+The conditional law of $(B_1,\ldots,B_n)$ given $K=k$ is a rejective
+sampling law \citep[Section~2]{BoistardLopuhaaRuizGazen2012}; by
+\eqref{eq:pb-grid}, for any set $F$ of at most three indices,
+$\Pp(B_F=b_F\mid K=k)=\Pp(B_F=b_F)\{1+O(A^{-1/2})\}$. Let $B,B'$ be two
+independent draws from the conditional law given $K=k$, and let
+$C=\{i:B_i\ne B_i'\}$, which has even cardinality $m=|C|$. Conditional on
+$C$ and on the common values outside $C$, the signs $B_i-B_i'\in\{-1,1\}$ for
+$i\in C$ are uniformly distributed over balanced sign vectors (since the
+odds product $\prod_{i\in C}(p_i/q_i)$ is independent of which half of $C$ is
+$+1$). Generating a uniform balanced sign vector by choosing a uniform
+perfect matching of $C$ and assigning independent Rademacher signs to each
+matched pair gives, by Khintchine's inequality on each matching,
 \[
  \E(|T-T'|\mid C)
- \ge\sqrt{2/3}\,
-       \frac{\sum_{i<j\in C}|e_i-e_j|}{(m-1)\sqrt m}.
+ \ge\sqrt{\frac23}\,
+       \frac{\sum_{i<j\in C}|e_i-e_j|}{(m-1)\sqrt m}\qquad(m\ge2).
 \]
-The relative deletion ratios imply
+Since $\Pp(i,j\in C)\ge ca_ia_j$ and $\E(m\mid i,j\in C)\le CA$, Jensen's
+inequality for $m^{-3/2}$ and $\sum_ja_j|e_i-e_j|\ge A|e_i|$ yield
 \[
- \Pp(i,j\in C)\ge c a_i a_j,\qquad
- \E(m\mid i,j\in C)\le CA.
+ 2\E(|T|\mid K=k)\ge\E(|T-T'|\mid K=k)
+ \ge cA^{-3/2}\sum_{i<j}a_ia_j|e_i-e_j|
+ \ge \frac{c\ell}{\sqrt A},
 \]
-For the first identity, if $\pi_{ab}$ are the conditional two-coordinate
-state probabilities, the exact probability is
-$2(\pi_{11}\pi_{00}+\pi_{10}\pi_{01})
- =4a_i a_j\{1+O(A^{-1/2})\}$.
-For the second, fix the two change signs. This fixes two coordinates
-and therefore the remaining count in each of the two independent
-conditional samples. The one-coordinate relative deletion ratios
-in these reduced samples bound the probability of a difference at
-coordinate $l$ by $Ca_l$. Summing gives $\E(m\mid i,j\in C)\le2+CA=O(A)$. Jensen's inequality for $m^{-3/2}$
-then yields
-\[
- \E|T-T'|\ge cA^{-3/2}\sum_{i<j}a_i a_j|e_i-e_j|.
-\]
-Orthogonality gives
-$\sum_j a_j|e_i-e_j|\ge A|e_i|$, so the sum is at least $A\ell/2$.
-The triangle inequality $\E|T-T'|\le2\E|T|$ proves
-\eqref{eq:conditional-l1}.
+proving \eqref{eq:conditional-l1}.
 
-\subsection{The phase loss and the exact final comparison}
-Write $M_1=\E(|T|\mid K=k)$,
-$W=\Pp(T>\theta\mid K=k)$ and $L=\theta+W$.
-Equations~\eqref{eq:conditional-bulk}--\eqref{eq:conditional-l1} give
-\[
- |\E(T\mid K=k)|\le M_1/4,
- \qquad M_1\ge c\frac{\sigma^2}{\sigma+\eta}
-\]
-for $A$ large. The second inequality is interpolation between the
-second and fourth moments. Thus
-$\E(T^+\mid K=k)\ge3M_1/8$. Cauchy's inequality gives
-\[
- \nu:=\Pp(T>0\mid K=k)\ge cM_1^2/\sigma^2
-                              \ge cM_1/(\sigma+\eta).
-\]
-For small enough $\sigma+\eta$, $\nu\ge8M_1$.
-If $\theta\ge M_1/4$, then $L\ge M_1/4$.
-For $0\le\theta<M_1/4$, removing the lower positive values leaves
-positive first moment at least $M_1/8$; Cauchy's inequality again
-gives $W\ge cM_1^2/\sigma^2\ge cM_1$.
-If $\theta=-u<0$ and $u\le\nu/2$, then $L\ge\nu/2$.
-If $u>\nu/2\ge4M_1$, first-moment Markov gives
-$\Pp(T\le-u\mid K=k)\le1/4$, hence $L\ge1/4$.
-These cases prove the relative bounds
+\subsection{Completion of the comparison and optimality of the rate}
+
+Setting $M_1=\E(|T|\mid K=k)$, $W=\Pp(T>\theta\mid K=k)$, and $L=\theta+W$,
+equations \eqref{eq:conditional-bulk}--\eqref{eq:conditional-l1} and Cauchy--Schwarz
+give $|\E(T\mid K=k)|\le M_1/4$, $M_1\ge c\sigma^2/(\sigma+\eta)$, and
 \begin{equation}\label{eq:relative-phase}
- L\ge c\max\left(\frac\ell{\sqrt A},
+ L\ge c\max\left(\frac\ell{\sqrt A},\,
                       \frac{\sigma^2}{\sigma+\eta}\right)>0,
- \quad |\theta|+\theta^2+W\le CL,
- \quad\sigma^2\le C(\sigma+\eta)L.
+ \qquad |\theta|+\theta^2+W\le CL,
+ \qquad\sigma^2\le C(\sigma+\eta)L.
 \end{equation}
+Comparing $D_h(y)=F_h(y)-\Phi(y/\sqrt{A+\sigma^2})$ directly with the
+unperturbed discrepancy $D_0(k)=F_K(k)-\Phi(x_k)$ via \eqref{eq:crossing-decomposition}
+and \eqref{eq:resource-change} shows that every error term is $O((\sigma+\eta)^3L+L/\sqrt A)$,
+giving
+\[
+ \mathcal C_h(y)-\frac{A^{3/2}}{R_0}D_0(k)
+ \le\bigl\{-c+C(\sigma+\eta)^3+CA^{-1/2}\bigr\}L
+ \le-\kappa\frac{\sigma^2}{\sigma+\eta},
+\]
+which proves Theorem~\ref{thm:spread} (and when $p_i\in J\subset(0,1)$ for a
+compact set $J$, $\eta\le\sigma/\sqrt{\min_{p\in J}p(1-p)}$ gives
+$\sigma^2/(\sigma+\eta)\ge c_J\sigma$).
 
-Compare with the exact unit-diameter closed discrepancy
-$D_0(k)=F_K(k)-\Phi(x_k)$, and set
-$\alpha_k=\phi(x_k)/\sqrt A$.
-At the bounded standardized threshold, normal Taylor expansion gives
-\[
- D_h(y)-D_0(k)
- =-c_kL+(c_k-\alpha_k)\theta+E_{k,\theta}
-                                      +O((\sigma^2+\theta^2)/A).
-\]
-Multiply by $P_0$, and use \eqref{eq:resource-change} to include
-$(P_h-P_0)D_h$. Every final error contains $L$:
-the normal, mass and denominator terms are $O(L/\sqrt A)$, and
-the crossing term is at most $C(\sigma+\eta)^3L$.
-The leading coefficient $P_0c_k$ has a positive lower bound.
-Consequently
-\[
- \mathcal C_h(y)-P_0D_0(k)
- \le\{-c+C(\sigma+\eta)^3+C/\sqrt A\}L
- \le-\kappa\frac{\sigma^2}{\sigma+\eta}.
-\]
-Choose the spread bounds and $A_0$ in that order.
-The comparison uses the exact common-diameter branch, so no
-spread-independent grid error remains. Its branch lies below the
-full common-diameter ratio. Reflection of a negative strict maximizing
-threshold preserves $a_i,r_i,\sigma,\eta$ and treats the other side.
-This proves Theorem~\ref{thm:spread}.
-If $p_i\in J\Subset(0,1)$, then
-$\eta\le\sigma/\sqrt{\min_{p\in J}p(1-p)}$, giving its linear-$\sigma$
-corollary.
-
-\subsection{Why the probability-free gain has the smaller scale}
-Fix $c_0<\ce$. Choose a fixed, sufficiently large IID unit-diameter
-binary group of size $m$ with $p=\pe$, ratio above $c_0$, and a
-positive closed maximum strictly above its negative strict maximum.
-The phase expansion in Section~\ref{sec:iid-phase} supplies such groups, with $m$ above
-any prescribed count-variance cutoff. Put $a=p(1-p)$, $r=p^2+(1-p)^2$.
-Add a Bernoulli($s$) coordinate. For small $s$, its common-diameter
-maximum still has the positive closed sign, by continuity of the finite
-set of threshold branches. Denote a winning integer by $k(s)$.
-
-Give the group diameter $g_c=1+s(1-s)\eta/(ma)$ and the rare coordinate
-diameter $g_s=1-\eta$, with $0<\eta<1/4$.
-This preserves the weighted mean diameter one. At raw threshold
-$k g_c$ the CDF is exactly
-\[
-                 (1-s)F_{\mathrm{group}}(k)
-                         +sF_{\mathrm{group}}(k-1),
-\]
-the same as the common-diameter array, since $0<g_s/g_c<1$.
-The centered threshold, variance and third-moment sum are
-\[
- y_k=kg_c-mpg_c-sg_s,\quad
- V_h=mag_c^2+s(1-s)g_s^2,\quad
- R_h=marg_c^3+s(1-s)\{s^2+(1-s)^2\}g_s^3.
-\]
-For fixed $m,p$, the corresponding finitely many smooth branch
-formulas are analytic near $(s,\eta)=(0,0)$.
-They agree with the common-diameter branch at $\eta=0$ and are
-independent of $\eta$ at $s=0$. A bounded mixed derivative therefore
-gives
-\[
-               0<\mathcal C_{\mathrm{com}}(s)-\mathcal C_h
-                                      \le K_m s\eta,
-\]
-where the lower strictness follows from Theorem~\ref{thm:spread}.
-Meanwhile
-$\sigma^2=s(1-s)\eta^2\{1+s(1-s)/(ma)\}$.
-Taking $s=\eta^4$ gives $\sigma\sim\eta^3$ and a gain of order
-$\eta^5$, equal to the order $\sigma^2/(\sigma+\eta)$ supplied by
-the theorem. These arrays stay above $c_0$ by continuity.
-Thus a uniform gain proportional to $\sigma$ fails without a
-probability floor, even for competitive finite binary arrays.
+Finally, to see that the rate $\sigma^2/(\sigma+\eta)$ cannot be improved to
+$\sigma$ without a lower bound on $p_i$, take a fixed large i.i.d.\ Esseen
+group of size $m$ with ratio $>c_0$ attained on the positive closed branch,
+and adjoin one rare coordinate $B_{m+1}\sim\Bern(s)$ ($s\to0$) with diameter
+$g_s=1-\eta$ ($0<\eta<1/4$) while giving the $m$ group coordinates diameter
+$g_c=1+s(1-s)\eta/(ma)$. Because $0<g_s/g_c<1$, the closed CDF at uncentered
+threshold $kg_c$ equals $(1-s)F_{\mathrm{group}}(k)+sF_{\mathrm{group}}(k-1)$,
+identical to the common-diameter value at $\eta=0$. Since the smooth branch
+ratio is analytic in $(s,\eta)$ near $(0,0)$ and is independent of $\eta$ at
+$s=0$, its mixed partial derivative is bounded, so
+$0<\mathcal C_{\mathrm{com}}(s)-\mathcal C_h\le K_m s\eta$. Choosing $s=\eta^4$
+gives $\sigma\sim\sqrt s\,\eta=\eta^3$ and gain $O(\eta^5)=O(\sigma^2/(\sigma+\eta))$.

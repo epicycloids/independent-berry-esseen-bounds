@@ -1,59 +1,55 @@
 \section{Binomial phase and the optimal number of zero coordinates}
 \label{sec:iid-phase}
 
-This section concerns the binomial optima $B_m$ and their padded envelope
-$P_N:=\max_{1\le m\le N}B_m$. It determines the eventual record pattern
-within this family. Theorem~\ref{thm:common} transfers these conclusions
-to common-diameter maximizers; no reduction from arbitrary independent
-laws is assumed here.
+In this section we analyze the $m$-summand i.i.d.\ binomial maxima $B_m$ and
+their padded envelope $P_N:=\max_{1\le m\le N}B_m$. By Theorem~\ref{thm:common},
+$P_N=C_N^{\mathrm{com}}$ is the exact $N$-summand common-diameter maximum.
 
-Put $s=\sqrt{10}$ and write
+Put $s=\sqrt{10}$ and define the algebraic constants
 \begin{equation}\label{eq:phase-constants}
 \begin{gathered}
- p=(4-s)/2,\quad q=1-p,\quad t=s-3,\quad u=p-t,
- \quad c_*=(20+s)/72,\\
+ p=\frac{4-s}2,\qquad q=1-p,\qquad t=s-3,\qquad u=p-t,
+ \qquad c_*=\frac{20+s}{72},\\
  Q_*=\frac{\phz(867+287s)}{25920},\qquad
  \alpha=\frac{\phz(60+19s)}{30},\qquad
  b=\frac{1010-397s}{12960},\\
  \delta=c_*-b=\frac{2590+577s}{12960},\qquad
- \eta=Q_*/\alpha=\frac{2510-747s}{8640},\qquad
+ \eta=\frac{Q_*}\alpha=\frac{2510-747s}{8640},\qquad
  \omega=\frac{7773-2447s}{8640}.
 \end{gathered}
 \end{equation}
-The letters $p,q,t$ in this section without an argument denote these
-fixed limiting values. For a variable Bernoulli parameter $v$, use
-$a(v)=v(1-v)$, $r(v)=v^2+(1-v)^2$ and $\tau(v)=1-2v$.
-For a real number $x$, write $\langle x\rangle=x-\operatorname{round}(x)$,
-choosing either convention at half-integers.
+For a general Bernoulli parameter $v\in(0,1)$, write $a(v)=v(1-v)$,
+$r(v)=v^2+(1-v)^2$, and $\tau(v)=1-2v$; for $x\in\R$, write
+$\langle x\rangle=x-\operatorname{round}(x)$.
 
-\begin{theorem}[Eventual binomial padding]\label{thm:iid-padding}
-At every sufficiently large horizon $N$, $P_N$ has a unique maximizing
-core size $m_N$, and $j_N=N-m_N$ belongs to $\{0,1,2,3,4\}$.
-The limiting frequencies of these five zero counts are respectively
+\begin{theorem}[Asymptotic zero padding and record gaps in $P_N$]\label{thm:iid-padding}
+For every sufficiently large integer $N$, $P_N=\max_{1\le m\le N}B_m$ is
+attained at a unique active count $m_N$, and the number of zero coordinates
+$j_N=N-m_N$ belongs to $\{0,1,2,3,4\}$. As $N\to\infty$, the limiting
+frequencies of $j_N=0,1,2,3,4$ exist and equal
 \[
- p-\omega,\quad p-\omega,\quad t,\quad\omega,\quad\omega.
+ p-\omega,\qquad p-\omega,\qquad t,\qquad\omega,\qquad\omega,
 \]
-The gaps between successive record core sizes eventually belong exactly
-to $\{2,3,5\}$: no other gap occurs sufficiently late, and each of
-these three occurs infinitely often. No effective first horizon is asserted.
+respectively. Moreover, the gaps between successive record active counts
+$m_N$ eventually belong to $\{2,3,5\}$, and each of the three gaps $2,3,5$
+occurs infinitely often with positive asymptotic density.
 \end{theorem}
 
-\subsection{A uniform expansion at a fixed integer threshold}
+\subsection{Uniform Edgeworth--Euler--Maclaurin expansion at an integer threshold}
 
-Let $F_{m,v}$ be the distribution function of $\Bin(m,v)$. Fix an integer
-$k$ and set $c=mv-k$, $d=(ma(v))^{-1/2}$. The positive closed-threshold
-discrepancy is $D_{m,k}(v)=F_{m,v}(k)-\Phi(-cd)$.
+Let $F_{m,v}$ be the distribution function of $\Bin(m,v)$. For an integer
+$k$ and $v\in(0,1)$, set $c=mv-k$, $d=(ma(v))^{-1/2}$, and
+$D_{m,k}(v)=F_{m,v}(k)-\Phi(-cd)$.
 
 \begin{lemma}\label{lem:phase-uniform}
-On every compact $J\subset(0,1)$ and bounded range $|c|\le M$, uniformly
-for $v=(k+c)/m\in J$,
+For every compact interval $J\subset(0,1)$ and $M>0$, uniformly for
+$|c|\le M$ and $v=(k+c)/m\in J$,
 \begin{equation}\label{eq:phase-cdf}
  D_{m,k}(v)=\phz\bigl[d(1/2+\tau/6)+d^3C(\tau,-c)
                          +d^5T_5(\tau,-c)\bigr]+O(d^7),
 \end{equation}
-with the same order for the derivative of the remainder in $c$, fixing
-$m,k$. The expansion extends to any fixed order and any fixed finite
-number of these branch derivatives. Here
+and the same asymptotic expansion holds upon differentiating with respect to
+$c$ at fixed $m,k$ (and extends to any fixed order in $d$). Here
 \begin{align*}
 C(\tau,\beta)={}&\frac{-1080(1+\tau)\beta^2
  -(90\tau^2+1080\tau+630)\beta
@@ -67,160 +63,79 @@ T_5(\tau,\beta)={}&\frac{3+5\tau}{48}\beta^4
 \end{lemma}
 
 \begin{proof}
-The Fourier integral for a binomial mass is on $[-\pi,\pi]$. Its modulus
-satisfies
-\[
- |1-v+ve^{i\xi}|^m
- =(1-4a(v)\sin^2(\xi/2))^{m/2}.
-\]
-After $z=\xi\sqrt{ma(v)}$, the inequality
-$\sin(|\xi|/2)\ge|\xi|/\pi$ bounds this by $e^{-2z^2/\pi^2}$
-throughout the integration interval. On $J$, the centered logarithm has
-a Taylor expansion of any prescribed order with uniformly bounded
-coefficients and parameter derivatives. Split the integral at
-$|z|=m^\varepsilon$, with $\varepsilon$ sufficiently small for that
-order. Polynomial multiples of the Gaussian bound control the inner
-Taylor remainder; the outer integral is smaller than any prescribed
-power of $m^{-1}$. Taking sufficiently many terms gives a Hermite
-mass expansion with uniform absolute error $O(d^{12})$, or any higher
-fixed power if needed, at every integer mass index.
-
-This statement also holds for branch derivatives. Before centering,
-\[
- \frac{\partial}{\partial c}(1-v+ve^{i\xi})^m
- =(e^{i\xi}-1)(1-v+ve^{i\xi})^{m-1},
- \qquad v=(k+c)/m.
-\]
-Further fixed derivatives have the same Gaussian control after increasing
-the retained Taylor order. The standardized mass index and spacing have
-bounded branch derivatives of the needed orders on the stated ranges.
-
-Summing at most $m+1=O(d^{-2})$ masses turns the displayed mass error
-into $O(d^{10})$, including its branch derivatives. The tails beyond
-the true binomial support are exponentially small. Euler--Maclaurin
-summation may therefore be applied to the infinite lower lattice of the
-Gaussian-polynomial terms. Its order-eight remainder is bounded by a
-constant times $d^8\|f^{(8)}\|_1$ for each such term. In the integral
-periodic-Bernoulli remainder, differentiating the phase gives bounded
-factors of the form $1+d|z|$; Gaussian derivative moments remain
-integrable. Increasing the summation order gives the corresponding
-assertion for further branch derivatives.
-
-The coefficient of $d^j$ in the density has parity $j$. Integration,
-the half-cell term, and the Euler--Maclaurin derivative terms then leave
-only odd powers $d,d^3,d^5,\ldots$ when evaluated at $-cd$.
-The terms through $d^5$ give \eqref{eq:phase-cdf}. Their coefficients
-follow by using the Bernoulli cumulant ratios
-\[
- \tau,\quad1-6a,\quad\tau(1-12a),\quad
- 1-30a+120a^2,\quad\tau(1-60a+360a^2)
-\]
-and the lattice corrections $df/2+d^2f'/12-d^4f'''/720$.
-The cubic phase coefficient is also the polynomial in Schulz's
-Remark~4.3, derived on p.~25 \cite{Schulz2016}.
+By Fourier inversion on $[-\pi,\pi]$ with $|1-v+ve^{\ii\xi}|^m=(1-4a(v)\sin^2(\xi/2))^{m/2}\le e^{-2z^2/\pi^2}$
+($z=\xi\sqrt{ma(v)}$), expanding $\log\E e^{\ii\xi(\Bin(m,v)-mv)}$ on
+$|z|\le m^\varepsilon$ gives a uniform local Hermite expansion for each point
+mass $\Pp(\Bin(m,v)=j)$ and its $c$-derivatives (using
+$\partial_c(1-v+ve^{\ii\xi})^m=(e^{\ii\xi}-1)(1-v+ve^{\ii\xi})^{m-1}$) to
+error $O(d^{12})$. Summing over $j\le k$ via Euler--Maclaurin summation
+(with lattice corrections $df/2+d^2f'/12-d^4f'''/720$ and Bernoulli cumulant
+ratios $\tau,1-6a,\tau(1-12a),1-30a+120a^2,\tau(1-60a+360a^2)$) leaves only
+odd powers of $d$ at $-cd$ and yields \eqref{eq:phase-cdf} (compare
+\citet[Remark~4.3, p.~25]{Schulz2016} for the cubic polynomial $C(\tau,\beta)$).
 \end{proof}
 
-Dividing \eqref{eq:phase-cdf} by $r(v)d$ gives the threshold efficiency
+Dividing \eqref{eq:phase-cdf} by $r(v)d$ gives the branch ratio expansion
 \begin{equation}\label{eq:phase-efficiency}
  R_{m,+,k}(v)=E(v)-\frac{Q(v,c)}m-\frac{H(v,c)}{m^2}+O(m^{-3}),
 \end{equation}
 where
 \[
- E(v)=\phz\frac{3+\tau(v)}{3(1+\tau(v)^2)},\quad
- Q(v,c)=-\frac{\phz C(\tau(v),-c)}{r(v)a(v)},\quad
+ E(v)=\phz\frac{3+\tau(v)}{3(1+\tau(v)^2)},\qquad
+ Q(v,c)=-\frac{\phz C(\tau(v),-c)}{r(v)a(v)},\qquad
  H(v,c)=-\frac{\phz T_5(\tau(v),-c)}{r(v)a(v)^2}.
 \]
-The phase parabola $Q(v,c)$ has vertex
-\[
- c_0(v)=\frac{\tau(v)^2+12\tau(v)+7}{24(1+\tau(v))}
-\]
-and minimum
+For each fixed $v$, the quadratic function $c\mapsto Q(v,c)$ attains its
+minimum at $c_0(v)=(\tau(v)^2+12\tau(v)+7)/[24(1+\tau(v))]$, with minimum
+value
 \begin{equation}\label{eq:phase-qmin}
  Q_{\min}(v)=\frac{\phz\{345+72\tau-498\tau^2-8\tau^3-23\tau^4\}}
  {4320(1+\tau)(1-\tau^4)}.
 \end{equation}
 
-\subsection{Global binomial localization and the padding envelope}
+\subsection{Second-order expansion of $B_m$ and the five-state phase envelope}
 
-Schulz's Theorem~1 gives $B_m<\ce$ for every finite $m$.
-His Proposition~6.1 bounds the full Kolmogorov distance on
-$v\in[1/6,5/6]$ by the four absolute closed/left central-threshold errors
-at $\lfloor mv\rfloor,\lceil mv\rceil$ and
-\[
- \gamma\frac{\phz(3+|1-2v|)}{6\sqrt{mv(1-v)}},
- \qquad \gamma=\frac{2}{\sqrt{2\pi}\ce}-1=12t-1<1.
-\]
-His estimate on the two complementary parameter ranges is
-$R_m(v)\le .3031(1+.646/\beta(v))<.4045$,
-where $\beta(v)=r(v)/\sqrt{a(v)}$
-\cite[pp.~29--31]{Schulz2016}.
-Each $B_m$ is attained: the ratio is the maximum of finitely many
-continuous threshold expressions and tends to zero as $v\to0,1$.
-
-By reflection restrict $v\le1/2$. Central expansions and the source
-bound show uniform convergence of the optimized threshold value to $E(v)$
-on the retained compact parameter interval. Its unique maximum is
-$\ce$ at $v=p$. Thus every maximizing parameter tends to $p$.
-Near $p$, the extra $\gamma$ term and left-limit thresholds are uniformly
-smaller than the positive closed central threshold: the latter has leading
-coefficient $\phz(1/2+\tau/6)/r$, while the left-limit coefficient is
-$\phz(1/2-\tau/6)/r$. Consequently the full winner is eventually
-a positive closed floor/ceiling threshold, with $|c|\le1$.
-
-Taking $v=(k+c_*)/m$ with $k$ nearest $mp-c_*$ gives
-$\ce-Q_*/m+O(m^{-2})$. Since
-$E(v)=\ce-\alpha(v-p)^2+O((v-p)^3)$, comparison with
-\eqref{eq:phase-efficiency} and $Q\ge Q_{\min}$ yields
-\[
- (v-p)^2\le C|v-p|/m+C/m^2,
- \qquad v-p=O(m^{-1}).
-\]
-The positive quadratic phase penalty then gives
-$c-c_0(v)=O(m^{-1/2})$. Since $0<c_*<1$, the branch is eventually
-interior. Differentiating \eqref{eq:phase-efficiency} along
-$v=(k+c)/m$ and using $E'(v)=O(m^{-1})$ gives $Q_c=O(m^{-1})$,
-so $c-c_0(v)=O(m^{-1})$ and
-$v=(k+c_*)/m+O(m^{-2})$.
-
-Set $e=k+c_*-mp$. Taylor expansion and completion of the square give
+By Proposition~6.1 and pp.~29--31 of \citet{Schulz2016}, noncentral thresholds
+and parameters $v\notin[1/6,5/6]$ cannot compete with $\ce-O(m^{-1})$. After
+reflecting to $v\le1/2$, $E(v)$ has its unique maximum $\ce$ at $v=p$ with
+$E(v)=\ce-\alpha(v-p)^2+O((v-p)^3)$, and the positive closed central
+threshold dominates the left-limit central threshold (whose leading term has
+$1/2-\tau/6<1/2+\tau/6$). Comparing \eqref{eq:phase-efficiency} with the
+trial choice $v=(k+c_*)/m$ (for $k=\operatorname{round}(mp-c_*)$) gives
+$v-p=O(m^{-1})$ and $c-c_0(v)=O(m^{-1/2})$, and branch stationarity
+$\partial_c R_{m,+,k}=0$ refines this to $c-c_0(v)=O(m^{-1})$ and
+$v=(k+c_*)/m+O(m^{-2})$. Setting $e=k+c_*-mp$ and completing the square in
+$\alpha e^2+Q_p(p,c_*)e+H(p,c_*)=\alpha(e-b)^2+H_*$ yields the uniform
+second-order expansion
 \begin{equation}\label{eq:phase-bm}
  B_m=\ce-\frac{Q_*}m-\frac{H_*+
  \alpha\operatorname{dist}(mp-\delta,\Z)^2}{m^2}+O(m^{-3}).
 \end{equation}
-Indeed the second-order branch correction is
-$\alpha e^2+Q_p e+H_0$, where all derivatives are evaluated at
-$(p,c_*)$, $H_0=H(p,c_*)$, $b=-Q_p/(2\alpha)$ and
-$H_*=H_0-\alpha b^2$. Direct substitution in
-\eqref{eq:phase-qmin} gives \eqref{eq:phase-constants}.
-The formula remains uniform at the nearest-integer crossing, by taking
-the better of the two branch values; the nearest branch itself need
-only be selected outside an $O(m^{-1})$ half-integer neighborhood.
 
-Choose the most recent maximizing core $m_N$ in a tie. Strict finite
-$B_m<\ce$ and $B_m\to\ce$ imply $m_N\to\infty$.
-The leading correction in \eqref{eq:phase-bm}, compared with $B_N$,
-then gives $m_N/N\to1$, and its $O(m^{-2})$ bounds give
-$j_N=N-m_N=O(1)$. With
-$\theta_N=\operatorname{round}(Np-\delta)-(Np-\delta)$, for bounded $j$,
+Because $B_m<\ce$ for all $m$ and $B_m\to\ce$, any maximizing active count
+$m_N$ for $P_N$ satisfies $m_N\to\infty$, and comparing \eqref{eq:phase-bm}
+at $m_N$ and $N$ forces $j_N=N-m_N=O(1)$. With
+$\theta_N=\operatorname{round}(Np-\delta)-(Np-\delta)\in[-1/2,1/2]$, we have
+for bounded $j\ge0$:
 \[
- N^2(B_{N-j}-B_N)=\alpha\{\theta_N^2-
- \operatorname{dist}(\theta_N+jp,\Z)^2-\eta j\}+O(N^{-1}).
+ N^2(B_{N-j}-B_N)=\alpha\bigl\{\theta_N^2-
+ \operatorname{dist}(\theta_N+jp,\Z)^2-\eta j\bigr\}+O(N^{-1}).
 \]
-The limiting policy minimizes
-$f_j(\theta)=\eta j+\operatorname{dist}(\theta+jp,\Z)^2$.
-Define
+Maximizing $B_{N-j}$ therefore minimizes $f_j(\theta)=\eta j+\operatorname{dist}(\theta+jp,\Z)^2$.
+Define the five transition points in $[-1/2,1/2]$ by
 \begin{equation}\label{eq:phase-boundaries}
 \begin{aligned}
- T_{13}&=-(p+u)/2+\eta/t,& T_{30}&=-u/2-3\eta/(2u),\\
- T_{02}&=t/2+\eta/t,&T_{24}&=3t/2+\eta/t,\\
- T_{41}&=(q+2t)/2-3\eta/(2u).
+ T_{13}&=-\frac{p+u}2+\frac\eta t,& T_{30}&=-\frac u2-\frac{3\eta}{2u},\\
+ T_{02}&=\frac t2+\frac\eta t,&T_{24}&=\frac{3t}2+\frac\eta t,\\
+ T_{41}&=\frac{q+2t}2-\frac{3\eta}{2u}.
 \end{aligned}
 \end{equation}
-In increasing order on $[-1/2,1/2]$ the winning zero counts are
+On $[-1/2,1/2]$, the lower envelope $\min_{j\ge0}f_j(\theta)$ is achieved on
+six intervals by $j\in\{0,1,2,3,4\}$:
 \begin{center}
 \begin{tabular}{cc}
 \toprule
-Phase interval&Zero count\\
+Phase interval for $\theta_N$&Optimal zero count $j$\\
 \midrule
 $[-1/2,T_{13}]$&1\\
 $[T_{13},T_{30}]$&3\\
@@ -231,94 +146,25 @@ $[T_{41},1/2]$&1\\
 \bottomrule
 \end{tabular}
 \end{center}
-The relevant parabola centers are $-p,-u,0,t,2t,q$, with biases
-$\eta,3\eta,0,2\eta,4\eta,\eta$. Subtracting neighboring
-quadratics gives exactly \eqref{eq:phase-boundaries}. The remaining
-copies are above this envelope: their differences are affine, so it
-suffices to check the displayed interval endpoints. The successive
-active widths are $\omega,p-\omega,t,\omega$, with the two outer
-pieces totaling $p-\omega$. Positivity follows, in particular, from
-$7773^2-10(2447)^2=541439>0$.
+Every $j\ge5$ satisfies $f_j(\theta)\ge5\eta$, whereas $\min_{0\le j\le2}f_j(\theta)\le2\eta+p^2/4<5\eta-59/10000$
+on $[-1/2,1/2]$. Hence $j_N\in\{0,1,2,3,4\}$ for all large $N$, and by Weyl
+equidistribution of the irrational rotation $\theta_N$, the limiting
+frequencies of $j_N=0,1,2,3,4$ equal the lengths
+$p-\omega,p-\omega,t,\omega,\omega$ of the corresponding phase intervals.
 
-For completeness all $j\ge5$ have a uniform positive price gap. Using
-only $j=0,1,2$, the relevant centers are $-p,0,t,q$ and the intersections
-are $-p/2-\eta/(2p)$, $t/2+\eta/t$ and
-$(q+t)/2-\eta/(2p)$. The largest potentially troublesome intersection
-price is at most $2\eta+p^2/4<5\eta$, with gap greater than
-$59/10000$, using
-\[
- 4/25<t<1/6,\qquad5/12<p<21/50,\qquad1/60<\eta<1/55.
-\]
-The other intersection prices are below $1/16<5\eta$;
-the endpoint price $\eta+t^2/4$ is also below $5\eta$.
-But $f_j\ge5\eta$ for $j\ge5$. The bounded-$j$ comparison
-therefore gives $j_N\le4$ eventually.
+\subsection{$O(N^{-1})$ boundary drift and quadratic-field separation}
 
-Away from $O(N^{-1})$ neighborhoods of the five crossings, the actual
-winner has the displayed code. Since $p$ is irrational, its rotation
-is equidistributed. Those shrinking neighborhoods have density zero:
-their upper density is bounded by the length of any fixed larger
-neighborhood. The interval widths prove the claimed padding frequencies.
-
-\subsection{Boundary drift and exact eventual record gaps}
-
-To decide every sufficiently late crossing, extend
-Lemma~\ref{lem:phase-uniform} to the seventh CDF order. Its smooth
-efficiency expansion has remainder $O(m^{-4})$, including the branch
-derivatives needed for optimization. The seventh-order coefficient's
-value at $(p,c_*)$ will be denoted $J_*$. Its value is common to the
-core comparisons and will cancel.
-
-All derivatives below are of the explicit $Q,H$ above at $(p,c_*)$.
-Put
-\begin{align*}
- K(e)&=(2\alpha+Q_{pc})e+Q_p+H_c,\qquad
- F_2(e)=\alpha e^2+Q_pe+H_0,\\
- G(e)&=E_3e^3-Q_{pp}e^2/2-H_pe+K(e)^2/(2Q_{cc}).
-\end{align*}
-The needed constants are
-\[
-\begin{gathered}
- Q_{cc}=\phz(35+11s)/15,\quad
- Q_{pc}=\phz(415+131s)/540,\quad
- Q_p=\phz(1483+463s)/19440,\\
- E_3=E'''(p)/6=-\phz(19+6s)/15,\quad
- c_0'(p)=-(23+4s)/108,\quad
- Q_{pp}=Q_{\min}''(p)+Q_{cc}c_0'(p)^2.
-\end{gathered}
-\]
-The derivatives $H_c,H_p$ are obtained by differentiating the displayed
-$T_5$ expression for $H$; thus every coefficient here is explicit.
-Writing $c=c_*+d_1/m$ and $v=p+e/m+d_1/m^2$, branch stationarity gives
-$d_1=-K(e)/Q_{cc}$. Substituting into the branch value yields
+To resolve ties near the five transition points \eqref{eq:phase-boundaries},
+carrying Lemma~\ref{lem:phase-uniform} to order $d^7$ gives the third-order
+expansion on a winning branch:
 \begin{equation}\label{eq:phase-cubic}
- B_m=\ce-Q_*/m-F_2(e)/m^2+(G(e)-J_*)/m^3+O(m^{-4})
+ B_m=\ce-\frac{Q_*}m-\frac{F_2(e)}{m^2}+\frac{G(e)-J_*}{m^3}+O(m^{-4}),
 \end{equation}
-on a winning integer branch. Near a core's internal half-integer
-crossing both branches must be compared. At each policy crossing in
-\eqref{eq:phase-boundaries}, the two competing cores' internal phases
-lie in $[T_{30},T_{02}]\subset(-1/2,1/2)$, so there is a fixed distance
-from those internal crossings.
-
-For $\theta_j=\langle\theta+jp\rangle$ and $e_j=b+\theta_j$, put
-\[
- L_j(\theta)=Q_*j+F_2(e_j),\qquad
- M_j(\theta)=-Q_*j^2-2jF_2(e_j)+G(e_j).
-\]
-Expanding \eqref{eq:phase-cubic} at $m=N-j$ gives
-\[
- B_{N-j}=\ce-Q_*/N-L_j(\theta)/N^2
-                    +(M_j(\theta)-J_*)/N^3+O(N^{-4}).
-\]
-At a transverse limiting crossing $T$ between $i,j$, the price
-difference changes sign at
-\[
- \theta=T+\frac{D_{ij}}N+O(N^{-2}),\qquad
- D_{ij}=\frac{M_i(T)-M_j(T)}{L_i'(T)-L_j'(T)}.
-\]
-Here the equation refers to the uniform sign comparison of branch
-values; no continuous interpolation of integer-threshold optima is required.
-Substitution of the explicit polynomials gives
+where $F_2(e)=\alpha e^2+Q_pe+H_0$, $K(e)=(2\alpha+Q_{pc})e+Q_p+H_c$, and
+$G(e)=E_3e^3-\frac12Q_{pp}e^2-H_pe+K(e)^2/(2Q_{cc})$. Expanding
+$B_{N-j}$ in powers of $N^{-1}$ shows that the crossing between parabolas
+$i$ and $j$ occurs at $\theta=T+D_{ij}/N+O(N^{-2})$, where explicit evaluation
+gives
 \begin{equation}\label{eq:phase-drift}
 \begin{gathered}
  D_{13}=D_{02}=D_{24}=D_A
@@ -329,66 +175,22 @@ Substitution of the explicit polynomials gives
        -\frac{20072514361}{141087744000}s.
 \end{gathered}
 \end{equation}
-Both rational parts are nonzero, so neither $sD_A$ nor $sD_B$ is rational.
-
-The actual rotation cannot remain ambiguously close to a shifted
-boundary. Let $h_N=\theta_N-T$ and $\gamma=\delta-T$.
-With $L_0=25920$, the numerators of
-$\gamma=(\gamma_A+\gamma_Bs)/L_0$ are
-\begin{center}
-\begin{tabular}{crr}
-\toprule
-$T$&$\gamma_A$&$\gamma_B$\\
-\midrule
-$T_{13}$&95720&-25573\\
-$T_{30}$&72401&-18232\\
-$T_{02}$&43880&-12613\\
-$T_{24}$&121640&-38533\\
-$T_{41}$&98321&-31192\\
-\bottomrule
-\end{tabular}
-\end{center}
-These follow directly from
-$\eta/t=(60+269s)/8640$ and $3\eta/(2u)=(269+6s)/2880$.
-If $k$ is the nearest integer to $Np-\delta$, then
+For each of the five transition points $T$, writing $h_N=\theta_N-T=(A_N+B_Ns)/L_0$
+with $L_0=25920$ and $A_N,B_N\in\Z$, the field norm
+$\nu_N=(A_N^2-10B_N^2)/L_0^2\in L_0^{-2}\Z$ is bounded whenever
+$|h_N|\le C/N$, and $Nh_N=-\nu_N/s+O(N^{-1})$. Because both $D_A$ and $D_B$
+have nonzero rational parts in $\mathbb Q(s)$, $-\nu_N/s$ is bounded away
+from $D_A$ and $D_B$, so $|\theta_N-T-D_{ij}/N|\ge\varepsilon/N$ for all
+large $N$. This dominates the $O(N^{-2})$ remainder and proves that $m_N$ is
+unique for all large $N$. Finally, the exact translation identities
+$T_{02}-p=T_{13}$, $T_{13}+q=T_{24}$, and $T_{30}+q=T_{41}$ preserve the
+drift classes $D_A$ and $D_B$, so under $\theta_{N+1}=\langle\theta_N-p\rangle$
+the transitions of $j_N$ follow the directed graph
 \[
- h_N=(A_N+B_Ns)/L_0,\quad
- A_N=L_0(k-2N)+\gamma_A,\quad B_N=12960N+\gamma_B.
+ 0\longrightarrow1,\qquad1\longrightarrow0\text{ or }2,\qquad
+ 2\longrightarrow0\text{ or }3,\qquad3\longrightarrow4,\qquad
+ 4\longrightarrow0,
 \]
-Its field norm is
-\[
- \nu_N=(A_N^2-10B_N^2)/L_0^2\in L_0^{-2}\Z.
-\]
-In any fixed corridor $|h_N|\le C/N$, the conjugate of $h_N$ is
-$-sN+O(1)$, so $\nu_N$ is bounded and takes only finitely many rational
-values. Moreover $Nh_N=-\nu_N/s+O(N^{-1})$.
-For the corresponding $D_A$ or $D_B$, each $-\nu/s-D$ is nonzero by
-\eqref{eq:phase-drift}. The finite set has a positive minimum separation.
-Thus $|\theta_N-T-D/N|\ge\varepsilon/N$ eventually for some
-$\varepsilon>0$. Outside a sufficiently wide $C/N$ corridor the same
-separation is immediate. This margin dominates the $O(N^{-2})$
-boundary uncertainty. Other policies have fixed limiting price gaps
-near each crossing; away from crossings the unique leading winner
-persists. Hence the exact sufficiently late code is the six-interval
-table, shifting the three $A$ endpoints by $D_A/N$ and the two $B$
-endpoints by $D_B/N$. In particular the winning core is unique.
-
-Finally the endpoint translations
-\[
- T_{02}-p=T_{13},\qquad T_{13}+q=T_{24},\qquad
- T_{30}+q=T_{41}
-\]
-preserve the drift group. Changing $N$ to $N+1$ changes $D/N$ only
-by $O(N^{-2})$, below the norm separation. Interval transport under
-$\theta_{N+1}=\langle\theta_N-p\rangle$ therefore gives exactly
-\[
- 0\longrightarrow1,\quad1\longrightarrow0\text{ or }2,\quad
- 2\longrightarrow0\text{ or }3,\quad3\longrightarrow4,\quad
- 4\longrightarrow0.
-\]
-The return lengths to a record are $2,3,5$. Their frequencies per
-horizon are $u-\omega,t-\omega,\omega$, respectively, all positive;
-this follows by translating the displayed intervals, with the vanishing
-shifts leaving frequencies unchanged. Their sum is $p-\omega$, and
-their gap-weighted sum is one. Each gap thus occurs infinitely often,
-proving Theorem~\ref{thm:iid-padding}.
+whose return cycles to $j_N=0$ have lengths $2,3,5$ with positive limiting
+frequencies $u-\omega,t-\omega,\omega$. This completes the proof of
+Theorem~\ref{thm:iid-padding}.

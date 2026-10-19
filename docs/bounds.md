@@ -1,161 +1,79 @@
-# Bounds and normalization
+# Summary of Bounds and Regimes
 
-For a finite independent family of centered real random variables, write
+Navigation: [Repository Root](../README.md) · [Overview & Reading Guide](overview.md) · [Numerical Studies & Conjectures](numerical-observations.md) · [Verification Guide](../verify/README.md)
+
+---
+
+## Normalization and Definitions
+
+For a finite family of independent centered real random variables $X_1, \dots, X_n$ with positive total variance and finite third absolute moments, we write
 
 ```math
-V=\sum_j\mathbb E X_j^2>0,\qquad
-L=\frac{\sum_j\mathbb E|X_j|^3}{V^{3/2}},\qquad
-\Delta=\sup_x\left|\mathbb P\!\left(
-\frac{\sum_jX_j}{\sqrt V}\le x\right)-\Phi(x)\right|.
+V = \sum_{i=1}^n \mathbb{E} X_i^2 > 0, \qquad
+R = \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty, \qquad
+L = \frac{R}{V^{3/2}}, \qquad
+\Delta = \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{\sum_{i=1}^n X_i}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
 ```
 
-Here $\Phi$ is the standard normal distribution function, and every third
-absolute moment is finite. The constant $C_{\mathrm{ind}}$
-is the supremum of $\Delta/L$ over these families; $C_2$ is the same
-supremum restricted to families of at most two summands. The companion
-papers also use $\ell$ for $L$.
+where $\Phi$ is the standard normal distribution function. Here $L$ is the Lyapunov ratio and $\Delta / L$ is the Berry–Esseen ratio. We denote by $C_{\mathrm{ind}} = \sup \Delta / L$ the universal constant over all finite independent arrays, and by $C_n$ the supremum over arrays of at most $n$ independent summands.
 
-| Bound on $C_{\mathrm{ind}}$ | Source |
-| --- | --- |
-| $C_{\mathrm{ind}}\ge C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})=0.409732\ldots$ | [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946) |
-| $C_{\mathrm{ind}}\lt 0.44988$ | [Upper-bound paper](../paper/independent-berry-esseen.pdf) |
+A *two-point* (or *centered Bernoulli*) summand is a centered random variable supported on at most two points, which takes the form $X_i = h_i(B_i - p_i)$ with $B_i \sim \operatorname{Bern}(p_i)$, $p_i \in (0, 1)$, and support diameter $h_i > 0$ (or $X_i = 0$ in the degenerate case).
 
-The conjecture $C_{\mathrm{ind}}=C_{\mathrm E}$ remains open.
+## 1. Global Bounds on $C_{\mathrm{ind}}$
 
-## The general upper bound
-
-The computation covers an intermediate interval $[L_-,L_+]$, where
-$L_-\approx0.0014$ and $L_+\approx1.21$. The exact rational endpoints
-are specified in the [paper](../paper/independent-berry-esseen.pdf) and
-[certificate](../certificates/cover.json).
-
-| Range | Estimate | Upper bound for $\Delta/L$ |
+| Bound | Value | Reference |
 | --- | --- | --- |
-| $0\lt L\le L_-$ | $C_{\mathrm E}+0.3413L^{1/3}$ | $0.447913037296$ |
-| $L_-\le L\le L_+$ | Interval evaluation of the smoothing bounds | $U_*$ below |
-| $L\ge L_+$ | $\Delta\lt 0.540936541549$ | $0.447055000001$ |
+| Lower bound | $C_{\mathrm{ind}} \ge C_{\mathrm{E}} = \dfrac{3 + \sqrt{10}}{6\sqrt{2\pi}} = 0.40973218370239634299\ldots$ | [Esseen (1956)](https://doi.org/10.1080/03461238.1956.10414946) |
+| Previous published upper bound | $C_{\mathrm{ind}} \le 0.5583$ | [Shevtsova (2013)](https://www.mathnet.ru/eng/ia252) |
+| Upper bound in this collection | $C_{\mathrm{ind}} \le U_* < 0.44988$ | [Manuscript 1](../paper/independent-berry-esseen.pdf) |
 
-The first estimate is Corollary 4.18 of
-[Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf),
-valid for independent summands when $L\le0.01$. The variance-only bound
-in the last row follows from Cantelli's inequality by maximizing
-$\Phi(x)-x^2/(1+x^2)$ for $x\gt 0$.
+The unconditional upper bound $C_{\mathrm{ind}} \le U_*$ is established by partitioning the positive half-line of Lyapunov ratios $L > 0$ into three regimes at the exact dyadic rational endpoints $L_- = 6456360425798343 / 2^{52} \approx 0.0014$ and $L_+ = 1362338887279575 / 2^{50} \approx 1.21$:
 
-The largest bound in the intermediate interval is
+| Lyapunov ratio regime | Method | Upper bound on $\Delta / L$ |
+| --- | --- | --- |
+| $0 < L \le L_-$ | Asymptotic bound $\Delta / L \le C_{\mathrm{E}} + 0.3413 L^{1/3}$ ([Shevtsova (2012)](https://publikacio.uni-eszterhazy.hu/3231/1/AMI_39_from241to307.pdf), Corollary 4.18) | $< 0.447913037296$ |
+| $L_- \le L \le L_+$ | Certified interval cover of the moment domain $(L, d, b, \tau)$ using signed cosine-reference Prawitz smoothing | $\le U_* = \dfrac{1013039690742047}{2251799813685248} = 0.449879995808\ldots$ |
+| $L \ge L_+$ | Variance-only Cantelli bound $\Delta \le \sup_{x > 0}\bigl(\Phi(x) - \frac{x^2}{1+x^2}\bigr) < 0.540936541549$ | $< 0.447055000001$ |
 
-```math
-U_*=\frac{1013039690742047}{2251799813685248}
-=0.449879995808387445\ldots<0.44988.
-```
+See the [Verification Guide](../verify/README.md) for the structure of the 1,670-band moment partition in [`certificates/cover.json`](../certificates/cover.json).
 
-Thus $C_{\mathrm{ind}}\le U_*$. The
-[verification guide](../verify/README.md) describes the finite partition,
-the arithmetic, and the checks supplied with the calculation.
+---
 
-## Finite classes satisfying the sharp inequality
+## 2. Regimes Where the Sharp Inequality $\Delta \le C_{\mathrm{E}} L$ Holds
 
-The [finite-array paper](../paper/finite-arrays/finite-arrays.pdf) proves:
+Although the unrestricted conjecture $C_{\mathrm{ind}} = C_{\mathrm{E}}$ remains open on the intermediate interval $\exp(-\exp(97)) < L < 1.321$, the sharp inequality $\Delta \le C_{\mathrm{E}} L$ (or a strictly smaller bound) is established in the following regimes:
 
-| Class | Bound |
-| --- | --- |
-| At most two arbitrary summands | $C_2\lt 49/120=0.408333\ldots\lt C_{\mathrm E}$ |
-| At most three summands, each supported on at most two points, with arbitrary support diameters | $\Delta\le C_{\mathrm E}L$ |
-| Any number of summands, each supported on at most two points, with a common positive support diameter | $\Delta\le C_{\mathrm E}L$; the constant is optimal over this class |
-| Arrays with two Bernoulli coordinates carrying at least $22/23$ of total variance | $\Delta\le C_{\mathrm E}L$ |
-| Arrays with two arbitrary coordinates carrying at least $439/440$ of total variance | $\Delta\le C_{\mathrm E}L$ |
+| Class of independent arrays | Bound established | Source |
+| --- | --- | --- |
+| **Small Lyapunov ratio:** arbitrary independent summands with $0 < L \le \ell_0 := \exp(-\exp(97))$ | $\Delta \le C_{\mathrm{E}} L$ (optimal) | [Manuscript 3](../paper/small-lyapunov/small-lyapunov.pdf), Theorem 1.1 |
+| **Large Lyapunov ratio:** arbitrary independent summands with $L \ge 1.321$ | $\Delta < 0.54093655 < C_{\mathrm{E}} L$ | Cantelli's inequality ($0.54093655 / 1.321 < C_{\mathrm{E}}$) |
+| **At most two arbitrary summands ($n \le 2$):** arbitrary centered laws $X_1, X_2$ | $C_2 < \dfrac{49}{120} = 0.408333\ldots < C_{\mathrm{E}}$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Theorem 1.1 |
+| **At most two two-point summands:** $X_1, X_2$ supported on at most two points each | $C_{\mathrm{E}} L - \Delta > \dfrac{3}{80}$ and $\dfrac{\Delta}{L} \le C_1 \approx 0.370352$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Theorem 1.3; [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf), Theorem 1.2 |
+| **At most three two-point summands ($n \le 3$):** arbitrary support diameters $h_1, h_2, h_3 > 0$ | $\Delta \le C_{\mathrm{E}} L$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Theorem 1.2(i) |
+| **Common-diameter two-point arrays:** any $n \ge 1$ two-point summands with equal support diameters $h_i = h$ | $\Delta \le C_{\mathrm{E}} L$ (optimal) | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Theorem 1.2(ii) |
+| **Two dominant two-point summands:** arbitrary array containing two two-point summands with $v_1 + v_2 \ge \frac{22}{23} V$ | $\Delta \le C_{\mathrm{E}} L$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Corollary 1.4 |
+| **Two dominant arbitrary summands:** arbitrary array containing two summands with $v_1 + v_2 \ge \frac{439}{440} V$ | $\Delta \le C_{\mathrm{E}} L$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Corollary 1.4 |
+| **Two-block moment condition:** two summands (or grouped blocks with third-moment increase $e \le R/500$) having $v_1 + v_2 \ge \frac{11}{16} V$ and $b_1 + b_2 \le \frac{1}{2} R$ | $\Delta < C_{\mathrm{E}} L$ | [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf), Section 7 |
 
-Here a Bernoulli coordinate means a centered variable supported on at most
-two points. A common support diameter is the same distance between the
-two support points of every nondegenerate summand.
+---
 
-The paper also gives conditions involving the third absolute moments of
-a selected pair. For example, after normalizing total variance to one,
-two coordinates satisfying
+## 3. Exact Extremizers and Asymptotic Limits
 
-```math
-\operatorname{Var}(X_i)+\operatorname{Var}(X_j)\ge\frac{11}{16},
-\qquad \mathbb E|X_i|^3+\mathbb E|X_j|^3\le\frac L2
-```
+Beyond upper bounds on $\Delta / L$, Manuscripts 4–7 establish exact formulas and structural classifications for extremal arrays:
 
-imply the sharp inequality for the full array. If coordinates are grouped
-into new summands, the increase in their third absolute moments must also
-be included.
-
-The Bernoulli variance threshold follows from the uniform two-coordinate
-margin $C_{\mathrm E}L-\Delta\gt 3/80$ at total variance one. The
-[finite-results supplement](../certificates/finite/README.md) describes
-the interval calculations supporting the finite theorems.
-
-## Small and large Lyapunov ratios
-
-The [small-Lyapunov paper](../paper/small-lyapunov/small-lyapunov.pdf) proves
-
-```math
-0<L\le\ell_0:=\exp(-\exp(97))
-\quad\Longrightarrow\quad\Delta\le C_{\mathrm E}L
-```
-
-for every independent array. The cutoff follows from explicit estimates in the proof. Esseen's Bernoulli arrays
-have $L\to0$ and $\Delta/L\to C_{\mathrm E}$, so the constant is optimal
-even in this restricted range.
-
-The argument adapts [He and Cheng's method (2026)](https://arxiv.org/abs/2609.06358v1)
-and uses the common-diameter theorem. Its quantitative selection also
-uses Shevtsova's Corollary 4.18, specifically
-$\Delta\le C_{\mathrm E}L+0.2538L^{4/3}$ for $L\le10^{-3}$.
-
-The variance-only bound $\Delta\lt 0.540936541549$ gives
-$\Delta\lt C_{\mathrm E}L$ for $L\ge1.321$: one has $C_{\mathrm E}\gt 0.4097$
-and $1.321\cdot0.4097=0.5412137$. The unresolved part of the sharp
-conjecture therefore lies in $\ell_0\lt L\lt 1.321$, outside the classes listed
-above. The [extremizer paper](../paper/extremizers/extremizers.pdf) gives
-further structural restrictions on possible maximizing violations.
-
-## Bernoulli maximizers and transport
-
-The [Bernoulli paper](../paper/bernoulli-structure/bernoulli-structure.pdf)
-proves that every fixed-size common-diameter maximizer has identically
-distributed active coordinates, with any remaining coordinates zero. The
-optimal number of active coordinates can depend on the size of the array.
-For at most two Bernoulli coordinates with arbitrary diameters, the exact
-optimum is
-
-```math
-C_{2,\mathrm{binary}}=C_1=0.370351523474378920\ldots.
-```
-
-Every attaining array has one active coordinate. If both variances are
-required to be positive, the same supremum is approached but not attained.
-The equality $C_2=C_1$ for two arbitrary summands is not established.
-
-The paper's diameter-replacement theorem assumes a sufficiently large
-Bernoulli variance sum and small relative diameter variation. Its binomial
-phase analysis explains the asymptotic choice of active count when zero
-padding is allowed. The [numerical observations](numerical-observations.md)
-give the stored finite-horizon candidates and the coverage of their searches.
-The conjecture that these candidate values equal the unrestricted $C_n$
-remains open.
-
-The [general structure paper](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf)
-proves an absolute, ineffective $\varepsilon_0\gt0$ such that every full
-finite-horizon global maximizer with $L\lt\varepsilon_0$ has identical
-nonzero two-point coordinates and zeros. This structural threshold is
-separate from the explicit value cutoff $\exp(-\exp(97))$. For arbitrary
-changing arrays with $L\to0$ and $\Delta/L\to C_{\mathrm E}$, the same
-paper proves common-lattice approximation and asymptotic equality in
-additive zero-bias transport; exact binary structure requires globality.
-
-For a fixed finite block of summands, let $V$ be its total variance,
-$R$ its third absolute moment sum, $\kappa$ its third signed moment sum,
-and $h$ the maximal lattice span of its sum, with $h=0$ in the nonlattice
-case. The [transport paper](../paper/transport/transport.pdf) proves that
-repeating the block $M$ times gives
-
-```math
-\lim_{M\to\infty}\frac{\Delta_M}{L_M}
-=\frac{|\kappa|+3hV}{6\sqrt{2\pi}\,R}\le C_{\mathrm E}.
-```
-
-Equality holds precisely for identical nonconstant Esseen Bernoulli
-coordinates, together with possible zero coordinates. This limit requires
-the block to remain fixed as $M$ increases.
+1. **One summand and two binary summands:** By [Bentkus and Kirša (1989)](https://doi.org/10.1007/BF00966194), the one-summand constant is achieved by a two-point distribution:
+   ```math
+   C_1 = \max_{0 < p < 1} \frac{\sqrt{p(1 - p)}}{p^2 + (1 - p)^2} \left\{\Phi\!\left(\sqrt{\frac{p}{1 - p}}\right) - p\right\} = 0.370351523474378920\ldots.
+   ```
+   [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf) (Theorem 1.2) proves that the two-summand two-point supremum $C_{2,\mathrm{bin}}$ equals $C_1$, and that every attaining two-summand two-point array has one zero summand.
+2. **Common-diameter two-point maximizers:** [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf) (Theorem 1.1) proves that for every $n \ge 1$, the maximum $C_n^{\mathrm{com}}$ of $\Delta / L$ over at most $n$ two-point summands with a common support diameter satisfies
+   ```math
+   C_n^{\mathrm{com}} = P_n := \max_{1 \le m \le n} B_m,
+   ```
+   where $B_m$ is the $m$-summand i.i.d. binomial optimum, and every maximizing array consists of $m$ identically distributed two-point summands and $n - m$ zero summands.
+3. **Global maximizers at small Lyapunov ratio:** [Manuscript 6](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf) (Theorem 1.2) proves that there exists an absolute constant $\varepsilon_0 > 0$ (not explicitly computed) such that any array attaining the unrestricted $n$-summand supremum $C_n$ with $L < \varepsilon_0$ consists of identically distributed two-point summands and zero summands.
+4. **Repeated finite blocks:** Given a fixed finite independent block $(X_1, \dots, X_n)$ with variance $V$, third absolute moment sum $R$, third signed moment sum $\kappa = \sum_{i=1}^n \mathbb{E} X_i^3$, and maximal sum-lattice span $h \ge 0$ ($h = 0$ if nonlattice), [Manuscript 4](../paper/transport/transport.pdf) (Theorem 1.2) proves that for $m$ independent copies of the block,
+   ```math
+   \lim_{m \to \infty} \frac{\Delta_m}{L_m} = \frac{|\kappa| + 3hV}{6\sqrt{2\pi}\,R} \le C_{\mathrm{E}} \frac{2V W_1(S, S^*)}{R} \le C_{\mathrm{E}},
+   ```
+   with equality at $C_{\mathrm{E}}$ if and only if all nonzero $X_i$ are identically distributed Esseen two-point variables.

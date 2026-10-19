@@ -1,79 +1,44 @@
-# Certificates for two summands and Bernoulli arrays
+# Finite-Array Certificates (Manuscript 2)
 
-The [paper](../../paper/finite-arrays/main.tex) proves a strict bound of
-49/120 for two arbitrary independent summands. It proves Esseen's bound
-for arrays consisting of at most three Bernoulli coordinates, or entirely
-of Bernoulli coordinates with a common support diameter, and $C_{\mathrm E}L-\Delta\gt 3/80$ for arrays of at most two Bernoulli
-coordinates with positive total variance. Here $L$ is the Lyapunov ratio
-and $\Delta$ is the normal-approximation error. Its
-[contact appendix](../../paper/finite-arrays/contact-proofs.tex) gives the
-case reductions and inequalities used by the computational proofs.
-A triple means a three-point summand and a pair a two-point summand.
-The appendix defines the support-index event labels used below.
+Navigation: [Repository Root](../../README.md) · [Verification Guide](../../verify/README.md) · [Bernoulli Structure Certificates](../structure/README.md)
 
-[current-results.json](current-results.json) identifies the current exact
-partitions, arithmetic definitions, receipt hashes, and recorded counts.
-The partitions and decision recipes are in
-[current-finite.zip](current-finite.zip). The product-odds calculation is recorded in [results.json](results.json).
-The [Bernoulli supplement](../structure/README.md) supplies the
-common-diameter curvature calculation at the smaller coefficient
-$199/500$; positivity at $C_{\mathrm E}$ follows by monotonicity.
+---
 
-| Calculation | Completed arithmetic evidence |
-| --- | --- |
-| Two Bernoulli summands: $C_{\mathrm E}L-\Delta\gt 3/80$ | 63,792 leaves covering the two unit parameter cubes and the support-endpoint unit square, evaluated with separately arranged formulas at 320 bits. |
-| Three Bernoulli coordinates, arbitrary diameters | Eight recipes, 2,624,314 nodes and 1,312,161 accepted leaves. The bounds were reevaluated at 320 bits, using the producer's mathematical formulas and a separate tree traversal. |
-| Triple/pair `110`, unique representation (`lower110`) | 15,081 independently evaluated leaves. |
-| Triple/pair `210`, unique low/high representation (`low210`) | 113,322 independently evaluated leaves. |
-| Triple/pair `221`, upper-gap collision (`collision221`) | 113,154 independently evaluated leaves. |
-| Triple/pair `210`, lower-gap collision (`collision210`) | 154,848 independently evaluated leaves. |
-| Two triples `221` or `320`, two representations (`tt221_negative`, `tt221_positive`) | 68,963 and 90,233 independently evaluated leaves in its two charts. The positive chart uses the signed divided-difference inequality proved in the appendix. |
-| Equality at 49/120 | 427 lower-event leaves and 34,084 upper-gap-collision leaves satisfy strict negative rejection inequalities at 384 bits. |
-| Two triples `321`, three or two representations (`three_owner321`, `adjacent_owner321`, `endpoint_owner321`) | Complete fixed scalar grids, with direct independent evaluations at 320 bits. |
-| Common-diameter curvature | 275,283 accepted boxes at 192 bits for coefficient $199/500$, reconstructed from 550,563 processed boxes. |
-| Product-odds inequality | Exact Bernstein coefficients in the quadratic field Q(sqrt(5)), with a separate algebraic calculation. |
+This directory contains the partition certificates, decision recipes, and exact polynomial records supporting [Manuscript 2: *Berry–Esseen bounds for two summands and Bernoulli arrays*](../../paper/finite-arrays/finite-arrays.pdf) ([`paper/finite-arrays/main.tex`](../../paper/finite-arrays/main.tex) and [`paper/finite-arrays/contact-proofs.tex`](../../paper/finite-arrays/contact-proofs.tex)).
 
-“Independently evaluated” in the contact rows means a different formulation
-of the necessary equations, using direct moments of the marginal laws
-where indicated in the paper. These implementations use the same Arb
-arithmetic library. A repeated evaluation using the same formulas is
-identified as such in the table.
+## Summary of Certified Calculations
 
-From the public repository root, run:
+| Theorem / Proposition in Manuscript 2 | Mathematical domain and inequality | Certificate summary |
+| --- | --- | --- |
+| **Theorem 1.3 & Lemma 2.3** (Two-Bernoulli margin) | $C_{\mathrm{E}} L - \Delta > 3/80$ on the two interior-atom parameter cubes and the support-endpoint square $[0, 99/100]^2$. | 63,792 accepted leaves evaluated at 320-bit Arb precision (`margin`). |
+| **Theorem 1.2(i)** (Three Bernoulli summands, arbitrary diameters) | $C_{\mathrm{E}} L - \Delta \ge 0$ across all eight ordered-diameter and interior-atom configurations. | 8 subdivision/projection recipes with 2,624,314 total nodes and 1,312,161 accepted leaves, reevaluated at 320-bit Arb precision (`bernoulli_three`). |
+| **Proposition 6.4** (Triple/pair contact case `110`, unique representation) | Exclusion of necessary contact system in Section B.11 (`lower110`). | 15,081 accepted leaves (plus 427 leaves for strict exclusion at $C = 49/120$ at 384 bits). |
+| **Proposition 6.4** (Triple/pair contact case `210`, low/high representation) | Exclusion of necessary contact system in Section B.10 (`low210`). | 113,322 accepted leaves at 320 bits. |
+| **Proposition 6.4** (Triple/pair contact case `221`, upper-gap collision) | Exclusion of necessary contact system in Section B.13 (`collision221`). | 113,154 accepted leaves at 320 bits (plus 34,084 leaves for strict exclusion at $C = 49/120$ at 384 bits). |
+| **Proposition 6.4** (Triple/pair contact case `210`, lower-gap collision) | Exclusion of necessary contact system in Sections B.14–B.16 (`collision210`). | 154,848 accepted leaves at 320 bits. |
+| **Proposition 6.4** (Two-triple contact cases `221` and `320`, two representations) | Exclusion of necessary contact systems in Sections B.27–B.33 (`tt221_negative`, `tt221_positive`). | 68,963 leaves (negative middle-contact chart) and 90,233 leaves (positive middle-contact chart) at 320 bits. |
+| **Proposition 6.4** (Two-triple contact case `321`, two or three representations) | Scalar exclusions in Sections B.20–B.26 (`three_owner321`, `adjacent_owner321`, `endpoint_owner321`). | Complete Cartesian grids (4,096 + 4,124 + 3,840 cells) evaluated with 320-bit Arb Taylor series. |
+| **Lemma 4.3** (Common-diameter one-exception curvature) | Positivity of the curvature lower bound on $V \ge 1/5$, $pq \le W \le 3$ at coefficient $c_* = 199/500 < C_{\mathrm{E}}$. | 275,283 accepted boxes from 550,563 processed boxes at 192 bits (shared with [Bernoulli Structure Certificates](../structure/README.md)). |
+| **Proposition A.2** (Bernoulli support-endpoint odds inequality) | Positivity of tensor Bernstein coefficients for the pair-merge and pair-chord quotients over $\mathbb{Q}(\sqrt{5})$. | Exact symbolic Bernstein tables in `results.json`, verified by `verify/finite/support_odds/`. |
 
-```sh
-uv run --frozen python verify/finite/check.py
-```
+---
 
-The default checks hashes, exact tree geometry, leaf boxes, all eight
-Bernoulli recipes, and the complete scalar-grid index sets. It does not
-recompute numerical inequalities. It rejects missing leaves, repeated partition paths, and overlapping
-interiors; closed boxes may share boundary faces. These checks run in `./verify.sh --no-latex`.
+## Running the Verifier
 
-To recompute the frozen current finite inequalities, without creating or
-subdividing cells:
+1. **Fast structural and exact-algebra check (default in `./verify.sh --no-latex`):**
+   ```sh
+   uv run --frozen python verify/finite/check.py
+   ```
+   Verifies file hashes, reconstructs every binary partition tree from the root domain (confirming that all leaf boxes partition the domain without gaps or interior overlaps), checks all eight three-Bernoulli recipe trees, and verifies the scalar grid index sets.
 
-```sh
-uv run --frozen python verify/finite/current/check.py --arithmetic
-```
+2. **Full interval arithmetic reevaluation of frozen partitions:**
+   ```sh
+   uv run --frozen python verify/finite/current/check.py --arithmetic
+   ```
+   Recomputes the outward-rounded Arb interval bounds on every leaf of the frozen partitions in `current-finite.zip`. A single family can be selected with `--case` (for example, `--case margin`, `--case bernoulli_three`, `--case lower110`, `--case low210`, `--case collision221`, `--case collision210`, `--case tt221_negative`, `--case tt221_positive`, `--case floor`, or `--case scalars`).
 
-A single recorded family can be selected with `--case`, for example
-`--case margin`, `--case tt221_positive`, or `--case scalars`. The full
-arithmetic run is substantial. The verifier accepts a leaf only if the
-outward interval calculation proves the required strict inequality or a
-necessary contact condition is impossible. Enclosures printed in receipts
-are not trusted as arithmetic inputs.
-
-The broader command below also reconstructs the common-diameter curvature
-and exact odds calculations. The curvature calculation uses
-its supplied subdivision algorithm; its complete run succeeds only when
-all cells are certified. Exhausting a limit is a failure.
-
-```sh
-uv run --frozen python verify/finite/check.py --full --independent
-```
-
-The locked environment uses Python 3.12, python-flint 0.8.0, and SymPy
-1.14.0. Arb and SymPy are described by
-[Johansson (2017)](https://doi.org/10.1109/TC.2017.2690633) and
-[Meurer et al. (2017)](https://doi.org/10.7717/peerj-cs.103).
+3. **Full verification including common-diameter curvature and symbolic Bernstein tables:**
+   ```sh
+   uv run --frozen python verify/finite/check.py --full --independent
+   ```
+   Runs all partition and arithmetic checks above, reconstructs the 550,563-box common-diameter curvature cover, and independently recomputes the exact $\mathbb{Q}(\sqrt{5})$ Bernstein coefficient tables in SymPy.

@@ -30,253 +30,331 @@ urlcolor=blue!45!black,pdftitle={Berry-Esseen bounds for two summands and Bernou
 \newcommand{\ind}{\mathbf 1}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\be}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
 \newcommand{\ke}{K_{\mathrm E}}
 \newcommand{\ph}{\phi}
+\newcommand{\ii}{\mathrm i}
 \title{Berry--Esseen bounds for two summands\\and Bernoulli arrays}
 \author{Logan Bell}
 \date{6 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-The Berry--Esseen constant for two arbitrary independent summands is
-strictly smaller than $49/120$. Independent centered two-point summands
-satisfy the bound with Esseen's constant
-$C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$ whenever there are at most
-three summands, or all nondegenerate summands have the same support
-diameter. In the latter class the constant is optimal. For at most two
-Bernoulli summands, the standardized normal-approximation error $\Delta$
-and Lyapunov ratio $\ell$ obey $C_{\mathrm E}\ell-\Delta>3/80$.
-These finite results imply the Esseen bound for an arbitrary independent
-array containing two Bernoulli coordinates with at least $22/23$ of its
-variance, or two arbitrary coordinates with at least $439/440$ of its
-variance. The two-summand proof uses moment optimization to reduce an attained
-maximum to two laws with at most three support points. Contact equations
-and second variations then exclude its possible threshold configurations,
-with interval certificates for the remaining parameter domains. The
-Bernoulli proofs use explicit deficit estimates and a reduction to
-binomial sums. The supplement supplies frozen partitions for the two-law and
-three-Bernoulli calculations, and the arithmetic and deterministic
-subdivision program for the common-diameter curvature inequality.
+We establish sharp and strict Berry--Esseen bounds for small independent
+arrays and for centered two-point (Bernoulli) summands. First, we prove that
+the Berry--Esseen constant $C_2$ for at most two arbitrary independent
+centered summands satisfies $C_2<49/120=0.408333\ldots<\be$, where
+$\be=(3+\sqrt{10})/(6\sqrt{2\pi})\approx0.409732$ is Esseen's constant.
+Second, for independent centered two-point summands, we prove the sharp
+inequality $\Delta\le\be L$ whenever either (i) there are at most three
+summands with arbitrary support diameters, or (ii) there are arbitrarily
+many summands whose nondegenerate members share a common support diameter,
+extending Schulz's binomial theorem to unequal probabilities. For at most
+two two-point summands with positive total variance, we prove the uniform
+strict margin $\be L-\Delta>3/80$. Combining these finite-array bounds with
+a Stein--Ornstein--Uhlenbeck Gaussian comparison yields $\Delta\le\be L$
+for any independent array in which two two-point summands carry at least
+$22/23$ of the total variance, or two arbitrary summands carry at least
+$439/440$ of the total variance. The proof for two arbitrary summands uses
+strong quadratic moment duality to reduce each summand at a fixed threshold
+and variance to a distribution supported on at most three points, and then
+rules out all possible threshold configurations by variational contact
+identities and certified interval enclosures.
 \end{abstract}
 
 \setcounter{tocdepth}{2}
 \tableofcontents
 
-\section{Results}\label{sec:main}
-The universal Berry--Esseen problem asks for an estimate valid for every
-independent array. Restrictions on the number or form of the summands can
-give sharper estimates. We study two arbitrary summands and several
-classes of Bernoulli arrays, then use these bounds in arrays whose variance
-is concentrated in two coordinates. For two arbitrary laws, the main
-difficulty is to control their support points and the location of a
-maximizing distribution-function jump. Moment optimization and the
-conditions for an attained maximum reduce this question to finitely many
-threshold configurations.
+\section{Introduction and main results}\label{sec:main}
+
+\subsection{Context and problem formulation}
 
 Let $X_1,\ldots,X_n$ be independent centered real random variables with
-finite absolute third moments. Write
+positive total variance and finite third absolute moments. Define the total
+variance $V$, the sum of third absolute moments $R$, the Lyapunov ratio $L$,
+and the Kolmogorov normal-approximation error $\Delta$ by
 \begin{equation}\label{eq:normalization}
- B^2=\sum_i\E X_i^2>0,\qquad
- R=\sum_i\E|X_i|^3,\qquad \ell=R/B^3,\qquad
- \Delta=\sup_x\left|\Pp\{B^{-1}\textstyle\sum_iX_i\le x\}-\Phi(x)\right|.
+\begin{gathered}
+ V=B^2=\sum_{i=1}^n\E X_i^2>0,\qquad
+ R=\sum_{i=1}^n\E|X_i|^3<\infty,\qquad
+ L=\ell=\frac{R}{V^{3/2}},\\
+ \Delta=\sup_{x\in\R}\left|\Pp\left\{\frac{\sum_{i=1}^nX_i}{\sqrt V}\le x\right\}-\Phi(x)\right|,
+\end{gathered}
 \end{equation}
-Here $\Phi$ and $\phi$ denote the standard normal distribution function
-and density. Put
+where $\Phi$ and $\phi$ denote the standard normal distribution function
+and density. (We write $V$ and $B^2$, as well as $L$ and $\ell$,
+interchangeably when convenient.) Set
 \begin{equation}\label{eq:esseen-constant}
- \be=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},\qquad
+ \be=\frac{3+\sqrt{10}}{6\sqrt{2\pi}}=0.4097321837\ldots,\qquad
  \ke=\sqrt{2\pi}\be=\frac{3+\sqrt{10}}6,
  \qquad c_2=\frac{49}{120},\qquad t_*=\sqrt{10}-3.
 \end{equation}
-Esseen proved that a universal Berry--Esseen constant cannot be smaller
-than $\be$ \cite{Esseen1956}. Equality with $\be$ remains open for
-general independent arrays.
-
-\begin{theorem}[Two arbitrary summands]\label{thm:arbitrary-two}
-Let $C_2$ be the supremum of $\Delta/\ell$ over arrays with at most two
-independent summands. Then $C_2<49/120$.
-\end{theorem}
-
-A \emph{Bernoulli coordinate} means a centered random variable with at
-most two support points; its two values need not be $0$ and $1$.
-Deterministic zero coordinates are allowed.
-\begin{theorem}[Bernoulli arrays]\label{thm:bernoulli-classes}
-The inequality $\Delta\le\be\ell$ holds if either
-\begin{enumerate}[label=(\roman*),leftmargin=2em]
-\item the array consists of at most three Bernoulli coordinates, or
-\item every coordinate is Bernoulli and all nondegenerate coordinates
-have the same support diameter.
-\end{enumerate}
-The constant in (ii) is optimal over that class.
-\end{theorem}
-
-\begin{theorem}[A uniform two-Bernoulli deficit]\label{thm:two-summands}
-For every independent array consisting of at most two Bernoulli
-coordinates and satisfying $B>0$,
-\[
- \be\ell-\Delta>\frac3{80}.
-\]
-\end{theorem}
-
-\begin{corollary}[Variance concentrated in two coordinates]\label{cor:dominance-main}
-An independent array satisfies $\Delta\le\be\ell$ if it contains either
-two Bernoulli coordinates with combined variance at least $22B^2/23$,
-or two arbitrary coordinates with combined variance at least $439B^2/440$.
-\end{corollary}
-
-Theorem~\ref{thm:arbitrary-two} is a bound on a supremum, so its strictness
-requires exclusion of equality at $49/120$. Its proof first attains a
-hypothetical maximum at or above this value, replaces its two laws by
-laws with at most three atoms, and excludes every possible threshold
-configuration. The Bernoulli results use direct deficit inequalities.
-
-For the common-diameter assertion we use Schulz's binomial theorem
-\cite[Theorem~1]{Schulz2016}: if $N\sim\Bin(n,p)$, $q=1-p$, and $0<p<1$,
-\begin{equation}\label{eq:schulz}
- \sup_x\left|\Pp\{(N-np)/\sqrt{npq}\le x\}-\Phi(x)\right|
- <\be\frac{p^2+q^2}{\sqrt{npq}}.
-\end{equation}
-The proof below extends this theorem to unequal success probabilities.
-Optimality follows from Esseen's i.i.d. example: with
-$p_{\mathrm E}=(4-\sqrt{10})/2$ and $q_{\mathrm E}=1-p_{\mathrm E}$, the law
+By \citet{Esseen1956}, no universal constant smaller than $\be$ can hold in
+the inequality $\Delta\le C L$ across all finite independent arrays. Indeed,
+for $p_{\mathrm E}=(4-\sqrt{10})/2$ and $q_{\mathrm E}=1-p_{\mathrm E}$, the
+centered unit-variance two-point distribution
 \begin{equation}\label{eq:esseen-law}
  \mu_{\mathrm E}=p_{\mathrm E}\delta_{\sqrt{q_{\mathrm E}/p_{\mathrm E}}}
  +q_{\mathrm E}\delta_{-\sqrt{p_{\mathrm E}/q_{\mathrm E}}}
 \end{equation}
-has variance one, and its i.i.d. sums satisfy $\Delta/\ell\to\be$
-\cite{Esseen1956}.
+achieves $\lim_{n\to\infty}\Delta/L=\be$ for sums of $n$ independent copies.
 
-The finite-support reduction uses classical moment-set methods
-\cite{Winkler1988,BertsimasPopescu2005}. The transfer to a Gaussian remainder
-uses the zero-bias estimate obtained independently by Goldstein and Tyurin
-\cite{Goldstein2010,Tyurin2009}. We state these inputs where they enter
-the proofs. Interval arithmetic is performed with Arb \cite{Johansson2017}.
+While the unrestricted conjecture $\Delta\le\be L$ remains open for general
+independent arrays, restricting either the number of summands $n$ or the
+structure of the summand distributions allows one to establish $\Delta\le\be L$
+(and, for small $n$, strictly smaller constants). For a single summand
+($n=1$), \citet[Theorem~1]{BentkusKirsa1989} proved that the optimal constant
+is $C_1\approx0.370352<\be$, achieved by a two-point distribution. For $n$
+identically distributed two-point summands ($N\sim\Bin(n,p)$ with $0<p<1$
+and $q=1-p$), \citet[Theorem~1]{Schulz2016} proved the sharp binomial bound
+\begin{equation}\label{eq:schulz}
+ \sup_{x\in\R}\left|\Pp\left\{\frac{N-np}{\sqrt{npq}}\le x\right\}-\Phi(x)\right|
+ <\be\frac{p^2+q^2}{\sqrt{npq}}.
+\end{equation}
 
-For a centered sum $S$ of variance $B^2$ and $\varepsilon\in\{-1,1\}$, define
+\subsection{Main results}
+
+Our first theorem establishes that for at most two arbitrary independent
+summands, the Berry--Esseen constant $C_2$ is strictly below $49/120<\be$.
+
+\begin{theorem}[Two arbitrary summands]\label{thm:arbitrary-two}
+Let $C_2$ be the supremum of $\Delta/L$ over all independent centered arrays
+with at most two summands. Then
+\[
+ C_2<\frac{49}{120}=0.408333\ldots<\be.
+\]
+\end{theorem}
+
+Throughout this paper, a \emph{two-point} (or \emph{centered Bernoulli})
+\emph{summand} means a centered random variable supported on at most two
+points; its support diameter is the distance between its two support points
+when nondegenerate. Deterministic zero summands are permitted. Our second
+theorem establishes the sharp Esseen bound $\Delta\le\be L$ for two fundamental
+classes of non-identically distributed two-point arrays.
+
+\begin{theorem}[Two-point arrays]\label{thm:bernoulli-classes}
+The sharp inequality $\Delta\le\be L$ holds whenever either
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item the array consists of at most three two-point summands with arbitrary
+support diameters, or
+\item every summand is supported on at most two points and all nondegenerate
+summands share a common support diameter.
+\end{enumerate}
+In class \textup{(ii)}, the constant $\be$ is optimal.
+\end{theorem}
+
+For at most two two-point summands, we establish a uniform positive gap
+between $\be L$ and $\Delta$ across all probabilities and support diameters.
+
+\begin{theorem}[Uniform deficit for two two-point summands]\label{thm:two-summands}
+For every independent array consisting of at most two two-point summands
+with positive total variance $V>0$,
+\[
+ \be L-\Delta>\frac3{80}.
+\]
+\end{theorem}
+
+Combining Theorems~\ref{thm:arbitrary-two} and~\ref{thm:two-summands} with
+a Stein--Ornstein--Uhlenbeck normal comparison for the remaining summands
+yields the sharp inequality $\Delta\le\be L$ for arbitrary arrays whose
+variance is concentrated in two summands.
+
+\begin{corollary}[Arrays with variance concentrated in two summands]\label{cor:dominance-main}
+An arbitrary finite independent array satisfies $\Delta\le\be L$ whenever it
+contains either two two-point summands with combined variance at least
+$\frac{22}{23}V$, or two arbitrary summands with combined variance at least
+$\frac{439}{440}V$.
+\end{corollary}
+
+\subsection{Open questions and overview of the proofs}
+
+Two natural questions directly extend the results of this paper:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Exact value of $C_2$:} For two two-point summands with arbitrary
+diameters, a companion paper proves that the maximal ratio is $C_1\approx0.370352$,
+attained when one summand is zero. Whether $C_2=C_1$ holds for two
+\emph{arbitrary} independent summands remains open; Theorem~\ref{thm:arbitrary-two}
+suffices to show $C_2<\be$.
+\item \emph{Arbitrary diameters for $n\ge4$ two-point summands and $n\ge3$
+general summands:} Extending Theorem~\ref{thm:bernoulli-classes}(i) beyond
+three two-point summands with unequal diameters, and extending
+Theorem~\ref{thm:arbitrary-two} to $n\ge3$ general summands, are key steps
+toward the general conjecture $\Cind=\be$. Meanwhile,
+Theorem~\ref{thm:bernoulli-classes}(ii) supplies the finite-array input used
+in the companion small-Lyapunov manuscript to prove $\Delta\le\be L$ for all
+independent arrays with $L\le\exp(-\exp(97))$.
+\end{enumerate}
+
+Let us summarize the methods used in each part of the paper. For any centered
+sum $S$ of variance $V=B^2$ and $\varepsilon\in\{-1,1\}$, define the closed
+and left-continuous distribution functions and the signed deficits by
 \[
  F_S^+(y)=\Pp(S\le y),\qquad F_S^-(y)=\Pp(S<y),\qquad
- H_S^\varepsilon(y)=\be\ell+\varepsilon\Phi(y/B)-\varepsilon F_S^\varepsilon(y).
+ H_S^\varepsilon(y)=\be L+\varepsilon\Phi(y/B)-\varepsilon F_S^\varepsilon(y).
 \]
-Continuity of $\Phi$ gives
+By continuity of $\Phi$,
 \begin{equation}\label{eq:one-sided}
- \Delta=\sup_y\max\{F_S^+(y)-\Phi(y/B),\ \Phi(y/B)-F_S^-(y)\}.
+ \Delta=\sup_{y\in\R}\max\{F_S^+(y)-\Phi(y/B),\ \Phi(y/B)-F_S^-(y)\},
 \end{equation}
-For finite support these extrema occur at atoms, with the indicated
-closed or strict convention. Reflection gives
-$H_S^-(y)=H_{-S}^+(-y)$.
+and reflection $S\mapsto-S$ gives $H_S^-(y)=H_{-S}^+(-y)$.
 
-Sections~\ref{sec:two}--\ref{sec:equal-gap-two-point} prove the
-Bernoulli assertions and the uniform two-summand deficit.
-Sections~\ref{sec:moments}--\ref{sec:arbitrary-two} use that deficit
-and moment optimization to prove the bound for two arbitrary summands;
-Appendix~\ref{app:contacts} supplies the contact-case exclusions.
-Section~\ref{sec:transfer} proves the variance-dominance corollaries.
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Two and three two-point summands with arbitrary diameters
+(Sections~\ref{sec:two}--\ref{sec:three} and Appendix~\ref{app:support}):}
+At the two extreme support endpoints of any $n$-summand two-point array,
+Proposition~\ref{cor:all-support-owners} proves $H_S^\pm>0$ analytically by
+optimizing over the support diameters via H\"older's inequality and bounding
+the resulting function of the Bernoulli odds $o_i=p_i/q_i$ via two exact
+Bernstein polynomial certificates over $\mathbb Q(\sqrt5)$. For $n=2$ and
+$n=3$, the remaining interior atoms are parameterized on compact cubes and
+certified by outward-rounded Arb interval partitions.
+\item \textbf{Common-diameter two-point arrays (Section~\ref{sec:equal-gap-two-point}):}
+To prove Theorem~\ref{thm:bernoulli-classes}(ii), we minimize the deficit
+$\mathcal H_+(p;k)$ over the probability cube $[0,1]^n$ at a fixed mean $\mu$
+and integer threshold $k$. Adapting \citet{Mattner2022}, we vary three
+probabilities along a curve preserving their elementary symmetric polynomials
+$e_1,e_2$; because both $F_k(p)$ and the third-moment sum $\mathcal B(p)$ are
+affine in $e_3$, any extremal point has at most two distinct interior
+probabilities $a<b$. A uniform bound on third differences of Poisson-binomial
+point probabilities (Lemma~\ref{lem:poisson-binomial-third-difference}) rules
+out the case where both $a$ and $b$ have multiplicity at least two, reducing
+the problem to $\Bin(M,p)+\Bern(x)$, which is resolved by Schulz's theorem
+(when $p=x$), a certified second-derivative curvature bound (when $M\ge2$ and
+$p\ne x$), and Theorem~\ref{thm:two-summands} (when $M=1$).
+\item \textbf{Two arbitrary summands via moment duality and contact
+exclusions (Sections~\ref{sec:moments}--\ref{sec:arbitrary-two} and
+Appendix~\ref{app:contacts}):}
+At a fixed threshold $z$ and fixed individual variances $v_1,v_2$, maximizing
+$\Pp(X_1+X_2\le z)-C\sum_{i=1}^2\E|X_i|^3$ in each marginal law is a linear
+program over probability measures with three moment constraints ($1,u,u^2$).
+By strong quadratic moment duality (\citet{Winkler1988,BertsimasPopescu2005};
+Theorem~\ref{thm:strongdual}), if $C_2\ge49/120$, the supremum is attained by
+two distributions $X_1,X_2$ each supported on at most three points, and each
+support lies in the contact set where a quadratic majorant $q_i(u)$ touches
+$F_{X_{3-i}}^+(z-u)-C|u|^3$. Classifying the possible downsets of
+$\{(j,k):x_j+y_k\le z\}$ on the $3\times2$ and $3\times3$ support grids and
+combining the contact equations with second-order support and mass variations
+rules out every configuration analytically or by interval arithmetic.
+\item \textbf{Variance-concentration transfer (Section~\ref{sec:transfer}):}
+When two summands carry variance $v\in(0,1)$ and the remaining summands
+carry variance $1-v$, convolving the two-summand Kolmogorov or $L^1$ bound
+with the Stein--Ornstein--Uhlenbeck zero-bias bound for the remainder yields
+Corollary~\ref{cor:dominance-main}.
+\end{itemize}
 
 \section{Two Bernoulli summands with arbitrary diameters}\label{sec:two}
-For independent Bernoulli variables $B_i$ with $\Pp(B_i=1)=p_i\in(0,1)$,
-write $q_i=1-p_i$ and
+
+For independent Bernoulli variables $B_i\sim\Bern(p_i)$ with $p_i\in(0,1)$
+and $q_i=1-p_i$, write
 \[
- X_i=h_i(B_i-p_i),\quad a_i=p_iq_i,\quad r_i=p_i^2+q_i^2,\quad
- V=\sum_i a_i h_i^2=B^2,\quad R=\sum_i a_ir_ih_i^3=B^3\ell.
+ X_i=h_i(B_i-p_i),\qquad a_i=p_iq_i,\qquad r_i=p_i^2+q_i^2,\qquad
+ V=\sum_{i=1}^n a_i h_i^2=B^2,\qquad R=\sum_{i=1}^n a_ir_ih_i^3=B^3\ell.
 \]
-We first record the estimate used when a compact calculation reaches a
-small variance.
+We begin by recording the lower bound on $L=R/V^{3/2}$ obtained by
+optimizing over the support diameters $h_i$.
+
 \begin{samepage}
-\begin{lemma}[Optimization over the diameters]\label{lem:reciprocal-gap-resource}
-Let $0<p_i<1$ and $h_i\geq0$, with $\sum_i a_i h_i^2>0$. Then
+\begin{lemma}[Diameter lower bound via H\"older's inequality]\label{lem:reciprocal-gap-resource}
+Let $0<p_i<1$ and $h_i\geq0$ with $\sum_{i=1}^n a_i h_i^2>0$. Then
 \begin{equation}\label{eq:reciprocal-gap-resource}
- \frac{\sum_i a_ir_ih_i^3}{(\sum_i a_ih_i^2)^{3/2}}
- \geq\left(\sum_i\frac{a_i}{r_i^2}\right)^{-1/2}.
+ \frac{\sum_{i=1}^n a_ir_ih_i^3}{(\sum_{i=1}^n a_ih_i^2)^{3/2}}
+ \geq\left(\sum_{i=1}^n\frac{a_i}{r_i^2}\right)^{-1/2},
 \end{equation}
-Equality holds precisely when $r_i h_i$ is constant in $i$.
+with equality if and only if $r_i h_i$ is constant across all $i$.
 \end{lemma}
 \end{samepage}
 \begin{proof}
-H\"older's inequality gives
+By H\"older's inequality with exponents $3/2$ and $3$,
 \[
- \sum_i a_i h_i^2
- =\sum_i(a_ir_ih_i^3)^{2/3}(a_i/r_i^2)^{1/3}
- \leq\left(\sum_i a_ir_ih_i^3\right)^{2/3}
-      \left(\sum_i a_i/r_i^2\right)^{1/3}.
+ \sum_{i=1}^n a_i h_i^2
+ =\sum_{i=1}^n(a_ir_ih_i^3)^{2/3}(a_i/r_i^2)^{1/3}
+ \leq\left(\sum_{i=1}^n a_ir_ih_i^3\right)^{2/3}
+      \left(\sum_{i=1}^n \frac{a_i}{r_i^2}\right)^{1/3},
 \]
-Its equality condition is $a_ir_ih_i^3$ proportional to $a_i/r_i^2$.
+with equality if and only if $a_ir_ih_i^3$ is proportional to $a_i/r_i^2$.
 \end{proof}
 
-The endpoint estimate below holds for any finite number of summands.
+Our next result shows that at the two extreme support endpoints of
+$S=\sum_{i=1}^n h_i(B_i-p_i)$, the sharp Esseen bound holds strictly for
+every $n\ge1$ and all choices of $p_i\in(0,1)$ and $h_i>0$.
+
 \begin{samepage}
-\begin{proposition}[Support endpoints]\label{cor:all-support-owners}
-For every finite Bernoulli array with $0<p_i<1$ and $h_i>0$, both
-$H_S^+(y)$ and $H_S^-(y)$ are strictly positive at each endpoint of the
-support of $S=\sum_i h_i(B_i-p_i)$.
+\begin{proposition}[Strict positivity at support endpoints]\label{cor:all-support-owners}
+For every finite two-point array with $0<p_i<1$ and $h_i>0$, both
+$H_S^+(y)$ and $H_S^-(y)$ are strictly positive at the minimum and maximum
+of the support of $S=\sum_{i=1}^n h_i(B_i-p_i)$.
 \end{proposition}
 \end{samepage}
-The proof is in Appendix~\ref{app:support}. It reduces the two CDF values
-containing an endpoint atom to an explicit rational inequality for the
-Bernoulli odds. The other two values follow from an elementary normal-tail
-estimate.
+The proof of Proposition~\ref{cor:all-support-owners} is given in
+Appendix~\ref{app:support}: the two branches where the endpoint atom is
+excluded follow from an elementary normal-tail bound, while the two branches
+where the endpoint atom is included reduce via Lemma~\ref{lem:reciprocal-gap-resource}
+to a sharp inequality for the Bernoulli odds $o_i=p_i/q_i$ established using
+exact Bernstein polynomials over $\mathbb Q(\sqrt5)$.
 
-The interior atoms of a two-summand law are covered by the following two
-compact inequalities.
+For $n=2$ summands, the two interior atoms of $S$ are covered by the
+following two compact inequalities.
+
 \begin{samepage}
-\begin{lemma}[Two compact inequalities]\label{lem:two-compact}
+\begin{lemma}[Interior-atom inequalities for two two-point summands]\label{lem:two-compact}
 Let $0<p_1,p_2<1$, $q_i=1-p_i$, $a_i=p_iq_i$, and $r_i=p_i^2+q_i^2$.
 For $0\leq t\leq1$, put $V=a_1t^2+a_2$ and $R=a_1r_1t^3+a_2r_2$. Then
 \begin{equation}\label{eq:two-upper-middle}
  \be\frac{R}{V^{3/2}}+
- \Phi\left(\frac{-p_1t+q_2}{\sqrt V}\right)-(1-p_1p_2)>3/80.
+ \Phi\left(\frac{-p_1t+q_2}{\sqrt V}\right)-(1-p_1p_2)>\frac3{80}.
 \end{equation}
-For $0\leq\theta\leq\pi/2$, set $\alpha=\cos\theta$, $\beta=\sin\theta$.
-Then
+Similarly, for $0\leq\theta\leq\pi/2$, set $\alpha=\cos\theta$ and
+$\beta=\sin\theta$. Then
 \begin{equation}\label{eq:two-lower-middle}
  \be\left(\alpha^3\frac{r_1}{\sqrt{a_1}}+
                   \beta^3\frac{r_2}{\sqrt{a_2}}\right)
  +\Phi\left(\alpha\sqrt{\frac{q_1}{p_1}}
-            -\beta\sqrt{\frac{p_2}{q_2}}\right)-q_2>3/80.
+            -\beta\sqrt{\frac{p_2}{q_2}}\right)-q_2>\frac3{80}.
 \end{equation}
 \end{lemma}
 \end{samepage}
-A separately formulated Arb interval calculation in the supplement proves these inequalities on the full two unit cubes. It substitutes intervals directly into the squared-variance-share formulas of Section~\ref{sec:verification}, using the same Arb library as the other calculations. Its combined three-domain cover, including the endpoint square below, has 63,792 leaves at 320 bits; the least certified excess over $3/80$ is greater than $2.5361\cdot10^{-7}$. Rational probability-variance maxima and H\"older bounds handle singular faces; Section~\ref{sec:verification} gives the exact acceptance formulas. Inequality~\eqref{eq:two-lower-middle}
-is proved for every $\alpha,\beta\geq0$ with $\alpha^2+\beta^2=1$.
-The parameters obtained from ordered diameters $0<h_1\leq h_2$ form a
-subset of this domain.
+\begin{proof}[Method of verification]
+Inequalities \eqref{eq:two-upper-middle} and \eqref{eq:two-lower-middle}
+(with $\theta=\pi t/2$), together with the endpoint square $[0,99/100]^2$ in
+Lemma~\ref{lem:pair-endpoint-margin} below, are verified on their closed unit
+domains by a 63,792-leaf partition evaluated in 320-bit Arb ball arithmetic
+(with minimum certified excess $>2.5361\times10^{-7}$ over $3/80$); the
+monotonicity bounds used near the singular boundary faces $p_i\in\{0,1\}$ are
+recorded in Section~\ref{sec:verification}.
+\end{proof}
 
-\begin{lemma}[The uniform endpoint deficit]\label{lem:pair-endpoint-margin}
-At either support endpoint of a one- or two-Bernoulli array, both signed
-sharp deficits exceed $3/80$.
+\begin{lemma}[Uniform endpoint deficit for at most two summands]\label{lem:pair-endpoint-margin}
+At either support endpoint of a one- or two-summand two-point array with
+$V>0$, both $H_S^+(y)$ and $H_S^-(y)$ exceed $3/80$.
 \end{lemma}
 \begin{proof}
-At the lower endpoint, let
-$A=\sum_i a_i/r_i^2$, $s=\sum_i p_i/q_i$, and $\Pi=\prod_iq_i$.
-After variance normalization, H\"older and Cauchy--Schwarz give
-$R\ge A^{-1/2}$ and $m=\sum_i p_i h_i\le\sqrt s$. The atom-bearing
-deficit is therefore at least
+At the lower support endpoint, set $A=\sum_i a_i/r_i^2$, $s=\sum_i p_i/q_i$,
+and $\Pi=\prod_iq_i$. Normalizing $V=1$, Lemma~\ref{lem:reciprocal-gap-resource}
+and Cauchy--Schwarz give $R\ge A^{-1/2}$ and $m=\sum_i p_i h_i\le\sqrt s$, so
+the closed deficit is bounded below by
 \[
- \be/\sqrt A+\Phi(-\sqrt s)-\Pi.
+ \frac{\be}{\sqrt A}+\Phi(-\sqrt s)-\Pi.
 \]
-On $[0,99/100]^2$ the independent endpoint cover proves this expression
-greater than $3/80$. Its all-zero corner has no positive-variance law.
-If some $p_i\ge99/100$, the deficit is greater than
-$49/180-1/100>3/80$, since $R\ge1/\sqrt2>2/3$.
-For an atom-free endpoint, the proof of
-Lemma~\ref{lem:support-owners-without-atom-term} gives $R\ge c/x$,
-where $c=2(\sqrt2-1)>49/60$. The elementary bound $x\Phi(-x)<1/4$
-then gives deficit greater than
+On $[0,99/100]^2$, the interval partition in the supplement certifies that
+this lower bound exceeds $3/80$. If some $p_i\ge99/100$, then $\Pi\le1/100$
+while $R\ge1/\sqrt2>2/3$, giving a deficit exceeding $49/180-1/100>3/80$.
+For the strict branch at the lower endpoint, where $F_S^-=0$, the proof of
+Lemma~\ref{lem:support-owners-without-atom-term} gives $R\ge c/x$ with
+$c=2(\sqrt2-1)>49/60$ and $x=m$. Since $x\Phi(-x)<1/4$ for all $x>0$, the
+strict deficit exceeds
 \[
- (\be-1/(4c))R>(49/120-15/49)(2/3)=601/8820>3/80.
+ \left(\be-\frac1{4c}\right)R>\left(\frac{49}{120}-\frac{15}{49}\right)\frac23
+ =\frac{601}{8820}>\frac3{80}.
 \]
-For completeness, $x\Phi(-x)<1/4$ follows from $\Phi(-x)<1/2$ for
-$x\le1/2$, from $\Phi(-1/2)<1/3$ and $\Phi(-3/4)<1/4$ on the next
-two quarter intervals, and from Mills' bound
-$x\Phi(-x)<\phi(x)\le\phi(1)<1/4$ for $x\ge1$.
-The two scalar CDF comparisons follow by integrating
-$\phi(t)> (39/100)(1-t^2/2)$. Reflection proves the other endpoint.
+Reflection $S\mapsto-S$ establishes the same bounds at the upper endpoint.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:two-summands}]
-Delete any deterministic coordinate. A remaining single Bernoulli variable
-is covered by Lemma~\ref{lem:pair-endpoint-margin}. Otherwise relabel
-and scale so $h_2=1$ and $0<h_1=t\leq1$.
-When $t<1$, the four configurations have the order $00<10<01<11$.
-If $x_A=\sum_i(A_i-p_i)h_i$, their CDF values are
+Omit any deterministic summand. If only one summand remains, both its atoms
+are support endpoints, which are covered by Lemma~\ref{lem:pair-endpoint-margin}.
+If two nondegenerate summands remain, relabel and scale so that $h_2=1$ and
+$0<h_1=t\leq1$. For $t<1$, the four atoms $x_A=\sum_{i=1}^2(A_i-p_i)h_i$
+($A\in\{0,1\}^2$) are ordered as $00<10<01<11$, with distribution values
 \[
 \begin{array}{c|cc}
  A&F_S^-(x_A)&F_S^+(x_A)\\\hline
@@ -286,182 +364,149 @@ If $x_A=\sum_i(A_i-p_i)h_i$, their CDF values are
  11&1-p_1p_2&1.
 \end{array}
 \]
-Lemma~\ref{lem:pair-endpoint-margin} handles both endpoint atoms.
-The closed value at $01$ is \eqref{eq:two-upper-middle}.
-At $10$, put
-\[
- \alpha=\frac{h_1\sqrt{a_1}}{\sqrt V},\qquad
- \beta=\frac{h_2\sqrt{a_2}}{\sqrt V};
- \qquad \alpha^2+\beta^2=1.
-\]
-Its closed deficit becomes \eqref{eq:two-lower-middle}.
-At $t=1$ the two middle atoms merge; their left and closed CDF values are
-$q_1q_2$ and $1-p_1p_2$. Thus \eqref{eq:two-upper-middle} is exactly the
-merged closed deficit. The split value $q_2$ is not used at this collision.
-Complementing both Bernoulli variables gives $-S$ with the same variance,
-third absolute moments, and gap ordering. The identity
-$F_S^-(y)=1-F_{-S}^+(-y)$ supplies every left limit from the closed values
-just proved. Equation~\eqref{eq:one-sided} completes the proof.
-A zero diameter or a probability equal to zero or one is handled by deletion
-before standardization. If no variance remains, the hypotheses of the theorem
-are not satisfied.
+Lemma~\ref{lem:pair-endpoint-margin} covers $00$ and $11$. For the closed
+branch at $01$, the deficit $H_S^+(x_{01})$ is exactly the left-hand side of
+\eqref{eq:two-upper-middle}. For the closed branch at $10$, setting
+$\alpha=h_1\sqrt{a_1/V}$ and $\beta=h_2\sqrt{a_2/V}$ (so that
+$\alpha^2+\beta^2=1$) transforms $H_S^+(x_{10})$ into the left-hand side of
+\eqref{eq:two-lower-middle}. When $t=1$, the interior atoms $10$ and $01$
+coalesce, with $F_S^-=q_1q_2$ and $F_S^+=1-p_1p_2$, whose closed deficit is
+again \eqref{eq:two-upper-middle}. Finally, replacing $(B_1,B_2)$ by
+$(1-B_1,1-B_2)$ negates $S$ while preserving $V$, $R$, and $0<h_1\le h_2$,
+so $F_S^-(y)=1-F_{-S}^+(-y)$ reduces all strict deficits $H_S^-(x_A)$ to the
+closed deficits already proved.
 \end{proof}
+
+As an immediate consequence of Theorem~\ref{thm:bernoulli-classes}(ii), the
+sharp Esseen bound also holds for arbitrary mixtures of positively and
+negatively oriented Esseen two-point variables of equal variance.
 
 \begin{samepage}
 \begin{corollary}[Mixtures of the two Esseen orientations]\label{cor:mixtures}
-Fix $c>0$ and numbers $0\leq\eta_i\leq1$. Suppose the independent variables
-$X_i$ have laws
+Fix $c>0$ and $0\leq\eta_i\leq1$ for $1\le i\le n$. If $X_1,\ldots,X_n$ are
+independent with marginal distributions
 \[
  \mathcal L(X_i)=(1-\eta_i)\mathcal L(cZ)+\eta_i\mathcal L(-cZ),
- \qquad Z\sim\mu_{\mathrm E}.
+ \qquad Z\sim\mu_{\mathrm E},
 \]
-Then $\Delta\leq\be\ell$.
+then $\Delta\leq\be L$.
 \end{corollary}
 \end{samepage}
 \begin{proof}
-Represent each mixture by an independent choice of orientation, followed by
-an independent draw from that oriented law. Conditional on the orientations,
-every summand has variance $c^2$, absolute third moment
-$c^3 b_{\mathrm E}$, where
-$b_{\mathrm E}=(p_{\mathrm E}^2+q_{\mathrm E}^2)/\sqrt{p_{\mathrm E}q_{\mathrm E}}$,
+Realize each $X_i$ by first drawing an independent sign choice and then
+drawing from $\mathcal L(\pm cZ)$. Conditional on the vector of sign choices,
+the summands are independent two-point variables with identical variances
+$c^2$, identical third absolute moments $c^3(p_{\mathrm E}^2+q_{\mathrm E}^2)/\sqrt{p_{\mathrm E}q_{\mathrm E}}$,
 and common support diameter $c/\sqrt{p_{\mathrm E}q_{\mathrm E}}$.
-Theorem~\ref{thm:equal-gap-two-point} bounds every conditional CDF by the
-same $\be\ell$ relative to the same standard normal CDF. Averaging preserves
-that bound. For $0<\eta_i<1$ the summand has four support points.
+Theorem~\ref{thm:bernoulli-classes}(ii) gives $|\Pp(S\le x\mid\text{signs})-\Phi(x/\sqrt V)|\le\be L$
+for every sign configuration, and averaging over the signs preserves the
+inequality.
 \end{proof}
 
-\section{Three arbitrary Bernoulli diameters}\label{sec:three}
-Write $X_i=h_i(B_i-p_i)$, $q_i=1-p_i$, $a_i=p_iq_i$, and
-$r_i=p_i^2+q_i^2$. We prove part (i) of
-Theorem~\ref{thm:bernoulli-classes}. The result for fewer than three
-nondegenerate coordinates follows from Theorem~\ref{thm:two-summands}.
+\section{Three Bernoulli summands with arbitrary diameters}\label{sec:three}
 
-Normalize $B^2=1$. The variance-only discrepancy estimate
+We now prove Theorem~\ref{thm:bernoulli-classes}(i). Write
+$X_i=h_i(B_i-p_i)$ with $q_i=1-p_i$, $a_i=p_iq_i$, and $r_i=p_i^2+q_i^2$ for
+$i=1,2,3$; arrays with at most two active summands are already covered by
+Theorem~\ref{thm:two-summands}.
+
+Normalize total variance to $B^2=1$. By Cantelli's inequality (see
+\citet{BellIndependent2026}), every
+centered unit-variance law satisfies
 \begin{equation}\label{eq:kappa}
- \Delta<\kappa:=271/500
+ \Delta<\kappa:=\frac{271}{500}=0.542,
 \end{equation}
-follows from Cantelli's inequality and a one-variable normal-tail
-calculation; its exact scalar certificate is supplied with the companion
-numerical paper \cite{BellIndependent2026}. A negative sharp deficit
-therefore requires $R<\kappa/\be<4/3$.
+so any counterexample to $\Delta\le\be R$ must satisfy $R<\kappa/\be<4/3$.
 
-Suppose a coordinate of variance $w\le1/25$ is deleted, leaving a
-Bernoulli pair of variance $v=1-w$. Its uniform deficit is greater than
-$1/30$ by Theorem~\ref{thm:two-summands}. Replace that pair by a Gaussian
-of variance $v$, and compare the deleted coordinate with a Gaussian of
-variance $w$. Taylor's formula to order two gives replacement coefficient
+Furthermore, no summand in a counterexample can have variance $w\le1/25$.
+Indeed, suppose a summand $X$ has variance $w\le1/25$, leaving a two-summand
+two-point sum $T$ of variance $v=1-w\ge24/25$. By Theorem~\ref{thm:two-summands},
+$T/\sqrt v$ has deficit exceeding $3/80>1/30$. Replacing $T$ by a normal
+variable $N(0,v)$ and comparing $N(0,v)+X$ with $N(0,1)$ by a second-order
+Taylor expansion of $\Phi(\cdot/\sqrt v)$ incurs an error bounded by
 \[
+ L(v)R_X,\qquad
  L(v)=\frac{\phi(0)(1+4\phi(0))}{6v^{3/2}}<\frac15
- \qquad(v\ge24/25);
+ \qquad(v\ge24/25),
 \]
-the bound uses $\E|Z|^3=4\phi(0)$ and
-$\|\Phi'''\|_\infty=\phi(0)$. If $R_X=\E|X|^3$ and $R_T$ is the
-sum of third absolute moments of the retained pair, the full deficit is greater than
+where $R_X=\E|X|^3\ge w^{3/2}$ and $R_T=R-R_X$. The full deficit therefore
+exceeds
 \[
  \frac1{30}-\be R_T(v^{-3/2}-1)+(\be-L(v))R_X
- > b(w):=\frac1{30}-\kappa((1-w)^{-3/2}-1)+\frac5{24}w^{3/2}.
+ > b(w):=\frac1{30}-\kappa\bigl((1-w)^{-3/2}-1\bigr)+\frac5{24}w^{3/2}.
 \]
-Here $R_X\ge w^{3/2}$ applies to the single deleted coordinate.
-On $[0,1/25]$,
-$b'(w)\le-3\kappa/2+1/16<0$, while
-\[
- b(1/25)>1/2000,
- \qquad (25/24)^3<(1153/1084)^2.
-\]
-Thus a negative deficit requires $w_i>1/25$ for every coordinate.
-The Bernoulli moment identities then give
-\[
- R\ge\frac{w_i^{3/2}}{2\sqrt{a_i}},\qquad
- R\ge\frac{w_i h_i}{2},\qquad h_i\ge2\sqrt{w_i},
-\]
-and hence
+On $[0,1/25]$, $b'(w)\le-3\kappa/2+1/16<0$ and $b(1/25)>1/2000>0$. Thus any
+counterexample must have $w_i=a_ih_i^2>1/25$ for each $i=1,2,3$. Since
+$R\ge w_i^{3/2}/(2\sqrt{a_i})$, $R\ge w_ih_i/2$, and $h_i\ge2\sqrt{w_i}$,
+the bound $R<4/3$ implies the a priori bounds
 \begin{equation}\label{eq:n3-collars}
- a_i>9\cdot10^{-6},\qquad 2/5<h_i<200/3.
+ a_i>9\times10^{-6},\qquad \frac25<h_i<\frac{200}{3},
+ \qquad p_i\in\left[\frac1{125000},\,1-\frac1{125000}\right].
 \end{equation}
-In particular it suffices to consider $p_i\in[1/125000,1-1/125000]$.
 
-Order and rescale the raw diameters so that $0<h_1\le h_2\le h_3=1$.
-For a configuration $A\in\{0,1\}^3$, put
-\[
- V=\sum_i a_i h_i^2,\qquad R_h=\sum_i a_i r_i h_i^3,
- \qquad z_A=(A-p)\mathbin{\cdot}h/\sqrt V.
-\]
-The following table states the complete finite calculation. Each row
-asserts
-\begin{equation}\label{eq:n3-certificate}
- \be R_h/V^{3/2}+\Phi(z_A)-F(p)\ge0
-\end{equation}
-on the probability cube just specified and $s,t\in[0,1]$.
-\[
- O=(st,s,1),\qquad
- T=((1-s)/2+st,(1+s)/2,1),\qquad
- U=(s/2,s/2+(1-s)t,1).
-\]
+Relabel and rescale the raw diameters so that $0<h_1\le h_2\le h_3=1$. Depending
+on whether $h_1+h_2\le1$ or $h_1+h_2\ge1$, the eight atoms $A\in\{0,1\}^3$
+are ordered either as
+\begin{gather*}
+ 000\le100\le010\le001\le110\le101\le011\le111\\
+ \text{or}\quad
+ 000\le100\le010\le110\le001\le101\le011\le111.
+\end{gather*}
+Proposition~\ref{cor:all-support-owners} covers the extreme endpoints $000$
+and $111$. With $V=\sum_{i=1}^3 a_ih_i^2$, $R_h=\sum_{i=1}^3 a_ir_ih_i^3$,
+and $z_A=(A-p)\cdot h/\sqrt V$, the six interior atoms in both orderings are
+covered by the eight parameterizations $O=(st,s,1)$,
+$T=((1-s)/2+st,(1+s)/2,1)$, and $U=(s/2,s/2+(1-s)t,1)$ for $(s,t)\in[0,1]^2$:
 \begin{center}
 \begin{tabular}{ccccr}
 \toprule
-Case&$h$&$A$&$F(p)$&Accepted leaves\\
+Case&$h(s,t)$&$A$&$F(p)$&Accepted leaves\\
 \midrule
-First &$O$&100&$q_2q_3$&244953\\
-Second &$O$&010&$q_3(1-p_1p_2)$&373301\\
-Upper pair &$O$&101&$1-p_2p_3$&102405\\
-Last &$O$&011&$1-p_1p_2p_3$&175197\\
-Triangle lower &$T$&001&$1-p_1p_2-p_1p_3-p_2p_3+2p_1p_2p_3$&263494\\
-Triangle upper &$T$&110&$q_3+p_3q_1q_2$&62488\\
-Separated lower &$U$&110&$q_3$&20070\\
-Separated upper &$U$&001&$q_3+p_3q_1q_2$&70253\\
+First &$O$&100&$q_2q_3$&244,953\\
+Second &$O$&010&$q_3(1-p_1p_2)$&373,301\\
+Upper pair &$O$&101&$1-p_2p_3$&102,405\\
+Last &$O$&011&$1-p_1p_2p_3$&175,197\\
+Triangle lower &$T$&001&$1-p_1p_2-p_1p_3-p_2p_3+2p_1p_2p_3$&263,494\\
+Triangle upper &$T$&110&$q_3+p_3q_1q_2$&62,488\\
+Separated lower &$U$&110&$q_3$&20,070\\
+Separated upper &$U$&001&$q_3+p_3q_1q_2$&70,253\\
 \bottomrule
 \end{tabular}
 \end{center}
-The supplement contains the eight complete recipes, with 1,312,161
-accepted leaves and 2,624,314 processed nodes. Every recipe has been
-replayed from its original cube at 320-bit precision. The replay
-reconstructs all exact bisections and face projections and recomputes
-their inequalities; it shares the mathematical formulas with the
-192-bit producer. Section~\ref{sec:verification} specifies the proof
-rules and the distinction between geometry checks and arithmetic replay.
+On each of these eight five-dimensional domains, the inequality
+\begin{equation}\label{eq:n3-certificate}
+ \be \frac{R_h}{V^{3/2}}+\Phi(z_A)-F(p)\ge0
+\end{equation}
+is certified by the subdivision and boundary-projection recipes in
+\path{certificates/finite/current-finite.zip} (1,312,161 accepted leaves across
+2,624,314 nodes, reevaluated at 320-bit Arb precision; see
+Section~\ref{sec:verification}). At any atom collision, the last configuration
+in the tied block carries the full closed CDF value $F_S^+(y)$, while every
+other row has $F(p)\le F_S^+(y)$ so that \eqref{eq:n3-collars} remains valid
+whenever the row expression is negative. Reflection supplies the strict CDF
+branches, proving Theorem~\ref{thm:bernoulli-classes}(i).
 
-To see that the table covers every Bernoulli array, the two possible
-strict orders of the subset sums are
-\[
-000,100,010,001,110,101,011,111,
-\qquad
-000,100,010,110,001,101,011,111.
-\]
-The six interior configurations in each order occur in the table.
-At a collision choose the last configuration in its tied block; that
-row includes every tied configuration in the closed CDF. This covers
-equal gaps, $h_1+h_2=h_3$, and their intersections. Every other row still
-satisfies $F_{\rm row}\le F_S^+(y)$. Thus a negative row deficit
-implies a negative deficit for the actual law. The parameter bounds
-derived under that hypothesis therefore apply in the row's
-negative-set derivative test.
-Proposition~\ref{cor:all-support-owners} covers the two support endpoints.
-Reflection supplies strict CDF values, and monotonicity between atoms
-extends the inequalities to every real threshold.
-\section{Proof for a common support diameter}\label{sec:equal-gap-two-point}
-\begin{theorem}[Common diameter]\label{thm:equal-gap-two-point}
-Part (ii) of Theorem~\ref{thm:bernoulli-classes} holds.
+\section{Common-diameter Bernoulli arrays}\label{sec:equal-gap-two-point}
+
+\begin{theorem}[Common support diameter]\label{thm:equal-gap-two-point}
+Part \textup{(ii)} of Theorem~\ref{thm:bernoulli-classes} holds: every finite
+independent array of two-point summands with a common support diameter
+satisfies $\Delta\le\be L$, and the constant $\be$ is optimal.
 \end{theorem}
-We minimize the signed deficit over the Bernoulli probabilities.
-The stationarity equations reduce a hypothetical negative minimum
-to a binomial law or to a binomial sum with one exceptional Bernoulli
-coordinate. Schulz's theorem treats the first case. A curvature
-calculation and the two-summand deficit treat the second.
 
-Let $B_1,\ldots,B_n$ be independent Bernoulli variables with parameters
-$p_1,\ldots,p_n$. Put $q_i=1-p_i$ and
+After omitting zero summands and dividing by the common support diameter,
+we have $X_i=B_i-p_i$ where $B_1,\ldots,B_n$ are independent with
+$B_i\sim\Bern(p_i)$, $p_i\in(0,1)$, and $q_i=1-p_i$. Put
 \begin{equation}
  N_p:=\sum_{i=1}^nB_i,\qquad
  \mu:=\sum_{i=1}^np_i,\qquad
  V(p):=\sum_{i=1}^np_iq_i,
  \qquad
- \mathcal B(p):=\sum_{i=1}^np_iq_i(p_i^2+q_i^2).
+ \mathcal B(p):=\sum_{i=1}^np_iq_i(p_i^2+q_i^2),
  \label{eq:equal-gap-bernoulli-data}
 \end{equation}
-Write $F_j(p)=\Pp(N_p\leq j)$, with $F_j=0$ below the support and $F_j=1$
-above it. For an integer $k$ and $V(p)>0$, define the closed and strict
-deficits
+and write $F_j(p)=\Pp(N_p\leq j)$. For an integer $k$ and $V(p)>0$, the closed
+and strict deficits are
 \begin{align}
  \mathcal H_+(p;k)
  &:=\be\frac{\mathcal B(p)}{V(p)^{3/2}}
@@ -472,30 +517,24 @@ deficits
    -\Phi\!\left(\frac{k-\mu}{\sqrt{V(p)}}\right)+F_{k-1}(p).
  \label{eq:equal-gap-strict-deficit}
 \end{align}
-By~\eqref{eq:one-sided}, the common-diameter bound is equivalent to the
-nonnegativity of both deficits for every integer $k$.
-Complementation gives the exact reflection
+By \eqref{eq:one-sided}, $\Delta\le\be L$ is equivalent to
+$\mathcal H_\pm(p;k)\ge0$ for all $k\in\Z$, and complementation $B_i\mapsto1-B_i$
+gives the exact reflection identity
 \begin{equation}
  \mathcal H_-(p_1,\ldots,p_n;k)
  =\mathcal H_+(q_1,\ldots,q_n;n-k).
  \label{eq:equal-gap-owner-reflection}
 \end{equation}
-Thus it is enough, when convenient, to treat the closed CDF value.
 
-We use the following bound for third differences of a Poisson-binomial
-mass function.
+\subsection{Third differences of Poisson-binomial point probabilities}
 
 \begin{samepage}
-\begin{lemma}[A bound for third differences]\label{lem:poisson-binomial-third-difference}
-Let $c_j=\Pp(C=j)$ be the mass function of any finite Poisson-binomial law,
-extended by zero off its support, and let
-\[
- W=\Var C,\qquad
- \Delta^3c_j:=c_j-3c_{j-1}+3c_{j-2}-c_{j-3}.
-\]
-Then
+\begin{lemma}[Poisson-binomial third-difference bound]\label{lem:poisson-binomial-third-difference}
+Let $c_j=\Pp(C=j)$ ($j\in\Z$) be the point mass function of a finite
+Poisson-binomial sum $C=\sum_i B_i$ of variance $W=\Var C$, and let
+$\Delta^3c_j:=c_j-3c_{j-1}+3c_{j-2}-c_{j-3}$. Then
 \begin{equation}
- \sup_j|\Delta^3c_j|
+ \sup_{j\in\Z}|\Delta^3c_j|
  < \frac{8\be}{(W+1)^{3/2}}.
  \label{eq:poisson-binomial-third-difference}
 \end{equation}
@@ -503,29 +542,17 @@ Then
 \end{samepage}
 
 \begin{proof}
-Set $A=8\be$. The rational estimates $\sqrt{10}>79/25$ and
-$\pi<22/7$ give $A>16/5$.
+Set $A=8\be$; the rational bounds $\sqrt{10}>79/25$ and $\pi<22/7$ give
+$A>16/5$.
 
-Suppose first that $0\leq W\leq1/4$. Write $C=\sum_iB_i$, where the $B_i$ are
-independent with $B_i\sim\Bern(p_i)$, and put $q_i=1-p_i$. Choose the more likely value of each
-$B_i$ as a base configuration, put $\varepsilon_i=\min(p_i,q_i)$, and let $J$
-count deviations from that configuration. If
-$E=\sum_i\varepsilon_i$ and $P_r=\Pp(J=r)$, then
-\[
- E\leq2W\leq\frac12,
- \qquad P_0\geq1-E\geq\frac12.
-\]
-With $R=\sum_i\varepsilon_i/(1-\varepsilon_i)$, one has
-$W\leq E\leq R\leq2E\leq1$, $P_1=P_0R$, and
-\[
- P_0\geq e^{-R},\qquad
- P_1\geq Re^{-R}\geq We^{-W}.
-\]
-Let $m$ be the number of ones in the base configuration. At the two central
-indices $m+1$ and $m+2$, the no-deviation contribution to $\Delta^3c_j$ has
-magnitude three. Every one-deviation contribution has the opposite sign and
-magnitude at least one; every remaining contribution has magnitude at most
-three. Since $P_0\geq1/2$, the central sign cannot reverse, and hence
+First suppose $0\leq W\leq1/4$. Taking the more probable outcome of each $B_i$
+as a reference configuration, let $\varepsilon_i=\min(p_i,q_i)$, $E=\sum_i\varepsilon_i\le2W\le1/2$,
+$R=\sum_i\varepsilon_i/(1-\varepsilon_i)\in[W,1]$, and let $J$ count the number
+of coordinates that depart from the reference configuration. Then
+$P_0=\Pp(J=0)\ge\max(1-E,e^{-R})\ge1/2$ and $P_1=\Pp(J=1)=P_0R\ge We^{-W}$.
+If $m$ is the sum of the reference configuration, then at $j\in\{m+1,m+2\}$
+the event $J=0$ contributes $\pm3$ to $\Delta^3c_j$ while every $J=1$ outcome
+contributes with the opposite sign and magnitude at least $1$, so that
 \begin{equation}
  |\Delta^3c_j|
  \leq3P_0-P_1+3\Pp(J\geq2)
@@ -533,40 +560,19 @@ three. Since $P_0\geq1/2$, the central sign cannot reverse, and hence
  \leq3-4We^{-W}
  \label{eq:third-difference-small-central}
 \end{equation}
-at those two indices. At every other index, the base contribution has
-magnitude at most one, so
+for $j\in\{m+1,m+2\}$, whereas at all other $j$ the $J=0$ contribution has
+magnitude at most $1$ and
 \begin{equation}
- |\Delta^3c_j|\leq P_0+3(1-P_0)\leq1+4W.
+ |\Delta^3c_j|\leq P_0+3(1-P_0)\leq1+4W\le2<A(5/4)^{-3/2}.
  \label{eq:third-difference-small-outer}
 \end{equation}
-The outer bound in~\eqref{eq:third-difference-small-outer} is at most two,
-whereas $A(1+W)^{-3/2}>2$ on this interval. For the central
-bound~\eqref{eq:third-difference-small-central}, use
-$e^{-W}\geq1-W$ and
-\[
- (1+W)^{-3/2}
- \geq h(W):=1-\frac32W+\frac{15}{8}W^2-\frac{35}{16}W^3.
-\]
-For
-\[
- P(W):=Ah(W)-(3-4W+4W^2),
-\]
-one has $h'(W)<0$ and, because $A>3$,
-\[
- P'(W)<3h'(W)+4-8W
- =-\frac12+\frac{13}{4}W-\frac{315}{16}W^2<0.
-\]
-At the right endpoint,
-\[
- P(1/4)=A\frac{725}{1024}-\frac94>\frac1{64}.
-\]
-This proves~\eqref{eq:poisson-binomial-third-difference} for $W\leq1/4$.
+In \eqref{eq:third-difference-small-central}, using $e^{-W}\ge1-W$ and
+$(1+W)^{-3/2}\ge h(W):=1-\frac32W+\frac{15}{8}W^2-\frac{35}{16}W^3$, the
+difference $P(W)=Ah(W)-(3-4W+4W^2)$ satisfies
+$P'(W)<3h'(W)+4-8W=-\frac12+\frac{13}{4}W-\frac{315}{16}W^2<0$ on $[0,1/4]$
+and $P(1/4)=\frac{725}{1024}A-\frac94>\frac1{64}>0$.
 
-For $W\geq1/4$, Fourier inversion and
-\[
- |1-p+pe^{it}|\leq
- \exp\{-2p(1-p)\sin^2(t/2)\}
-\]
+Now suppose $W\geq1/4$. Fourier inversion and $|1-p+pe^{\ii t}|\leq\exp\{-2p(1-p)\sin^2(t/2)\}$
 give
 \begin{equation}
  |\Delta^3c_j|
@@ -574,50 +580,29 @@ give
  \sin^3x\,e^{-2W\sin^2x}\,dx.
  \label{eq:third-difference-fourier-majorant}
 \end{equation}
-Put
-$J_r(W)=\int_0^{\pi/2}\sin^rx\,e^{-2W\sin^2x}\,dx$.
-Integration of the derivative of
-$\sin^4x\cos x\,e^{-2W\sin^2x}$ yields
+Writing $J_r(W)=\int_0^{\pi/2}\sin^rx\,e^{-2W\sin^2x}\,dx$, integration by
+parts of $(\sin^4x\cos x\,e^{-2W\sin^2x})'$ gives $(5+4W)J_5=4J_3+4WJ_7$, so
+$J_5/J_3\ge4/(5+4W)$ and
 \[
- (5+4W)J_5=4J_3+4WJ_7,
- \qquad \frac{J_5}{J_3}\geq\frac4{5+4W}.
-\]
-Consequently
-\[
- \frac{d}{dW}\log\{I(W)(1+W)^{3/2}\}
+ \frac{d}{dW}\log\bigl\{I(W)(1+W)^{3/2}\bigr\}
  =-2\frac{J_5}{J_3}+\frac{3}{2(1+W)}
  \leq-\frac8{5+4W}+\frac3{2(1+W)}<0.
 \]
-It remains to check $W=1/4$. The bound $e^{-u}\leq1-u+u^2/2$ gives
-\[
- I(1/4)
- \leq\frac{16}{\pi}\left(J_3(0)-\frac12J_5(0)+\frac18J_7(0)\right)
- =\frac{256}{35\pi}.
-\]
-Finally,
-\[
- \frac{256}{35\pi}<\frac{A}{(5/4)^{3/2}},
-\]
-because, after squaring positive quantities, this is
-$5760<49\pi(19+6\sqrt{10})$, which follows from
-$\pi>157/50$ and $\sqrt{10}>79/25$. The normalized majorant in
-\eqref{eq:third-difference-fourier-majorant} is decreasing, completing the
-proof.
+At $W=1/4$, $e^{-u}\leq1-u+u^2/2$ gives
+$I(1/4)\leq\frac{16}{\pi}(J_3(0)-\frac12J_5(0)+\frac18J_7(0))=\frac{256}{35\pi}<A(5/4)^{-3/2}$.
 \end{proof}
 
+\subsection{Reduction to a binomial sum plus one Bernoulli summand}
+
 \begin{samepage}
-\begin{proposition}[Reduction to a binomial sum and one Bernoulli variable]
+\begin{proposition}[Reduction along elementary-symmetric probability fibers]
 \label{prop:equal-gap-one-exception-reduction}
-Fix $n$, a mean $\mu$, an integer $k$, and either deficit in
+Fix $n\ge1$, $\mu\in(0,n)$, $k\in\Z$, and either deficit in
 \eqref{eq:equal-gap-closed-deficit}--\eqref{eq:equal-gap-strict-deficit}.
-If that deficit is negative somewhere on
-\[
- \mathcal P_{n,\mu}:=
- \left\{p\in[0,1]^n:\sum_{i=1}^np_i=\mu\right\},
-\]
-then, after deleting deterministic coordinates and possibly applying the
-reflection~\eqref{eq:equal-gap-owner-reflection}, a negative minimum on a face
-has the form
+If that deficit is negative somewhere on $\mathcal P_{n,\mu}:=\{p\in[0,1]^n:\sum_{i=1}^np_i=\mu\}$,
+then after deleting deterministic coordinates in $\{0,1\}$ and possibly
+applying \eqref{eq:equal-gap-owner-reflection}, a negative global minimum on
+a face of minimal dimension has the form
 \begin{equation}
  N_p\sim\Bin(M,p)+\Bern(x),
  \qquad M\geq1,\quad 0<p,x<1,\quad p\ne x.
@@ -627,115 +612,70 @@ has the form
 \end{samepage}
 
 \begin{proof}
-Since $\mathcal B(p)\geq V(p)/2$, extend the selected deficit by $+\infty$
-on $V=0$. It then has a global minimum away from the zero-variance boundary.
-Choose a face of least dimension on which the selected deficit is negative
-somewhere. Among the global minimizers on that face, choose one maximizing
-$\sum_i p_i^3$. A coordinate at zero can be deleted. A coordinate at one can be deleted after replacing
-$(\mu,k)$ by $(\mu-1,k-1)$. Both operations preserve $k-\mu$ and the selected
-deficit. Each face is identified bijectively with the reduced polytope, so
-global minimality is preserved; the cubic tie-break is preserved as well,
-because the deleted cube is the constant zero or one on that face. Minimal
-dimension therefore makes the chosen minimizer interior.
+Since $\mathcal B(p)\geq V(p)/2$, the deficit tends to $+\infty$ as
+$V(p)\to0$, so it attains its minimum on every closed face of
+$\mathcal P_{n,\mu}$. Choose a face of smallest dimension on which the minimum
+is negative, and among the minimizers on that face choose one maximizing
+$\sum_i p_i^3$. Deleting coordinates equal to $0$ or $1$ (replacing
+$(\mu,k)$ by $(\mu-1,k-1)$ when $p_i=1$) preserves the deficit, so minimal
+dimension implies $p_i\in(0,1)$ for all remaining coordinates.
 
-The next-power-sum choice and the three-coordinate variation adapt
-Mattner's proof of Theorem~1.1 \cite[pp.~5--6]{Mattner2022}.
-Here the original absolute cubic sum is also affine along the variation,
-so the argument applies to the selected deficit. The subsequent
-exclusion of two repeated probability values is an additional step.
-Select three coordinates and write $e_1,e_2,e_3$ for their elementary
-symmetric polynomials. Their generating polynomial is
+Following \citet[pp.~5--6]{Mattner2022}, for any three coordinates $p_1,p_2,p_3$
+let $e_1,e_2,e_3$ be their elementary symmetric polynomials:
 \begin{equation}
  \prod_{i=1}^3\{1+p_i(w-1)\}
  =1+e_1(w-1)+e_2(w-1)^2+e_3(w-1)^3.
  \label{eq:equal-gap-triple-generating}
 \end{equation}
-Holding $e_1,e_2$ fixed preserves the mean and the triple variance
-$V_3=e_1-e_1^2+2e_2$. At every fixed integer threshold, the CDF of the full
-sum is affine in $e_3$, and the contribution of the selected triple to
-$\mathcal B$ is
+Holding $e_1,e_2$ fixed preserves both their mean $e_1$ and their variance
+$V_3=e_1-e_1^2+2e_2$, while making both $F_k(p)$ and their third-moment sum
 \begin{equation}
-\begin{aligned}
- \mathcal B_3={}&e_1-3e_1^2+4e_1^3-2e_1^4
- +(6-12e_1+8e_1^2)e_2-4e_2^2\\
- &+4(3-2e_1)e_3.
-\end{aligned}
+ \mathcal B_3=e_1-3e_1^2+4e_1^3-2e_1^4
+ +(6-12e_1+8e_1^2)e_2-4e_2^2+4(3-2e_1)e_3
 \label{eq:equal-gap-triple-budget}
 \end{equation}
-Thus the whole deficit is affine on the feasible $e_3$ interval. If the three
-roots are distinct and interior, the current $e_3$ is interior. A nonzero
-slope permits a decrease of the deficit; a zero slope permits an increase of
-$e_3$ and therefore of
-\[
- p_1^3+p_2^3+p_3^3=e_1^3-3e_1e_2+3e_3.
-\]
-Both alternatives contradict the choice of minimizer. Hence it has at most
-two distinct interior probabilities.
+affine in $e_3$. If $p_1,p_2,p_3\in(0,1)$ were distinct, $e_3$ could be varied
+in both directions, contradicting either minimality of the deficit (if the
+slope is nonzero) or maximality of $p_1^3+p_2^3+p_3^3=e_1^3-3e_1e_2+3e_3$ (if
+the slope is zero). Thus at most two distinct values $0<a<b<1$ occur, with
+multiplicities $r,s\ge1$ (since $r=0$ or $s=0$ is ruled out by Schulz's
+theorem \eqref{eq:schulz}).
 
-Schulz's theorem~\eqref{eq:schulz} excludes a negative deficit when all
-probabilities are equal.
-Apply the reflection
-\eqref{eq:equal-gap-owner-reflection} if necessary, so the selected deficit
-is closed. Suppose the two values are $0<a<b<1$, with multiplicities $r$ and
-$s$. It remains to show that $r,s\geq2$ is impossible.
-For a selected triple, let $d_j$ be the mass function of the other
-coordinates and put $\Delta^2d_j=d_j-2d_{j-1}+d_{j-2}$. By
-\eqref{eq:equal-gap-triple-generating}, the coefficient of $e_3$ in the
-selected CDF is $-\Delta^2d_k$. Hence the coefficient of $e_3$ in the
-deficit is
+Suppose $r,s\ge2$. After applying \eqref{eq:equal-gap-owner-reflection} if
+necessary so the deficit is closed, let $d_j$ be the point mass function of
+the $n-3$ coordinates outside a chosen triple. The slope of $\mathcal H_+$
+with respect to $e_3$ is
 \begin{equation}
  L(e_1;d)=4\gamma(3-2e_1)+\Delta^2d_k,
- \qquad \gamma:=\frac{\be}{V^{3/2}}.
+ \qquad \gamma:=\frac{\be}{V^{3/2}},
  \label{eq:equal-gap-fiber-slope}
 \end{equation}
-
-For $f(t)=t^3-e_1t^2+e_2t$, one has
-$f''(a)=2(a-b)<0$ at $(a,a,b)$ and $f''(b)=2(b-a)>0$ at $(a,b,b)$.
-Thus the values of $e_3$ at these triples are, respectively, the upper and
-lower endpoints of the interval for which
-$t^3-e_1t^2+e_2t-e_3$ has three roots in $[0,1]$. Global minimality gives
+where $\Delta^2d_k=d_k-2d_{k-1}+d_{k-2}$. Because $(a,a,b)$ maximizes $e_3$
+and $(a,b,b)$ minimizes $e_3$ on their respective $(e_1,e_2)$ fibers,
+minimality of $\mathcal H_+$ requires
 \begin{equation}
  L_{aab}\leq0\leq L_{abb}.
  \label{eq:equal-gap-fiber-endpoint-signs}
 \end{equation}
-If the other endpoint of this interval first sends a root to zero or one,
-the same one-sided endpoint conditions hold; no interior endpoint has been
-omitted.
-
-When $r,s\geq2$, delete two copies of each parameter and let $c_j$ be the mass
-function of the remaining core. The deletions associated with the two triples
-are $c*\Bern(b)$ and $c*\Bern(a)$. Direct substitution in
-\eqref{eq:equal-gap-fiber-slope} gives
+Letting $c_j$ denote the point mass function of the $n-4$ coordinates obtained
+by deleting two copies of $a$ and two copies of $b$, we have
+$d^{(aab)}=c*\Bern(b)$ and $d^{(abb)}=c*\Bern(a)$, so subtraction gives
 \begin{equation}
- L_{abb}-L_{aab}
- =(b-a)\{-8\gamma+\Delta^3c_k\}.
+ 0\le L_{abb}-L_{aab}
+ =(b-a)\{-8\gamma+\Delta^3c_k\},
  \label{eq:equal-gap-two-block-slope-difference}
 \end{equation}
-The slope-difference identity~\eqref{eq:equal-gap-two-block-slope-difference}
-and the signs in~\eqref{eq:equal-gap-fiber-endpoint-signs} would force
-\[
- \Delta^3c_k\geq\frac{8\be}{V^{3/2}}.
-\]
-If $W$ is the variance of the core, then
-$V=W+2a(1-a)+2b(1-b)\leq W+1$. Lemma~\ref{lem:poisson-binomial-third-difference}
-gives the opposite inequality. Thus one of $r,s$ equals one, which is exactly
-the family~\eqref{eq:one-exceptional-family}.
+which contradicts Lemma~\ref{lem:poisson-binomial-third-difference} since
+$V\le\Var(C)+1$. Hence $\min(r,s)=1$.
 \end{proof}
 
-For a binomial sum and one Bernoulli variable, three adjacent binomial
-masses bound the second derivative of the deficit. The following inequality
-will exclude a negative minimum when the binomial sum has at least two
-summands. The two-summand case is proved in Section~\ref{sec:two}.
+\subsection{Excluding the one-exception family}
 
 \begin{samepage}
-\begin{lemma}[A curvature inequality on a bounded domain]
+\begin{lemma}[Curvature inequality on the bounded variance domain]
 \label{lem:one-exceptional-compact}
-Let $0<p,x<1$, $q=1-p$, and
-\[
- pq\leq W\leq3,\qquad 0\leq f\leq1,
- \qquad A_0:=W-(1-f)q^2\geq0.
-\]
-Set
+Let $0<p,x<1$, $q=1-p$, $pq\leq W\leq3$, $0\leq f\leq1$, and
+$A_0:=W-(1-f)q^2\geq0$. Set
 \[
  B_0:=p^2+(1-f)(W+2pq),\qquad
  V:=x(1-x)+W+pq,
@@ -755,139 +695,61 @@ Then
 \end{samepage}
 
 \begin{proof}
-For $V\leq1/5$, put $S_2=t_x^2+t_xt_p+t_p^2$. The inequalities
-$V\geq\{2-t_x^2-t_p^2\}/4$ and
-$S_2\geq(t_x^2+t_p^2)/2$ imply $S_2\geq1/3$.
-Since $4V+S_2=4W+2+t_xt_p$, the arithmetic--geometric mean inequality
-bounds the first term in~\eqref{eq:one-exceptional-compact-gap} from below by
-\[
- \be\left(8\sqrt V+\frac{2S_2}{\sqrt V}\right)
- \geq\frac{8\be}{\sqrt3}.
-\]
-The normal contribution is at least
-$-4/(e\sqrt\pi)$, since $u(2+u^2)\ph(u)$ is maximized at $u=\sqrt2$.
-Moreover
-\[
- (2-f)B_0+A_0-fB_0=2(1-f)B_0+A_0\geq0,
-\]
-so the neighbor fraction is at most one and its entire subtracted
-contribution is at most $5V\leq1$. The rational bounds
-\[
- \be>\frac25,\qquad \sqrt3<\frac{26}{15},\qquad
- e>\frac{19}{7},\qquad \sqrt\pi>\frac74
-\]
-give the strict margin
+For $V\leq1/5$, set $S_2=t_x^2+t_xt_p+t_p^2\ge(t_x^2+t_p^2)/2\ge1-2V\ge1/3$.
+Since $4V+S_2=4W+2+t_xt_p$, the arithmetic--geometric mean inequality gives
+$\be(8\sqrt V+2S_2/\sqrt V)\ge8\be/\sqrt3$. Because $z\ph(z)(2+z^2)\ge-4/(e\sqrt\pi)$
+and $fB_0/[(2-f)B_0+A_0]\le1$, we have for $V\le1/5$
 \begin{equation}
- \frac{8\be}{\sqrt3}-\frac4{e\sqrt\pi}-1
- >\frac{24}{13}-\frac{16}{19}-1=\frac1{247}.
+ \frac{8\be}{\sqrt3}-\frac4{e\sqrt\pi}-5V
+ \ge\frac{8\be}{\sqrt3}-\frac4{e\sqrt\pi}-1
+ >\frac{24}{13}-\frac{16}{19}-1=\frac1{247}>0.
  \label{eq:one-exceptional-small-variance-margin}
 \end{equation}
-
-For the complement $V\geq1/5$, the normal term is bounded below by
+For $V\geq1/5$, using the lower bound
 \begin{equation}
- z\ph(z)(2+z^2)\geq\sqrt{\frac2\pi}\min\{z,0\}.
+ z\ph(z)(2+z^2)\geq\sqrt{\frac2\pi}\min\{z,0\},
  \label{eq:one-exceptional-normal-lower}
 \end{equation}
-Indeed the claim is immediate for $z\geq0$; for $z=-u<0$, the function
-$(2+u^2)\ph(u)$ decreases because its derivative is $-u^3\ph(u)$, and its
-value at zero is $2\ph(0)=\sqrt{2/\pi}$. We verify the remaining domain
-using 192-bit Arb intervals and the following three parametrizations:
+the domain is covered by three explicit maps from $[0,1]^4$ (with fourth
+coordinate $x$):
 \begin{enumerate}[label=(\roman*),leftmargin=2em]
-\item $p=(1+s_p)/2$, $W=pq+s_W(3-pq)$, $f=s_f$;
-\item $p=s_p/2$, $W=q^2+s_W(3-q^2)$, $f=s_f$;
-\item $p=s_p/2$, $W=pq+s_W(q^2-pq)$,
-      $f=1-(1-s_f)W/q^2$,
+\item $p=(1+s_p)/2$, $W=pq+s_W(3-pq)$, $f=s_f$ (covering $p\ge1/2$);
+\item $p=s_p/2$, $W=q^2+s_W(3-q^2)$, $f=s_f$ (covering $p\le1/2$, $W\ge q^2$);
+\item $p=s_p/2$, $W=pq+s_W(q^2-pq)$, $f=1-(1-s_f)W/q^2$ (covering $p\le1/2$,
+$W\le q^2$, $A_0\ge0$).
 \end{enumerate}
-where $s_p,s_W,s_f,x\in[0,1]$. The first chart is exactly $p\geq1/2$. For
-$p\leq1/2$, the other two charts split at $W=q^2$; below that interface,
-$A_0\geq0$ is equivalent to $f\geq1-W/q^2$, which is precisely the range of
-the third parametrization. The interfaces overlap. Thus the charts cover the
-whole stated domain. In the third chart $A_0=s_fW$; the first two
-charts give, respectively,
-$A_0=qs_p+s_W(3-pq)+fq^2$ and
-$A_0=s_W(3-q^2)+fq^2$. On each box the program uses a downward enclosure for
-the smooth term, the lower bound~\eqref{eq:one-exceptional-normal-lower} for
-the normal term, and an upward enclosure for the subtracted mass term in
-\eqref{eq:one-exceptional-compact-gap}. A box is accepted only when the
-resulting outward lower endpoint is positive. Otherwise the widest normalized
-coordinate is bisected dyadically;
-an unresolved box at the prescribed depth or box budget aborts the program.
-Boxes touching both $p=0$ and $f=1$ use the weaker limit $y\geq0$ rather than dividing by an
-interval containing zero. If interval dependency does not certify the
-three-neighbor denominator as positive, the program does not divide; it uses
-the universal bound of one for the neighbor fraction and accepts only if the resulting lower gap is
-positive. The finite cover and its strict acceptance bounds are recorded in
-Section~\ref{sec:verification}.
-
-The verifier is \path{verify/structure/check.py}, run with
-\verb|--arithmetic| and \verb|--case common-gap|.
-Its one-exception calculation uses the smaller coefficient $199/500$.
-The coefficient of $2\be/\sqrt V$ in
-\eqref{eq:one-exceptional-compact-gap} is
-$4W+2+t_xt_p\ge1$, so the certified positive gap remains positive
-at $\be>199/500$. The supporting record is
-\path{certificates/structure/common_gap.json}.
+The verifier \path{verify/structure/check.py} (\verb|--arithmetic --case common-gap|)
+certifies positivity of \eqref{eq:one-exceptional-compact-gap} at the smaller
+coefficient $199/500<\be$ across 275,283 accepted boxes (from 550,563
+processed boxes) at 192-bit Arb precision.
 \end{proof}
 
 \begin{samepage}
-\begin{proposition}[A binomial sum and one Bernoulli variable]
+\begin{proposition}[Nonnegativity for $\Bin(M,p)+\Bern(x)$]
 \label{prop:one-exceptional-bernoulli}
-For every $M\geq1$, $0<p,x<1$, $p\ne x$, and every integer $k$, both deficits
-of $\Bin(M,p)+\Bern(x)$ are nonnegative.
+For every $M\geq1$, $0<p,x<1$ with $p\ne x$, and $k\in\Z$, both deficits of
+$\Bin(M,p)+\Bern(x)$ are nonnegative.
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
-By~\eqref{eq:equal-gap-owner-reflection}, it suffices to treat the closed
-CDF value. Suppose it has a negative deficit. Proposition~\ref{prop:equal-gap-one-exception-reduction},
-applied with the same mean and threshold, gives a negative global minimum
-of the same form with $p\ne x$. Relabel its parameters as $M,p,x$.
+By \eqref{eq:equal-gap-owner-reflection} and Proposition~\ref{prop:equal-gap-one-exception-reduction},
+if a negative deficit occurred, $\mathcal H_+$ would have a negative global
+minimum at some $\Bin(M,p)+\Bern(x)$ with $p\ne x$. When $M=1$, this is
+excluded by Theorem~\ref{thm:two-summands}, so assume $M\geq2$, put $m=M-1$,
+and let $D\sim\Bin(m,p)$, $d_j=\Pp(D=j)$, and $W=mpq$.
 
-First suppose $M\geq2$, put $m=M-1$, and let
-\[
- D\sim\Bin(m,p),\qquad d_j=\Pp(D=j),\qquad W=mpq.
-\]
-Vary the success probabilities of the exceptional variable and one variable
-in the repeated group, keeping their sum fixed. Write their probabilities as $\bar p+d$ and $\bar p-d$, and put
-$u=d^2$. Their generating polynomial is
-\[
- \{1+\bar p(w-1)\}^2-u(w-1)^2,
-\]
-so the selected closed CDF along the smoothing curve satisfies the exact
-affinity
+Varying the exceptional coordinate $x$ and one copy of $p$ as
+$\bar p+d,\bar p-d$ with $u=d^2$ makes the closed CDF affine in $u$:
 \begin{equation}
  \mathcal F_k(u)=\mathcal F_k(0)+(d_{k-1}-d_k)u.
  \label{eq:one-exceptional-pair-cdf-affinity}
 \end{equation}
-At the current point set
-\begin{align*}
- t_x&=1-2x, & t_p&=1-2p, & \xi&=d_{k-1}-d_k,\\
- S_2&=t_x^2+t_xt_p+t_p^2, &
- z&=\frac{k-x-Mp}{\sqrt V}, & V&=x(1-x)+Mpq.
-\end{align*}
-The moving pair satisfies
-\[
- V'=-2,\qquad \mathcal B'=-2S_2,\qquad \mathcal B''=-8.
-\]
-If
-\[
- \mathcal A(u)=\be\frac{\mathcal B(u)}{V(u)^{3/2}}
- +\Phi\!\left(\frac{k-\mu}{\sqrt{V(u)}}\right),
-\]
-then $\mathcal H_+=\mathcal A-\mathcal F_k$. Since the current unequal pair
-is an interior point of the $u$ interval, stationarity and
-\eqref{eq:one-exceptional-pair-cdf-affinity} give $\mathcal A'=\xi$, while
-$\mathcal H_+''=\mathcal A''$. Direct differentiation gives
-\begin{align*}
- \mathcal A'
- &=\be\frac{\mathcal B'V+3\mathcal B}{V^{5/2}}
-   +\frac{z\ph(z)}V,\\
- \mathcal A''
- &=\be\frac{\mathcal B''V^2+6\mathcal B'V+15\mathcal B}{V^{7/2}}
-   +\frac{z\ph(z)(3-z^2)}{V^2}.
-\end{align*}
-Eliminating $\mathcal B$ from these two identities with
-$\mathcal A'=\xi$ gives the exact curvature formula
+With $t_x=1-2x$, $t_p=1-2p$, $\xi=d_{k-1}-d_k$, $S_2=t_x^2+t_xt_p+t_p^2$,
+$V=x(1-x)+Mpq$, and $z=(k-x-Mp)/\sqrt V$, we have $V'=-2$,
+$\mathcal B'=-2S_2$, and $\mathcal B''=-8$ with respect to $u$. Eliminating
+$\mathcal B$ at the stationary point $\mathcal H_+'(u)=0$ yields the exact
+second derivative
 \begin{equation}
  V^2\mathcal H_+''
  =5V\xi
@@ -895,130 +757,73 @@ $\mathcal A'=\xi$ gives the exact curvature formula
  -z\ph(z)(2+z^2).
  \label{eq:one-exceptional-stationary-curvature}
 \end{equation}
-A local minimum would require the left side to be nonnegative.
-
-Extend $d_j$ by zero. The adjacent difference is
+By the binomial recurrence,
 \begin{equation}
  \xi=
  \begin{cases}
- 0, & k<0,\\
+ 0, & k<0\text{ or }k\geq m+2,\\
  -d_0, & k=0,\\
- d_{k-1}\dfrac{k-(m+1)p}{kq}, & 1\leq k\leq m+1,\\
- 0, & k\geq m+2.
+ d_{k-1}\dfrac{k-(m+1)p}{kq}, & 1\leq k\leq m+1.
  \end{cases}
  \label{eq:one-exceptional-rank-split}
 \end{equation}
-If $\xi\leq0$, the quantity subtracted from $5V\xi$ in
-\eqref{eq:one-exceptional-stationary-curvature} is strictly positive. Indeed
-$V\geq x(1-x)+pq$ implies
-\[
- \max\{V,S_2\}\geq\frac13,
-\]
-by the same elementary calculation used in the proof of
-Lemma~\ref{lem:one-exceptional-compact},
-and hence
-\[
- \be\left(8\sqrt V+\frac{2S_2}{\sqrt V}\right)
- +z\ph(z)(2+z^2)
- \geq\frac{8\be}{\sqrt3}-\frac4{e\sqrt\pi}>0.
-\]
-The right side of~\eqref{eq:one-exceptional-stationary-curvature} is therefore
-negative. Thus only the positive range in the third line of
-\eqref{eq:one-exceptional-rank-split} remains.
-
-Put $y=k-(m+1)p>0$, $f=y/(kq)$, and $j=k-1$. Then $0<f\leq1$ and the binomial
-recurrences give
-\[
- d_{j+1}=(1-f)d_j,\qquad
- d_{j-1}=r_0d_j,\qquad
- r_0=\frac{(k-1)q}{(m-k+2)p}.
-\]
-The mass of these three atoms is at most one, so
+If $\xi\leq0$, then $V^2\mathcal H_+''\le-(8\be/\sqrt3-4/(e\sqrt\pi))<0$. If
+$\xi>0$, put $y=k-(m+1)p>0$, $f=y/(kq)\in(0,1]$, and $j=k-1$, so that
+$d_{j+1}=(1-f)d_j$, $d_{j-1}=r_0d_j$, and $d_{j-1}+d_j+d_{j+1}\le1$ give
 \begin{equation}
- \xi=fd_j\leq\frac{f}{2-f+r_0}.
+ \xi=fd_j\leq\frac{f}{2-f+r_0},
  \label{eq:one-exceptional-three-neighbor}
 \end{equation}
-Eliminating $m$ and $k$ gives
+with
 \begin{equation}
  r_0=\frac{A_0}{B_0},\qquad
- A_0=W-(1-f)q^2,\qquad
+ A_0=W-(1-f)q^2\ge0,\qquad
  B_0=p^2+(1-f)(W+2pq),
  \label{eq:one-exceptional-neighbor-elimination}
 \end{equation}
-as well as
+and
 \begin{equation}
  y=\frac{f(W+pq)}{1-qf},\qquad
  \be\left(8\sqrt V+\frac{2S_2}{\sqrt V}\right)
  =\frac{2\be}{\sqrt V}\{4W+2+t_xt_p\}.
  \label{eq:one-exceptional-phase-compression}
 \end{equation}
-Finally, the normal term obeys the lower bound
-\eqref{eq:one-exceptional-normal-lower}.
-Here $W=mpq\geq pq$, and
-\eqref{eq:one-exceptional-neighbor-elimination} gives $A_0\geq0$. For
-$W\leq3$, Lemma~\ref{lem:one-exceptional-compact}, together with
-\eqref{eq:one-exceptional-three-neighbor}--\eqref{eq:one-exceptional-phase-compression},
-makes the right side of~\eqref{eq:one-exceptional-stationary-curvature}
-strictly negative, contradicting local minimality.
-
-For $W\geq3$, Fourier inversion gives the analytic bound
+For $W\leq3$, Lemma~\ref{lem:one-exceptional-compact} implies
+$V^2\mathcal H_+''<0$. For $W\geq3$, Fourier inversion gives
 \begin{equation}
- |d_{k-1}-d_k|
+ |\xi|=|d_{k-1}-d_k|
  \leq\frac4\pi\int_0^{\pi/2}\sin u\,e^{-2W\sin^2u}\,du
- <\frac2{\pi W}.
+ <\frac2{\pi W},
  \label{eq:one-exceptional-fourier-tail}
 \end{equation}
-The last inequality follows on setting $s=\cos u$ and using
-$1-s^2\geq1-s$. Combining~\eqref{eq:one-exceptional-fourier-tail} with the
-curvature formula~\eqref{eq:one-exceptional-stationary-curvature}, and using
-$W\leq V\leq W+1/2$, the negative of the right side
-of~\eqref{eq:one-exceptional-stationary-curvature} is at least
-\[
- 8\be\sqrt V-\frac4{e\sqrt\pi}-\frac{10V}{\pi W}.
-\]
-This expression is concave in $V$, so its minimum is at $V=W$ or
-$V=W+1/2$. Both endpoint functions increase with $W$. At $W=3$, the rational
-bounds $\be>2/5$, $\sqrt3>5/3$, $\sqrt{7/2}>11/6$, $\pi>3$, and
-$4/(e\sqrt\pi)<1$ give the respective lower bounds $1$ and $44/45$.
-This excludes $M\geq2$.
-
-When $M=1$, the two-summand deficit in
-Theorem~\ref{thm:two-summands} gives the required bound.
-This excludes the assumed negative closed deficit in the remaining case.
-Reflection~\eqref{eq:equal-gap-owner-reflection} supplies the left CDF limit.
+so $-V^2\mathcal H_+''\ge8\be\sqrt V-4/(e\sqrt\pi)-10V/(\pi W)\ge44/45>0$ on
+$V\in[W,W+1/2]$. In every case $\mathcal H_+''<0$, contradicting local
+minimality.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:equal-gap-two-point}]
-
-Delete deterministic coordinates and divide every remaining summand
-by the common support diameter. Each can then be written
-$X_i=B_i-p_i$, so the data in~\eqref{eq:equal-gap-bernoulli-data} are exactly
-the variance and sum of absolute third moments of the sum. If
-the bound in Theorem~\ref{thm:equal-gap-two-point} failed, one of the deficits
-\eqref{eq:equal-gap-closed-deficit}--\eqref{eq:equal-gap-strict-deficit}
-would be negative at an integer threshold. Proposition~\ref{prop:equal-gap-one-exception-reduction}
-would produce a negative minimum in the family~\eqref{eq:one-exceptional-family},
-contrary to Proposition~\ref{prop:one-exceptional-bernoulli}.
-Esseen's i.i.d.\ Bernoulli sequence has equal support diameters and its ratio
-tends to $\be$, so no smaller constant is valid in this class.
+Combine Propositions~\ref{prop:equal-gap-one-exception-reduction}
+and~\ref{prop:one-exceptional-bernoulli}; optimality of $\be$ follows from
+Esseen's i.i.d.\ family \eqref{eq:esseen-law}.
 \end{proof}
 
+\section{Moment duality and the three-point reduction}\label{sec:moments}
 
-\section{Moment optimization and three-point reduction}\label{sec:moments}
-At a fixed threshold, convolution is affine in each summand law. Fixing its
-mean and variance therefore gives a moment optimization problem with three
-affine constraints. Extreme-point theorems for moment sets, including
-Winkler's characterization \cite[Theorem~2.1]{Winkler1988}, provide the broader setting.
-Strong duality under interior moment constraints is also classical
-\cite[Theorem~2.2]{BertsimasPopescu2005}. We give the compactness and
-separation arguments for the precise coercive objectives needed here.
+When all summands except $X_i$ are held fixed, the distribution function of
+$S$ at a fixed threshold $y$ is an expectation $\E h(X_i)$. Maximizing the
+Berry--Esseen deficit at fixed summand variance $s=\E X_i^2$ is therefore a
+linear optimization problem over probability measures with prescribed first
+and second moments, governed by the classical extreme-point and duality
+theorems of \citet[Theorem~2.1]{Winkler1988} and
+\citet[Theorem~2.2]{BertsimasPopescu2005}.
+
 \begin{samepage}
 \begin{theorem}[Strong quadratic moment duality]\label{thm:strongdual}
-Let $s>0$ and let $h:\R\to\R$ be upper semicontinuous with
+Let $s>0$ and let $h:\R\to\R$ be upper semicontinuous and satisfy
 \[
  -K_-(1+|u|^3)\leq h(u)\leq K_+-\lambda|u|^3
 \]
-for some finite $K_-,K_+$ and $\lambda>0$. Then
+for some constants $K_-,K_+<\infty$ and $\lambda>0$. Then
 \begin{equation}
  \max_{\substack{P:\ \int dP=1,\ \int u\,dP=0,\ \int u^2\,dP=s\\
                          \int|u|^3dP<\infty}}
@@ -1026,1079 +831,481 @@ for some finite $K_-,K_+$ and $\lambda>0$. Then
  =\min_{\substack{q(u)=A+Bu+Cu^2\\q\geq h\ \text{on }\R}}(A+Cs).
  \label{eq:coordinate-duality}
 \end{equation}
-Both extrema are attained. An extreme primal optimizer has at most three atoms, and every primal
-optimizer is concentrated on the contact set of every optimal quadratic majorant.
+Both extrema are attained. Every extreme point of the set of primal maximizers
+is supported on at most three points, and every primal maximizer is supported
+within the contact set $\{u\in\R:q(u)=h(u)\}$ of every optimal quadratic
+majorant $q$.
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
-Fix any finite-support feasible law $P_0$. A maximizing sequence may be taken with value at least
-$\int h\,dP_0-1$; together with $h\leq K_+-\lambda|u|^3$, this gives uniformly bounded third moments.
-The laws are tight, and the uniform bound on third moments makes
-$u^2$ uniformly integrable. A weak limit preserves the three moment
-constraints and has finite third moment by Fatou's lemma. The bounded-above
-upper semicontinuous version of Portmanteau's theorem shows that the limit
-attains the maximum. The maximizing set is weakly compact and convex; it is
-a face of the feasible set because the objective is affine. It has an
-extreme point, which is also extreme in the feasible set.
+The upper bound $h(u)\le K_+-\lambda|u|^3$ forces any maximizing sequence to
+have uniformly bounded third absolute moments, which ensures tightness and
+uniform integrability of $u$ and $u^2$. By upper semicontinuity of $h$ and
+Fatou's lemma, the set of primal maximizers is nonempty, convex, and weakly
+compact, and forms an extremal face of the feasible moment set. If an extreme
+feasible measure $P$ charged four disjoint Borel sets $A_1,\ldots,A_4$, their
+moment vectors $(P(A_j),\int_{A_j}u\,dP,\int_{A_j}u^2\,dP)\in\R^3$ would be
+linearly dependent, yielding a nonzero bounded density perturbation
+$(1\pm\eps\sum_{j=1}^4c_j\ind_{A_j})P$ preserving the three moments. Thus
+every extreme maximizer has at most three atoms.
 
-If an extreme feasible law $P$ had four disjoint Borel sets
-$A_1,\ldots,A_4$ of positive mass, their vectors
+For strong duality, the moment-hypograph cone
 \[
- \left(P(A_j),\int_{A_j}u\,dP,\int_{A_j}u^2\,dP\right)\in\R^3
+ \mathcal D=\left\{\left(\mu(\R),\int u\,d\mu,\int u^2\,d\mu,z\right):
+ \mu\ge0,\ \int|u|^3\,d\mu<\infty,\ z\le\int h\,d\mu\right\}\subset\R^4
 \]
-would be linearly dependent. A nonzero bounded function
-$g=\sum_jc_j\ind_{A_j}$ would then satisfy
-$\int g\,dP=\int ug\,dP=\int u^2g\,dP=0$.
-For sufficiently small $\epsilon>0$, the two distinct laws
-$(1\pm\epsilon g)P$ remain feasible and have finite third moments, while
-their average is $P$. Thus an extreme law has at most three support points.
-
-For strong duality, let $\mathcal D\subset\R^4$ consist of
-\[
- \left(\mu(\R),\int u\,d\mu,\int u^2\,d\mu,z\right),
- \qquad \mu\geq0,\qquad z\leq\int h\,d\mu,
-\]
-where $\mu$ has finite third moment. This is a convex cone. It is closed: along a convergent
-sequence with $z$ bounded below, the inequalities
-$z\leq\int h\,d\mu\leq K_+\mu(\R)-\lambda\int|u|^3d\mu$ give a uniform third-moment bound; weak
-compactness, uniform integrability of $u^2$, and Portmanteau for the bounded-above upper semicontinuous function
-$h$ then retain all four inequalities in the limit.
-
-Let $M$ denote the primal maximum. The point $p=(1,0,s,M)$ belongs to $\mathcal D$, whereas
-$p+(0,0,0,\eps)$ does not for any $\eps>0$, so $p$ is a boundary point. A nonzero supporting
-functional $(a,b,c,d)$ exists; since $\mathcal D$ is a cone and contains both $0$ and $2p$, its
-supporting level at $p$ is zero. Thus
-$a m_0+b m_1+c m_2+d z\leq0$ on $\mathcal D$ and equality holds at $p$. The downward vertical ray in
-$\mathcal D$ gives $d\geq0$. In fact $d>0$: if $d=0$, then $(a,b,c)$ would support the moment cone
-\[
- \{0\}\cup\{(m_0,m_1,m_2):m_0>0,\ m_2\geq m_1^2/m_0\}
-\]
-at $(1,0,s)$, which is an interior point because $s>0$, forcing the whole functional to vanish.
-Normalize $d=1$. Applying the support inequality to a point mass at $u$ gives
-$a+bu+cu^2+h(u)\leq0$, so $q(u):=-a-bu-cu^2$ majorizes $h$. Equality at $p$ gives
-$M=-a-cs=A+Cs$. For every feasible $P$ and every feasible $q$, integration gives $\int h\,dP\leq A+Cs$. Thus this attained dual value is minimal. Finally, for any primal and dual optimizers,
-$0=(A+Cs)-\int h\,dP=\int(q-h)\,dP$ with $q-h\geq0$, proving the contact assertion.
+is convex and closed (by the same cubic-coercivity compactness argument). At
+its boundary point $p=(1,0,s,M)$, where $M$ is the primal maximum, a nonzero
+supporting hyperplane $am_0+bm_1+cm_2+dz\le0$ has $d>0$ because $(1,0,s)$ lies
+in the interior of the moment cone $\{(m_0,m_1,m_2):m_0>0,m_2\ge m_1^2/m_0\}$.
+Normalizing $d=1$ and testing against point masses $\delta_u$ shows that
+$q(u)=-a-bu-cu^2\ge h(u)$ on $\R$ with $q(0)+q''(0)s/2=-a-cs=M$, establishing
+\eqref{eq:coordinate-duality} and complementary slackness $\int(q-h)\,dP=0$.
 \end{proof}
-
 
 \begin{samepage}
 \begin{theorem}[Three-point reduction]\label{thm:threepoint}
-Every strict failure of $\Delta\leq\be\ell$ can be replaced by a strict
-failure with the same number of independent centered summands, each
-supported on at most three points.
+Any independent centered array satisfying $\Delta>c L$ for some $c>0$ can be
+replaced by an independent centered array with the same number of summands
+and the same individual variances, each supported on at most three points,
+satisfying $\Delta>c L$.
 \end{theorem}
 \end{samepage}
 \begin{proof}
-Fix a strict one-sided failure, its threshold $y$, its choice
-$\varepsilon\in\{+1,-1\}$, and the variances of all summands.
-Put $\lambda=\be B^{-3}>0$. When all coordinates except $X_i$ are fixed,
-let $T_i=\sum_{j\ne i}X_j$ and set
-\[
- h_i(u)=\varepsilon F_{T_i}^\varepsilon(y-u)-\lambda|u|^3.
-\]
-The first term is upper semicontinuous for both signs. Indeed the closed CDF
-composed with $y-u$ is upper semicontinuous, while the strict CDF composed
-with $y-u$ is lower semicontinuous. The cubic term gives the two bounds
-required in Theorem~\ref{thm:strongdual}. A coordinate of zero variance
-is deterministic. Every other coordinate can be replaced by an extreme
-maximizer with its mean and variance unchanged. This increases or preserves
-\[
- \varepsilon F_{\sum_iX_i}^\varepsilon(y)-\varepsilon\Phi(y/B)
- -\lambda\sum_i\E|X_i|^3.
-\]
-Sequential replacement gives the claimed finite-support failure.
+After reflection if needed, fix a threshold $y$ with $F_S^+(y)-\Phi(y/B)>cL$.
+Holding all summands except $X_i$ fixed with $T_i=S-X_i$, apply
+Theorem~\ref{thm:strongdual} to the upper semicontinuous function
+$h_i(u)=F_{T_i}^+(y-u)-cB^{-3}|u|^3$ at variance $s_i=\E X_i^2$ to replace
+$X_i$ by a three-point extreme maximizer without decreasing
+$F_S^+(y)-\Phi(y/B)-cB^{-3}\sum_j\E|X_j|^3$.
 \end{proof}
 
-\section{Two arbitrary summands}\label{sec:arbitrary-two}
-We prove Theorem~\ref{thm:arbitrary-two}. All variations in this section
-change the same two marginal laws; their independence is preserved.
-Normalize the total variance to one. By reflection it suffices to maximize
-$D/R$, where $D=\Pp(X_1+X_2\le z)-\Phi(z)>0$.
+\section{Proof of Theorem~\ref{thm:arbitrary-two}: two arbitrary summands}\label{sec:arbitrary-two}
 
-\begin{lemma}[Attainment at a positive ratio]\label{lem:c2-attainment}
-If $C_2\ge49/120$, its value is attained at a finite threshold by two
-nondegenerate laws, each supported on at most three points.
+Normalize total variance to $B^2=1$. By reflection, $C_2$ is the supremum of
+$D/R$, where $D=\Pp(X_1+X_2\le z)-\Phi(z)>0$ and $R=\E|X_1|^3+\E|X_2|^3$.
+
+\begin{lemma}[Attainment by three-point marginals]\label{lem:c2-attainment}
+If $C_2\ge49/120$, then $C_2$ is attained at some threshold $z\in\R$ by two
+nondegenerate centered distributions $X_1,X_2$, each supported on at most
+three points.
 \end{lemma}
 \begin{proof}
-Choose ratios $C_j\to C_2$ bounded below by a fixed
-$c>463/1250$. Since
-\[
- R_j\ge v_{1,j}^{3/2}+v_{2,j}^{3/2}\ge1/\sqrt2,
- \qquad C_jR_j=D_j\le1,
-\]
-the third moments are uniformly bounded. Each marginal family is tight,
-and its second moments are uniformly integrable. The thresholds stay
-bounded: at negative thresholds Chebyshev bounds the closed probability
-by $z_j^{-2}$, while at positive thresholds the discrepancy is at most
-$1-\Phi(z_j)$. Either unbounded direction contradicts $D_j\ge c/\sqrt2$.
-
-Pass to a subsequence on which both marginals converge weakly,
-$z_j\to z$, and $R_j\to r$. The limits are centered and have total
-variance one. Their independent sums converge weakly. Portmanteau for
-the closed event gives $D\ge C_2r$, whereas lower semicontinuity gives
-$R\le r$. Thus $D/R\ge C_2$, and equality follows from the definition
-of $C_2$. In particular $R=r$.
-The one-variable theorem of Bentkus and Kirsa
-\cite[Theorem~1]{BentkusKirsa1989} gives a constant smaller than
-$463/1250<49/120$, excluding a deterministic marginal.
-
-At fixed threshold and marginal variance, optimize
-$F_{X_{3-i}}^+(z-u)-C_2|u|^3$ using Theorem~\ref{thm:strongdual}.
-Replacing one law by a three-atom extreme optimizer cannot decrease
-$F-\Phi(z)-C_2R=0$, and cannot increase it without exceeding $C_2$.
-Do this for each marginal. The selected threshold is then a support
-point: otherwise moving it left to the nearest support point increases
-$D$ without changing the event.
+Along a maximizing sequence with $D_j/R_j\to C_2\ge49/120$, we have
+$1/\sqrt2\le v_{1,j}^{3/2}+v_{2,j}^{3/2}\le R_j\le D_j/c\le1/c$ (for any fixed
+$c\in(463/1250,49/120)$), while Chebyshev's inequality and $1-\Phi(z_j)$ keep
+the thresholds $z_j$ bounded. Passing to a weak limit preserves total
+variance one (by uniform integrability of squares) and yields $D\ge C_2r\ge C_2R$,
+so equality $D/R=C_2$ holds. Because $C_1<463/1250<49/120$ by
+\citet[Theorem~1]{BentkusKirsa1989}, both limiting marginals have positive
+variance. Replacing each marginal by a three-point extreme maximizer from
+Theorem~\ref{thm:strongdual} preserves $D-C_2R=0$ and shifts $z$ to a sum
+atom $x_j+y_k=z$.
 \end{proof}
 
-At this maximum write $C=C_2$, $s_i=\E X_i^2$,
+At an attained maximum with $C=C_2\in[49/120,227/500)$ (where the upper bound
+follows from \citet{BellIndependent2026}), set $s_i=\E X_i^2$,
 $\beta_i=\E|X_i|^3$, $M_i=\E[X_i|X_i|]$, and
 \[
  A=\frac{z\phi(z)+3D}{2},\qquad
  K=\frac{2A}{3C}=R+\frac{z\phi(z)}{3C}.
 \]
-The companion numerical bound implies $C<227/500$
-\cite{BellIndependent2026}.
 
-\begin{lemma}[Full-law contact equations]\label{lem:full-law-contacts}
+\begin{lemma}[Variational contact majorants]\label{lem:full-law-contacts}
 For $i=1,2$, the quadratic polynomial
 \[
- q_i(u)=F+A s_i-C\beta_i-(\phi(z)+3CM_i)u-Au^2
+ q_i(u)=F+A s_i-C\beta_i-\bigl(\phi(z)+3CM_i\bigr)u-Au^2
 \]
-majorizes $F_{X_{3-i}}^+(z-u)-C|u|^3$ on $\R$, with equality at every
-support point of $X_i$. If $f_i=q_i+C|\cdot|^3$, then $f_i'\le0$ at
-all contacts and $f_i'=0$ at each contact that is not a representation
-of the selected sum atom.
+majorizes $F_{X_{3-i}}^+(z-u)-C|u|^3$ on $\R$, with equality at every support
+point of $X_i$. Moreover, $f_i(u)=q_i(u)+C|u|^3$ satisfies $f_i'(u)\le0$ at
+every support point $u\in\supp X_i$, with $f_i'(u)=0$ whenever $z-u\notin\supp X_{3-i}$.
 \end{lemma}
 \begin{proof}
-Mix the $i$th law towards $\delta_u$ with mass $t$, center it by
-subtracting $tu$, and move the threshold to $z-tu$. At $t=0$ the
-derivatives of event probability, variance, and the sum of third absolute moments are respectively
-\[
- F_{X_{3-i}}^+(z-u)-F,\qquad u^2-s_i,\qquad
- |u|^3-\beta_i-3uM_i.
-\]
-The right derivative of $D(t)V(t)^{3/2}/R(t)$ is nonpositive. Expanding
-it gives precisely the stated majorant. Its nonnegative gap has integral
-zero against the original law, proving contact at every atom. To the
-left of a contact the decreasing deletion CDF retains its contact value,
-so the derivative of its smooth majorant is nonpositive. Away from a
-selected representation the deletion CDF is locally constant, giving a
-local minimum and derivative zero.
+Perturbing $\mathcal L(X_i)$ to $(1-t)\mathcal L(X_i)+t\delta_u$, recentering
+by $tu$, and shifting the threshold to $z-tu$ gives right derivatives
+$F_{X_{3-i}}^+(z-u)-F$, $u^2-s_i$, and $|u|^3-\beta_i-3uM_i$ for the event
+probability, variance, and third-moment sum at $t=0$. Nonpositivity of the
+right derivative of $D(t)V(t)^{3/2}/R(t)$ yields $F_{X_{3-i}}^+(z-u)-C|u|^3\le q_i(u)$,
+and integrating against $\mathcal L(X_i)$ gives equality on $\supp X_i$.
+Because $u\mapsto F_{X_{3-i}}^+(z-u)$ is nonincreasing and is constant near
+$u$ when $z-u\notin\supp X_{3-i}$, the smooth majorant $f_i$ satisfies
+$f_i'(u)\le0$ at every contact point and $f_i'(u)=0$ away from threshold
+representations.
 \end{proof}
 
-A representation $(j,k)$ of the selected threshold means $x_j+y_k=z$.
-With ordered supports, the event $x_j+y_k\le z$ is a downset; encode it
-by its numbers of included cells in successive rows.
-
-We record the quantitative inputs used to bound its contact parameters.
-The elementary discrepancy bound $D<11/20$ and
-$|z\phi(z)|<49/200$, together with $R\ge1/\sqrt2$, give
+From Cantelli's inequality ($D<11/20$), $|z\phi(z)|<1/\sqrt{2\pi e}<49/200$,
+and $R\ge1/\sqrt2$, we obtain the a priori bounds
 \begin{equation}\label{eq:contact-basic-collars}
- 1/2<K<8/5.
+ \frac12<K<\frac85,
 \end{equation}
-Indeed $|z\phi(z)|/(3C)<1/5$, $R>7/10$, and
-$R=D/C<66/49$. The first discrepancy estimate follows from Cantelli:
-for $z=-s<0$,
-\[
- D\le\frac1{1+s^2}-\Phi(-s)
- <\frac12+\frac25s-\frac{s^2}{1+s^2}.
-\]
-For $s\le1/2$ use $s^2/(1+s^2)\ge4s^2/5$; for $1/2\le s\le1$
-the displayed expression decreases; for $s\ge1$ Cantelli alone gives
-$D\le1/2$. Positive $z$ also gives $D\le1/2$.
-The density estimate follows from
-$\sup|z\phi(z)|=1/\sqrt{2\pi e}<49/200$.
-
-Each marginal variance satisfies
+and comparing a dominant summand of variance $v\ge187/200$ against a Gaussian
+via the Bentkus--Kir\v{s}a bound $C_1<463/1250$ and $L(v)<1/5$ yields
 \begin{equation}\label{eq:contact-variance-collar}
- 13/200<s_i<187/200.
+ \frac{13}{200}<s_i<\frac{187}{200}\qquad(i=1,2).
 \end{equation}
-To prove this, let $v\ge187/200$ be a dominant variance, $b$ its
-third absolute moment, and $r$ the other moment. Conditioning, the
-Bentkus--Kirsa estimate, and the same Gaussian Taylor comparison used
-in Section~\ref{sec:three} give
-\[
- D\le\frac{463b}{1250v^{3/2}}+L(v)r,
- \qquad L(v)<1/5.
-\]
-For $v\ge15/16$ both coefficients are smaller than $49/120$.
-For $187/200\le v\le15/16$, the other coordinate gives
-$r\ge1/64$, so $r/(b+r)>49/4224$. The first coefficient is less
-than $41/100$, and therefore
-\[
- C<\frac{41}{100}-\frac{21}{100}\frac{49}{4224}
- =\frac{49}{120}-\frac{13}{16896}.
-\]
-Both cases contradict $C\ge49/120$.
 
-For a centered three-point law with support $\{-a,c,b\}$, where
-$a,b>0$ and $-a<c<b$, put
-\[
- d=\min\{b(a+c),a(b-c)\}.
-\]
-This is the absolute difference between the variances of its two
-centered two-point components; when $c=0$, one component is $\delta_0$.
-Set $d=0$ for a law with at most two support points.
+Furthermore, any centered three-point law on $\{-a,c,b\}$ ($a,b>0$,
+$-a<c<b$) is a mixture of two centered two-point laws sharing an extreme
+atom, whose conditional variances differ by $d=\min\{b(a+c),a(b-c)\}$ (we set
+$d=0$ for a two-point law). When $d_1+d_2\le B^2/3$, conditioning on the
+mixture components and applying Theorem~\ref{thm:two-summands} bounds the
+ratio strictly below $49/120$:
 
-\begin{lemma}[Small variance width]\label{lem:mixture-width}
-For two laws with at most three support points, let $d_i$ be the
-nonnegative variance widths just defined. If
-$d_1+d_2\le B^2/3$, then
+\begin{lemma}[Exclusion of small mixture-variance widths]\label{lem:mixture-width}
+If two centered distributions supported on at most three points have
+mixture-variance widths $d_1+d_2\le B^2/3$, then
 \[
- \be\ell-\Delta>4877/1056500,
- \qquad \Delta/\ell<(572623/577500)\be<49/120.
+ \be L-\Delta>\frac{4877}{1056500},\qquad
+ \frac{\Delta}{L}<\frac{572623}{577500}\be<\frac{49}{120}.
 \]
 \end{lemma}
 \begin{proof}
-A centered three-point law is a mixture of $\delta_0$ and a centered
-pair, or, up to reflection, of two pairs sharing their negative atom.
-For support $\{-a,b_1,b_2\}$ the pair weights are
-$m_j(a+b_j)/a$, where $m_j$ is the original mass at $b_j$;
-centering makes the weights sum to one. Each conditional third moment
-is affine in its conditional variance, with nonnegative slope: the
-slope is the second divided difference of $|x|^3$.
-
-Choose the two mixture labels independently and normalize $B^2=1$.
-Their conditional total variance $W$ has mean one and support width at
-most $1/3$, so $W\ge2/3$. Write the conditional sum of third absolute moments as
-$R+\sum_i c_i(U_i-\E U_i)$, where $c_i\ge0$.
-Conditioning on the other label proves
-$\E[(U_i-\E U_i)W^{-3/2}]\le0$. Thus the mixing excess in
-$\be$ times the normalized sum of third absolute moments is at most
-$t\{\E W^{-3/2}-1\}$, where $t=\be R$.
-For $N(v)=\varepsilon\Phi(y/\sqrt v)$,
-$N''(v)=\varepsilon\phi'''(y/\sqrt v)/(4v^2)<7/(50v^2)$;
-hence its mixing excess is at most $(7/50)\E[-\log W]$.
-
-The fixed scalar certificate proves
-\[
- \E W^{-3/2}-1<113/2000,\qquad \E[-\log W]<1/70.
-\]
-For either convex function it suffices to check a two-point law on the
-extreme support points, then enlarge their distance to $d=1/3$ while
-keeping the mean one. If the lower displacement is $l\in[0,d]$, its
-Jensen gap is
-\[
- J_f(l)=\frac{(d-l)f(1-l)+lf(1+d-l)}d-f(1).
-\]
-The certificate bounds this explicit function by its midpoint value plus
-$\tfrac12$ the cell width times a bound for $|J_f'|$ on each of 256
-rational cells; all cells satisfy the two displayed inequalities.
-
-Each conditional endpoint array has two Bernoulli coordinates, so its
-deficit exceeds $3/80$. Averaging gives
-$\be R-\Delta>3/80-(113/2000)t-1/500$.
-Independently, \eqref{eq:kappa} gives $\be R-\Delta>t-\kappa$.
-Taking the convex combination which cancels $t$ yields
-\[
- \frac{3/80-1/500-(113/2000)(271/500)}{1+113/2000}
- =\frac{4877}{1056500}.
-\]
-For positive discrepancy divide $D<\be R-\delta$ by $R$ and use
-$D<\kappa$ to obtain $D/R<\be\kappa/(\kappa+\delta)$.
-The final rational comparison follows already from $\be<2049/5000$.
+Normalize $B^2=1$ and draw the two mixture labels independently. Each
+conditional array consists of two two-point summands with total variance
+$W\in[2/3,4/3]$ of mean $1$, and its conditional third absolute moment is
+affine in its variance with nonnegative slope. Because $u\mapsto u^{-3/2}$ is
+decreasing, $\E[(U_i-\E U_i)W^{-3/2}]\le0$, so the average of $\be$ times the
+conditional Lyapunov ratio exceeds $\be R$ by at most $\be R(\E W^{-3/2}-1)$,
+while the normal CDF convexity error is at most $(7/50)\E[-\log W]$ (since
+$|\partial_v^2\Phi(y/\sqrt v)|\le\phi'''(y/\sqrt v)/(4v^2)<7/(50v^2)$). Over
+all centered random variables $W$ of mean $1$ and support width at most $1/3$,
+a 256-cell rational midpoint-derivative check verifies $\E W^{-3/2}-1<113/2000$
+and $\E[-\log W]<1/70$. Combining the conditional margin $3/80$ from
+Theorem~\ref{thm:two-summands} with $\Delta<\kappa=271/500$ gives the stated
+bounds.
 \end{proof}
 
-For two Bernoulli marginals, Theorem~\ref{thm:two-summands} gives
-$D/R<80\be/83<49/120$, since $D\le1$. A hypothetical maximum must
-therefore contain a genuine triple, and its canonical variance widths
-have sum greater than $1/3$.
-
-\begin{proposition}[Finite contact exclusion]\label{prop:finite-contact-exclusion}
-Two nondegenerate laws with at most three support points cannot attain
-a full-law ratio maximum with $49/120\le C<227/500$.
+\begin{proposition}[Exclusion of all three-point contact configurations]\label{prop:finite-contact-exclusion}
+No pair of nondegenerate centered distributions supported on at most three
+points can attain a global maximum of $\Delta/L$ with $49/120\le C<227/500$.
 \end{proposition}
 \begin{proof}
-The contact equations of Lemma~\ref{lem:full-law-contacts}, the bounds
-\eqref{eq:contact-basic-collars}--\eqref{eq:contact-variance-collar}, and
-Lemma~\ref{lem:mixture-width} apply. The case proofs in
-Appendix~\ref{app:contacts} exhaust their downsets and sets of threshold representations.
-We spell out the exhaustion here so that the finite calculations have
-an unambiguous mathematical scope.
-
-For a triple and a pair, the ten downsets are
-$000,100,110,111,200,210,211,220,221,222$.
-If the threshold has a unique representation, the two other triple points are smooth minima
-of $q+C|x|^3$. The selected point cannot be its largest point, since
-that function increases to the right of its positive minimum.
-The zero event is impossible. Equal zero minima exclude $100$ and
-$200$ by $F<CR$; the largest-point condition excludes $111$ and $222$.
-The remaining unique-representation cases are $110$, both possible representations of
-$210$, and $211,220,221$. Appendix~\ref{app:contacts} gives analytic
-contradictions for $211,220,221$ and the middle/low representation of $210$;
-the two compact calculations for $110$ and the low/high representation of $210$
-have respectively 15,081 and 113,322 independent accepted leaves.
-A collision can occur only at the two maximal cells of $210$, $211$,
-or $221$. The $211$ contradiction is analytic; the $210$ and $221$
-contact calculations have 154,848 and 113,154 accepted leaves.
-
-For two triples, let the unit-variance signed support directions be
-\[
- \eta_i=\frac{\alpha_i\delta_{x_{i,0}}-\delta_{x_{i,1}}
-                 +\beta_i\delta_{x_{i,2}}}{u_iv_i},
- \qquad \alpha_i=\frac{v_i}{u_i+v_i},\quad
- \beta_i=\frac{u_i}{u_i+v_i}.
-\]
-The transfer $(P_1+t\eta_1)\otimes(P_2-t\eta_2)$ preserves total
-variance, makes the sum of third absolute moments affine, and makes the deficit quadratic
-with coefficient $g=\iint\ind_{x+y\le z}\,d\eta_1d\eta_2$.
-Thus $g\ge0$ at a maximum. For row counts $k=(k_0,k_1,k_2)$, its
-sign is the sign of
-$\alpha_1s(k_0)-s(k_1)+\beta_1s(k_2)$, where
-$s(0)=s(3)=0$, $s(1)=\alpha_2$, $s(2)=-\beta_2$.
-Negative signs exclude
-$110,200,210,211,310,311,332$.
-The zero-sign shapes are $000,111,222,300,330,333$; the first has zero
-event probability, and each other shape has a unique maximal cell
-using a largest triple point. The positive shapes are
-$100,220,221,320,321,322,331$.
-The lower-endpoint identity excludes $100$. The unique-representation proofs
-exclude the other six. For collisions, the analytic argument excludes
-$322$ and $331$; the three possible representation patterns of $321$ are
-excluded by their complete scalar calculations. The remaining shape
-$221$ and its transpose $320$ are covered by two contact charts with
-68,963 and 90,233 independently accepted leaves.
-
-Every compact chart includes its closed boundary. Vanishing masses and
-coalescing support points reduce to the smaller-support cases above.
-A change of closed downset at a collision is assigned to the larger
-closed event, already in the classification. 
-
-At $C=49/120$ all analytic contradictions remain strict. The only two
-lower-floor rejection expressions whose sign convention needs changing
-are the lower $110$ exclusion expression and the collided triple/pair $221$ exclusion expression.
-All 427 and 34,084 respective leaves pass a strict negative replay at
-384 bits. Their largest upper endpoints are below
-$-4.1742\cdot10^{-5}$ and $-2.0860\cdot10^{-7}$.
-For the $321$ scalar exclusion expressions, the actual event bounds are strict: the
-proper downset has probability less than one, the bounded-sum quadratic
-has an interior support point with positive slack, and Cantelli equality
-would force the sum to have only two support points. Two genuine triples
-have at least five. Thus equality at the floor is excluded as well.
+By Theorem~\ref{thm:two-summands}, at least one summand must be a
+nondegenerate three-point distribution, and Lemma~\ref{lem:mixture-width}
+gives $d_1+d_2>1/3$. Ordering the support points of $X_1$ and $X_2$, the event
+$\{(j,k):x_j+y_k\le z\}$ is a downset encoded by the number of included pairs
+in each row of $X_1$.
+\begin{itemize}[leftmargin=2em]
+\item \emph{One three-point and one two-point summand ($3\times2$ grid):}
+Among the ten downsets $000,100,110,111,200,210,211,220,221,222$, the contact
+conditions of Lemma~\ref{lem:full-law-contacts} immediately rule out $000,100,200,111,222$.
+Appendix~\ref{app:contacts} rules out $211,220,221$ (unique representation),
+the middle/low representation of $210$, and the $211$ collision analytically,
+and rules out the remaining four configurations (\texttt{lower110}, \texttt{low210},
+\texttt{collision210}, \texttt{collision221}) by certified interval covers.
+\item \emph{Two three-point summands ($3\times3$ grid):}
+Letting $\eta_i=(\alpha_i\delta_{x_{i,0}}-\delta_{x_{i,1}}+\beta_i\delta_{x_{i,2}})/(u_iv_i)$
+be the mean-zero, variance-zero signed measure on $\supp X_i$, the joint
+perturbation $(P_1+t\eta_1)\otimes(P_2-t\eta_2)$ preserves total variance and
+makes $R$ affine in $t$, so maximality requires
+$g=\iint\ind_{\{x+y\le z\}}\,d\eta_1d\eta_2\ge0$. This sign condition
+immediately rules out $110,200,210,211,310,311,332$, while the $g=0$ shapes
+$000,111,222,300,330,333$ and $100$ are ruled out by Lemma~\ref{lem:full-law-contacts}.
+Appendix~\ref{app:contacts} rules out all remaining unique-representation
+configurations and $322,331$ collisions analytically, and rules out the
+remaining collision configurations (\texttt{three\_owner321},
+\texttt{adjacent\_owner321}, \texttt{endpoint\_owner321}, \texttt{tt221\_negative},
+\texttt{tt221\_positive}) by certified interval covers, including strict
+exclusion at the boundary $C=49/120$.
+\end{itemize}
+Together with Lemma~\ref{lem:c2-attainment}, this completes the proof of
+Theorem~\ref{thm:arbitrary-two}.
 \end{proof}
 
-If $C_2\ge49/120$, Lemma~\ref{lem:c2-attainment} supplies precisely the
-maximum excluded by Proposition~\ref{prop:finite-contact-exclusion}.
-This proves the strict supremum bound in Theorem~\ref{thm:arbitrary-two}.
-\section{Transfer to larger arrays}\label{sec:transfer}
-Normalize the variance of the original array to one. Put
+\section{Transfer to larger arrays with two dominant summands}\label{sec:transfer}
+
+Normalize the total variance of $(X_1,\ldots,X_n)$ to $B^2=1$. For $0<v\le1$,
+set
 \[
  K(v)=\frac{\phi(0)}2\int_0^1
-       \frac{s^2\,ds}{[1-(1-v)s^2]^{3/2}},\qquad 0<v\le1.
+       \frac{s^2\,ds}{[1-(1-v)s^2]^{3/2}}.
 \]
-This is the coefficient in the following Gaussian comparison.
-Write $d_K$ for the Kolmogorov distance and $W_1$ for the
-$L^1$-Wasserstein distance: the latter is the infimum of $\E|U-V|$
-over couplings of the two laws.
-\begin{lemma}[Gaussian comparison]\label{lem:gaussian-comparison}
-If $T$ is a sum of independent centered variables with total variance
-$1-v$ and additive third absolute moment $r$, and $G_v$ is an independent
-$N(0,v)$ variable, then $d_K(T+G_v,N(0,1))\le K(v)r$.
+
+\begin{lemma}[Gaussian remainder comparison]\label{lem:gaussian-comparison}
+If $T$ is a sum of independent centered random variables with total variance
+$1-v$ and third absolute moment sum $r$, and $G_v\sim N(0,v)$ is independent
+of $T$, then $d_{\mathrm K}(T+G_v,N(0,1))\le K(v)r$.
 \end{lemma}
 \begin{proof}
-Write $a=1-v$. For $a>0$, let $T^*$ have the zero-biased law of $T$, characterized by $\E[Tf(T)]=a\E f'(T^*)$ \cite{GoldsteinReinert1997}.
-The Goldstein--Tyurin estimate gives
-$W_1(T,T^*)\le r/(2a)$
-\cite[Lemma~1.1]{Goldstein2010}\cite[Theorem~3 and Corollary~1]{Tyurin2009}.
-For $h(u)=\Phi((x-u)/\sqrt v)$, the normal Stein solution has the
-Ornstein--Uhlenbeck representation
-\[
- f(u)=-\int_0^1\E h'(su+\sqrt{a(1-s^2)}Z)\,ds,
- \qquad af'(u)-uf(u)=h(u)-\E h(\sqrt a Z).
-\]
-Differentiating twice and convolving the Gaussian derivatives gives
-\[
- \|f''\|_\infty\le\phi(0)\int_0^1
-      \frac{s^2\,ds}{(1-as^2)^{3/2}}.
-\]
-The zero-bias identity therefore bounds the discrepancy by
-$aW_1(T,T^*)\|f''\|_\infty\le K(v)r$. The case $a=0$ is immediate.
+Put $a=1-v>0$. By \citet[Lemma~1.1]{Goldstein2010} and
+\citet[Theorem~3 and Corollary~1]{Tyurin2009}, the zero-biased distribution
+$T^*$ satisfies $W_1(T,T^*)\le r/(2a)$. For $h(u)=\Phi((x-u)/\sqrt v)$, the
+Stein equation $af'(u)-uf(u)=h(u)-\E h(\sqrt a Z)$ has solution
+$f(u)=-\int_0^1\E h'(su+\sqrt{a(1-s^2)}Z)\,ds$, with
+$\|f''\|_\infty\le\phi(0)\int_0^1s^2(1-as^2)^{-3/2}\,ds$, so
+$|\E h(T)-\Phi(x)|=a|\E f'(T)-\E f'(T^*)|\le aW_1(T,T^*)\|f''\|_\infty\le K(v)r$.
 \end{proof}
 
-Choose two disjoint sets of original coordinates, with independent
-sums $H_1,H_2$. One set may be empty. Let $v=\Var(H_1+H_2)>0$, let
-$b$ be the sum of the original cubic moments in these sets, and let
-$r=R-b$. Define the increase in the sum of third absolute moments under grouping by
-\[
- e=\E|H_1|^3+\E|H_2|^3-b.
-\]
-Then
-\begin{equation}\label{eq:cost-aware}
- \Delta\le\frac{c_2(b+e)}{v^{3/2}}+K(v)r.
-\end{equation}
-Indeed, condition on the remainder and use Theorem~\ref{thm:arbitrary-two}
-to compare $H_1+H_2$ with $G_v$; then apply
-Lemma~\ref{lem:gaussian-comparison}. The quantity $b+e$ is the sum of the third absolute moments of the two grouped sums.
-
-For independent centered $X,Y$, direct expansion gives
+Partitioning the array into two disjoint blocks $H_1,H_2$ of combined variance
+$v=\Var(H_1+H_2)>0$ and original third-moment sum $b$, plus an independent
+remainder $T$ of third-moment sum $r=R-b$, let
+$e=\E|H_1|^3+\E|H_2|^3-b\ge0$ be the increase in third absolute moments under
+grouping (nonnegativity follows from the identity
 \begin{equation}\label{eq:cubic-grouping}
  \E|X+Y|^3-\E|X|^3-\E|Y|^3
- =2\E\!\left[\ind_{XY<0}\min(|X|,|Y|)^2
-       \{3\max(|X|,|Y|)-\min(|X|,|Y|)\}\right]\ge0.
+ =2\E\!\left[\ind_{\{XY<0\}}\min(|X|,|Y|)^2
+       \{3\max(|X|,|Y|)-\min(|X|,|Y|)\}\right]\ge0
 \end{equation}
-The pointwise expansion subtracts $3XY(|X|+|Y|)$; its expectation is
-zero by independence and centering. Iteration proves $e\ge0$.
-
-Consequently a sufficient condition for the Esseen bound is
+for independent centered $X,Y$). Conditioning on $T$, applying
+Theorem~\ref{thm:arbitrary-two} to $H_1+H_2$, and then applying
+Lemma~\ref{lem:gaussian-comparison} gives
+\begin{equation}\label{eq:cost-aware}
+ \Delta\le\frac{c_2(b+e)}{v^{3/2}}+K(v)r,
+\end{equation}
+so that $\Delta\le\be R$ holds whenever
 \begin{equation}\label{eq:cost-criterion}
  \frac{c_2}{v^{3/2}}\left(\frac bR+\frac eR\right)
  +K(v)\left(1-\frac bR\right)\le\be.
 \end{equation}
-For example,
+In particular, since $K(v)<\frac2{75}+\frac1{25v^{3/2}}$ by convexity,
 \begin{equation}\label{eq:half-resource}
- v\ge11/16,\qquad b\le r,\qquad e\le R/500
+ v\ge\frac{11}{16},\qquad b\le r,\qquad e\le\frac R{500}
  \quad\Longrightarrow\quad\Delta<\be R.
 \end{equation}
-To check this without a numerical search, convexity gives
-\[
- K(v)\le\frac{\phi(0)}{15}+\frac{\phi(0)}{10v^{3/2}}
- <\frac2{75}+\frac1{25v^{3/2}}.
-\]
-Use $v^{3/2}>57/100$, substitute $b/R\le1/2$ and $e/R\le1/500$
-in \eqref{eq:cost-criterion}, and compare with the smaller constant
-$c_2<\be$; the cross-multiplied rational slack is $1/6000$.
-For two original coordinates, $e=0$.
 
 \begin{proof}[Proof of Corollary~\ref{cor:dominance-main}]
-For an arbitrary pair, \eqref{eq:cost-aware} with $e=0$ proves the result
-as soon as $c_2/v^{3/2}\le\be$ and $K(v)\le\be$.
-The elementary bounds $\be>40973/100000$ and
-\[
- (40973/100000)^2(439/440)^3-(49/120)^2
- =\frac{4093395655159}{7666560000000000000}>0
-\]
-prove the first comparison for $v\ge439/440$; the displayed chord bound
-proves the second.
-
-For a Bernoulli pair, the uniform deficit gives instead
-\[
- \Delta<\be b/v^{3/2}-3/80+K(v)r.
-\]
-If the original array violated the Esseen bound, \eqref{eq:kappa} would
-give $\be R<\kappa$. Since $K(v)<\be$ on the variance range in question,
-\[
- \Delta-\be R<\kappa(v^{-3/2}-1)-3/80.
-\]
-This is nonpositive when $v^{3/2}\ge1084/1159$.
-The exact comparison $(22/23)^3>(1084/1159)^2$ proves the claim.
+For two arbitrary summands ($e=0$), \eqref{eq:cost-aware} implies
+$\Delta\le\be R$ whenever $c_2/v^{3/2}\le\be$ and $K(v)\le\be$, both of which
+hold for $v\ge439/440$ since $(49/120)^2<(40973/100000)^2(439/440)^3$. For
+two two-point summands, Theorem~\ref{thm:two-summands} gives
+$\Delta<\be b/v^{3/2}-3/80+K(v)r$; if $\Delta>\be R$, then $\be R<\kappa=271/500$
+and $K(v)<\be$ give $\Delta-\be R<\kappa(v^{-3/2}-1)-3/80\le0$ for
+$v\ge22/23$ since $(22/23)^3>(1084/1159)^2$.
 \end{proof}
 
-\subsection{Signed convolution estimates}
-The same comparison can retain the signed error of the selected sum. For
-$H=X_1+X_2$ of variance $v$ and independent remainder $T$, define
-\[
- f_H(x)=F_H(x)-\Phi(x/\sqrt v),\qquad
- \mathcal N_T(f_H)=\sup_x|\E f_H(x-T)|.
-\]
-The exact convolution identity and Lemma~\ref{lem:gaussian-comparison} give
+\subsection{Signed convolution refinements}
+
+Retaining the signed error $f_H(x)=F_H(x)-\Phi(x/\sqrt v)$ of a two-summand
+partial sum $H=X_1+X_2$ under convolution with $T$ gives the sharper bound
 \begin{equation}\label{eq:signed-convolution}
- \Delta(H+T)\le\mathcal N_T(f_H)+K(v)r.
+ \Delta(H+T)\le\mathcal N_T(f_H)+K(v)r,\qquad
+ \mathcal N_T(f_H)=\sup_{x\in\R}|\E f_H(x-T)|.
 \end{equation}
-Replacing $\mathcal N_T(f_H)$ by $\|f_H\|_\infty$ can lose the gain
-needed for sharpness. For three independent symmetric signs of size
-$1/\sqrt3$, the two-sign partial sum has $\|f_H\|_\infty=1/4$, whereas
-\[
- \mathcal N_T(f_H)=\frac14-\frac12\Phi(-\sqrt2).
-\]
-Both statements follow by checking the sum atoms and their left limits.
-Together with the chord bound for $K(2/3)$, Mills' lower bound gives
-\[
- \frac14-\frac12\Phi(-\sqrt2)+\frac{K(2/3)}{3\sqrt3}
- <\frac{\be}{\sqrt3}.
-\]
-Thus \eqref{eq:signed-convolution} proves the sharp estimate in this
-example using the actual convolution. The corresponding unsmoothed
-two-summand norm already exceeds the target.
-
-There is also an explicit Gaussian version which uses the sign of the
-integrated error. If $f=F_U-F_V$ for equal-mean laws,
-$\|f\|_\infty\le d$, and $\int|f|\le w$, then $\int f=0$ and each
-of $f_+,f_-$ has integral at most $w/2$. Among functions bounded by $d$
-with that integral, a centered interval of height $d$ maximizes the
-integral against a centered Gaussian density. Hence, for $a>0$,
-\[
- \|f*\phi_a\|_\infty
- \le d\{2\Phi(w/(4d\sqrt a))-1\}.
-\]
-The right side increases with both $d$ and $w$. For a two-summand head,
-Theorem~\ref{thm:arbitrary-two} gives $d\le c_2b/v^{3/2}$, while
-the mean normal-approximation bound of Goldstein and Tyurin
-\cite[Theorem~1.1]{Goldstein2010}\cite[Theorem~4, equation~(10)]{Tyurin2009}
-gives $w\le b/v$. Therefore
+For example, for three independent Rademacher summands of size $1/\sqrt3$
+($v=2/3$), $\|f_H\|_\infty=1/4$ exceeds $\be/\sqrt3$, whereas
+$\mathcal N_T(f_H)=\frac14-\frac12\Phi(-\sqrt2)$ and
+$\mathcal N_T(f_H)+K(2/3)/(3\sqrt3)<\be/\sqrt3$. Similarly, convolving $f_H$
+with an explicit independent normal $G_a\sim N(0,a)$ and using Both
+$\|f_H\|_\infty\le c_2b/v^{3/2}$ and $\|f_H\|_1\le b/v$
+\citep{Goldstein2010,Tyurin2009} yields
 \begin{equation}\label{eq:signed-gaussian}
- d_K(H+G_a,G_{v+a})\le\frac{c_2b}{v^{3/2}}
- \left\{2\Phi\left(\frac{\sqrt v}{4c_2\sqrt a}\right)-1\right\}.
+ d_{\mathrm K}(H+G_a,G_{v+a})\le\frac{c_2b}{v^{3/2}}
+ \left\{2\Phi\!\left(\frac{\sqrt v}{4c_2\sqrt a}\right)-1\right\}.
 \end{equation}
-The Gaussian is an explicit hypothesis of this last estimate.
 
-\section{Computational supplement}\label{sec:verification}
-The finite calculations assert inequalities on complete parameter
-domains. The supplied record distinguishes an arithmetic evaluation from
-a check of its stored output. The default command
-\begin{quote}
-\verb|uv run --frozen python verify/finite/current/check.py|
-\end{quote}
-checks source and archive hashes, reconstructs every original contact
-partition, verifies the three Bernoulli-pair forests and all eight
-Bernoulli-triple recipes, and checks the complete scalar Cartesian
-partitions. It performs no contact arithmetic and does not search.
-Adding \verb|--arithmetic| recomputes every necessary interval bound
-on those frozen cells. The optional \verb|--case| selects one of the
-mathematical domains listed in the record. A failed enclosure is an error;
-the verifier never refines a cell to make it pass.
+\section{Overview of the computational certificates}\label{sec:verification}
 
-For the Bernoulli-pair margin, the three roots are the two unit cubes in
-\eqref{eq:two-upper-middle}--\eqref{eq:two-lower-middle}, with
-$\theta=\pi t/2$ in the second, and the endpoint square
-$[0,99/100]^2$. For an interval $p\in[l,u]$, its variance cap is
-$\max_{p\in[l,u]}p(1-p)$, computed exactly. The functions
-$a/(1-2a)^2$ and $(1-2a)/\sqrt a$ are respectively increasing and
-decreasing on $[0,1/4]$. These observations bound the H\"older third-moment expression,
-the endpoint odds, and the two terms involving variance shares.
-Monotonicity of $\Phi$ supplies the probability bounds. The supplied
-partition has 63,792 leaves covering the three stated roots, evaluated
-at 320 bits by direct interval substitution in separately arranged
-squared-variance-share formulas.
+The computational certificates supporting Theorems~\ref{thm:arbitrary-two},
+\ref{thm:bernoulli-classes}, and~\ref{thm:two-summands} are stored in
+\path{certificates/finite/} and verified by \path{verify/finite/check.py}
+(structural tree and exact algebra checks) and
+\path{verify/finite/current/check.py --arithmetic} (full Arb interval
+reevaluation):
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \textbf{Two-Bernoulli margin (\texttt{margin}, 63,792 leaves at 320 bits):}
+Covers the two unit cubes in Lemma~\ref{lem:two-compact} and the endpoint
+square $[0,99/100]^2$ in Lemma~\ref{lem:pair-endpoint-margin}, using exact
+interval monotonicity of $p(1-p)$, $a/(1-2a)^2$, and $(1-2a)/\sqrt a$.
+\item \textbf{Three-Bernoulli arbitrary diameters (\texttt{bernoulli\_three},
+1,312,161 accepted leaves at 320 bits):} Covers the eight five-dimensional
+domains in Section~\ref{sec:three} using midpoint bisections, derivative-sign
+boundary projections under \eqref{eq:n3-collars}, and mean-value enclosures.
+\item \textbf{Two-summand contact exclusions (Appendix~\ref{app:contacts}):}
+Covers \texttt{lower110} (15,081 leaves, plus 427 leaves at $C=49/120$),
+\texttt{low210} (113,322 leaves), \texttt{collision221} (113,154 leaves, plus
+34,084 leaves at $C=49/120$), \texttt{collision210} (154,848 leaves),
+\texttt{tt221\_negative} (68,963 leaves), \texttt{tt221\_positive} (90,233
+leaves), and the complete Cartesian grids for $321$ (\texttt{three\_owner321},
+\texttt{adjacent\_owner321}, \texttt{endpoint\_owner321}).
+\item \textbf{Common-diameter curvature and Bernstein odds tables:}
+Reconstructs the 275,283-leaf cover for Lemma~\ref{lem:one-exceptional-compact}
+and verifies the exact $\mathbb Q(\sqrt5)$ Bernstein tables for
+Proposition~\ref{prop:product-normalized-odds-envelope} in SymPy \citep{Meurer2017}.
+\end{enumerate}
 
-For the Bernoulli triple, a recipe consists of exact midpoint bisections,
-face projections, and terminal inequalities. A terminal inequality is
-a direct interval lower bound, an unconditional whole-box mean-value
-bound, or one of the proved analytic complements. A face projection
-uses a derivative sign on the possible negative set: a negative point
-would continue to the indicated face without increasing the deficit.
-The bounds in \eqref{eq:n3-collars}, and their raw consequences
-$h_{\min}>3/500$, $\sqrt V>3/200$, and
-$\sqrt V>3h_{\min}/8$, are valid for this negative-set derivative test.
-The mean-value bound instead uses the unmodified full-box derivatives.
-The 320-bit replay recomputes the formulas of the frozen 192-bit
-producer with a separate traversal; it does not constitute a separately
-derived arithmetic implementation.
-
-For the contact calculations, each leaf excludes a necessary system.
-The lower $110$, $210$ with a low/high representation, and collided triple/pair $221$
-implementations use direct support moments and independently arranged
-height and Gaussian equations. The collided lower-gap triple/pair and
-two-triple implementations repeatedly intersect intervals for actual
-candidate values. Each intersection is an equality or a proved
-inequality in Appendix~\ref{app:contacts}; an empty intersection excludes
-the entire box. These value intersections are never used to narrow a
-full-box derivative estimate. The two-triple signed divided-difference
-inequality has the normalization displayed in the appendix.
-
-The contact counts in Proposition~\ref{prop:finite-contact-exclusion}
-refer to the independent accepted leaves. Exact path reconstruction
-checks the full original domains, including overlapping closed faces.
-The lower-floor arithmetic is reevaluated at 384 bits with strict
-negative rejection of a lower-floor exclusion expression, accounting for equality
-$C=49/120$. The scalar $321$ calculations use native Arb series to
-bound derivatives on the complete rectangles; their accepted counts
-are 4,096 three-representation cells, 4,096 adjacent-representation cells (four represented
-by eight fixed subcells each), and 3,840 endpoint-representation cells.
-
-The common-diameter curvature calculation uses the three charts in
-Lemma~\ref{lem:one-exceptional-compact}. At coefficient $199/500$,
-its complete 192-bit evaluation processed 550,563 boxes and accepted
-275,283 boxes, with no remaining domain. Monotonicity in the coefficient
-supplies the stated inequality at $\be$. This record supplies counts
-and a deterministic subdivision program; the arithmetic check
-reconstructs its partition.
-The endpoint-odds proof uses exact Bernstein coefficients in
-$\mathbb Q(\sqrt5)$, checked by a separate exact polynomial conversion.
-Its source programs and fixed controls are supplied beside the current
-certificates. The algebraic calculation uses SymPy \cite{Meurer2017}.
-
-The public archive contains exact leaf
-paths and boxes, projection recipes, and scalar witnesses. Its manifest
-identifies the supplied arithmetic source and the corresponding frozen
-source generation. The default record check does not by itself prove an
-interval inequality; the proof uses the stated formulas, analytic domain
-reductions, and interval evaluations.
 \appendix
-\section{Support endpoint estimates}\label{app:support}
-Use the Bernoulli representation from Section~\ref{sec:two}. In this
-appendix $V=B^2$ and $\mathcal B_h=B^3\ell$.
+\section{Proof of the support-endpoint inequalities}\label{app:support}
+
+In this appendix we prove Proposition~\ref{cor:all-support-owners}. Set
+$V=\sum_{i=1}^n p_iq_ih_i^2$ and $\mathcal B_h=\sum_{i=1}^n p_iq_i(p_i^2+q_i^2)h_i^3$.
+
 \begin{samepage}
-\begin{lemma}[Normal tails at the support endpoints]
+\begin{lemma}[Atom-free branches at the support endpoints]
 \label{lem:support-owners-without-atom-term}
-Let $n\geq1$, and let $B_1,\ldots,B_n$ be independent, with
-$B_i\sim\Bern(p_i)$, $p_i\in(0,1)$, and $h_i>0$.
-Put $q_i=1-p_i$ and define
-\[
- V=\sum_i p_iq_ih_i^2,
- \qquad
- \mathcal B_h=\sum_i p_iq_i(p_i^2+q_i^2)h_i^3,
-\]
-and set
-\[
- u=\sum_iq_ih_i,
- \qquad
- m=\sum_ip_ih_i.
-\]
-Then
+For any $n\geq1$, $p_i\in(0,1)$, $q_i=1-p_i$, $h_i>0$, $u=\sum_{i=1}^nq_ih_i$,
+and $m=\sum_{i=1}^np_ih_i$,
 \begin{equation}
  \be\frac{\mathcal B_h}{V^{3/2}}
  >\max\left\{
-  1-\Phi\left(\frac{u}{\sqrt V}\right),
-  \Phi\left(-\frac{m}{\sqrt V}\right)
+  1-\Phi\!\left(\frac{u}{\sqrt V}\right),\,
+  \Phi\!\left(-\frac{m}{\sqrt V}\right)
  \right\}.
 \label{eq:support-owner-tail-bound}
 \end{equation}
-Consequently, the closed deficit at the upper support and the strict deficit
-at the lower support are both strictly positive.
+Consequently, the closed deficit at the upper support endpoint and the strict
+deficit at the lower support endpoint are strictly positive.
 \end{lemma}
 \end{samepage}
 
 \begin{proof}
-It is enough to prove the first inequality in
-\eqref{eq:support-owner-tail-bound}; complementing every $B_i$ exchanges $p_i$
-and $q_i$, preserves $V$ and $\mathcal B_h$, and gives the second. Normalize
-$V=1$ and write
-\[
- x_i=q_ih_i,\qquad v_i=p_iq_ih_i^2,\qquad
- b_i=p_iq_i(p_i^2+q_i^2)h_i^3,\qquad x=\sum_i x_i.
-\]
-For $c=2(\sqrt2-1)$,
-\[
- b_i=\frac{p_i^2+q_i^2}{p_i}\frac{v_i^2}{x_i},
- \qquad
- \frac{p_i^2+q_i^2}{p_i}-c
- =\frac{(\sqrt2p_i-1)^2}{p_i}\geq0.
-\]
-Since $\sum_i v_i=1$, Cauchy--Schwarz gives
+By complementation $B_i\mapsto1-B_i$, it suffices to prove the upper-endpoint
+bound. Normalize $V=1$ and put $x_i=q_ih_i$, $v_i=p_iq_ih_i^2$,
+$b_i=p_iq_i(p_i^2+q_i^2)h_i^3$, and $x=\sum_{i=1}^nx_i$. With
+$c=2(\sqrt2-1)>49/60$, the identity $(p_i^2+q_i^2)/p_i-c=(\sqrt2p_i-1)^2/p_i\ge0$
+and Cauchy--Schwarz give
 \begin{equation}
- \mathcal B_h\geq c\sum_i\frac{v_i^2}{x_i}
+ \mathcal B_h=\sum_{i=1}^n\frac{p_i^2+q_i^2}{p_i}\frac{v_i^2}{x_i}
+ \geq c\sum_{i=1}^n\frac{v_i^2}{x_i}
  \geq\frac{c}{x}.
 \label{eq:support-owner-resource-bound}
 \end{equation}
-We claim that
+On the other hand, for every $x>0$,
 \begin{equation}
- x\{1-\Phi(x)\}<\be c
- \qquad(x>0).
+ x\{1-\Phi(x)\}<\be c.
 \label{eq:support-owner-normal-tail}
 \end{equation}
-If $0<x\leq2/3$, then the left side is at most $1/3$. The elementary bounds
-\[
- \sqrt{10}>\frac{79}{25},\qquad
- \sqrt2>\frac{169}{120},\qquad
- \pi<\frac{22}{7},
-\]
-give $\be>49/120$ and $c>49/60$. For the first comparison,
-\[
- 20(\sqrt{10}+3)>\frac{616}{5}
- >49\sqrt{\frac{44}{7}}>49\sqrt{2\pi};
-\]
-the middle inequality follows on squaring, with difference $2156/25$.
-The bound on $\pi$ follows, for example, from
-\[
- \frac{22}{7}-\pi
- =\int_0^1\frac{t^4(1-t)^4}{1+t^2}\,dt>0.
-\]
-Hence $\be c>2401/7200>1/3$.
-For $x\geq2/3$, Mills' inequality and monotonicity of $\ph$ give
-\[
- x\{1-\Phi(x)\}<\ph(x)\leq\ph(2/3)=\ph(0)e^{-2/9}.
-\]
-Now $e^{-2/9}<9/11<c$, where the last inequality follows from
-$\sqrt2>31/22$, and $\be/\ph(0)=(\sqrt{10}+3)/6>1$. This proves
-\eqref{eq:support-owner-normal-tail}. Combining it with
-\eqref{eq:support-owner-resource-bound} proves the upper-support inequality.
-At that support the closed CDF equals one. At the lower support the strict CDF
-equals zero, and exact complementation exchanges the two CDF limits. The two
-deficit statements follow.
+Indeed, for $0<x\le2/3$, $x\{1-\Phi(x)\}\le1/3<2401/7200<\be c$, while for
+$x\ge2/3$, Mills' ratio gives $x\{1-\Phi(x)\}<\ph(x)\le\ph(2/3)=\ph(0)e^{-2/9}<\ph(0)c<\be c$.
+Combining \eqref{eq:support-owner-resource-bound} and
+\eqref{eq:support-owner-normal-tail} proves \eqref{eq:support-owner-tail-bound}.
 \end{proof}
 
 \begin{samepage}
-\begin{proposition}[An inequality for Bernoulli odds]
+\begin{proposition}[Sharp envelope for Bernoulli odds]
 \label{prop:product-normalized-odds-envelope}
-Let $o_1,\ldots,o_n\geq0$, not all zero, and put
+Let $o_1,\ldots,o_n\geq0$, not all zero, and set
 \begin{equation}
- s=\sum_i o_i,\qquad
- \Pi=\prod_i(1+o_i)^{-1},\qquad
+ s=\sum_{i=1}^n o_i,\qquad
+ \Pi=\prod_{i=1}^n(1+o_i)^{-1},\qquad
  g(o)=\frac{o(1+o)^2}{(1+o^2)^2},\qquad
- \mathcal A=\sum_i g(o_i).
+ \mathcal A=\sum_{i=1}^n g(o_i).
 \label{eq:support-odds-data}
 \end{equation}
 Then
-\begin{equation}
- \Pi^2\mathcal A\leq\frac13\qquad(0<s\leq1),
-\label{eq:support-odds-small-envelope}
-\end{equation}
-\begin{equation}
- \Pi^2\mathcal A\leq
- \frac{s}{(1+s/2)^2(1+s^2/4)^2}
- \qquad\left(1\leq s\leq\frac{16}{9}\right),
-\label{eq:support-odds-live-envelope}
-\end{equation}
-and
-\begin{equation}
- \Pi^2\mathcal A\leq\frac{944784}{6076225}
- \qquad\left(s\geq\frac{16}{9}\right).
+\begin{align}
+ \Pi^2\mathcal A&\leq\frac13&&\hspace{-4em}(0<s\leq1),
+\label{eq:support-odds-small-envelope}\\
+ \Pi^2\mathcal A&\leq
+ \frac{s}{(1+s/2)^2(1+s^2/4)^2}&&\hspace{-4em}\left(1\leq s\leq\frac{16}{9}\right),
+\label{eq:support-odds-live-envelope}\\
+ \Pi^2\mathcal A&\leq\frac{944784}{6076225}&&\hspace{-4em}\left(s\geq\frac{16}{9}\right).
 \label{eq:support-odds-large-envelope}
-\end{equation}
-For every fixed nonzero direction $v\in[0,\infty)^n$, set
-$\mathcal F_v(t)=\Pi(tv)^2\mathcal A(tv)$. Then
-\[
- \frac{d\log\mathcal F_v(t)}{d\log t}<-\frac3{100}
- \qquad\left(t\sum_i v_i\geq\frac{16}{9}\right).
-\]
-In particular, $\mathcal F_v$ is strictly decreasing on this range.
-Equality in \eqref{eq:support-odds-live-envelope} holds exactly when two
-odds are positive and equal to $s/2$, up to zero coordinates and
-permutation.
+\end{align}
+Moreover, along any nonzero ray $v\in[0,\infty)^n$, $\mathcal F_v(t)=\Pi(tv)^2\mathcal A(tv)$
+satisfies $\frac{d}{d\log t}\log\mathcal F_v(t)<-3/100$ for $t\sum_iv_i\ge16/9$,
+and equality in \eqref{eq:support-odds-live-envelope} holds if and only if
+two odds equal $s/2$ and all others vanish.
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
-We first prove the intermediate-range envelope. After relabeling, isolate
-$x=o_1$ and $y=o_2$, and write
-\[
- a=x+y,\qquad k=xy,
- \qquad 0<k\leq\frac{a^2}{4}.
-\]
-For the untouched coordinates, set
-\[
- H=\sum_{j=3}^n g(o_j),
- \qquad
- \Pi_0=\prod_{j=3}^n(1+o_j)^{-1}.
-\]
-With
-\[
- z_a(k)=\frac1{(1+a+k)^2},\qquad
- R_a(k)=z_a(k)\{g(x)+g(y)\},
-\]
-the full functional retains the untouched coordinates exactly:
+To analyze the intermediate range $1\le s\le16/9$, isolate two coordinates
+$x=o_1,y=o_2$ with sum $a=x+y$ and product $k=xy\in(0,a^2/4]$. Writing
+$H=\sum_{j=3}^ng(o_j)$, $\Pi_0=\prod_{j=3}^n(1+o_j)^{-1}$,
+$z_a(k)=(1+a+k)^{-2}$, and $R_a(k)=z_a(k)\{g(x)+g(y)\}$, we have
 \begin{equation}
  \Pi^2\mathcal A=\Pi_0^2\{R_a(k)+Hz_a(k)\}.
 \label{eq:support-odds-affine-environment}
 \end{equation}
-Put $D=1+a^2-2k+k^2$. Direct symmetric expansion gives
-\[
- R_a(k)=\frac{N(a,k)}{D^2(1+a+k)^2},
-\]
-where
-\[
-\begin{aligned}
- N(a,k)={}&a+2a^2+a^3+(a^3-a-4)k\\
- &+(2a^2-a+8)k^2+(a-4)k^3.
-\end{aligned}
-\]
-The pair endpoints are a merge and an equal split. Their values are
-\[
- \mathcal C_1(a)=\frac{a}{(1+a^2)^2},
- \qquad
- \mathcal C_2(a)=
- \frac{a}{(1+a/2)^2(1+a^2/4)^2},
-\]
-and
-\[
- \mathcal C_2(a)-\mathcal C_1(a)
- =-
- \frac{a^2(a^2-6a+4)(a^3+10a^2+4a+16)}
- {(a+2)^2(a^2+1)^2(a^2+4)^2}.
-\]
-Thus the endpoints exchange order at
-$a_*=3-\sqrt5$.
-
-Two exact Bernstein certificates control the whole pair curve. For
-$0\leq a\leq a_*$, define
-\[
- \mathcal S_{\mathrm{raw}}(a,k)
- :=\frac{aD^2(1+a+k)^2-(1+a^2)^2N(a,k)}{k},
- \qquad
- \mathcal S(a,k):=\frac{\mathcal S_{\mathrm{raw}}(a,k)}{(1+a)^2}.
-\]
-Both quotients are polynomials, and
-\[
- R_a(0)-R_a(k)
- =\frac{k\mathcal S_{\mathrm{raw}}(a,k)}
- {(1+a^2)^2D^2(1+a+k)^2}.
-\]
-Under
-\[
- a=a_*r,\qquad k=\frac{a^2t}{4},\qquad (r,t)\in[0,1]^2,
-\]
-the uncancelled mapped quotient has monomial bidegree $(13,5)$. Cancelling
-the positive common factor $(1+a)^2$ gives a reduced quotient of bidegree
-$(11,5)$. Their degree-$(60,20)$ Bernstein tables differ but have the same
-sign pattern: exactly $1280$ entries are positive, and the sole zero is the
-corner coefficient $(60,20)$. Hence
-\[
- R_a(k)\leq R_a(0),
-\]
-strictly for $k>0$ except at $(a,k)=(a_*,a_*^2/4)$. Since $z_a$ decreases,
-the same merge inequality holds after the term $Hz_a(k)$ in
-\eqref{eq:support-odds-affine-environment} is added.
-
-For $a_*\leq a\leq16/9$, define $\theta\in[0,1]$ by
-\[
- z_a(k)=\theta z_a(0)+(1-\theta)z_a(a^2/4).
-\]
-Define $\mathcal L(a,k)$ by the exact identity
-\[
-\begin{aligned}
- &\theta R_a(0)+(1-\theta)R_a(a^2/4)-R_a(k)\\
- &\quad=
- \frac{k(a^2-4k)\mathcal L(a,k)}
- {(1+a^2)^2(4+a^2)^2(1+a+k)^2
-  (8+8a+a^2)D^2}.
-\end{aligned}
-\]
-Under
-\[
- a=a_*+\left(\frac{16}{9}-a_*\right)r,
- \qquad k=\frac{a^2t}{4},
-\]
-the remaining quotient has bidegree $(13,4)$ and all $70$ tensor Bernstein
-coefficients are positive. Therefore
+With $D=1+a^2-2k+k^2$, we have $R_a(k)=N(a,k)/[D^2(1+a+k)^2]$, where
+$N(a,k)=a+2a^2+a^3+(a^3-a-4)k+(2a^2-a+8)k^2+(a-4)k^3$. At the boundary
+endpoints $k=0$ (merging $(x,y)\mapsto(a,0)$) and $k=a^2/4$ (equal split
+$x=y=a/2$), the values $\mathcal C_1(a)=a/(1+a^2)^2$ and
+$\mathcal C_2(a)=a/[(1+a/2)^2(1+a^2/4)^2]$ cross at $a_*=3-\sqrt5$.
+\begin{itemize}[leftmargin=2em]
+\item For $0\le a\le a_*$, converting the polynomial quotient
+$\mathcal S(a,k)=[aD^2(1+a+k)^2-(1+a^2)^2N(a,k)]/[k(1+a)^2]$ to the tensor
+Bernstein basis of degree $(60,20)$ on $(a/a_*,4k/a^2)\in[0,1]^2$ yields
+$1280$ strictly positive coefficients and a single zero at the corner
+$(a,k)=(a_*,a_*^2/4)$, proving $R_a(k)\le R_a(0)$ (and hence
+$R_a(k)+Hz_a(k)\le R_a(0)+Hz_a(0)$ since $z_a(k)$ decreases in $k$).
+\item For $a_*\le a\le16/9$, parametrizing $z_a(k)=\theta z_a(0)+(1-\theta)z_a(a^2/4)$
+by $\theta\in[0,1]$, all $70$ tensor Bernstein coefficients of the polynomial
+quotient $\mathcal L(a,k)$ on $[a_*,16/9]\times[0,a^2/4]$ are strictly
+positive, proving the strict chord inequality
 \begin{equation}
  R_a(k)<\theta R_a(0)+(1-\theta)R_a(a^2/4)
  \qquad\left(0<k<\frac{a^2}{4}\right).
 \label{eq:support-odds-pair-chord}
 \end{equation}
-The untouched term $Hz_a(k)$ is affine in the same coordinate, so
-\eqref{eq:support-odds-pair-chord} holds for the complete pair profile,
-uniformly in $H\geq0$.
+\end{itemize}
+Consequently, at any maximizer of $\Pi^2\mathcal A$ for $s\in[1,16/9]$, no
+pair of positive odds can have sum $\le a_*$, and every pair in the strict
+chord range must be equal, so all $d\in\{1,2,3,4\}$ positive odds are equal to
+$s/d$. Comparing the four functions $\mathcal C_d(s)=s/[(1+(s/d)^2)^2(1+s/d)^{2(d-1)}]$
+on $[1,16/9]$ shows $\mathcal C_2(s)>\mathcal C_d(s)$ for $d\in\{1,3,4\}$,
+proving \eqref{eq:support-odds-live-envelope}.
 
-Fix $s\in[1,16/9]$ and maximize $\Pi^2\mathcal A$ on the closed odds
-simplex. No
-positive pair in a maximizer can have sum at most $a_*$. For $a<a_*$,
-merging the pair strictly increases the objective. At $a=a_*$, this is also
-true for an equal pair when $H>0$; if $H=0$, then $s=a_*<1$. Every remaining
-pair lies in the strict chord region, so it must be equal. Thus all positive
-odds in any maximizer are equal. If their number is $d\geq2$, then
-\[
- d<\frac{2s}{a_*}
- \leq\frac89(3+\sqrt5)<5.
-\]
-The case $d=1$ is already in the resulting list, so in all cases
-$d\in\{1,2,3,4\}$.
-The equal-block value is
-\[
- \mathcal C_d(s)=
- \frac{s}{(1+(s/d)^2)^2(1+s/d)^{2(d-1)}}.
-\]
-After positive factors are removed, the three differences
-$\mathcal C_2-\mathcal C_d$, $d=1,3,4$, have the respective factors
-\[
- -(s^2-6s+4),\qquad
- 8s^3-33s^2-18s+108,\qquad
- s^4+12s^3-64s^2+256.
-\]
-They are strictly positive on the intermediate range. The first polynomial inside
-the minus sign decreases there and starts at $-1$. The second decreases there
-and has right-endpoint value $12140/729$.
-The third is at least $256 - 64(16/9)^2>0$. This proves
-\eqref{eq:support-odds-live-envelope} and its equality statement.
-
-For the small range, expand term by term:
-\[
- \Pi^2\mathcal A=
- \sum_i\frac{o_i}
- {(1+o_i^2)^2\prod_{j\ne i}(1+o_j)^2}.
-\]
-If $r_i=s-o_i$, then the product over $j\ne i$ is at least $1+r_i$. The
-elementary inequality
+For $0<s\le1$, expanding $\Pi^2\mathcal A=\sum_i o_i/[(1+o_i^2)^2\prod_{j\ne i}(1+o_j)^2]$
+and applying the elementary inequality
 \begin{equation}
  (1+x^2)^2(1+y)^2\geq3(x+y)
  \qquad(x>0,\ y\geq0)
 \label{eq:support-odds-termwise-denominator}
 \end{equation}
-therefore bounds every summand with $o_i>0$ by $o_i/(3s)$; a zero-odds
-summand vanishes. To verify
-\eqref{eq:support-odds-termwise-denominator}, put $A=(1+x^2)^2$. The
-difference is
+with $x=o_i$ and $y=s-o_i\le\prod_{j\ne i}(1+o_j)-1$ bounds each term by
+$o_i/(3s)$, proving \eqref{eq:support-odds-small-envelope}. Finally, for
+$s\ge16/9$, using $e(o):=og'(o)/g(o)<5/4$ and subadditivity of $o\mapsto o/(1+o)$
+gives
 \[
- Ay^2+(2A-3)y+(A-3x).
+ \frac{d}{d\log t}\log\mathcal F_v(t)
+ =\frac{\sum_i g(o_i)e(o_i)}{\mathcal A}-2\sum_i\frac{o_i}{1+o_i}
+ <\frac54-\frac{2s}{1+s}\leq-\frac3{100},
 \]
-Its constant term is positive because
-$\min_{x>0}A/x=16/(3\sqrt3)>3$. If $2A-3<0$, then $x<1/2$, and four times
-the leading coefficient times the quadratic minimum is
-$12A(1-x)-9>0$, since $A(1-x)\geq25/32$. This proves
-\eqref{eq:support-odds-small-envelope}.
-
-It remains to prove the large-range envelope. Discard the zero coordinates
-of a fixed nonnegative direction. Along the resulting positive ray
-$o_i=tv_i$, let $\mathcal F(t)=\Pi(tv)^2\mathcal A(tv)$ and put
-\[
- e(o)=\frac{o g'(o)}{g(o)}.
-\]
-Logarithmic differentiation gives
-\[
- \frac{d}{d\log t}\log\mathcal F(t)
- =\frac{\sum_i g(o_i)e(o_i)}{\mathcal A}
- -2\sum_i\frac{o_i}{1+o_i}.
-\]
-The exact identities
-\[
- \frac54-e(o)
- =\frac{9o^3+17o^2-7o+1}{4(1+o)(1+o^2)}>0,
-\]
-\[
- 17o^2-7o+1
- =17\left(o-\frac7{34}\right)^2+\frac{19}{68},
-\]
-and
-\[
- \frac{x}{1+x}+\frac{y}{1+y}-\frac{x+y}{1+x+y}
- =\frac{xy(x+y+2)}{(1+x)(1+y)(1+x+y)}>0
-\]
-imply
-\[
- \frac{d}{d\log t}\log\mathcal F(t)
- <\frac54-\frac{2s}{1+s}\leq-\frac3{100}
- \qquad\left(s\geq\frac{16}{9}\right).
-\]
-Scale back to total odds $16/9$ and apply
-\eqref{eq:support-odds-live-envelope}. This gives
-\eqref{eq:support-odds-large-envelope}.
-
-The two tables are generated by
-\path{verify/finite/support_odds/exact_certificate.py}; the independent
-basis conversion is in the corresponding \texttt{independent\_certificate.py}.
-For a polynomial $P(x)=\sum_\alpha a_\alpha x^\alpha$ of multidegree $d$,
-the Bernstein coefficients are
+so scaling back to $s=16/9$ yields \eqref{eq:support-odds-large-envelope}. The
+Bernstein conversions use
 \begin{equation}\label{eq:bernstein-conversion}
  b_\beta=\sum_{\alpha\le\beta}a_\alpha\prod_j
- \frac{\binom{\beta_j}{\alpha_j}}{\binom{d_j}{\alpha_j}}.
+ \frac{\binom{\beta_j}{\alpha_j}}{\binom{d_j}{\alpha_j}}
 \end{equation}
-The programs check every coefficient sign. Their source hashes and the
-reported sign counts are in \path{certificates/finite/results.json}.
+and are checked in \path{verify/finite/support_odds/}.
 \end{proof}
 
-
 \begin{samepage}
-\begin{lemma}[Endpoint atom comparison]
+\begin{lemma}[Atom-bearing branches at the support endpoints]
 \label{lem:atom-bearing-support-owners}
-Under the hypotheses and notation of
-Lemma~\ref{lem:support-owners-without-atom-term}, the closed deficit at the
-lower support and the strict deficit at the upper support are strictly
-positive.
+Under the hypotheses of Lemma~\ref{lem:support-owners-without-atom-term}, the
+closed deficit at the lower support endpoint and the strict deficit at the
+upper support endpoint are strictly positive.
 \end{lemma}
 \end{samepage}
 
 \begin{proof}
-Normalize $V=1$, put $o_i=p_i/q_i$, and set
-\[
- w_i=p_iq_ih_i^2,\qquad \sum_iw_i=1.
-\]
-The distance to the lower support, its atom, and the cubic sum are
-\[
- x_0=\sum_i\sqrt{o_iw_i},\qquad
- \Pi=\prod_i(1+o_i)^{-1},
-\]
-\[
- \mathcal B_h
- =\sum_i\frac{1+o_i^2}{\sqrt{o_i}(1+o_i)}w_i^{3/2}.
-\]
-Use $s$ and $\mathcal A$ from \eqref{eq:support-odds-data}. With
-\[
- a_i=\frac{o_i}{(1+o_i)^2},\qquad
- r_i=\frac{1+o_i^2}{(1+o_i)^2},\qquad
- z_i=\sqrt{a_i}h_i,
-\]
-we have $\sum_i z_i^2=1$ and
-$\mathcal B_h=\sum_i(r_i/\sqrt{a_i})z_i^3$. Cauchy--Schwarz, twice, gives
-\[
- 1\leq
- \mathcal B_h\sum_i\frac{\sqrt{a_i}}{r_i}z_i
- \leq\mathcal B_h\sqrt{\mathcal A},
- \qquad
- x_0^2\leq s.
-\]
-Let $Q(x)=1-\Phi(x)$. Since $Q$ decreases, it is enough to prove
+Normalizing $V=1$ and setting $o_i=p_i/q_i$, $w_i=p_iq_ih_i^2$, $x_0=\sum_i\sqrt{o_iw_i}$,
+and $\Pi=\prod_i(1+o_i)^{-1}$, Lemma~\ref{lem:reciprocal-gap-resource} and
+Cauchy--Schwarz give $\mathcal B_h\ge\mathcal A^{-1/2}$ and $x_0\le\sqrt s$.
+With $Q(x)=1-\Phi(x)$, it therefore suffices to show
 \begin{equation}
  \frac{\be}{\sqrt{\mathcal A}}+Q(\sqrt s)>\Pi.
 \label{eq:atom-bearing-weights-free-target}
 \end{equation}
-Put
+First note that
 \begin{equation}
- f(s):=(1+s)Q(\sqrt s),\qquad f'(s)<0\quad(s>0).
+ f(s):=(1+s)Q(\sqrt s),\qquad f'(s)<0\quad(s>0),
 \label{eq:atom-bearing-tail-monotonicity}
 \end{equation}
-To prove the derivative sign, take $x=\sqrt s$, $M(x)=Q(x)/\ph(x)$, and
-$u(x)=(1+x^2)/(2x)$, the required derivative sign is $M(x)<u(x)$. For
-$x\geq1$ this follows from the Mills bound $M(x)<1/x$. On $(0,1)$, put
-$d=u-M$. We have $d(0+)=\infty$ and $d(1)>0$. Since
-$M'=xM-1$, at any interior critical point of $d$,
-\[
- M(x)=\frac{3x^2-1}{2x^3},
- \qquad
- d(x)=\frac{(1-x^2)^2}{2x^3}>0.
-\]
-Thus $d$ cannot have a nonpositive minimum, proving
-\eqref{eq:atom-bearing-tail-monotonicity}.
-
-First suppose $0<s\leq1$. By
-\eqref{eq:support-odds-small-envelope},
-\[
- \frac{\be}{\Pi\sqrt{\mathcal A}}>\frac7{10},
-\]
-using $\be>49/120$ and $\sqrt3>12/7$. Also
-$\Pi\leq(1+s)^{-1}$. The alternating exponential bound on $[0,1]$ and
-$\ph(0)<2/5$ give
-\[
- Q(1)>\frac12-\frac25\left(1-\frac16+\frac1{40}\right)
- =\frac{47}{300}.
-\]
-By \eqref{eq:atom-bearing-tail-monotonicity},
-\[
- \frac{Q(\sqrt s)}\Pi\geq(1+s)Q(\sqrt s)
- \geq2Q(1)>\frac{47}{150}>\frac3{10}.
-\]
-The two strict bounds prove
-\eqref{eq:atom-bearing-weights-free-target} in the small range.
-
-For $1\leq s\leq16/9$, write $u=s/2$. The intermediate-range envelope gives
+since $Q(x)/\ph(x)<(1+x^2)/(2x)$ for all $x>0$. On $0<s\le1$,
+\eqref{eq:support-odds-small-envelope} gives $\be/(\Pi\sqrt{\mathcal A})>7/10$,
+while $Q(\sqrt s)/\Pi\ge(1+s)Q(\sqrt s)\ge2Q(1)>47/150>3/10$, whose sum
+exceeds $1$. On $1\le s\le16/9$, \eqref{eq:support-odds-live-envelope} with
+$u=s/2\ge1/2$ gives
 \begin{equation}
  \frac{\be}{\Pi\sqrt{\mathcal A}}
  \geq\be\frac{(1+u)(1+u^2)}{\sqrt{2u}}
- >\frac{49}{64}.
+ >\frac{49}{64},
 \label{eq:atom-bearing-live-resource-payment}
 \end{equation}
-The factor after $\be$ increases for $u\geq1/2$; its logarithmic derivative
-has the sign of $5u^3+3u^2+u-1>0$. At $s=16/9$, the alternating bound
-\[
- e^{-t^2/2}\leq
- 1-\frac{t^2}{2}+\frac{t^4}{8}-\frac{t^6}{48}+\frac{t^8}{384}
- \qquad\left(0\leq t\leq\frac43\right)
-\]
-and $\ph(0)<2/5$ give
-\[
- Q\left(\frac43\right)>\frac{16727087}{186004350},
- \qquad
- \frac{25}{9}Q\left(\frac43\right)-\frac{15}{64}
- >\frac{33055039}{2142770112}>0.
-\]
-Consequently,
+while \eqref{eq:atom-bearing-tail-monotonicity} gives
 \begin{equation}
- \frac{Q(\sqrt s)}\Pi\geq(1+s)Q(\sqrt s)>\frac{15}{64}.
+ \frac{Q(\sqrt s)}\Pi\geq(1+s)Q(\sqrt s)\ge\frac{25}{9}Q\!\left(\frac43\right)>\frac{15}{64},
 \label{eq:atom-bearing-live-tail-payment}
 \end{equation}
-The bounds in \eqref{eq:atom-bearing-live-resource-payment} and
-\eqref{eq:atom-bearing-live-tail-payment} again sum to more than one.
-
-Finally, if $s\geq16/9$, Proposition~\ref{prop:product-normalized-odds-envelope}
-and the exact margin
-\[
- \frac{2401}{14400}-\frac{944784}{6076225}
- =\frac{7873013}{699981120}>0
-\]
-give $\Pi^2\mathcal A<\be^2$. The cubic term alone proves
-\eqref{eq:atom-bearing-weights-free-target}. Hence, in every range,
-\[
- \be\mathcal B_h+Q(x_0)-\Pi
- \geq\frac{\be}{\sqrt{\mathcal A}}+Q(\sqrt s)-\Pi>0.
-\]
-This is the closed deficit at the lower support. Complementing every $B_i$
-preserves $V$ and $\mathcal B_h$ and carries it to the strict deficit at the
-upper support.
-\end{proof}
-
-
-\begin{proof}[Proof of Proposition~\ref{cor:all-support-owners}]
-The two preceding endpoint lemmas supply the two signs at each endpoint.
+which again sum to more than $1$. Finally, for $s\ge16/9$,
+\eqref{eq:support-odds-large-envelope} gives
+$\Pi^2\mathcal A\le944784/6076225<(49/120)^2<\be^2$, so $\be/\sqrt{\mathcal A}>\Pi$
+already holds. Together with Lemma~\ref{lem:support-owners-without-atom-term},
+this completes the proof of Proposition~\ref{cor:all-support-owners}.
 \end{proof}
 
 \input{contact-proofs.tex}

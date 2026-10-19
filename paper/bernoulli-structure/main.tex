@@ -27,148 +27,219 @@ urlcolor=blue!45!black,pdftitle={Bernoulli extremizers for the independent Berry
 \newcommand{\Z}{\mathbb Z}
 \newcommand{\ind}{\mathbf1}
 \newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
 \newcommand{\pe}{p_{\mathrm E}}
 \newcommand{\phz}{\phi(0)}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ii}{\mathrm i}
 \title{Bernoulli extremizers for the independent\\Berry--Esseen ratio}
 \author{Logan Bell}
 \date{6 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-We study the Berry--Esseen ratio of independent centered two-point
-variables, allowing zero summands. At every fixed number of available
-coordinates, every maximizing array with a common support diameter has
-identically distributed nonzero coordinates. With at most two coordinates,
-the same conclusion holds for arbitrary support diameters, and only one
-coordinate is nonzero. A uniform binomial phase expansion determines
-the asymptotic choice of active count when zeros are allowed: eventually
-at most four zeros are needed, and their frequencies are explicit.
-For binary arrays with ratios bounded away from zero, large total count
-variance and small diameter deviations, replacement by a common diameter strictly
-increases the ratio. The gain is quantified without an individual
-probability floor, and improves when the probabilities stay in a compact
-subset of $(0,1)$.
-The finite classifications use interval certificates with explicitly
-stated domains. The replacement argument is analytic.
+We study the extremal structure of the Berry--Esseen ratio for independent
+centered two-point (Bernoulli) random variables, allowing deterministic zero
+summands. First, for every $n\ge1$, we prove that every array maximizing the
+Berry--Esseen ratio among $n$-summand two-point arrays with a common support
+diameter consists of $m\le n$ identically distributed nondegenerate two-point
+summands and $n-m$ zero summands. Second, for at most two two-point summands
+with arbitrary support diameters, we prove that the maximum ratio equals the
+one-summand constant $C_1\approx0.3703515235$, attained only when one summand
+is zero. Third, we determine the asymptotic behavior of the optimal active
+count $m_N$ in the binomial envelope $P_N=\max_{1\le m\le N}B_m$: a uniform
+seventh-order Edgeworth--Euler--Maclaurin expansion and a quadratic-field
+separation argument in $\mathbb Q(\sqrt{10})$ prove that for all sufficiently
+large $N$, $m_N$ is unique, the number of zero summands $N-m_N$ belongs to
+$\{0,1,2,3,4\}$ with explicit limiting frequencies, and successive record
+active sizes have gaps in $\{2,3,5\}$. Fourth, for two-point arrays with
+large count variance $A=\sum_{i=1}^np_i(1-p_i)$ and small diameter deviations
+$e_i=g_i/h_0-1$, we prove that replacing all diameters by their
+variance-weighted mean $h_0$ strictly increases the ratio by at least
+$\kappa\sigma^2/(\sigma+\eta)$, where $\sigma^2=\sum_{i=1}^np_i(1-p_i)e_i^2$
+and $\eta=\max_i|e_i|$, and we construct an explicit family showing that the
+rate $\sigma^2/(\sigma+\eta)$ is optimal in the absence of a lower bound on
+the individual probabilities.
 \end{abstract}
 \tableofcontents
 
-\section{The extremal questions}
-Let $X_1,\ldots,X_n$ be independent centered real variables and put
-\[
- V=\sum_i\E X_i^2>0,\qquad R=\sum_i\E|X_i|^3<\infty,
- \qquad
- \mathcal C(X)=\frac{V^{3/2}}R
-   \sup_y\left|\Pp\{\textstyle\sum_iX_i\le y\}-\Phi(y/\sqrt V)\right|.
-\]
-Here $\Phi$ and $\phi$ are the standard normal distribution function and
-density. A binary coordinate has the form $h_i(B_i-p_i)$, where
-$h_i>0$ and $B_i\sim\Bern(p_i)$. Its support diameter is $h_i$.
-Parameters $p_i=0,1$ give a centered zero coordinate.
-For binary coordinates,
+\section{Introduction and main results}
+
+\subsection{Formulation of the extremal problem}
+
+Let $X_1,\ldots,X_n$ be independent centered real random variables with
+positive total variance and finite third absolute moments, and set
+\begin{gather*}
+ V=\sum_{i=1}^n\E X_i^2>0,\qquad R=\sum_{i=1}^n\E|X_i|^3<\infty,\\
+ \mathcal C(X_1,\ldots,X_n)=\frac{V^{3/2}}R
+   \sup_{y\in\R}\left|\Pp\left\{\sum_{i=1}^nX_i\le y\right\}-\Phi\!\left(\frac y{\sqrt V}\right)\right|,
+\end{gather*}
+where $\Phi$ and $\phi$ are the standard normal distribution function and
+density. A \emph{two-point} (or \emph{centered Bernoulli}) summand has the
+form $X_i=h_i(B_i-p_i)$, where $h_i>0$ is its support diameter and
+$B_i\sim\Bern(p_i)$ ($0\le p_i\le1$); the boundary values $p_i\in\{0,1\}$
+yield a deterministic zero summand. For two-point summands,
 \begin{equation}\label{eq:binary-moments}
- V=\sum_i h_i^2p_i(1-p_i),\qquad
- R=\sum_i h_i^3p_i(1-p_i)\{p_i^2+(1-p_i)^2\}.
+ V=\sum_{i=1}^n h_i^2p_i(1-p_i),\qquad
+ R=\sum_{i=1}^n h_i^3p_i(1-p_i)\bigl\{p_i^2+(1-p_i)^2\bigr\}.
 \end{equation}
 
-The conjectured unrestricted bound is
-\[
- \mathcal C(X)\le\ce:=\frac{3+\sqrt{10}}{6\sqrt{2\pi}}.
-\]
-Esseen's fixed-law asymptotics give this value as a necessary lower
-bound, using repeated copies of a binary law with upper mass
-$\pe=(4-\sqrt{10})/2$ \cite[pp.~160--163]{Esseen1956}.
-Schulz proves the sharp bound for binomial sums
-\cite[Theorem~1]{Schulz2016}; a companion paper proves it for independent
-binary coordinates having a common diameter \cite{BellFinite2026}.
-The present paper identifies the finite maximizers and proves
-replacement theorems beyond exact diameter equality. It also explains
-the zero padding visible in finite binomial optimization. The integer
-threshold cannot remain at its preferred phase while the probability
-remains at its asymptotic optimum; a smaller active core can have a
-better phase and a larger ratio.
+By \citet[pp.~160--163]{Esseen1956}, $n$ independent copies of a two-point
+summand with upper atom probability $\pe=(4-\sqrt{10})/2$ achieve
+$\lim_{n\to\infty}\mathcal C=\ce:=(3+\sqrt{10})/(6\sqrt{2\pi})\approx0.409732$.
+For finite $m\ge1$, \citet[Theorem~1]{Schulz2016} proved that the $m$-summand
+i.i.d.\ binomial maximum $B_m:=\max_{0<p<1}\mathcal C(B_1-p,\ldots,B_m-p)$
+satisfies $B_m<\ce$, and a companion paper \citep[Theorem~1.2(ii)]{BellFinite2026}
+extended the upper bound $\mathcal C\le\ce$ to all finite common-diameter
+two-point arrays.
 
-There are two separate difficulties. Unequal masses change both the
-variance and the third-moment denominator. Unequal diameters can split
-a convolution atom, so the objective need not be differentiable under
-support motions. Our finite common-diameter argument varies probabilities
-at a fixed integer threshold. Our diameter comparison replaces the
-whole diameter vector and keeps the exact probabilities of crossing
-each count layer.
+Whereas \citet{BellFinite2026} bounds the ratio $\mathcal C$ from above by
+$\ce$, the present paper characterizes the \emph{maximizers} of $\mathcal C$
+at a fixed number of summands $n$, analyzes how $\mathcal C$ behaves under
+perturbations of the probabilities and support diameters, and explains why
+setting a bounded number of coordinates to zero can strictly increase the
+finite-$n$ binomial maximum.
 
-Let $B_m$ be the maximal ratio for $m$ identically distributed active
-binary coordinates. Let $C_n^{\mathrm{com}}$ be the maximum over at most
-$n$ common-diameter binary coordinates. The maximum allows zero
-coordinates. Let $C_1$ be the one-coordinate binary maximum; explicitly,
+\subsection{Main results}
+
+Let $B_m$ denote the maximal ratio for $m$ identically distributed active
+two-point summands, and let $C_n^{\mathrm{com}}$ denote the maximum of
+$\mathcal C(X_1,\ldots,X_n)$ over arrays of at most $n$ two-point summands
+sharing a common support diameter (permitting zero summands). For $n=1$,
 \begin{equation}\label{eq:c1}
- C_1=\max_{0<p<1}
+ B_1=C_1=\max_{0<p<1}
  \frac{\sqrt{p(1-p)}}{p^2+(1-p)^2}
-       \left\{\Phi\!\left(\sqrt{\frac p{1-p}}\right)-p\right\}.
+       \left\{\Phi\!\left(\sqrt{\frac p{1-p}}\right)-p\right\}
+ =0.370351523474378920\ldots,
 \end{equation}
-Bentkus and Kirsa prove that this is also the unrestricted
-one-coordinate constant \cite[Theorem~1]{BentkusKirsa1989}.
+which is also the unrestricted one-summand Berry--Esseen constant
+\citep[Theorem~1]{BentkusKirsa1989}.
 
-\begin{theorem}[Common diameter]\label{thm:common}
-For every $n\ge1$,
+Our first theorem classifies all common-diameter maximizers at every finite
+$n\ge1$.
+
+\begin{theorem}[Classification of common-diameter maximizers]\label{thm:common}
+For every integer $n\ge1$,
 \[
  C_n^{\mathrm{com}}=\max_{1\le m\le n}B_m.
 \]
-Every maximizing array consists of identically distributed active
-binary coordinates and zero coordinates.
+Moreover, every $n$-summand common-diameter array attaining
+$C_n^{\mathrm{com}}$ consists of $m\in\{1,\ldots,n\}$ identically distributed
+nondegenerate two-point summands and $n-m$ zero summands.
 \end{theorem}
 
-\begin{theorem}[Two arbitrary binary diameters]\label{thm:two}
-Over arrays with at most two binary coordinates, the maximal ratio is
-$C_1$. Every maximizing array has exactly one active coordinate.
-If both variances must be positive, $C_1$ is an unattained supremum.
+When $n=2$, we remove the common-diameter hypothesis completely and determine
+the exact maximum over all pairs of two-point summands with arbitrary
+diameters.
+
+\begin{theorem}[Two two-point summands with arbitrary diameters]\label{thm:two}
+Over arrays of at most two independent two-point summands with arbitrary
+support diameters, the maximum of $\mathcal C(X_1,X_2)$ is $C_1$, and every
+attaining array has exactly one nonconstant summand. If both summands are
+required to have positive variance, the supremum remains $C_1$ and is not
+attained.
 \end{theorem}
 
-Theorems~\ref{thm:common} and~\ref{thm:two} include finite interval
-calculations. Their precise arithmetic premises and the analytic
-boundary arguments are given in Sections~\ref{sec:common}
-and~\ref{sec:two}. The records and verifier are described in
-\path{certificates/structure/README.md} and \path{verify/structure/}.
-These finite classifications do not assert uniqueness of the maximizing
-active count or probability. The eventual binomial phase results are
-given in Section~\ref{sec:iid-phase}.
+Our third theorem quantifies the strict improvement obtained when a
+two-point array with large total count variance $A=\sum_{i=1}^np_i(1-p_i)$
+and small diameter spread is replaced by the common-diameter array with the
+same probabilities $p_1,\ldots,p_n$.
 
-\begin{theorem}[Small diameter spread]\label{thm:spread}
-Fix $c_0>0$. There are $A_0,\sigma_0,\eta_0,\kappa>0$, depending
-only on $c_0$, with the following property. Let
-$X_i=g_i(B_i-p_i)$, where $g_i>0$ and $0<p_i<1$. Put
+\begin{theorem}[Strict improvement under common-diameter replacement]\label{thm:spread}
+Fix $c_0>0$. There exist constants $A_0,\sigma_0,\eta_0,\kappa>0$, depending
+only on $c_0$, with the following property. Let $X_i=g_i(B_i-p_i)$
+($1\le i\le n$) be independent with $g_i>0$ and $0<p_i<1$, and set
+\begin{gather*}
+ a_i=p_i(1-p_i),\qquad A=\sum_{i=1}^n a_i,\qquad
+ h_0=\frac{\sum_{i=1}^n a_i g_i}{A},\\
+ e_i=\frac{g_i}{h_0}-1,
+ \qquad\sigma^2=\sum_{i=1}^n a_i e_i^2,\qquad\eta=\max_{1\le i\le n}|e_i|.
+\end{gather*}
+If $A\ge A_0$, $0<\sigma\le\sigma_0$, $\eta\le\eta_0$, and
+$\mathcal C(X_1,\ldots,X_n)\ge c_0$, then
 \[
- a_i=p_i(1-p_i),\quad A=\sum_i a_i,\quad
- h_0=\frac{\sum_i a_i g_i}{A},\quad e_i=g_i/h_0-1,
- \quad\sigma^2=\sum_i a_i e_i^2,\quad\eta=\max_i|e_i|.
-\]
-If $A\ge A_0$, $0<\sigma\le\sigma_0$, $\eta\le\eta_0$ and
-$\mathcal C(X)\ge c_0$, then
-\[
- \mathcal C(B_1-p_1,\ldots,B_n-p_n)-\mathcal C(X)
+ \mathcal C(B_1-p_1,\ldots,B_n-p_n)-\mathcal C(X_1,\ldots,X_n)
                  \ge\kappa\frac{\sigma^2}{\sigma+\eta}>0.
 \]
-The comparator preserves every individual probability. If all
-probabilities belong to a fixed compact $J\subset(0,1)$, the gain is
-at least $\kappa_J\sigma$ for some $\kappa_J>0$.
+If in addition all probabilities $p_i$ lie in a fixed compact subset
+$J\subset(0,1)$, then the improvement is at least $\kappa_J\sigma$ for a
+constant $\kappa_J>0$ depending only on $c_0$ and $J$. Furthermore, the
+exponent $\sigma^2/(\sigma+\eta)$ cannot be improved to $\sigma$ when rare
+probabilities $p_i\to0$ are permitted.
 \end{theorem}
 
-The maximum deviation condition controls diameters carried by arbitrarily
-small probabilities. The constants in Theorem~\ref{thm:spread} are
-qualitative. Section~\ref{sec:spread} also gives a competitive binary
-family for which the gain has exactly the smaller order
-$\sigma^2/(\sigma+\eta)$.
+Finally, in Section~\ref{sec:iid-phase} (Theorem~\ref{thm:iid-padding}) we
+determine the asymptotic behavior of the padded binomial maximum
+$P_N=\max_{1\le m\le N}B_m$: for all sufficiently large $N$, $P_N$ has a
+unique maximizing active count $m_N$, the number of zero summands
+$j_N=N-m_N$ belongs to $\{0,1,2,3,4\}$ with explicit limiting frequencies,
+and the gaps between successive record active counts belong to $\{2,3,5\}$.
 
-For every finite-support sum we use both atom sides:
+\subsection{Open questions and overview of the methods}
+
+The results of this paper motivate two open structural conjectures for fixed
+$n\ge1$:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Global optimality of common diameters among two-point arrays:}
+Theorem~\ref{thm:two} establishes that unequal diameters cannot beat a common
+diameter for $n=2$, and Theorem~\ref{thm:spread} establishes this locally for
+large count variance $A$ and small diameter spread. However, as shown in the
+companion numerical note, unequal diameters with rational ratios such as
+$(1,1,1,2)$ at $n=4$ can create multi-summand atom collisions that are strict
+local maxima of $\mathcal C$ (though with ratio $\approx0.2825<P_4\approx0.4009$).
+Proving globally that $\sup\mathcal C(X_1,\ldots,X_n)=P_n$ across all
+$n$-summand two-point arrays with arbitrary diameters for $n\ge3$ remains open.
+\item \emph{Reduction from general summands to two-point summands:}
+Combining Theorem~\ref{thm:common} with the small-Lyapunov phase-collapse and
+lattice-concavity theorems of the companion structure paper proves that every
+unrestricted $n$-summand global maximizer with Lyapunov ratio below an
+absolute threshold $\varepsilon_0>0$ is a padded i.i.d.\ two-point array.
+Extending this classification to all $n\ge1$ without a small-Lyapunov
+restriction would imply $\Cind=\ce$.
+\end{enumerate}
+
+For every finite-support sum $S$, we use the one-sided branch decomposition
 \begin{equation}\label{eq:branches}
- \sup_y|F(y)-\Phi(y/\sqrt V)|
- =\sup_y\max\{F(y)-\Phi(y/\sqrt V),\,
-               \Phi(y/\sqrt V)-F^-(y)\},
+ \sup_{y\in\R}\left|F(y)-\Phi\!\left(\frac y{\sqrt V}\right)\right|
+ =\sup_{y\in\R}\max\left\{F(y)-\Phi\!\left(\frac y{\sqrt V}\right),\,
+               \Phi\!\left(\frac y{\sqrt V}\right)-F^-(y)\right\},
 \end{equation}
-where $F(y)=\Pp(S\le y)$ and $F^-(y)=\Pp(S<y)$.
-Reflection interchanges the branches. Between consecutive atoms,
-the positive closed discrepancy decreases. Thus its maximum occurs at
-an atom, and one selected positive closed threshold suffices after
-reflection, including ties.
+where $F(y)=\Pp(S\le y)$ and $F^-(y)=\Pp(S<y)$. Reflection $X_i\mapsto-X_i$
+interchanges the two branches, and between consecutive atoms the closed
+discrepancy $F(y)-\Phi(y/\sqrt V)$ is strictly decreasing, so its maximum is
+attained at a support atom.
+
+The paper is organized as follows:
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Section~\ref{sec:common} (Proof of Theorem~\ref{thm:common}):}
+Fixing the mean $\mu$, variance $V$, and closed integer threshold $k$ of a
+common-diameter maximizer, we maximize $\sum_ip_i^3$ on the connected
+component $K$ of the zero-deficit set $Z=\{p:H_C(p)=0\}$. Varying three
+probabilities along their elementary-symmetric $(e_1,e_2)$ fiber and using a
+uniform third-difference bound (Lemma~\ref{lem:third-difference}) reduces the
+cubic maximizer on $K$ to $\Bin(M,p)+\Bern(x)$, where a certified curvature
+inequality (Lemma~\ref{lem:certified-curvature}) rules out $p\ne x$ and proves
+that the i.i.d.\ point is isolated in $Z$, forcing $K$ to be a singleton.
+\item \textbf{Section~\ref{sec:two} (Proof of Theorem~\ref{thm:two}):}
+For two two-point summands with diameters $1$ and $t\in(0,1)$, variational
+contact bounds confine any stationary point with $\mathcal C\ge37/100$ to a
+compact variance domain $V>1369/3319684$, where a 37,287-leaf certified
+interval partition rules out all three interior threshold branches.
+\item \textbf{Section~\ref{sec:iid-phase} (Binomial phase and zero padding):}
+We derive a uniform seventh-order Edgeworth--Euler--Maclaurin expansion for
+$D_{m,k}(v)=F_{m,v}(k)-\Phi(-cd)$, compute the $O(m^{-2})$ and $O(m^{-3})$
+phase expansions of $B_m$, determine the five-parabola lower envelope on
+$[-1/2,1/2]$, and use a field-norm lower bound in $\mathbb Q(\sqrt{10})$ to
+control the $O(N^{-1})$ boundary drift.
+\item \textbf{Section~\ref{sec:spread} (Proof of Theorem~\ref{thm:spread}):}
+Using uniform Poisson-binomial local and jittered Edgeworth expansions with
+no individual probability floor, we bound the unconditioned weighted
+perturbation moments $N_j(k)=\E[T^j\ind_{\{K=k\}}]$, localize any threshold
+with $\mathcal C\ge c_0$ to the central bulk, establish the conditional $L^1$
+lower bound $\E(|T|\mid K=k)\ge c\ell/\sqrt A$ by a perfect-matching coupling
+of two rejective-sampling copies, and construct the rare-coordinate example
+proving optimality of the rate $\sigma^2/(\sigma+\eta)$.
+\end{itemize}
 
 \input{common-diameter.tex}
 \input{two-diameters.tex}

@@ -1,7 +1,12 @@
-# Scalar certificate verification
+# Scalar Certificate Verification (Manuscript 1)
 
-These files record the coefficient bounds used in
-[the paper](../../paper/main.tex).
+Navigation: [Repository Root](../../README.md) · [Verification Guide](../../verify/README.md) · [Interval Kernel](../../verify/kernel/README.md)
+
+---
+
+This directory contains the scalar majorant certificates and generator scripts used in [Manuscript 1](../../paper/independent-berry-esseen.pdf) ([`paper/main.tex`](../../paper/main.tex)) to bound single-summand characteristic functions, logarithmic product corrections, zero-bias differences, and the cosine-comparison forcing term.
+
+## Running the Checks
 
 From the repository root, run:
 
@@ -9,98 +14,39 @@ From the repository root, run:
 uv run --frozen python verify/check_scalar_certificates.py
 ```
 
-The default check regenerates the three exact polynomials and their
-Bernstein coefficient bounds, verifies every tangent lower bound for the
-logarithmic correction with Arb, checks all saved partitions and exact
-rational inequalities derived from their leaf bounds, verifies the analytic
-tails, and reconstructs the scalar tables used by the evaluator. These
-checks use the saved transcendental enclosures at the leaves.
+This default check (which runs automatically as part of `./verify.sh --no-latex`) performs the following verifications:
 
-To recompute the saved leaf bounds, run:
+1. **Quadratic imaginary-error polynomial (`odd-quadratic.json`, `source/odd_polynomial.py`):** Regenerates the exact rational polynomials in Appendix A of Manuscript 1, converts them to the tensor Bernstein basis on $[0, 4] \times [0, 49]$, verifies positivity of the minimum Bernstein coefficients minus the series tail, and checks the spatial tail for $z \ge 7$.
+2. **Logarithmic tangent lower bounds (`direct-log.json`, `source/direct_log.py`):** Uses 192-bit Arb ball arithmetic to verify the convexity/concavity transition and endpoint inequality of Lemma 2.3 for all 2,006 tangent lower bounds across $\lambda \in \{3/4, 1, 3/2, 2, 3\}$.
+3. **Affine zero-bias modulus and directional bounds (`affine-index.json`, `disk.zip`, `directional.zip`):** Verifies the binary partition trees covering all frequency cells and spatial intervals, checks the exact analytic tail polynomials outside $[-R, R]$, verifies the 48-direction polygon inradius $\eta = 997/1000$, and confirms that the reconstructed cumulative maxima match `verify/kernel/scalar_table.json` and `verify/kernel/disk_table.json`.
+4. **Cosine-comparison forcing bound (`energy.json`, `source/energy_majorant.py`, `source/energy_small.py`):** Verifies the rectangle partitions covering $(x, y) \in [0, 1/2] \times [0, 48]$ and $[1/2, 1] \times [0, 16]$, checks the exact positive tail polynomials for $y \ge 48$ and $y \ge 16$, and confirms exact agreement with `verify/kernel/energy_table_complete.json`.
+
+### Recomputing Leaf Enclosures with Arb
+
+The default check verifies partition completeness, exact rational tail conditions, and table reconstruction from the stored leaf enclosures. To recompute every leaf enclosure from scratch using Arb ball arithmetic:
 
 ```sh
 uv run --frozen python verify/check_scalar_certificates.py --replay directional --replay disk --replay energy
 ```
 
-This recomputes every leaf in the requested families using the supplied Arb
-formulas. Adding `--limit N` restricts each affine family to its first N
-certificates and the energy family to its first N frequency-cell records.
-The output states whether each family's numerical reevaluation is complete.
-The directional certificates contain over a million leaves, so their full
-reevaluation takes substantially longer than the default checks. All
-calculations use one numerical thread and process one affine certificate at
-a time. For checks of the moment cover and smoothing calculations, see the
-[verification guide](../../verify/README.md).
+Adding `--limit N` restricts reevaluation to the first `N` certificates in each family for a faster spot check.
 
-## Files and mathematical roles
+---
 
-| Input | Content |
-|---|---|
-| `odd-quadratic.json` | Three exact polynomials and bounds on their Bernstein coefficients, with analytic series and spatial tails for the quadratic bound on the imaginary part of the zero-bias error |
-| `direct-log.json` | 2,006 tangent lower bounds at five values of $\lambda$, with exact dyadic coefficients, tangent points and domains |
-| `affine-index.json`, `directional.zip` | 61 frequency cells and five slopes, each with 25 directions in the closed upper half-plane: 7,625 certificates with 1,558,869 leaves |
-| `affine-index.json`, `disk.zip` | 128 frequency cells and five common slopes: 640 certificates for modulus bounds with 75,046 leaves |
-| `energy.json` | 128 frequency cells for the cosine comparison: 25,175 rectangles on frequencies $[0,1/2]$ and 150,453 on $[1/2,1]$, with analytic tail bounds |
-| `source/odd_polynomial.py` | Exact rational generator used to regenerate every polynomial coefficient and Bernstein minimum |
-| `source/direct_log.py` | Construction of tangent lower bounds at 100-bit precision for the five values of $\lambda$ |
-| `source/entire_target.py`, `source/directional.py`, `source/disk.py` | Analytic expression for the normalized zero-bias error, including its value at zero frequency, and Arb formulas for tail checks and leaf reevaluation |
-| `source/energy_majorant.py`, `source/energy_small.py` | Quotients used to check the reference-error inequality, including their continuous values at zero frequency, remainder bounds and exact tail polynomials |
+## Files and Mathematical Roles
 
-The directional and disk certificates bound the same normalized zero-bias
-error, through real projections and the complex modulus, respectively. The
-25 stored directions include both real-axis directions. Reflecting the
-other 23 across the real axis gives the 48 directions used in the paper.
-Reflection of the spatial variable conjugates the normalized error and
-supplies the reflected bounds. The energy certificates bound the forcing
-term in the differential equation
-for comparison with the cosine product. At zero frequency, the checker uses
-the continuous quotient after removing the factors that vanish there.
+| File | Mathematical content |
+| --- | --- |
+| `odd-quadratic.json`, `source/odd_polynomial.py` | Exact rational polynomial generator and Bernstein coefficient bounds for Lemma 5.1 and Appendix A (quadratic bound on $\operatorname{Im}(f_W - f_{W^*})$). |
+| `direct-log.json`, `source/direct_log.py` | 2,006 certified tangent lower bounds for $-\frac{1}{2}\log(1 - 2q) - q$ across $\lambda \in \{3/4, 1, 3/2, 2, 3\}$ (Lemmas 2.2–2.3). |
+| `affine-index.json`, `disk.zip`, `source/disk.py` | 640 modulus certificates (75,046 leaves) across 128 frequency cells on $[0, 2]$ and common slopes $\lambda \in \{5/4, 3/2, 2, 3, 4\}$ (Section 5.2). |
+| `affine-index.json`, `directional.zip`, `source/directional.py` | 7,625 directional projection certificates (1,558,869 leaves) across 61 frequency cells, 5 slopes, and 25 upper-half-plane directions (reflected by conjugation to 48 directions). |
+| `energy.json`, `source/energy_majorant.py`, `source/energy_small.py` | 128 frequency-cell certificates (25,175 rectangles on $[0, 1/2]$ and 150,453 rectangles on $[1/2, 1]$) for the cosine-comparison forcing inequality in Section 6.1 and Appendix B. |
+| `source/entire_target.py` | Analytic formulas and Taylor enclosures for the normalized zero-bias difference $2(f_W(x) - f_{W^*}(x))/x$. |
 
-The logarithmic bounds use $\lambda\in\lbrace3/4,1,3/2,2,3\rbrace$. The checker
-verifies the tangent and endpoint conditions at 192-bit Arb precision;
-the evaluator constructs these bounds at 100-bit precision. The affine
-zero-bias bounds use the common slopes $5/4,3/2,2,3,4$.
+## Record Format
 
-## Exact compact record format
+All rational numbers in the JSON archives are stored as exact fraction strings, and runtime lookup tables store exact IEEE-754 binary64 floats.
 
-Every rational string denotes its exact value. A finite JSON float, where
-present in a runtime table, denotes its exact binary64 value.
-
-Each affine ZIP entry retains its coefficients, correction, closed frequency
-interval, precision, tail radius, tail coefficients and complete binary
-partition. A leaf is a final rectangle whose saved lower bounds are used
-without further subdivision. A split node is
-`[axis, cut, left_index, right_index]`, with axis zero for frequency and one
-for the spatial variable. A directional leaf is
-`[lower]`; a disk leaf is `[lower_P, lower_H]`. The root rectangle is the
-frequency interval times `[-R,R]` for a directional certificate, or `[0,R]`
-for a disk. Child rectangles are reconstructed from exact cuts. Both closed
-children cover their parent, including the cut; every node must be reachable
-exactly once.
-
-For a directional certificate, each saved lower bound plus the final
-correction must be nonnegative. For a disk, the two lower bounds apply at
-the saved base correction. If the final additional correction is `e`, the
-exact tests are `lower_P + e >= 0` and
-`lower_H + 2*e*lower_P + e^2 >= 0`. Both forms have complete analytic tails.
-The disk certificate's slope is converted to a common slope using
-$\rho=\mathbb E|W|^3\ge1$ for a mean-zero, variance-one variable $W$.
-Directional bounds are converted to modulus bounds using a polygon whose
-inradius is at least 997/1000; this inclusion is checked exactly.
-
-An energy rectangle is `[xlo, xhi, ylo, yhi, lower]`. The rectangles must
-cover the full spatial interval at every frequency boundary and between
-consecutive boundaries. The spatial interval is $[0,48]$ for frequencies in
-$[0,1/2]$ and $[0,16]$ for $[1/2,1]$. Exact positive tail polynomials complete
-the real line. Numerical reevaluation includes the continuous values at
-removable singularities.
-
-The affine index identifies the certificates used for each table row.
-The checker reconstructs maxima over directions, conversions to common
-disk slopes, coefficients for the energy bound, and cumulative maxima over
-frequency cells. They must agree exactly with the corresponding rows in
-`verify/kernel/scalar_table.json`, `disk_table.json` and
-`energy_table_complete.json`.
-
-The checker reports the number of numerically reevaluated leaves or
-rectangles separately for each family.
+- **Affine certificates (`directional.zip`, `disk.zip`):** Each entry records its polynomial coefficients $(\beta, \gamma, c_0, c_2, \Lambda)$, base correction $\delta$, closed frequency interval $[x_0, x_1]$, working precision, spatial cutoff $R$, tail polynomial coefficients, and binary partition tree over $[x_0, x_1] \times [-R, R]$ (or $[0, R]$ for disk certificates). Split nodes are encoded as `[axis, cut, left_index, right_index]`, where `axis` is `0` for frequency $x$ and `1` for spatial variable $w$.
+- **Cosine-comparison certificates (`energy.json`):** Each frequency cell lists closed rectangles `[xlo, xhi, ylo, yhi, lower]` whose union covers $[x_0, x_1] \times [0, Y]$ (with $Y = 48$ on $[0, 1/2]$ and $Y = 16$ on $[1/2, 1]$) with positive lower bounds on the desingularized quotient $\mathcal{D}_x(y) / [x^4(y - 1)^4]$ or $\mathcal{D}_x(y) / (y - 1)^4$.

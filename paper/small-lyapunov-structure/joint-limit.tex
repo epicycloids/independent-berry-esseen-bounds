@@ -1,256 +1,135 @@
-\section{Joint integer and phase estimates}\label{sec:joint}
-We first work under the hypotheses of Lemma~\ref{lem:first-alias}.
-Write $J_i=K_i-\E K_i$, $K=\sum K_i$, $\mu=\E K$,
-$T=\sum Z_i$, $A=\Var K$, $Q=\Var T$, $S=K-\mu+T$,
-and $V=\Var S$. The retained core has size $M$, converges uniformly
-in $W_3$ to $\Bern(p)$ for a fixed $0<p<1$, and retains all but
-$o(M)$ of integer variance and cubic price. In addition
-$Q=O(1)$ and $\Cov(K,T)=o(\sqrt M)$. Therefore
+\section{Joint integer and residual limit theorems}\label{sec:joint}
+
+Under the decomposition $Y_i=J_i+Z_i$ of Lemma~\ref{lem:first-alias}, write
+$J_i=K_i-\E K_i$, $K=\sum_{i=1}^N K_i$, $\mu=\E K$, $T=\sum_{i=1}^N Z_i$,
+$A=\Var K$, $Q=\Var T=O(1)$, $S=K-\mu+T$, and $V=\Var S$. Because the core
+$I$ of size $M$ converges uniformly in $W_3$ to $\Bern(p)$ ($p=\pe$) and
+carries all but $o(M)$ of the integer variance and third absolute moments,
+while $\Cov(K,T)=o(\sqrt M)$, we have
 \begin{equation}\label{eq:joint-moments}
- A\sim p(1-p)M,\quad V=A+o(\sqrt A),\quad
- \gamma=\frac{\sum_i\E J_i^3}{A}\longrightarrow1-2p.
+ A\sim p(1-p)M,\qquad V=A+o(\sqrt A),\qquad
+ \gamma=\frac{\sum_{i=1}^N\E J_i^3}{A}\longrightarrow1-2p.
 \end{equation}
 
-\begin{lemma}[Global integer estimates]\label{lem:integer}
-Uniformly over every integer $j$, with $x_j=(j-\mu)/\sqrt A$,
+\begin{lemma}[Global Edgeworth and local estimates for the integer sum]\label{lem:integer}
+Uniformly over all $j\in\Z$, with $x_j=(j-\mu)/\sqrt A$,
 \begin{align}
  \Pp(K\le j)&=\Phi(x_j)+\frac{\phi(x_j)}{\sqrt A}
              \left\{\frac12+\frac\gamma6(1-x_j^2)\right\}
                         +o(A^{-1/2}),\label{eq:integer-edgeworth}\\
- \sqrt A\Pp(K=j)&=\phi(x_j)+o(1).\label{eq:integer-local}
+ \sqrt A\,\Pp(K=j)&=\phi(x_j)+o(1),\label{eq:integer-local}
 \end{align}
-Also, uniformly over every integer $k$,
+and uniformly over all $k\in\Z$,
 \begin{equation}\label{eq:all-layer}
-                  \E[T^2\ind_{\{K=k\}}]\le K_0 Q/\sqrt A.
+                  \E\bigl[T^2\ind_{\{K=k\}}\bigr]\le \frac{K_0 Q}{\sqrt A}.
 \end{equation}
-All assertions remain uniform after a fixed number of coordinate deletions
-when their shifts and moments satisfy the same displayed hypotheses.
+All three estimates remain uniform after deleting any fixed number of
+summands.
 \end{lemma}
 \begin{proof}
-Each retained integer law has its probabilities at $0,1$ bounded below.
-After at most any fixed number of deletions its characteristic product
-obeys
+On the core $I$, every $K_i$ has atom probabilities at $0$ and $1$ bounded
+below, so after deleting a bounded number of summands the remaining product
+satisfies the torus damping bound
 \begin{equation}\label{eq:torus-damping}
-        |\chi_{\rm deleted}(u)|\le K\exp(-cM\sin^2(u/2)),
-                                                   \quad |u|\le\pi.
+        |\chi_{\rm deleted}(u)|\le K\exp\bigl(-cM\sin^2(u/2)\bigr)
+                                                   \qquad(|u|\le\pi).
 \end{equation}
-Other factors can only reduce the modulus. Uniform $W_3$ convergence
-to the bounded binary target gives uniform integrability of the core
-third moments and convergence of the first three characteristic
-derivatives on compact intervals. In a fixed small zero cell its
-logarithm has expansion
-\[
- \log\chi_I(u)=-W u^2/2-i\kappa_Iu^3/6+\mathcal E(u),\quad
- |\mathcal E(u)|\le M(\epsilon_n|u|^3+K u^4),\quad\epsilon_n\to0.
-\]
-The fourth power here is a remainder for the bounded target, not a
-fourth-moment assumption on the actual laws. Gaussian-weighted Fourier
-integration divided by $|u|$ gives error
-$O(\epsilon_n/\sqrt M+1/M)$; the complement of the zero cell is
-exponentially small by \eqref{eq:torus-damping}.
-
-For precise CDF inversion take the Gaussian--Hermite lattice sequence
-\[
- b_j=\frac{\phi((j-\mu_I)/\sqrt W)}{\sqrt W}
-       \left\{1+\frac{\kappa_I}{6W^{3/2}}
-                         H_3((j-\mu_I)/\sqrt W)\right\},\quad
- H_3(x)=x^3-3x.
-\]
-Its mass error is exponentially small by Poisson summation; correct
-that mass at the integer nearest $\mu_I$. The corrected Fourier
-alias numerator vanishes at zero and is
-$O(\operatorname{poly}(M)e^{-cM}|u|)$ there, so division by the CDF
-denominator $1-e^{-iu}$ is integrable. Euler--Maclaurin summation
-gives the closed half-step $\phi(x)/(2\sqrt W)$ and the integrated
-cubic term, with uniform $O(W^{-1})$ error. Inversion without the
-denominator gives the local estimate for the core.
-
-Convolve with the omitted integer block. Its centered variance and
-additive cubic price are $o(A)$. Transfer the half-step and cubic
-correction using their bounded derivatives and its $o(\sqrt A)$
-first absolute moment. Replace only the smooth leading normal CDF
-coordinatewise by same-variance normals; third-order Taylor replacement
-costs $K\sum_{\rm rem}\E|J_i|^3/A^{3/2}=o(A^{-1/2})$.
-This proves \eqref{eq:integer-edgeworth}. Convolution and uniform
-continuity of $\phi$ prove \eqref{eq:integer-local}.
-
-For \eqref{eq:all-layer}, expand the Fourier transform of
-$T^2\ind_{\{K=k\}}$ without dividing by any characteristic factor.
-The diagonal numerators have summed magnitude at most $Q$; cross
-numerators have factors $\E[Z_i e^{iuJ_i}]$, whose magnitude is at
-most $|u|\sqrt{\Var(K_i)\E Z_i^2}$ by centering. Their squared
-sum is at most $u^2AQ$. The product after at most two extra deletions
-is bounded by \eqref{eq:torus-damping}. Integration of
-$KQ(1+Au^2)e^{-cAu^2}$ proves the assertion. These proofs are uniform
-under fixed deletions; they use products with those factors removed
-and no characteristic-function quotients outside the zero cell.
+Expanding $\log\chi_I(u)=-Wu^2/2-\ii\kappa_Iu^3/6+O(M(\epsilon_n|u|^3+|u|^4))$
+near $u=0$, inverting against the Gaussian--Hermite lattice sequence via
+Euler--Maclaurin summation, and convolving with the outside block (which has
+variance and third-moment sum $o(A)$) yields \eqref{eq:integer-edgeworth}
+and \eqref{eq:integer-local}. For \eqref{eq:all-layer}, expanding the Fourier
+transform of $T^2\ind_{\{K=k\}}$ into diagonal terms (bounded in sum by $Q$)
+and off-diagonal terms (with factors $|\E[Z_ie^{\ii uJ_i}]|\le|u|\sqrt{\Var(K_i)\E Z_i^2}$)
+and integrating $KQ(1+Au^2)e^{-cAu^2}$ over $[-\pi,\pi]$ gives the uniform
+bound $K_0Q/\sqrt A$.
 \end{proof}
 
-\begin{lemma}[Joint local limit]\label{lem:joint-local}
-Along any subsequence with $T\Rightarrow U$,
-\[
- ((K-\mu)/\sqrt A,T)\Rightarrow(G,U),
-\]
-where $G$ is standard normal independent of $U$, and $\E U=0$.
-For every sequence $(k-\mu)/\sqrt A\to x\in\R$,
+\begin{lemma}[Asymptotic independence and joint local limit]\label{lem:joint-local}
+Along any subsequence for which $T\Rightarrow U$, we have
+$((K-\mu)/\sqrt A,T)\Rightarrow(G,U)$, where $G\sim N(0,1)$ is independent
+of $U$ and $\E U=0$. Moreover, for every integer sequence $k$ with
+$(k-\mu)/\sqrt A\to x\in\R$,
 \begin{equation}\label{eq:joint-local}
-        \sqrt A\Pp(K=k,T\in du)\Rightarrow\phi(x)\Law(U)(du).
+        \sqrt A\,\Pp(K=k,\ T\in du)\Longrightarrow\phi(x)\Law(U)(du).
 \end{equation}
 \end{lemma}
 \begin{proof}
-Bounded second phase moments give tightness and first-moment uniform
-integrability. Fix real $u,v$. On the core,
-$g_i(v)=\E e^{ivZ_i}\to1$ uniformly. At $s=u/\sqrt A$, expand
-the logarithm of $\E e^{isJ_i+ivZ_i}/g_i(v)$ through second order.
-The total third-order error is $O(M|s|^3)=o(1)$. Its quadratic
-coefficient divided by $A$ tends to $-1$, by uniform integrability
-of $J_i^2$ and uniform $Z_i\to0$ in $L^2$; the squared first
-coefficients contribute only $O(Q)/A$.
-
-For the linear term use
-$\E[J_i e^{ivZ_i}]=iv\E[J_iZ_i]+O_v(\E[|J_i|Z_i^2])$.
-The summed error is $o(\sqrt M)$: the bounded target contributes
-$KQ$, and the coupling remainder contributes
-$o(\sqrt M)(\sum\E Z_i^4)^{1/2}$.
-Correcting the $g_i(v)$ denominators costs
-$K_v\sum_I(\E Z_i^2)^{3/2}=o(1)$.
-The omitted covariance is $o(\sqrt A)$, so the core linear sum
-is also $o(\sqrt A)$. We obtain
-\[
- \chi_I(u/\sqrt A,v)=e^{-u^2/2+o(1)}\chi_{T_I}(v).
-\]
-Replacing the omitted normalized integer count by zero costs at most
-$|u|\sqrt{\Var K_{\rm rem}/A}=o(1)$, and leaves its complete phase
-law. Multiplication proves the joint weak limit.
-
-For the local assertion invert only the integer coordinate. On a
-fixed zero cell the twisted core factors have uniform $C^2$
-convergence to the centered binary factor, are nonzero, and have
-log-modulus second derivatives at most $-c$. Their summed first
-derivative is at most $K_v\sqrt A$. Thus
-\[
- \left|\prod_I\E e^{isJ_i+ivZ_i}\right|
-          \le e^{K_v|s|\sqrt A-cAs^2}.
-\]
-Outside this cell the uniformly binary-like twisted product is
-exponentially small. With $w=s\sqrt A$, dominated inversion and
-the just-proved joint characteristic limit give
-$\phi(x)\E e^{ivU}$. The masses converge by
-\eqref{eq:integer-local}, and \eqref{eq:all-layer} gives tightness
-of these finite positive phase measures. Fourier tests followed by
-compact approximation establish \eqref{eq:joint-local}.
+For fixed $u,v\in\R$ and $s=u/\sqrt A$, expanding
+$\sum_{i\in I}\log(\E e^{\ii sJ_i+\ii vZ_i}/\E e^{\ii vZ_i})$ through second
+order in $s$ and using $\Cov(K,T)=o(\sqrt A)$ gives
+$\E e^{\ii s(K-\mu)+\ii vT}=e^{-u^2/2+o(1)}\E e^{\ii vT}$, proving joint
+weak convergence. Inverting the Fourier transform in the first coordinate at
+$k$ using \eqref{eq:torus-damping} and tightness from \eqref{eq:all-layer}
+yields \eqref{eq:joint-local}.
 \end{proof}
 
-\begin{lemma}[Endpoints and localization]\label{lem:endpoints}
-If $y/\sqrt A\to x\in\R$, let
-$j=\lfloor y+\mu\rfloor$ and, after a subsequence,
-$\theta=y+\mu-j\to\theta_0\in[0,1]$. Then
+\begin{lemma}[Asymptotic threshold envelopes]\label{lem:endpoints}
+If $y/\sqrt A\to x\in\R$, let $j=\lfloor y+\mu\rfloor$ and suppose along a
+subsequence that $\theta=y+\mu-j\to\theta_0\in[0,1]$ and $T\Rightarrow U$.
+Then
 \begin{align}
- \limsup\sqrt A\{F_S(y)-\Phi(y/\sqrt V)\}
- &\le\phi(x)\{\tfrac12+\tfrac{1-2p}{6}(1-x^2)
-                         -\E\{\theta_0-U\}\},\label{eq:closed-envelope}\\
- \liminf\sqrt A\{F_S^-(y)-\Phi(y/\sqrt V)\}
- &\ge\phi(x)\{-\tfrac12+\tfrac{1-2p}{6}(1-x^2)\}.
+ \limsup_{n\to\infty}\sqrt A\,\bigl\{F_S(y)-\Phi(y/\sqrt V)\bigr\}
+ &\le\phi(x)\left\{\frac12+\frac{1-2p}{6}(1-x^2)
+                         -\E\{\theta_0-U\}\right\},\label{eq:closed-envelope}\\
+ \liminf_{n\to\infty}\sqrt A\,\bigl\{F_S^-(y)-\Phi(y/\sqrt V)\bigr\}
+ &\ge\phi(x)\left\{-\frac12+\frac{1-2p}{6}(1-x^2)\right\},
                                                         \label{eq:strict-envelope}
 \end{align}
-If $|y|/\sqrt A\to\infty$, both discrepancies multiplied by
-$\sqrt A$ tend to zero.
+where $\{w\}=w-\lfloor w\rfloor$ denotes fractional part. If
+$|y|/\sqrt A\to\infty$, then $\sqrt A\,|F_S^\pm(y)-\Phi(y/\sqrt V)|\to0$.
 \end{lemma}
 \begin{proof}
-The actual-variance and count-variance normal baselines differ
-uniformly by $o(A^{-1/2})$ from \eqref{eq:joint-moments}.
-The exact closed crossing difference from the count CDF at $j$ is
-\[
- \sum_{\ell\in\Z}\left\{\Pp(K=j+\ell,T\le\theta-\ell)
-                            -\ind_{\{\ell\le0\}}\Pp(K=j+\ell)\right\}.
-\]
-For $|\ell|>H\ge3$ any crossing requires $|T|\ge|\ell|-1$.
-The all-layer bound therefore gives total crossing probability at
-most $KQ/(H\sqrt A)$, uniformly over all real thresholds.
-First truncate to $|\ell|\le H$. The moving closed half-lines in
-\eqref{eq:joint-local} give an upper bound with
-$\Pp(U\le\theta_0-\ell)$. Now let $H\to\infty$.
-The resulting sum is
-\[
- \phi(x)\E\lfloor\theta_0-U\rfloor
-    =\phi(x)\{\theta_0-\E U-\E\{\theta_0-U\}\}.
-\]
-Combine it with the count expansion about the real threshold, whose
-coefficient contains $-\theta_0+1/2$. This proves the closed bound.
-For strict CDFs moving open half-lines give a lower bound with
-$\lceil\theta_0-U\rceil-1\ge\theta_0-U-1$, proving the strict bound.
-These conventions include limiting phase atoms at integer boundaries.
-
-For thresholds leaving every standardized compact set, fix $H$ first.
-The finitely many crossing layers have masses $o(A^{-1/2})$ by the
-global local estimate; the remaining layers cost at most
-$KQ/(H\sqrt A)$. The global integer Edgeworth correction also tends
-to zero there. Let the row tend to infinity and then $H\to\infty$.
+Decomposing $F_S(y)-F_K(j)=\sum_{\ell\in\Z}\{\Pp(K=j+\ell,T\le\theta-\ell)-\ind_{\{\ell\le0\}}\Pp(K=j+\ell)\}$,
+truncating at $|\ell|\le H$ via \eqref{eq:all-layer} (which bounds the tail
+by $KQ/(H\sqrt A)$), applying \eqref{eq:joint-local} and Portmanteau on closed
+half-lines, and sending $H\to\infty$ gives
+$\phi(x)\E\lfloor\theta_0-U\rfloor=\phi(x)(\theta_0-\E\{\theta_0-U\})$ (since
+$\E U=0$). Combining this with \eqref{eq:integer-edgeworth} at $j=y+\mu-\theta$
+proves \eqref{eq:closed-envelope}, and open half-lines similarly prove
+\eqref{eq:strict-envelope}.
 \end{proof}
 
-\subsection{Modular concentration and transport}
-For the original near-Esseen rows take $p=\pe$. Their original
-price in gap units $P$ and signed cubic $\kappa$ satisfy
-$P/V\to\re$ and $\kappa/V\to\te$ by Proposition~\ref{prop:core}.
-The negative strict envelope has maximal limiting normalized value
-$\phz(1/2-\te/6)/\re<\ce$. The positive envelope has unique
-standardized maximum at zero. Near-extremality, the localization lemma,
-and \eqref{eq:closed-envelope} force $x=0$ and
-$\E\{\theta_0-U\}=0$, so $U$ lies on one integer coset.
-Consequently there are phases $\vartheta_n$ with
+\subsection{Modular concentration and proof of Theorem~\ref{thm:near}}
+
+For a sequence satisfying \eqref{eq:near-assumption} with $p=\pe$, we have
+$P/V\to\re$ and $\kappa/V\to\te$ by Proposition~\ref{prop:core}. The negative
+strict branch \eqref{eq:strict-envelope} has normalized upper limit
+$\phz(1/2-\te/6)/\re<\ce$, while the positive closed branch
+\eqref{eq:closed-envelope} has unique maximum $\ce$ at $x=0$ and
+$\E\{\theta_0-U\}=0$. Thus $U$ is concentrated on the integer coset
+$\theta_0+\Z$, so there exist phases $\vartheta_n$ such that
 \begin{equation}\label{eq:modular}
               \E\dist(S-\vartheta_n,\Z)\longrightarrow0.
 \end{equation}
-Every subsequence admits this argument; minimizing the bounded
-continuous circle-distance expectation over the compact circle gives
-phases for the full sequence.
 
-We give the transport implication directly. For $q\in(0,1)$, let
-$t=2q-1$ and define the continuous periodic triangle
-\[
- P_q(u)=\begin{cases}-2(1-q)u,&0\le u\le q,\\
-                         2q(u-1),&q\le u\le1.
-          \end{cases}
-\]
-Its mean is $-q(1-q)$ and its nonzero Fourier coefficients are
-$(1-e^{-2\pi ikq})/(2\pi^2k^2)$. Zero bias gives
-$\E S^*=\kappa/(2V)$ and
-$|\E e^{iuS^*}|\le1/(|u|\sqrt V)$, by its defining identity.
-The test $-tx+P_q(x-\vartheta)$ is $1$-Lipschitz. The Wasserstein
-dual and its absolutely convergent Fourier series yield
+To deduce $\mathcal B(X_n)\to1$ from \eqref{eq:modular}, let $q=\qe$,
+$t=2q-1=\te$, and let $P_q(u)$ be the $1$-periodic sawtooth function equal to
+$-2(1-q)u$ on $[0,q]$ and $2q(u-1)$ on $[q,1]$. Then $-tx+P_q(x-\vartheta)$
+is $1$-Lipschitz, has mean $-q(1-q)$ on the circle, and vanishes on
+$\vartheta+\Z$. Using $\E S^*=\kappa/(2V)$ and $|\E e^{\ii uS^*}|\le1/(|u|\sqrt V)$
+in its Fourier series gives, by Kantorovich--Rubinstein duality,
 \begin{equation}\label{eq:modular-dual}
  W_1(S,S^*)\ge\frac{t\kappa}{2V}+q(1-q)
   -2\E\dist(S-\vartheta,\Z)-\frac{\zeta(3)}{\pi^3\sqrt V}.
 \end{equation}
-With $q=\qe$ and \eqref{eq:modular}, the lower limit is
-$\te^2/2+\pe\qe=\re/2$. The original additive bound
-$W_1(S,S^*)\le P/(2V)\to\re/2$ matches it, proving
-$\mathcal B(X_n)\to1$.
+Taking $\liminf$ via \eqref{eq:modular} gives
+$\liminf W_1(S,S^*)\ge\te^2/2+\pe\qe=\re/2$, which matches the upper bound
+$W_1(S,S^*)\le P/(2V)\to\re/2$ and proves $\mathcal B(X_n)\to1$.
 
-Modular concentration also strengthens the actual rounding.
-It gives $|\E e^{2\pi iS}|\to1$, hence independence implies
-$\sum_i(1-r_i^2)\le-\log\prod_i r_i^2\to0$.
-The argument-aligned errors of Lemma~\ref{lem:first-alias} therefore
-have $Q=\sum_i\E Z_i^2\to0$. Since $|Z_i|\le1$, their actual
-independent couplings give
-\[
- \sum_iW_2^2(Y_i,J_i)\le Q\to0,\qquad
- \sum_iW_3^3(Y_i,J_i)\le Q\to0.
-\]
-Restore the gap units to obtain \eqref{eq:strong-lattice}. This
-completes Theorem~\ref{thm:near}.
+Finally, \eqref{eq:modular} implies $|\E e^{2\pi\ii S}|=\prod_i|\E e^{2\pi\ii Z_i}|\to1$,
+so $Q=\sum_i\E Z_i^2\le\frac14\sum_i(1-|\E e^{2\pi\ii Z_i}|^2)\to0$. Since
+$|Z_i|\le1$, the direct couplings $(Y_i,J_i)$ satisfy
+$\sum_i W_2^2(Y_i,J_i)\le Q\to0$ and $\sum_i W_3^3(Y_i,J_i)\le Q\to0$.
+Restoring the gap scale $h_n$ proves \eqref{eq:strong-lattice} and completes
+the proof of Theorem~\ref{thm:near}.
 
 \begin{remark}
-The finite inequality $C\le\ce\mathcal B(X)$ is false. To see why,
-replace the part of the standard normal law in $[-a,a]$ by atoms at
-$-a,0,a$, preserving its mass and second moment. If
-$P=\Pp(|Z|\le a)$ and $r=\E[Z^2\ind_{\{|Z|\le a\}}]/(a^2P)$,
-these masses are $Pr/2,P(1-r),Pr/2$, with $0<r<1/3$.
-The discrepancy is $P(1-r)/2$. Its zero-biased law instead replaces
-the same interval by a uniform law, and
-$W_1=(aP/2)((1-r)^2+r^2)$. The ratio of the Berry--Esseen statistic
-to $\mathcal B$ is
-$(1-r)/(2a((1-r)^2+r^2))\ge1/(2a)$, which diverges as $a\downarrow0$.
-Both statistics tend to zero. Theorem~\ref{thm:near} uses competitive
-near-Esseen value as well as small $L$.
+While $\mathcal B(X_n)\to1$ whenever $L_n\to0$ and $C_n\to\ce$, the pointwise
+inequality $C\le\ce\mathcal B(X)$ does not hold for general distributions.
+Indeed, for $N=1$, replacing the standard normal law $Z$ on $[-a,a]$ by three
+atoms at $\{-a,0,a\}$ with matching mean and second moment (weights
+$Pr/2,P(1-r),Pr/2$ where $P=\Pp(|Z|\le a)$ and $r=\E[Z^2\ind_{\{|Z|\le a\}}]/(a^2P)\to1/3$)
+gives $d_{\mathrm K}=P(1-r)/2$ and $W_1=(aP/2)\{(1-r)^2+r^2\}$, so
+$C/\mathcal B(X)=(1-r)/[2a\{(1-r)^2+r^2\}]\sim3/(5a)\to\infty$ as $a\downarrow0$.
 \end{remark}

@@ -1,36 +1,37 @@
-\section{Moment losses and a common scale}\label{sec:shape}
-This section proves the approximate core used in both main theorems.
-We normalize $B=1$ and omit row indices. Thus $R=L$. Put
-$v_i=\E X_i^2$, $\sigma_i=\sqrt{v_i}$, $\rho_i=\E|X_i|^3$,
-$\kappa_i=\E X_i^3$, and $b_i=\E|X_i|$. Define
+\section{Retained smoothing losses and the Esseen core}\label{sec:shape}
+
+In this section we establish the second assertion of Theorem~\ref{thm:near}:
+any sequence of arrays satisfying \eqref{eq:near-assumption} concentrates in
+$W_3$ around a padded i.i.d.\ Esseen array. Normalize total variance to
+$B=1$ and omit the row index $n$, so that $R=L\to0$. For each summand $X_i$,
+put $v_i=\E X_i^2$, $\sigma_i=\sqrt{v_i}$, $\rho_i=\E|X_i|^3$,
+$\kappa_i=\E X_i^3$, $b_i=\E|X_i|$, and define the scalar moment deficit
 \[
  \delta_i=\sqrt{10}\rho_i-|\kappa_i|-3b_iv_i.
 \]
 
-\begin{lemma}[Retained losses]\label{lem:retained}
-Under \eqref{eq:near-assumption},
+\begin{lemma}[Retained moment, tail, and orientation losses]\label{lem:retained}
+Under \eqref{eq:near-assumption}, as $R\to0$,
 \begin{equation}\label{eq:retained-losses}
- \sum_i\delta_i=o(R),\quad
- \sum_i\E[|X_i|^3\ind_{\{|X_i|>R^{1/6}\}}]=o(R),\quad
- \sum_i|\kappa_i|-\Big|\sum_i\kappa_i\Big|=o(R),
+ \sum_{i=1}^N\delta_i=o(R),\qquad
+ \sum_{i=1}^N\E\bigl[|X_i|^3\ind_{\{|X_i|>R^{1/6}\}}\bigr]=o(R),\qquad
+ \sum_{i=1}^N|\kappa_i|-\left|\sum_{i=1}^N\kappa_i\right|=o(R),
 \end{equation}
-and $\sum_i\sigma_i^3/R\to1/\be$. After one reflection of a row,
-let $P_i^*$ be the Esseen two-point law of variance $v_i$ with the
-same positive orientation for every $i$. Then
+and $\sum_{i=1}^N\sigma_i^3/R\to1/\be$. Moreover, after reflecting the array
+if necessary so that $\sum_{i=1}^N\kappa_i\ge0$, let $P_i^*=\Law(\sigma_i W)$
+be the positively oriented Esseen two-point distribution of variance $v_i$.
+Then
 \begin{equation}\label{eq:shape-W3}
-                  \sum_iW_3^3(X_i,P_i^*)=o(R).
+                  \sum_{i=1}^N W_3^3(X_i,P_i^*)=o(R).
 \end{equation}
 \end{lemma}
 \begin{proof}
-First we record the equality and stability part of the scalar moment
-inequality. Put $s=\sqrt{\pe\qe}$, $a=\sqrt{\qe/\pe}$,
-$b=\sqrt{\pe/\qe}$ and $t=\te$. For a centered variance-one law
-oriented to have nonnegative third moment, set
-\[
- Q(x)=-6sx^2+6tx+6s,\qquad
- f(x)=x^3-\sqrt{10}|x|^3+3|x|.
-\]
-Direct factorization gives
+We first establish quantitative stability in Shevtsova's scalar moment
+inequality $\delta(X)\ge0$ \citep[Theorem~3.1, pp.~256--262]{Shevtsova2012}.
+Put $s=\sqrt{\pe\qe}$, $a=\sqrt{\qe/\pe}$, $b=\sqrt{\pe/\qe}$, and $t=\te$.
+For a centered unit-variance variable $X$ oriented to have $\E X^3\ge0$, set
+$Q(x)=-6sx^2+6tx+6s$ and $f(x)=x^3-\sqrt{10}|x|^3+3|x|$. Direct factorization
+gives
 \[
  Q(x)-f(x)=
  \begin{cases}
@@ -38,365 +39,147 @@ Direct factorization gives
  (\sqrt{10}+1)(-x-b)^2(-x+2s),&x\le0.
  \end{cases}
 \]
-Since $\E Q(X)=0$, $\delta(X)=\E(Q-f)\ge0$; equality forces
-the two Esseen support points, with their centered probabilities.
-This also checks the equality statement needed from
-\citet[Theorem~3.1, pp.~256--262]{Shevtsova2012}.
-
-For $c_0=2\pe(\sqrt{10}-1)>0$, each factor is at least $c_0$
-times the cube of the distance to its half-line contact. Round a
-variance-one law to $a$ on the positive half-line and to $-b$ on the
-negative half-line. If $e$ is its cubic rounding cost, then
-$e\le\delta(X)/c_0$ and centering gives
-$|\Pp\{\hbox{rounded value}=a\}-\pe|\le e^{1/3}/(a+b)$.
-Couple the rounded law to the exact Esseen probabilities. The inequality
-$(u+v)^3\le4(u^3+v^3)$ yields
-\[
- W_3^3(X,W_+)\le4e+4(a+b)^2e^{1/3}.
-\]
-After rescaling coordinates and applying H\"older,
+Since $\E Q(X)=0$ and $\E f(X)\le-\delta(X)$, we have
+$\delta(X)\ge\E[Q(X)-f(X)]\ge c_0\E[\dist(X,\{-b,a\})^3]$ with
+$c_0=2\pe(\sqrt{10}-1)>0$. Rounding $X$ to $a$ on $[0,\infty)$ and to $-b$ on
+$(-\infty,0)$ at cubic cost $e\le\delta(X)/c_0$ and then matching the atom
+probabilities to $\pe,\qe$ gives $W_3^3(X,W)\le4e+4(a+b)^2e^{1/3}$. Rescaling
+each summand by $\sigma_i$ and applying H\"older's inequality yields, for
+individually oriented Esseen targets $P_i^{\rm oriented}$,
 \begin{equation}\label{eq:shape-stability}
- \frac{\sum_iW_3^3(X_i,P_i^{\rm oriented})}{R}
+ \frac{\sum_{i=1}^N W_3^3(X_i,P_i^{\rm oriented})}{R}
  \le\frac4{c_0}\bar\delta+
        4(a+b)^2c_0^{-1/3}\bar\delta^{1/3},\qquad
- \bar\delta=R^{-1}\sum_i\delta_i.
+ \bar\delta=\frac1R\sum_{i=1}^N\delta_i.
 \end{equation}
-Here the orientations initially follow the signs of individual
-$\kappa_i$; zero laws have zero cost.
 
-The proof on pp.~289--296 of \citet{Shevtsova2012} permits retention
-of its nonnegative losses. We give the details of this extraction.
-Put $U=R^{1/6}$, $Y_i=X_i\ind_{\{|X_i|\le U\}}$,
-$Z_i=Y_i-\E Y_i$, and $T_i=\E[|X_i|^3\ind_{\{|X_i|>U\}}]$.
-The source's $I_{14},I_{15},I_{16}$ comparisons, with its truncation
-parameter $u=1$, and Lemma~4.3 on pp.~272--274 give
+Next, we retain the nonnegative moment and truncation losses in the smoothing
+proof of \citet[pp.~289--296]{Shevtsova2012}. With truncation level
+$U=R^{1/6}$, set $Y_i=X_i\ind_{\{|X_i|\le U\}}$, $Z_i=Y_i-\E Y_i$, and
+$T_i=\E[|X_i|^3\ind_{\{|X_i|>U\}}]$. By \citet[Lemma~4.3 and $I_{14}$--$I_{18}$, pp.~272--295]{Shevtsova2012},
+$\Delta\le\phz(I_{16}+R/2)+O(R^{7/6})$, where
+$I_{16}=\frac{\sqrt{10}}{6}R-\frac16\sum_i\delta(Z_i)+I_{17}-I_{18}$,
+$I_{17}=\frac{\sqrt{10}}{6}\sum_i(\E|Z_i|^3-\E|Y_i|^3)$, and
+$I_{18}=\frac{\sqrt{10}-1}{6}\sum_iT_i$. Since $|\E Y_i|\le T_i/U^2$ gives
+$\E|Z_i|^3-\E|Y_i|^3\le\frac13T_i$ for $R\le1/4096$, we obtain
 \[
- \Delta\le\phz(I_{16}+R/2)+O(R^{7/6}),
+ \Delta\le\ce R-\frac{\phz}{6}\sum_{i=1}^N\delta(Z_i)
+            -\frac{\phz(\sqrt{10}-1)}{12}\sum_{i=1}^NT_i+O(R^{7/6}).
 \]
-\[
- I_{16}=\frac{\sqrt{10}R}{6}-\frac16\sum_i\delta(Z_i)
-                   +I_{17}-I_{18},
-\]
-\[
- I_{17}=\frac{\sqrt{10}}6\sum_i(\E|Z_i|^3-\E|Y_i|^3),\qquad
- I_{18}=\frac{\sqrt{10}-1}{6}\sum_iT_i.
-\]
-The second identity is the moment decomposition before discarding
-its deficit. At the parameter $\sqrt{10}$ the source's moment
-remainder is zero. All remaining terms are of order $R^{7/6}$ or
-smaller, uniformly over the independent row.
+Under \eqref{eq:near-assumption}, both sums must be $o(R)$, which proves the
+first two relations in \eqref{eq:retained-losses}.
 
-Let $b_{0i}=\rho_i^{1/3}/U\le R^{1/6}$. The bound
-$|\E Y_i|\le T_i/U^2$ and cubic Taylor expansion show
-\[
- \E|Z_i|^3-\E|Y_i|^3
-       \le(3b_{0i}^2+3b_{0i}^4+b_{0i}^6)T_i.
-\]
-For $R\le1/4096$, $b_{0i}\le1/4$ and the bracket is less than
-$1/3$. Since $\sqrt{10}/3<(\sqrt{10}-1)/2$, the displayed
-decomposition implies
-\[
- \Delta\le\ce R-\frac{\phz}{6}\sum_i\delta(Z_i)
-            -\frac{\phz(\sqrt{10}-1)}{12}\sum_iT_i+O(R^{7/6}).
-\]
-Near-Esseen competition forces both losses to be $o(R)$. Cubic Taylor
-bounds give
-$|\rho_i-\rho(Z_i)|+|\kappa_i-\kappa(Z_i)|\le K T_i$, while
-$\E|Z_i|\Var Z_i-\E|X_i|\Var X_i\le b_{0i}^2T_i$.
-Consequently $\delta_i\le\delta(Z_i)+K'T_i$, proving the first two
-claims in \eqref{eq:retained-losses} and the individually oriented
-version of \eqref{eq:shape-W3}.
-
-To retain orientation we use the aggregate low-frequency integral,
-before the source's individual cubic triangle inequality. Write
-$K_3=\sum_i\kappa_i$, $\nu=1+\sum_i b_iv_i/R\in[1,2]$ and
-$T=2\pi/(\nu R)$. On each fixed compact frequency interval the
-just-proved tail estimate gives
-\[
- \chi(u)=e^{-u^2/2}(1-iK_3u^3/6)+o(R),
-\]
-uniformly there. Indeed the summed Taylor remainders are at most
-$K[UR|u|^4+\sum_iT_i|u|^3]=o(R)$ and the summed logarithmic
-quadratic errors are $O(\sum_i v_i^2+\sum_i\rho_i^2)=o(R)$.
-
-We use Lemma~4.1 and (4.4)--(4.7) on pp.~263--267 of the source.
-Its smoothing kernel is
-\[
- K(t)=\frac{1-|t|}{2}+\frac{i}{2}
-       \left\{(1-|t|)\cot(\pi t)+\frac{\operatorname{sign}t}{\pi}\right\},
-                                      \qquad0<|t|<1.
-\]
-The constants $\kappa_1$ and $t_1\in(1/2,1)$ below are the universal
-constants in the source's (4.4)--(4.6); in particular
-$t^2(1-4\pi\kappa_1t)$ is strictly positive on $0<t\le t_1$.
-Choose a fixed small $t_0>0$ so that its deleted-product bound (4.7)
-has Gaussian exponent at least $1/4$ for $0\le u\le t_0T$.
-The one-coordinate second-order Taylor bound against a same-variance
-normal gives
-\[
- R^{-1}|\chi(u)-e^{-u^2/2}|\le K|u|^3e^{-u^2/4}
-                           \quad(0\le u\le t_0T).
-\]
-The Prawitz kernel satisfies
-$2|K(u/T)|/T\le1.0253/(\pi u)$ and converges to $1/(\pi u)$.
-Dominated convergence therefore evaluates the source's low integral as
-$\phz|K_3|/6+o(R)$. Its middle interval is exponentially small:
-the function $t^2(1-4\pi\kappa_1t)$ is positive on the chosen
-$[t_0,t_1]$. At the final endpoint $|K(1-u)|\le Ku$ and
-$1-\cos(2\pi u)\ge8u^2$, giving $O(T^{-2})$. The Gaussian endpoint
-terms are at most $\sqrt{\pi/2}/T+O(T^{-2})$. Thus
+To prove the third relation in \eqref{eq:retained-losses}, write
+$K_3=\sum_i\kappa_i$, $\nu=1+\sum_i b_iv_i/R\in[1,2]$, and $T=2\pi/(\nu R)$.
+On every compact frequency interval, $\chi(u)=\E e^{\ii uS}=e^{-u^2/2}(1-\ii K_3u^3/6)+o(R)$,
+so dominated convergence in the low-frequency Prawitz integral of
+\citet[Lemma~4.1 and (4.4)--(4.7), pp.~263--267]{Shevtsova2012} replaces
+$\sum_i|\kappa_i|$ by $|K_3|$:
 \begin{equation}\label{eq:signed-loss}
- \Delta\le\phz\left\{\frac R2+\frac12\sum_i b_iv_i
+ \Delta\le\phz\left\{\frac R2+\frac12\sum_{i=1}^N b_iv_i
                                   +\frac{|K_3|}{6}\right\}+o(R)
- =\ce R-\frac{\phz}{6}\left\{\sum_i\delta_i+
-                  \sum_i|\kappa_i|-|K_3|\right\}+o(R).
+ =\ce R-\frac{\phz}{6}\left\{\sum_{i=1}^N\delta_i+
+                  \sum_{i=1}^N|\kappa_i|-|K_3|\right\}+o(R),
 \end{equation}
-This proves the orientation loss. Reflect so $K_3\ge0$. Moment
-continuity under the cubic couplings gives
-\[
- \sum_i|\kappa_i-\kappa(P_i^{\rm oriented})|
- \le3\left(R+\be\sum_i\sigma_i^3\right)^{2/3}
-                 \left(\sum_iW_3^3(X_i,P_i^{\rm oriented})\right)^{1/3}
- =o(R).
-\]
-The negatively oriented target coordinates then have
-$\sum\sigma_i^3=o(R)$; reflecting just those targets costs $o(R)$
-in cubic transport. This proves the common-orientation assertion.
-
-Finally \citet[Theorem~4.14, pp.~300--303]{Shevtsova2012} gives, for
-each fixed $c>2\phz/3$,
-\[
- \Delta\le cR+K(c)\sum_i\sigma_i^3+O_c(R^{4/3}),
-\]
-where its Bernoulli envelope is
-\[
- K(c)=\sup_{0<p\le1/2}
- \frac{\phz(3+1-2p)/6-c\{p^2+(1-p)^2\}}{\sqrt{p(1-p)}}.
-\]
-At $c=\ce$ its unique maximizing parameter is $\pe$,
-$K(\ce)=0$, and $K'(\ce)=-\be$. The numerator's exact maximum
-and uniqueness follow either by differentiation or from the sharp
-moment equality above; parameters near zero are separated since
-$c>2\phz/3$. Any subsequential limit $z\in[0,1]$ of
-$\sum\sigma_i^3/R$ satisfies $\ce\le c+K(c)z$ on both sides of
-$\ce$. Differentiation there forces $1-\be z=0$.
+forcing $\sum_i|\kappa_i|-|K_3|=o(R)$ and proving \eqref{eq:shape-W3} via
+\eqref{eq:shape-stability}. Finally, Theorem~4.14 of \citet[pp.~300--303]{Shevtsova2012}
+gives $\Delta\le cR+K(c)\sum_i\sigma_i^3+O_c(R^{4/3})$ for every fixed
+$c>2\phz/3$, where $K(\ce)=0$ and $K'(\ce)=-\be$; varying $c$ on both sides
+of $\ce$ forces $\sum_i\sigma_i^3/R\to1/\be$.
 \end{proof}
 
-\begin{lemma}[An actual Fourier window]\label{lem:window}
-For every fixed $\epsilon>0$, a sufficiently small fixed $t_0>0$ gives
+\begin{lemma}[High-frequency Fourier window and subset variance control]\label{lem:window}
+For every fixed $\epsilon>0$ and sufficiently small fixed $t_0>0$, set
 \[
  T'=(1+\epsilon)\frac{2\pi}{\nu R},\qquad
  H=2\int_{t_0}^1|K(u)|\,|\chi(T'u)|\,du,
 \]
-with $\nu\to\nus$ and
+where $K(u)$ is Prawitz's smoothing kernel. Under \eqref{eq:near-assumption},
+$\nu\to\nus$ and
 \begin{equation}\label{eq:window}
- \liminf H/R\ge\frac{\phz\nus\epsilon}{2(1+\epsilon)}>0.
+ \liminf_{n\to\infty} \frac{H}{R}\ge\frac{\phz\nus\epsilon}{2(1+\epsilon)}>0.
 \end{equation}
-For one fixed such window there are $\eta>0$ and $e_n\to0$ such that
-simultaneously for every subset of coordinates $A$,
+Consequently, there exist $\eta>0$ and $e_n\to0$ such that for every subset
+of indices $A\subseteq\{1,\ldots,N_n\}$,
 \begin{equation}\label{eq:subset-inverse}
              \sum_{i\in A}v_i\le\eta^{-1}
-                          \frac{\sum_{i\in A}\rho_i}{R}+e_n.
+                          \frac{\sum_{i\in A}\rho_i}{R}+e_n,
 \end{equation}
-Moreover $\sum_iW_2^2(X_i,P_i^*)\to0$.
+and $\sum_{i=1}^{N_n}W_2^2(X_i,P_i^*)\to0$.
 \end{lemma}
 \begin{proof}
-Common-orientation moment continuity from Lemma~\ref{lem:retained}
-gives $\nu\to1+3/\sqrt{10}=\nus$ and $K_3/R\to1/\sqrt{10}$.
-Repeat the source's Prawitz inequality at the enlarged cutoff $T'$,
-choosing $t_0$ smaller so its low-frequency domination remains valid.
-Keep the actual high integral $H$ rather than extending a previous
-high-frequency upper estimate beyond its domain. The low integral is
-$\phz|K_3|/6+o(R)$ and the Gaussian endpoint terms are at most
-$\phz\nu R/[2(1+\epsilon)]+O(R^2)$. Near-Esseen competition gives
-\eqref{eq:window}.
-
-For any centered law and an independent copy,
-\[
- |\chi_i(u)|^2\le1-v_iu^2+\tfrac43\rho_i|u|^3.
-\]
-This follows from $\cos x\le1-x^2/2+|x|^3/6$ and
-$\E|X_i-X_i'|^3\le8\rho_i$. Independence gives for a subset
-\[
- |\chi_A(u)|\le\exp(-V_Au^2/2+2R_A|u|^3/3).
-\]
-The fixed window lies in $[a/R,C/R]$ with $a>0$. Choose
-$0<\eta\le3/(8C)$. If $R_A/V_A\le\eta R$, then the full product
-on this window is at most $\exp(-a^2V_A/(4R^2))$.
-The common lower bound $H\ge hR$ implies
-$V_A\le e_n=(4R^2/a^2)\log(2\sup|K|/(hR))$.
-Otherwise $V_A<\eta^{-1}R_A/R$. These two cases prove
-\eqref{eq:subset-inverse} with one eventual index for all subsets.
-
-Let $E_i=W_3^3(X_i,P_i^*)$, so $\sum E_i=o(R)$. Fix $0<\zeta<1$.
-On the set $E_i>\zeta\rho_i$, the original price and, by
-\eqref{eq:subset-inverse}, variance tend to zero. On its complement,
-Minkowski gives
-$\rho_i/\sigma_i^3\le\be/(1-\zeta^{1/3})^3$ and
-\[
- W_2^2(X_i,P_i^*)\le E_i^{2/3}
- \le v_i\left\{\frac{\zeta\be}{(1-\zeta^{1/3})^3}\right\}^{2/3}.
-\]
-On the exceptional set a centered independent same-variance coupling
-costs $2v_i$. Let the row tend to infinity, then let $\zeta\downarrow0$.
+Applying Prawitz's smoothing inequality at the enlarged cutoff $T'$ bounds
+the low-frequency integral by $\phz|K_3|/6+o(R)$ and the Gaussian cutoff term
+by $\phz\nu R/[2(1+\epsilon)]+O(R^2)$; comparing with $\Delta\sim\ce R$ yields
+\eqref{eq:window}. Since $|\chi_A(u)|\le\exp(-V_Au^2/2+2R_A|u|^3/3)$ for
+$V_A=\sum_{i\in A}v_i$ and $R_A=\sum_{i\in A}\rho_i$, on $u\in[a/R,C/R]$ with
+$\eta\le3/(8C)$ any subset with $R_A/V_A\le\eta R$ has
+$|\chi(u)|\le\exp(-a^2V_A/(4R^2))$, which combined with \eqref{eq:window}
+gives \eqref{eq:subset-inverse}. Applying \eqref{eq:subset-inverse} to the
+exceptional set $\{i:W_3^3(X_i,P_i^*)>\zeta\rho_i\}$ and H\"older's inequality
+on its complement proves $\sum_i W_2^2(X_i,P_i^*)\to0$.
 \end{proof}
 
-\begin{proposition}[A variance-and-price-full Esseen core]\label{prop:core}
-The IID target conclusion of Theorem~\ref{thm:near} holds. In gap units
-$h=\nus R$, there is a further retained set of cardinality $M$ with
+\begin{proposition}[Concentration at a single variance scale]\label{prop:core}
+The i.i.d.\ Esseen approximation of Theorem~\ref{thm:near} holds. Moreover,
+in gap units $h=\nus R$, there exists a subset $I\subseteq\{1,\ldots,N_n\}$
+of cardinality $M=|I|$ carrying $1-o(1)$ of both total variance and $R$ such
+that
 \begin{equation}\label{eq:raw-core}
- M R^2\to\be^2,\quad
- \sup_{i\in I}W_3(\Law(X_i/h),\Law(B_{\pe}-\pe))\to0,
+ M R^2\longrightarrow\be^2,\qquad
+ \sup_{i\in I}W_3\bigl(\Law(X_i/h),\Law(B_{\pe}-\pe)\bigr)\longrightarrow0,
 \end{equation}
-retaining $1-o(1)$ of original variance and price. In these units the
-total original variance and price satisfy
-$V\sim\pe\qe M$ and $P/V\to\re$, and its signed cubic sum divided
-by $V$ tends to $\te$.
+and in these units the rescaled total variance $V$ and third-moment sums
+$P,\kappa$ satisfy $V\sim\pe\qe M$, $P/V\to\re$, and $\kappa/V\to\te$.
 \end{proposition}
 \begin{proof}
-Consider the variance probability measures
-$\mu_n=\sum_i v_i\delta_{\sigma_i/R}$.
-Their first moments tend to $s_0=1/\be$, so they are tight at
-infinity. They have no limiting mass at zero. To prove this, discard
-the set $E_i>\zeta\rho_i$ as in the last lemma. On the remaining set
-$\rho_i/\sigma_i^3\le K_\zeta$. For $\sigma_i\le\delta R$, its
-price is at most $K_\zeta\delta R$ times its variance. The subset
-inverse gives limiting variance at most $\eta^{-1}K_\zeta\delta$.
-Portmanteau on the relative-open interval $[0,\delta)$ followed by
-$\delta\downarrow0$ excludes a zero atom from every limit $\mu$.
-Fatou gives $\int z\,d\mu\le s_0$; first-moment uniform
-integrability has not yet been assumed.
-
-At each fixed $\epsilon>0$, \eqref{eq:window} selects a frequency
-$u_n\in[t_0T',T']$ with $|\chi(u_n)|\ge c_\epsilon R$.
-Let $w_n=Ru_n$. It lies in a compact positive interval with
-$\limsup w_n\le2\pi(1+\epsilon)/\nus$. Independence gives
-$\sum_i(1-|\chi_i(u_n)|^2)=O_\epsilon(\log(1/R))$.
-The same-variance binary target has defect
-$4\pe\qe\sin^2((a+b)\sigma_i u_n/2)$.
-On $\sigma_i\le KR$, the original variance-weighted defects tend
-to zero, and their transfer to target defects is at most
-\[
- 2|u_n|\Big(\sum_{\sigma_i\le KR}v_i^2\Big)^{1/2}
-                          \Big(\sum_iW_2^2(X_i,P_i^*)\Big)^{1/2}=o(1).
-\]
-The untruncated target contribution is bounded by $\mu_n([K,\infty))$.
-First let the row tend to infinity, then $K\to\infty$. Along a weak
-subsequence with $w_n\to w_\epsilon$, this proves
-\[
-          \int\sin^2((a+b)zw_\epsilon/2)\,d\mu(z)=0.
-\]
-The limit is supported on positive integer multiples of
-$2\pi/((a+b)w_\epsilon)$, hence on $[s_0/(1+\epsilon),\infty)$;
-we used $\be/(a+b)=1/\nus$. Repeat for $\epsilon=1/j$, taking
-further subsequences of the same weak limit. That limit is supported
-on $[s_0,\infty)$ and has mean at most $s_0$, so it is $\delta_{s_0}$.
-The exact first moments converge; therefore
-\[
- \int|z-s_0|\,d\mu_n
-   =\int z\,d\mu_n-s_0+2\int(s_0-z)_+\,d\mu_n\longrightarrow0.
-\]
-
-Trim a slowly shrinking band about $s_0$ and denote its count by $m$.
-It retains total variance $1-o(1)$ and target cubic resource
-$\be\sum_{I}\sigma_i^3=R(1-o(1))$. The original price has the
-same retention, since uniformly over subsets
-\[
- \sum_i|\rho_i-\be\sigma_i^3|
- \le3\left(R+\be\sum_i\sigma_i^3\right)^{2/3}
-                       \left(\sum_iE_i\right)^{1/3}=o(R).
-\]
-Counting retained variances gives $mR^2/\be^2\to1$.
-Replace the core's individually scaled targets by $W_+/\sqrt m$.
-Their summed squared scale error tends to zero, and their summed
-cubed scale error is $o(R)$; both follow by expanding
-$\sigma_i-1/\sqrt m=R(\sigma_i/R-s_0)+R(s_0-1/(R\sqrt m))$.
-The outside-to-zero costs are exactly its variance and original price.
-This proves the stated IID conclusion after restoring $B$.
-
-In gap units $h=\nus R$, the core's total cubic transport error is
-$o(M)$. Remove indices whose error in gap units exceeds a positive number tending
-slowly to zero. Their count is $o(M)$ and the preceding uniform moment
-continuity estimate preserves variance and price retention. This gives
-\eqref{eq:raw-core}; its moment limits follow by uniform $W_3$ continuity.
+Consider the variance-weighted probability measures
+$\mu_n=\sum_i v_i\delta_{\sigma_i/R}$, whose means $\sum_i\sigma_i^3/R$
+converge to $s_0=1/\be$, and which have no limiting mass at $0$ by
+\eqref{eq:subset-inverse}. For each $\epsilon>0$, \eqref{eq:window} supplies
+a frequency $u_n=w_n/R$ with $\limsup w_n\le2\pi(1+\epsilon)/\nus$ and
+$|\chi(u_n)|\ge c_\epsilon R$, so $\sum_i(1-|\chi_i(u_n)|^2)=O_\epsilon(\log(1/R))$.
+Transferring to the Esseen targets $P_i^*$ via $\sum_i W_2^2(X_i,P_i^*)\to0$
+shows that any weak limit $\mu$ of $\mu_n$ satisfies
+$\int\sin^2((a+b)zw_\epsilon/2)\,d\mu(z)=0$, so $\supp\mu\subset[s_0/(1+\epsilon),\infty)$.
+Letting $\epsilon\downarrow0$ gives $\supp\mu\subset[s_0,\infty)$, which
+together with $\int z\,d\mu\le s_0$ forces $\mu=\delta_{s_0}$ and
+$\int|z-s_0|\,d\mu_n\to0$. Restricting to a slowly shrinking neighborhood of
+$s_0$ and discarding indices with large $W_3(\Law(X_i/h),\Law(B_{\pe}-\pe))$
+yields \eqref{eq:raw-core}.
 \end{proof}
 
-\section{A first nonzero Fourier peak and integer lifts}\label{sec:alias}
+\section{First nonzero Fourier peak and integer lifts}\label{sec:alias}
+
 \begin{lemma}\label{lem:first-alias}
-At a gap asymptotic to that in Proposition~\ref{prop:core}, the original
-variables in gap units have representations
+At a spacing $h_n$ asymptotic to $\nus R_n B_n$, the rescaled summands
+$Y_i=X_i/h_n$ decompose as
 \[
- Y_i=J_i+Z_i,\qquad J_i=K_i-\E K_i,\quad K_i\in\Z,\quad
- \E Z_i=0,\quad |Z_i|\le1.
+ Y_i=J_i+Z_i,\qquad J_i=K_i-\E K_i,\qquad K_i\in\Z,\qquad
+ \E Z_i=0,\qquad |Z_i|\le1,
 \]
-The pairs are independent between coordinates. On the retained core
-$K_i$ converges uniformly in $W_3$, after integer translations, to
-$\Bern(\pe)$. Outside it the summed centered integer variance and
-cubic price are $o(M)$. Writing $K=\sum K_i$ and $T=\sum Z_i$,
+where the pairs $(K_i,Z_i)$ are independent across $i$, $\sup_{i\in I}W_3(K_i,\Bern(\pe))\to0$
+(up to integer shifts) on the core $I$ of size $M$ from Proposition~\ref{prop:core},
+$\sum_{i\notin I}(\Var K_i+\E|J_i|^3)=o(M)$, and for $K=\sum_i K_i$ and
+$T=\sum_i Z_i$,
 \begin{equation}\label{eq:initial-lifts}
  Q=\Var T=O(1),\qquad \Cov(K,T)=o(\sqrt M),\qquad
  A=\Var K\sim\pe\qe M.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Fix $0<\epsilon<1/2$ in Lemma~\ref{lem:window}. The frequency in gap units
-window stays in a compact subinterval of $(0,4\pi)$ containing only
-the alias $2\pi$, and its actual characteristic-modulus area is
-at least $c/\sqrt M$.
-Uniform gap-unit $W_3$ convergence in \eqref{eq:raw-core} gives uniform
-convergence of every core characteristic function and its first two
-derivatives on that window. Polynomial-factor differences are controlled
-by the $L^2$ coupling and the bounded Bernoulli target, so no fourth
-moment is required. Around $2\pi$ those factors are nonzero and their
-log-modulus second derivatives are at most $-c$. Away from a fixed
-neighborhood the retained product is exponentially small.
+Taking $0<\epsilon<1/2$ in Lemma~\ref{lem:window}, the frequency window in
+gap units lies inside $(0,4\pi)$, where the core product $\prod_{i\in I}|\E e^{\ii sY_i}|$
+is exponentially small outside a neighborhood of $2\pi$ and attains its local
+maximum at $s_0\to2\pi$ with $\prod_{i=1}^N|\E e^{\ii s_0Y_i}|\ge c>0$.
+Rescaling $h_n$ by $2\pi/s_0\to1$ places this core maximum at $2\pi$.
 
-Let $s_0\to2\pi$ be the exact retained-product modulus maximum.
-Its product is bounded by $\exp(-cM(s-s_0)^2)$ near that point.
-The area lower bound therefore yields a full-product point
-$s_1=s_0+O(M^{-1/2})$ of fixed positive height. The centered omitted
-original sum has variance $o(M)$, so its characteristic function changes
-by $o(1)$ from $s_1$ to $s_0$:
-\[
- |\chi_{\rm rem}(s_1)-\chi_{\rm rem}(s_0)|
- \le |s_1-s_0|\sqrt{\Var Y_{\rm rem}}=o(1).
-\]
-The full product at the exact core maximum also has fixed positive height.
-Rescale the original variables by $s_0/(2\pi)$.
-
-Align each marginal characteristic argument at $2\pi$ and write
-$Y_i=\theta_i+K_i+E_i$ with $E_i\in[-1/2,1/2]$, using a fixed
-nearest-integer tie rule. Then
-\[
- \E\sin(2\pi E_i)=0,\quad \E\cos(2\pi E_i)=r_i>0,\quad
- \sum_i\E E_i^2\le\tfrac18\sum_i(1-r_i)=O(1).
-\]
-Centering gives $Z_i=E_i-\E E_i$ and the claimed representation.
-The exact core logarithmic derivative is zero, hence
-$\sum_{I}\E[Y_i\sin(2\pi E_i)]/r_i=0$.
-On the core $r_i\to1$ uniformly. Removing these denominators costs
-$o(1)$ by Cauchy and the bounded sum of defects. Replacing the sine
-by $2\pi E_i$ costs $O(1)+o(\sqrt M)$: couple $Y_i$ to its bounded
-binary target and use
-\[
- \sum_I\E[|Y_i||E_i|^3]
- \le K\sum_I\E|E_i|^3+
-       \left(\sum_I\E|Y_i-W_i|^2\right)^{1/2}
-       \left(\sum_I\E|E_i|^6\right)^{1/2}.
-\]
-The omitted covariance is $o(\sqrt M)$ by its original variance and
-bounded phase variance. Thus $\Cov(\sum Y_i,T)=o(\sqrt M)$ and
-$\Cov(K,T)=\Cov(\sum Y_i,T)-Q=o(\sqrt M)$.
-
-Core rounding gives uniform $W_3$ convergence of $K_i$ to $\Bern(\pe)$:
-outside a fixed small coupling-error event its two nearest integers are
-exactly the binary labels, while the remaining cubic rounding error
-is bounded by a constant times the cubic target-coupling error.
-For the omitted laws, $J_i=Y_i-Z_i$ and $|Z_i|\le1$ imply
-\[
- \sum_{\rm rem}\Var K_i\le2\sum_{\rm rem}\Var Y_i+2Q=o(M),\quad
- \sum_{\rm rem}\E|J_i|^3\le4\sum_{\rm rem}\E|Y_i|^3+4Q=o(M).
-\]
-All prices in the last expression remain separate original-coordinate
-prices. These estimates also give $A\sim\pe\qe M$.
+Aligning each summand by $\theta_i=(2\pi)^{-1}\arg\E e^{2\pi\ii Y_i}$, write
+$Y_i=\theta_i+K_i+E_i$ with $K_i\in\Z$ and $E_i\in[-1/2,1/2]$. Then
+$\E\sin(2\pi E_i)=0$, $r_i=\E\cos(2\pi E_i)>0$, and
+$\sum_i\E E_i^2\le\frac18\sum_i(1-r_i)=O(1)$. Setting $Z_i=E_i-\E E_i$ gives
+$Q=\sum_i\E Z_i^2=O(1)$. Stationarity of the core log-modulus at $2\pi$ is
+$\sum_{i\in I}\E[Y_i\sin(2\pi E_i)]/r_i=0$; since $r_i\to1$ uniformly on $I$
+and $|\sin(2\pi E_i)-2\pi E_i|\le K|E_i|^3$, this implies
+$\Cov(K,T)=\Cov(\sum_i Y_i,T)-Q=o(\sqrt M)$, proving \eqref{eq:initial-lifts}.
 \end{proof}

@@ -31,485 +31,513 @@ pdfauthor={Logan Bell}}
 \newcommand{\ind}{\mathbf 1}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\be}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
 \newcommand{\ce}{c_{\mathrm E}}
 \newcommand{\pe}{p_{\mathrm E}}
 \newcommand{\qe}{q_{\mathrm E}}
 \newcommand{\te}{\tau_{\mathrm E}}
 \newcommand{\he}{h_{\mathrm E}}
 \newcommand{\phz}{\phi(0)}
+\newcommand{\ii}{\mathrm i}
 \title{The sharp Berry--Esseen bound for independent arrays\\
 with small Lyapunov ratio}
 \author{Logan Bell}
-\date{6 October 2026\quad Version 0.7.0}
+\date{6 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-Every finite independent centered array with positive total variance
-and finite third absolute moments satisfies $\Delta\le C_{\mathrm E}\ell$
-whenever $\ell\le\exp(-\exp(97))$, where $\Delta$ is the
-Kolmogorov distance of the standardized sum from the normal law,
-$\ell$ is its Lyapunov ratio, and
-$C_{\mathrm E}=(3+\sqrt{10})/(6\sqrt{2\pi})$.
-The coefficient is optimal. The proof develops the variational,
-uniform-jitter, and local-comparison methods of He and Cheng for
-summands with different laws. A finite approximate-period argument and
-a quantitative form of Esseen's moment inequality identify a common
-scale. Support variations put every coordinate of a maximizing array
-into two narrow clusters or a small neighborhood of zero. An exact
-comparison with a common-diameter Bernoulli array completes the proof.
-All parameters are explicit. The common-diameter bound and an auxiliary
-unrestricted bound are supplied by companion papers with validated
-finite calculations.
+We prove that every finite family of independent centered real random
+variables $X_1,\ldots,X_n$ with positive total variance $V=\sum_{i=1}^n\E X_i^2$
+and finite third absolute moments $R=\sum_{i=1}^n\E|X_i|^3$ satisfies the
+sharp Berry--Esseen inequality $\Delta\le\be L$ whenever the Lyapunov ratio
+$L=R/V^{3/2}$ satisfies $L\le\exp(-\exp(97))$, where
+$\Delta=\sup_x|\Pp(V^{-1/2}\sum_{i=1}^nX_i\le x)-\Phi(x)|$ and
+$\be=(3+\sqrt{10})/(6\sqrt{2\pi})$ is Esseen's constant. The constant $\be$
+is optimal. Our proof adapts the variational, uniform-jitter, and
+local-comparison framework introduced by He and Cheng for identically
+distributed summands to independent summands with arbitrary distributions.
+A penalized optimization selects an attained counterexample and yields
+variational contact equations for each summand. A finite pigeonhole argument
+identifies an approximate lattice period, and a quantitative stability form
+of Esseen's moment inequality confines every summand either to two narrow
+clusters separated by that period or to a small neighborhood of zero with
+small total variance. A two-regime conditional comparison against a
+common-diameter Bernoulli array then rules out any violation of
+$\Delta\le\be L$.
 \end{abstract}
 \tableofcontents
 
-\section{The theorem and the proof}\label{sec:theorem}
-Let $X_1,\ldots,X_n$ be independent centered real random variables. Put
+\section{Introduction and main result}\label{sec:theorem}
+
+\subsection{The theorem and its setting}
+
+Let $X_1,\ldots,X_n$ be independent centered real random variables with
+positive total variance and finite third absolute moments. Write
 \begin{equation}\label{eq:basic-data}
- B^2=\sum_i\E X_i^2>0,\qquad T=\sum_i\E|X_i|^3<\infty,
- \qquad\ell=T/B^3,
+ V=B^2=\sum_{i=1}^n\E X_i^2>0,\qquad R=T=\sum_{i=1}^n\E|X_i|^3<\infty,
+ \qquad L=\ell=\frac{T}{B^3},
 \end{equation}
-and write
+and define the Kolmogorov normal-approximation error and Berry--Esseen ratio
+by
 \[
- \Delta=\sup_x\left|\Pp\left\{B^{-1}\sum_iX_i\le x\right\}-\Phi(x)\right|,
- \qquad\mathcal R(X_1,\ldots,X_n)=\Delta/\ell.
+ \Delta=\sup_{x\in\R}\left|\Pp\left\{B^{-1}\sum_{i=1}^nX_i\le x\right\}-\Phi(x)\right|,
+ \qquad\mathcal R(X_1,\ldots,X_n)=\frac{\Delta}{\ell},
 \]
-Here $\Phi$ and $\phi$ are the standard normal distribution function
-and density. Zero coordinates are allowed. Set
-$\ce=3+\sqrt{10}$ and $\be=\ce\phz/6$.
+where $\Phi$ and $\phi$ are the standard normal distribution function and
+density. Deterministic zero summands are permitted. Put $\ce=3+\sqrt{10}$
+and $\be=\ce\phz/6=(3+\sqrt{10})/(6\sqrt{2\pi})$.
 
 \begin{theorem}\label{thm:main}
-For every array satisfying \eqref{eq:basic-data},
+For every finite independent array satisfying \eqref{eq:basic-data},
 \[
  \boxed{\quad\ell\le\ell_0:=\exp\bigl(-\exp(97)\bigr)
           \quad\Longrightarrow\quad\Delta\le\be\ell.\quad}
 \]
-The coefficient $\be$ cannot be decreased, even when all coordinates
-have the same two-point law.
+The constant $\be$ is optimal: no smaller constant holds on $0<\ell\le\ell_0$,
+even when all summands are identically distributed two-point variables.
 \end{theorem}
 
-A companion paper \cite{BellSmallStructure2026} classifies every
-full finite-horizon global maximizer below an ineffective Lyapunov
-threshold. That qualitative structural result concerns the maximizing
-laws; the present theorem gives an explicit value bound for every array.
+Theorem~\ref{thm:main} extends to non-identically distributed summands the
+result of \citet[Theorem~1.1]{HeChengCurrent2026}, who proved that identically
+distributed summands satisfy $\Delta\le\be\ell$ once the sample size $n$
+exceeds a universal threshold. For general independent arrays, the number of
+summands $n$ can be increased arbitrarily without changing the sum or the
+Lyapunov ratio simply by adjoining deterministic zero summands; the intrinsic
+measure of proximity to the asymptotic regime is therefore the Lyapunov
+ratio $\ell$.
 
-The value of $\ell_0$ is a sufficient threshold. The proof does not
-estimate the largest admissible threshold, and the sharp inequality
-for unrestricted independent arrays remains open.
+\subsection{Open questions and relationship to companion papers}
 
-He and Cheng \cite[Theorem~1.1]{HeChengCurrent2026} prove
-the sharp inequality for iid sums once their sample size exceeds a
-universal threshold. We use the arguments in Sections~2--5 and Appendix~A
-of their first version \cite{HeCheng2026}, and retain that version's
-numbering when citing its lemmas and equations. Their proof supplies three mechanisms used here:
-coordinate contamination gives support equations, uniform jitter
-reveals a lattice scale, and a local comparison separates small and
-large residual variance. Independence with different laws requires
-additional estimates. We prove these for the original coordinates,
-including those outside the two-cluster class. In particular,
-conditioning on a Bernoulli count does not make the residuals
-independent; our conditional Fourier argument retains each label
-together with its residual.
+The threshold $\ell_0=\exp(-\exp(97))$ in Theorem~\ref{thm:main} is an
+explicit sufficient bound resulting from tracking concrete constants through
+the period-selection and conditional-comparison stages of the proof. Whether
+the sharp inequality $\Delta\le\be\ell$ holds for \emph{all} $\ell>0$---that
+is, whether $\Cind=\be$ holds unconditionally---remains open in the
+intermediate regime $\ell_0<\ell<1.321$.
 
-Two finite bounds from the companion papers enter the proof:
+Two quantitative results from companion papers in this collection enter the
+proof of Theorem~\ref{thm:main}:
 \begin{align}
  \mathcal R\bigl(h(B_1-p_1),\ldots,h(B_m-p_m)\bigr)&\le\be,
                                                         \label{eq:finite-input}\\
- \mathcal R(X_1,\ldots,X_n)&<9/20.                      \label{eq:upper-input}
+ \mathcal R(X_1,\ldots,X_n)&<\frac9{20}.                \label{eq:upper-input}
 \end{align}
-In \eqref{eq:finite-input}, the $B_i$ are independent Bernoulli
-variables with arbitrary parameters and positive total variance, and
-$h>0$. This is the common-diameter theorem
-\cite[Theorem~1.2(ii)]{BellFinite2026}; its proof uses Schulz's
-binomial theorem \cite[Theorem~1]{Schulz2016} and validated finite
-calculations. Equation~\eqref{eq:upper-input} follows from the
-unrestricted bound \cite[Theorem~1.1]{BellUpper2026}.
-These are the computational dependencies of the present theorem.
-We also use Shevtsova's general-independent estimate
+In \eqref{eq:finite-input}, $B_1,\ldots,B_m$ are independent Bernoulli
+variables with arbitrary parameters $p_i\in(0,1)$ and $h>0$; this is the
+common-diameter theorem \citep[Theorem~1.2(ii)]{BellFinite2026}, which
+extends Schulz's binomial theorem \citep[Theorem~1]{Schulz2016} to unequal
+probabilities. Inequality~\eqref{eq:upper-input} follows from the
+unconditional upper bound $\Cind<0.44988<9/20$ \citep[Theorem~1.1]{BellUpper2026}.
+We also use Shevtsova's asymptotic remainder estimate for independent
+summands \citep[Corollary~4.18, p.~303]{Shevtsova2012}:
 \begin{equation}\label{eq:published-excess}
- \Delta\le\be\ell+0.2538\ell^{4/3}\qquad(\ell\le10^{-3})
+ \Delta\le\be\ell+0.2538\ell^{4/3}\qquad(\ell\le10^{-3}).
 \end{equation}
-\cite[Corollary~4.18, p.~303]{Shevtsova2012}. Its role is to localize
-a maximizing counterexample. Its positive remainder is removed by
-the subsequent support and local comparisons.
+In addition, a companion structural paper \citep{BellSmallStructure2026}
+proves that below an ineffective Lyapunov threshold $\varepsilon_0>0$, every
+$n$-summand global maximizer of $\mathcal R$ consists of identically
+distributed two-point summands and zero summands. Theorem~\ref{thm:main}
+establishes an explicit threshold $\ell_0$ for the value inequality
+$\Delta\le\be\ell$ across all independent arrays.
 
-For the lattice step, define
+\subsection{Architecture of the proof}
+
+Our proof develops the three core mechanisms of \citet[Sections~2--5 and Appendix~A]{HeCheng2026}---variational
+support equations via coordinate contamination, approximate lattice period
+detection via uniform jitter, and a two-regime local comparison---in forms that
+hold uniformly for non-identically distributed summands. Set
 \begin{equation}\label{eq:esseen-data}
- \pe=\frac{4-\sqrt{10}}2=\frac{1-1/\ce}{2},\quad
- \qe=1-\pe,\quad\te=\pe^2+\qe^2,\quad\he=1/\te.
+ \pe=\frac{4-\sqrt{10}}2=\frac{1-1/\ce}{2},\qquad
+ \qe=1-\pe,\qquad\te=\pe^2+\qe^2,\qquad\he=\frac1\te.
 \end{equation}
-Esseen's moment inequality \cite[pp.~162--163]{Esseen1956} states
-that a centered variable $Y$ supported on a translate of $h\Z$ satisfies
+By Esseen's moment inequality \citep[pp.~160--163]{Esseen1956}, any centered
+random variable $Y$ supported on a coset of $h\Z$ satisfies
 \begin{equation}\label{eq:esseen-moment}
- |\E Y^3|+3h\E Y^2\le\ce\E|Y|^3.
+ |\E Y^3|+3h\E Y^2\le\ce\E|Y|^3,
 \end{equation}
-For positive variance, equality holds precisely for
-$Y\overset d=\pm h(B-\pe)$, $B\sim\Bern(\pe)$.
-Appendix~\ref{app:confinement} proves the quantitative form needed here.
-The iid asymptotic formula for this law gives a ratio tending to $\be$
-and a Lyapunov ratio tending to zero
-\cite{Esseen1956,MattnerShevtsova2019}. This proves optimality.
+with equality for nondegenerate $Y$ if and only if $Y\stackrel d=\pm h(B-\pe)$
+with $B\sim\Bern(\pe)$.
 
-We use closed and strict CDFs $F_S(x)=\Pp(S\le x)$ and
-$F_S^-(x)=\Pp(S<x)$. For a centered sum of variance $B^2$,
+Writing $F_S(x)=\Pp(S\le x)$ and $F_S^-(x)=\Pp(S<x)$, continuity of $\Phi$
+gives
 \begin{equation}\label{eq:branches}
- \sup_x|F_S(x)-\Phi(x/B)|
- =\sup_x\max\{F_S(x)-\Phi(x/B),\ \Phi(x/B)-F_S^-(x)\}.
+ \sup_{x\in\R}|F_S(x)-\Phi(x/B)|
+ =\sup_{x\in\R}\max\{F_S(x)-\Phi(x/B),\ \Phi(x/B)-F_S^-(x)\},
 \end{equation}
-Reflection interchanges these branches. The comparisons below retain
-these endpoint conventions and therefore include laws with atoms.
+and reflection $X_i\mapsto-X_i$ interchanges the two one-sided branches.
+The proof proceeds in five stages:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \textbf{Penalized selection and variational contact equations
+(Section~\ref{sec:selection}):} If an $n$-summand array violated
+$\Delta\le\be\ell$ at some $\ell\le t$, maximizing
+$[F_S(z)-\Phi(z)]/\ell-\psi_t(\ell)$ over $n$-summand variance-one arrays
+for a smooth penalty $\psi_t(\ell)$ (chosen to dominate \eqref{eq:published-excess}
+and \eqref{eq:upper-input} for $\ell\ge2t$) yields an attained maximizer with
+$\ell<2t$ and ratio $R>\be$. Perturbing each summand $X_i$ toward a point mass
+$\delta_y$ yields a variational contact inequality \eqref{eq:contact} with
+equality on $\supp X_i$, which implies the uniform support bound
+$\supp X_i\subset(-8\ell,8\ell)$ (Lemma~\ref{lem:support}).
+\item \textbf{Approximate period selection and uniform jitter
+(Section~\ref{sec:jitter} and Appendix~\ref{app:fourier}):} Applying a
+finite pigeonhole lemma (Lemma~\ref{lem:period}) to the symmetrized
+quadratic-variation measure of $(X_1/\ell,\ldots,X_n/\ell)$ produces a
+scale $0\le h\le128\pi$ such that convolving $S$ with an independent uniform
+variable $\ell U_h\sim\operatorname{Unif}[-\ell h/2,\ell h/2]$ damps all
+high-frequency peaks and brings $F_{S+\ell U_h}$ within $\rho\ell$ of its
+one-term Edgeworth expansion (Proposition~\ref{prop:jitter}).
+\item \textbf{Quantitative Esseen stability and two-cluster confinement
+(Section~\ref{sec:confinement} and Appendix~\ref{app:confinement}):}
+Rounding each scaled summand $Y_i=X_i/\ell$ to its nearest lattice coset of
+span $h$ and applying a quantitative stability refinement of Esseen's
+inequality \eqref{eq:esseen-moment} forces $h$ close to $\he$ and the
+maximizing threshold $z$ close to $0$. Comparing the one-sided jitter
+smoothing loss across deletions restricts all pairwise differences of
+support points of $Y_i$ to a $\gamma$-neighborhood of $h\Z$, while the cubic
+contact polynomial bounds $\operatorname{diam}(\supp Y_i)<7/2$. This splits
+the summands into $m\ge1/(4\ell^2)$ two-cluster variables
+$Y_i=h_i(B_i-p_i)+U_i$ (with $p_i\in[1/4,3/4]$, $|h_i/h-1|\le\lambda$, and
+$|U_i|\le\lambda h$) and small-diameter variables $Z_j$ with
+$|Z_j|\le\lambda h$ and total variance $\sum_j\Var Z_j\le\lambda mh^2$
+(Proposition~\ref{prop:reduction}).
+\item \textbf{Local comparison near a common diameter
+(Section~\ref{sec:local} and Appendix~\ref{app:conditional}):}
+Theorem~\ref{thm:local} shows that every array satisfying the two-cluster
+reduction with $m\ge N$ and $\lambda=e^{-\mathcal A}$ ($\mathcal A=38e^{43}$)
+obeys $\mathcal R\le\be$. Rescaling by the variance-weighted mean diameter
+$\bar h$, the total residual variance $\Lambda=\Lambda_A+\Lambda_U$ measures
+both diameter spread and intra-cluster noise. When $\Lambda=0$, the array has
+a common diameter and \eqref{eq:finite-input} applies. When $0<\Lambda\le e^{-43}$,
+conditioning on the Bernoulli count $K_0=\sum_{i=1}^mB_i$ and applying a
+one-sided clipping inequality shows that the residual $W$ strictly reduces
+the ratio below that of the common-diameter reference array. When
+$\Lambda\ge e^{-43}$, exponential tilting of the Bernoulli labels and a
+conditional Fourier minorant show that $S-x$ places mass at least
+$q/\sqrt m$ in both $(1/4,1/2)$ and $(-1/2,-1/4)$, creating a one-sided
+jitter smoothing loss that pushes $\mathcal R$ strictly below $\be$.
+\item \textbf{Threshold evaluation (Section~\ref{sec:completion}):}
+Composing the explicit parameter dependencies shows that
+$\ell_0=\exp(-\exp(97))<t_*$, completing the proof of Theorem~\ref{thm:main}.
+\end{enumerate}
 
-Section~\ref{sec:selection} selects an attained counterexample with
-small Lyapunov ratio and bounds every support.
-Section~\ref{sec:jitter} finds an approximate period by a finite
-procedure. Section~\ref{sec:confinement} converts its moment information
-into restrictions on every support point. Section~\ref{sec:local}
-proves the independent local comparison with explicit parameters, and
-Section~\ref{sec:completion} evaluates their composition. The appendices
-give the Fourier estimates, the quantitative support argument, and the
-conditional-moment estimates used in these sections.
+\section{Penalized selection and variational support bounds}\label{sec:selection}
 
-\section{Selection and support equations}\label{sec:selection}
-Normalize total variance to one, so $\ell=T$.
-For a fixed number of coordinates, maximize the positive signed ratio
-at a threshold, less a nondecreasing penalty on $\ell$.
+Normalize total variance to $B^2=1$, so that $\ell=T=\sum_{i=1}^n\E|X_i|^3$.
+To obtain an attained counterexample from a hypothetical small-$\ell$
+violation, we maximize the one-sided ratio minus a smooth penalty on $\ell$
+at a fixed number of summands $n$.
 
-\begin{lemma}[Localized selection]\label{lem:selection}
-Let $0<\eta\le1/100$ and
-$0<t\le\min\{1/2000,\eta^3/108\}$. If a finite array has
-$\ell\le t$ and $\mathcal R>\be$, there is an attained penalized
-maximizer with the same number of coordinates, a threshold $z$, and
+\begin{lemma}[Localized counterexample selection]\label{lem:selection}
+Let $0<\eta\le1/100$ and $0<t\le\min\{1/2000,\eta^3/108\}$. If a finite
+independent array has $\ell\le t$ and $\mathcal R>\be$, then there exists an
+attained maximizer of the penalized objective \eqref{eq:objective} with the
+same number of summands, a threshold $z\in\R$, and full ratio $R=\mathcal R$
+satisfying
 \begin{equation}\label{eq:selected}
- \be<R<9/20,\quad\ell<2t,\quad
+ \be<R<\frac9{20},\qquad\ell<2t,\qquad
  R\le K:=R+\ell\psi_t'(\ell)\le R+\eta.
 \end{equation}
-Here $R$ is its full ratio. If a coordinate has variance $s$ and
-third absolute moment $b$, then
+Moreover, if a summand of this maximizer has variance $s$ and third absolute
+moment $b$, then
 \begin{equation}\label{eq:deletion-penalty}
- \psi_t\left(\frac{\ell-b}{(1-s)^{3/2}}\right)-\psi_t(\ell)
+ \psi_t\!\left(\frac{\ell-b}{(1-s)^{3/2}}\right)-\psi_t(\ell)
                          \le2\eta s.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Put $f(v)=0$ for $v\le0$, $f(v)=v^2/(1+v)$ for $v>0$, and
-$\psi_t(u)=2u^{1/3}f(\log(u/t))$. This penalty is continuously
-differentiable, nonnegative, nondecreasing, and zero for $u\le t$.
-After reflection if necessary, the supremum of
+Define $f(v)=0$ for $v\le0$, $f(v)=v^2/(1+v)$ for $v>0$, and
+$\psi_t(u)=2u^{1/3}f(\log(u/t))$. Then $\psi_t$ is continuously
+differentiable, nonnegative, nondecreasing, and identically zero on $(0,t]$.
+After reflecting the array if necessary, the supremum of
 \begin{equation}\label{eq:objective}
-              [F_S(z)-\Phi(z)]/\ell-\psi_t(\ell)
+              \frac{F_S(z)-\Phi(z)}{\ell}-\psi_t(\ell)
 \end{equation}
-over centered variance-one arrays of the specified length is above $\be$.
-If the objective exceeds $r_0>0$, then $n^{-1/2}\le\ell\le r_0^{-1}$.
-Bounded third moments give coordinatewise weak subsequences and uniform
-integrability of squares, preserving means and total variance.
-Chebyshev bounds the thresholds because their discrepancies are at
-least $r_0/\sqrt n$. Moving-threshold Portmanteau for the closed CDF
-gives the required upper semicontinuity at a limit. A strict loss of
-third moments would increase the positive ratio and decrease the
-penalty, contradicting the supremum. Thus the limit attains it.
-This is the fixed-dimension argument of
-\citet[Lemma~4.1]{HeCheng2026}, applied coordinatewise.
+over centered variance-one arrays of length $n$ and $z\in\R$ exceeds $\be$.
+Along any maximizing sequence with objective value at least $r_0>\be$, we
+have $n^{-1/2}\le\ell\le r_0^{-1}$, so the third absolute moments are
+uniformly bounded. Coordinatewise weak compactness, uniform integrability of
+second moments, boundedness of $z$ (since $F_S(z)-\Phi(z)\ge r_0/\sqrt n$),
+upper semicontinuity of $F_S(z)$ at moving thresholds, and lower
+semicontinuity of $\ell$ yield an attaining limit array with $\ell$ preserved
+(following the fixed-$n$ compactness argument of \citet[Lemma~4.1]{HeCheng2026}).
 
-Since $f(\log2)>4/15>1/4$, one has $\psi_t(u)>u^{1/3}/2$ for
-$u\ge2t$. For $u\le10^{-3}$ this exceeds the excess in
-\eqref{eq:published-excess}; for $u\ge10^{-3}$ it is at least
-$1/20>9/20-\be$. Hence the maximizer has $\ell<2t$.
-For $t<u\le4t$, $f<1$ and $0\le f'\le1$ give
+Since $f(\log2)>4/15>1/4$, we have $\psi_t(u)>u^{1/3}/2$ for $u\ge2t$. For
+$2t\le u\le10^{-3}$, $\psi_t(u)>0.2538u^{1/3}$, so \eqref{eq:published-excess}
+implies that the objective in \eqref{eq:objective} is at most $\be$; for
+$u\ge10^{-3}$, $\psi_t(u)>1/20>9/20-\be$, so \eqref{eq:upper-input} likewise
+bounds the objective below $\be$. Thus the attained maximizer must satisfy
+$\ell<2t$. For $t<u\le4t$, $f<1$ and $0\le f'\le1$ give
 \[
- 0\le u\psi_t'(u)\le\tfrac83(4t)^{1/3}
-                         <3(4t)^{1/3}\le\eta.
+ 0\le u\psi_t'(u)\le\frac83(4t)^{1/3}
+                         <3(4t)^{1/3}\le\eta,
 \]
-This holds also for $u\le t$. Each coordinate has
-$s^{3/2}\le\ell<10^{-3}$, so $s\le1/4$ and
-$\ell_-=(\ell-b)/(1-s)^{3/2}<(8/5)\ell<4t$.
-If $\ell_->\ell$, integration on this actual interval gives
+which also holds on $(0,t]$. Every summand satisfies $s^{3/2}\le\ell<10^{-3}$,
+so $s\le1/4$ and $\ell_-=(\ell-b)/(1-s)^{3/2}<(8/5)\ell<4t$. When
+$\ell_->\ell$, integrating $u\psi_t'(u)\le\eta$ over $[\ell,\ell_-]$ gives
 \[
  \psi_t(\ell_-)-\psi_t(\ell)
  \le\eta\log(\ell_-/\ell)
- \le\tfrac32\eta[-\log(1-s)]\le2\eta s.
+ \le\frac32\eta[-\log(1-s)]\le2\eta s,
 \]
-Otherwise monotonicity suffices. A larger discrepancy in the selected
-array, reflected for the other branch, would increase its objective;
-therefore $R$ is its full ratio.
+proving \eqref{eq:deletion-penalty}.
 \end{proof}
 
-Write $s_i=\E X_i^2$, $b_i=\E|X_i|^3$,
-$M_i=\E[X_i|X_i|]$, and let $G_i$ be the CDF of $S-X_i$.
-\begin{lemma}[Support contact]\label{lem:contact}
-For every $y\in\R$,
+For each summand $X_i$ of the selected maximizer, write $s_i=\E X_i^2$,
+$b_i=\E|X_i|^3$, $M_i=\E[X_i|X_i|]$, and let $G_i$ be the distribution
+function of the deleted sum $S-X_i$.
+
+\begin{lemma}[Variational support contact]\label{lem:contact}
+For every $i\in\{1,\ldots,n\}$ and $y\in\R$,
 \begin{align}
  D_i(y):={}&G_i(z-y)-F_S(z)+\phi(z)y
        +\frac{z\phi(z)}2(y^2-s_i)\notag\\
  &+\frac32K\ell(y^2-s_i)
-       -K\{|y|^3-b_i-3M_i y\}\le0.                 \label{eq:contact}
+       -K\{|y|^3-b_i-3M_i y\}\le0,                 \label{eq:contact}
 \end{align}
-Equality holds at every $y\in\supp X_i$.
+with equality $D_i(y)=0$ at every $y\in\supp X_i$.
 \end{lemma}
 \begin{proof}
-Replace the raw law of coordinate $i$ by
-$(1-e)\Law(X_i)+e\delta_y$, retain the raw threshold, and center
-and standardize the new array. The derivatives at $e=0$ of its mean,
-variance, and total third absolute central moment are
-$y$, $y^2-s_i$, and $|y|^3-b_i-3M_i y$.
-The last differentiation is justified by a bound $C_y(1+X_i^2)$.
-The raw CDF derivative is $G_i(z-y)-F_S(z)$. Differentiating
-\eqref{eq:objective} and multiplying by $\ell$ gives
-\eqref{eq:contact}, with its sign supplied by maximality.
-Its integral under $\Law(X_i)$ is zero. Upper semicontinuity of $D_i$
-then extends equality to the entire support. This is the
-independent-coordinate form of the contamination argument of
-\citet[Lemma~4.3]{HeCheng2026}.
+Replacing $\Law(X_i)$ by $(1-e)\Law(X_i)+e\delta_y$ ($0\le e<1$), keeping
+the uncentered threshold $z$ fixed, and recentering and restandardizing the
+sum gives right derivatives $y$, $y^2-s_i$, and $|y|^3-b_i-3M_i y$ for the
+mean, total variance, and third absolute moment sum at $e=0$, while the
+uncentered CDF has right derivative $G_i(z-y)-F_S(z)$. Differentiating
+\eqref{eq:objective} at $e=0$ and multiplying by $\ell$ gives $D_i(y)\le0$
+by maximality. Since $\E D_i(X_i)=0$ and $D_i$ is upper semicontinuous,
+$D_i(y)=0$ holds for every $y\in\supp X_i$ (compare \citet[Lemma~4.3]{HeCheng2026}).
 \end{proof}
 
-\begin{lemma}[Uniform support bound]\label{lem:support}
-Every nonzero coordinate of the selected maximizer satisfies
+\begin{lemma}[Uniform support and moment bounds]\label{lem:support}
+Every nonzero summand $X_i$ of the selected maximizer satisfies
 \begin{equation}\label{eq:support}
  b_i<3\ell s_i,\qquad s_i<9\ell^2,
                  \qquad\supp X_i\subset(-8\ell,8\ell).
 \end{equation}
 \end{lemma}
 \begin{proof}
-Deletion, padded by a zero coordinate, stays in the maximization class.
-Its ratio at every threshold is at most $R+2\eta s_i$.
-Compare the convolution of the deleted normal approximation with $X_i$
-to its convolution with $N(0,s_i)$. Put
-$a=\phz(1+4\phz)/6<13/75$. Translation Taylor expansion and
-$\E|N(0,s_i)|^3=4\phz s_i^{3/2}\le4\phz b_i$ give
+Replacing $X_i$ by $0$ leaves an admissible $n$-summand array whose penalized
+objective is at most $R-\psi_t(\ell)$, so its unpenalized ratio at every
+threshold is at most $R+2\eta s_i$ by \eqref{eq:deletion-penalty}. Comparing
+the deleted normal approximation convolved with $X_i$ against its convolution
+with $N(0,s_i)$ via a second-order Taylor expansion gives, with
+$a=\phz(1+4\phz)/6<13/75$,
 \[
  R\ell(1-s_i)^{3/2}\le(R+2\eta s_i)(\ell-b_i)+ab_i.
 \]
-Using $1-(1-s_i)^{3/2}\le3s_i/2$ and rearranging gives
-\[
- (R-a)b_i\le(3R/2+2\eta)\ell s_i.
-\]
-Since $R>2/5$, the right coefficient is less than $3(R-a)$.
-This proves $b_i<3\ell s_i$, and Jensen gives $\sqrt{s_i}<3\ell$.
+Using $1-(1-s_i)^{3/2}\le3s_i/2$ and rearranging yields
+$(R-a)b_i\le(3R/2+2\eta)\ell s_i<3(R-a)\ell s_i$ (since $R>2/5$ and
+$\eta\le1/100$), proving $b_i<3\ell s_i$ and $s_i^{3/2}\le b_i<3\ell s_i$, so
+$s_i<9\ell^2$.
 
-For $0\le s\le1/4$ put
+For $0\le s\le1/4$, define the Gaussian scale-translation remainder
 \[
- H_s(z,y)=\Phi\left(\frac{z-y}{\sqrt{1-s}}\right)-\Phi(z)
-                     +\phi(z)y+\tfrac12z\phi(z)(y^2-s).
+ H_s(z,y)=\Phi\!\left(\frac{z-y}{\sqrt{1-s}}\right)-\Phi(z)
+                     +\phi(z)y+\frac12z\phi(z)(y^2-s),
 \]
-Translation and scale Taylor expansions give
+which satisfies the global and local Taylor bounds
 \begin{align}
- |H_s(z,y)|&\le\phz|y|^3/6+\phz s|y|/2+s^2/6,    \label{eq:gaussian-global}\\
- |H_s(z,y)-\phi''(z)(sy/2-y^3/6)|
-       &\le y^4/36+sy^2/6+s^2/6.                   \label{eq:gaussian-local}
+ |H_s(z,y)|&\le\frac{\phz}{6}|y|^3+\frac{\phz}{2}s|y|+\frac{s^2}{6},    \label{eq:gaussian-global}\\
+ \left|H_s(z,y)-\phi''(z)\left(\frac{sy}2-\frac{y^3}6\right)\right|
+       &\le \frac{y^4}{36}+\frac{sy^2}6+\frac{s^2}6.                   \label{eq:gaussian-local}
 \end{align}
-Use $\|\phi''\|_\infty=\phz$, $\|\phi'''\|_\infty\le2/\pi<2/3$;
-the scale remainder is bounded in absolute value by $4s^2/27<s^2/6$.
-Substitute the deleted bound in the contact equality. Its constant
-terms are
-\[
- R(\ell_--\ell)-\tfrac32K\ell s+Kb
-                  +[\psi_t(\ell_-)-\psi_t(\ell)]\ell_-.
-\]
-Since $(1-s)^{-3/2}<8/5$ and
-$(1-s)^{-3/2}-1-3s/2\le6s^2$, every support point satisfies
+Bounding $G_i(z-y)$ in the contact equality $D_i(y)=0$ by the deleted normal
+approximation and using $(1-s)^{-3/2}<8/5$ and $(1-s)^{-3/2}-1-3s/2\le6s^2$
+shows that every $y\in\supp X_i$ obeys
 \begin{equation}\label{eq:deletion}
- 0\le H_s(z,y)-K|y|^3+\tfrac32K\ell y^2+3KM_i y
+ 0\le H_s(z,y)-K|y|^3+\frac32K\ell y^2+3KM_i y
                        +6R\ell s^2+\eta b+4\eta\ell s.
 \end{equation}
-The contact equation first bounds the support, since its negative
-cubic term dominates at infinity. Let $A_i$ be its maximum absolute
-value. Use $|M_i|\le s$, $b\le sA_i$, $K\le23/50$, and
-\eqref{eq:gaussian-global} to obtain
+Let $A_i=\max_{y\in\supp X_i}|y|$. Using $|M_i|\le s_i$, $b_i\le s_iA_i$,
+$K\le23/50$, $s_i\le9\ell^2$, $\ell\le1/8$, and \eqref{eq:gaussian-global}
+in \eqref{eq:deletion} at $|y|=A_i=x\ell$ gives
 \[
- A_i^3/3\le(7/10)\ell A_i^2+(8/5)sA_i+(3/5)s^2+(1/25)\ell s.
+ \frac{x^3}3\le\frac7{10}x^2+\frac{72}5x+\frac{1287}{200},
 \]
-With $s\le9\ell^2$, $\ell\le1/8$, and $x=A_i/\ell$,
-\[
- x^3/3\le7x^2/10+72x/5+1287/200.
-\]
-The difference is $2539/600>0$ at $x=8$ and has positive derivative
-for $x\ge8$. Thus $A_i<8\ell$.
+which implies $x<8$, and hence $A_i<8\ell$.
 \end{proof}
 
-\section{An approximate period and uniform jitter}\label{sec:jitter}
-A uniform random shift suppresses the nonzero lattice peaks of a
-characteristic function. Its period must be chosen from the array
-itself. The following finite construction gives an explicit error.
+\section{Approximate period selection and uniform jitter}\label{sec:jitter}
 
-\begin{lemma}[Finite period selection]\label{lem:period}
-Let $\mu$ be a probability measure on $[-M,M]$, $M>0$, and put
+Convolving $S$ with an independent uniform random variable suppresses the
+high-frequency peaks of $\E e^{\ii tS}$ provided the uniform jitter width is
+matched to any approximate lattice period shared by the summands. The
+following finite pigeonhole lemma selects such a period directly from a
+probability measure $\mu$ on $[-M,M]$.
+
+\begin{lemma}[Finite approximate-period selection]\label{lem:period}
+Let $\mu$ be a probability measure on $[-M,M]$ ($M>0$), and define
 \[
- g(u)=\int\frac{|e^{iud}-1|^2}{d^2}\,\mu(dd),\quad
- q(u)=\sqrt{g(u)},\quad\delta=1/(4M),
+ g(u)=\int_{[-M,M]}\frac{|e^{\ii ud}-1|^2}{d^2}\,\mu(dd),\qquad
+ q(u)=\sqrt{g(u)},\qquad\delta=\frac1{4M},
 \]
-where the integrand at zero is $u^2$. For $T\ge\delta$ and
-$0<r\le\delta/4$ define
+where the integrand at $d=0$ is $u^2$. For $T\ge\delta$ and $0<r\le\delta/4$,
+put
 \[
- B_0=T/\delta+2,\quad J=\lceil\log_2(T/\delta)\rceil+1,\quad
- \eps=r/(2B_0^J),\quad E=\{u\in[\delta,T]:q(u)\le\eps\}.
+ B_0=\frac T\delta+2,\qquad J=\lceil\log_2(T/\delta)\rceil+1,\qquad
+ \eps=\frac r{2B_0^J},\qquad E=\{u\in[\delta,T]:q(u)\le\eps\}.
 \]
-If $E\ne\varnothing$, there is $p\in[\delta,T]$ such that
-$q(p)\le r/2$ and $\dist(u,p\Z)<r$ for every $u\in E$.
-For $h=2\pi/p$ and $\ell>0$,
+If $E\ne\varnothing$, there exists $p\in[\delta,T]$ such that $q(p)\le r/2$
+and $\dist(u,p\Z)<r$ for every $u\in E$. Setting $h=2\pi/p$, we have for all
+$\ell>0$,
 \begin{equation}\label{eq:high-frequency}
  \int_\delta^T e^{-g(u)/(2\ell^2)}|\sinc(hu/2)|\,\frac{du}{u}
  \le\frac{56\sqrt\pi}{9}\frac{r\ell}{p^2}
            +\log(T/\delta)e^{-\eps^2/(2\ell^2)}.
 \end{equation}
-If $E=\varnothing$, take $h=0$; the exponential term alone suffices.
+If $E=\varnothing$, \eqref{eq:high-frequency} holds with $h=0$ and only the
+second term on the right-hand side.
 \end{lemma}
 \begin{proof}
-The Hilbert-space triangle inequality gives subadditivity of $q$,
-$q(-u)=q(u)$, and $q(u)\le|u|$. Thus $q$ is $1$-Lipschitz.
-Also $g''\ge2-M^2g$ and $g(u)\ge u^2/2$ for $|u|\le\delta$.
-Start with $p_0\in E$. If $v\in E$ has distance at least $r$ from
-$p_j\Z$, choose the nearest integer $k$ and put
-$p_{j+1}=|v-kp_j|$. While $p_j\ge\delta$,
+By the triangle inequality in $L^2(\mu)$, $q$ is even, subadditive, and
+$1$-Lipschitz; moreover $g''(u)\ge2-M^2g(u)$ and $g(u)\ge u^2/2$ on
+$[0,\delta]$. If $E\ne\varnothing$, pick $p_0\in E$. Whenever there exists
+$v\in E$ with $\dist(v,p_j\Z)\ge r$, let $k$ be the nearest integer to
+$v/p_j$ and set $p_{j+1}=|v-kp_j|$. As long as $p_j\ge\delta$, we have
 \[
- r\le p_{j+1}\le p_j/2,\qquad
- q(p_{j+1})\le\eps+(T/\delta+1/2)q(p_j)\le B_0^{j+1}\eps.
+ r\le p_{j+1}\le \frac{p_j}2,\qquad
+ q(p_{j+1})\le\eps+\left(\frac T\delta+\frac12\right)q(p_j)\le B_0^{j+1}\eps.
 \]
-A proposed value in $[r,\delta]$ would satisfy both $q\le r/2$
-and $q\ge r/\sqrt2$. There are at most
-$\lceil\log_2(T/\delta)\rceil$ halvings before this happens.
-The construction therefore stops with the required $p$.
+Because any point in $[r,\delta]$ satisfies $q(u)\ge u/\sqrt2\ge r/\sqrt2>r/2\ge B_0^J\eps$,
+at most $J-1=\lceil\log_2(T/\delta)\rceil$ halving steps can occur before the
+process terminates at a period $p\in[\delta,T]$ with $q(p)\le r/2$ and
+$\dist(u,p\Z)<r$ for all $u\in E$.
 
-Retain each $I_k=[kp-r,kp+r]\cap[\delta,T]$, $k\ge1$, that meets
-$E$. On it $q\le\eps+2r\le5\delta/8$, so $g''\ge1$.
-At its minimum $a_k$, including an endpoint minimum,
-$g(u)\ge(u-a_k)^2/2$. Moreover
-$|\sinc(\pi u/p)|\le r/u$ and $u\ge(k-1/4)p$.
-Its integral is at most $2\sqrt\pi\ell r/[(k-1/4)^2p^2]$.
-Sum using $\sum_{k\ge1}(k-1/4)^{-2}\le28/9$.
-Outside the retained intervals $g>\eps^2$, proving the assertion.
+For each $k\ge1$ such that $I_k=[kp-r,kp+r]\cap[\delta,T]$ intersects $E$,
+we have $q\le\eps+2r\le5\delta/8$ on $I_k$, so $g''\ge1$ and
+$g(u)\ge(u-a_k)^2/2$ around the minimum $a_k$ of $g$ on $I_k$. Since
+$|\sinc(\pi u/p)|\le r/u$ on $I_k$ and $u\ge(k-1/4)p$, integrating over
+$I_k$ and summing $\sum_{k\ge1}(k-1/4)^{-2}\le28/9$ yields the first term in
+\eqref{eq:high-frequency}, while $g(u)>\eps^2$ outside $\bigcup_k I_k$ yields
+the second.
 \end{proof}
 
-\begin{proposition}[Uniform jitter]\label{prop:jitter}
-Suppose $\sum\E X_i^2=1$, $\ell=\sum\E|X_i|^3\le1/8$, and
-$|X_i|\le8\ell$. For $0<\rho\le1$ put
+\begin{proposition}[Uniform jitter Edgeworth approximation]\label{prop:jitter}
+Suppose $\sum_{i=1}^n\E X_i^2=1$, $\ell=\sum_{i=1}^n\E|X_i|^3\le1/8$, and
+$|X_i|\le8\ell$ for all $i$. For $0<\rho\le1$, define
 \begin{align}
- \delta&=1/64,&T&=80/\rho,&r&=\rho\delta^2/48,\notag\\
- B_0&=T/\delta+2,&J&=\lceil\log_2(T/\delta)\rceil+1,
- &\eps&=r/(2B_0^J),\notag\\
+ \delta&=\frac1{64},&T&=\frac{80}\rho,&r&=\frac{\rho\delta^2}{48},\notag\\
+ B_0&=\frac T\delta+2,&J&=\lceil\log_2(T/\delta)\rceil+1,
+ &\eps&=\frac r{2B_0^J},\notag\\
  L_{\rm jit}(\rho)&=
- \min\left\{\frac18,\frac\rho{48000},
+ \min\left\{\frac18,\,\frac\rho{48000},\,
               \frac{\rho\eps^2}{8\log(T/\delta)}\right\}.
                                                         \label{eq:jitter-parameters}
 \end{align}
-If $\ell\le L_{\rm jit}(\rho)$, there is $0\le h\le128\pi$ such
-that, for an independent $U_h$ uniform on $[-h/2,h/2]$,
+If $\ell\le L_{\rm jit}(\rho)$, there exists $0\le h\le128\pi$ such that, for
+an independent $U_h\sim\operatorname{Unif}[-h/2,h/2]$ (with $U_0=0$),
 \begin{equation}\label{eq:jitter}
  \left\|F_{S+\ell U_h}(x)-\Phi(x)
            -\frac\kappa6(1-x^2)\phi(x)\right\|_\infty\le\rho\ell,
- \qquad\kappa=\sum_i\E X_i^3.
+ \qquad\kappa=\sum_{i=1}^n\E X_i^3,
 \end{equation}
-When $h>0$, $g(2\pi/h)\le r^2/4$ for the measure below. Here $U_0=0$.
+and when $h>0$, the symmetrized difference measure \eqref{eq:diff-measure}
+satisfies $g(2\pi/h)\le r^2/4$.
 \end{proposition}
 \begin{proof}
-Set $Y_i=X_i/\ell$, with independent copies $Y_i'$. The measure
+Set $Y_i=X_i/\ell$, let $Y_i'$ be an independent copy of $Y_i$, and define
+the probability measure on $[-16,16]$ by
 \begin{equation}\label{eq:diff-measure}
- \mu(A)=\frac{\ell^2}{2}\sum_i
-        \E[(Y_i-Y_i')^2\ind_{\{Y_i-Y_i'\in A\}}]
+ \mu(A)=\frac{\ell^2}{2}\sum_{i=1}^n
+        \E\bigl[(Y_i-Y_i')^2\ind_{\{Y_i-Y_i'\in A\}}\bigr].
 \end{equation}
-is a probability measure on $[-16,16]$. It satisfies
-\[
- g(u)=\ell^2\sum_i(1-|\E e^{iuY_i}|^2),\qquad
- |\E e^{iuS/\ell}|\le e^{-g(u)/(2\ell^2)}.
-\]
-Apply Lemma~\ref{lem:period}. The low-frequency and signed-smoothing
-estimates in Appendix~\ref{app:fourier} bound the norm in
+Then $g(u)=\ell^2\sum_{i=1}^n(1-|\E e^{\ii uY_i}|^2)$ and
+$|\E e^{\ii uS/\ell}|\le e^{-g(u)/(2\ell^2)}$. Applying Lemma~\ref{lem:period}
+together with the signed smoothing inequality and low-frequency Edgeworth
+estimates of Appendix~\ref{app:fourier} bounds the left-hand side of
 \eqref{eq:jitter} by
 \begin{equation}\label{eq:jitter-error}
- 12000\ell^2+12r\ell/\delta^2+
-       \log(T/\delta)e^{-\eps^2/(2\ell^2)}+20\ell/T.
+ 12000\ell^2+\frac{12r\ell}{\delta^2}+
+       \log(T/\delta)e^{-\eps^2/(2\ell^2)}+\frac{20\ell}{T},
 \end{equation}
-Each term is at most $\rho\ell/4$ under
-\eqref{eq:jitter-parameters}; for the third use $e^{-x}\le1/x$.
+each of whose four terms is at most $\rho\ell/4$ under \eqref{eq:jitter-parameters}.
 \end{proof}
 
-\section{From moment stability to complete supports}\label{sec:confinement}
-The contact equations strengthen the moment estimates into bounds for
-each coordinate's full support.
+\section{From moment stability to two-cluster support confinement}\label{sec:confinement}
 
-\begin{proposition}[Two-cluster reduction]\label{prop:reduction}
-Let $0<\lambda\le1$ and $N\ge1$. Set
+Combining the uniform jitter approximation of Proposition~\ref{prop:jitter}
+with the variational contact equations of Lemma~\ref{lem:contact} and a
+quantitative stability form of Esseen's moment inequality \eqref{eq:esseen-moment}
+confines the support of every summand of the selected maximizer.
+
+\begin{proposition}[Two-cluster support reduction]\label{prop:reduction}
+Let $0<\lambda\le1$ and $N\ge1$, and set
 \begin{equation}\label{eq:reduction-parameters}
  \rho=10^{-26}\lambda^2,\qquad\eta=10^{-10}\lambda,\qquad
- L_* =\min\{L_{\rm jit}(\rho),1/(2\sqrt N)\}.
+ L_* =\min\left\{L_{\rm jit}(\rho),\,\frac1{2\sqrt N}\right\}.
 \end{equation}
-An attained maximizer of Lemma~\ref{lem:selection} with this penalty
-bound and $\ell\le L_*$ can be represented, after division by $\ell$,
-as independent coordinates
+Every attained maximizer from Lemma~\ref{lem:selection} with penalty parameter
+$\eta$ and $\ell\le L_*$ can be written, after dividing each summand by
+$\ell$ and relabeling, as independent variables
 \begin{equation}\label{eq:clusters}
  Y_i=h_i(B_i-p_i)+U_i\quad(1\le i\le m),\qquad Z_1,\ldots,Z_s,
 \end{equation}
 where $m\ge N$, $h>0$, $B_i\sim\Bern(p_i)$, and
 \begin{gather}
- p_i\in[1/4,3/4],\quad |h_i/h-1|\le\lambda,\quad
- \E(U_i\mid B_i)=0,\quad |U_i|\le\lambda h,              \label{eq:cluster-bounds}\\
- \E Z_j=0,\quad |Z_j|\le\lambda h,\quad
-                        \sum_j\Var Z_j\le\lambda m h^2. \label{eq:extra-bounds}
+ p_i\in[1/4,3/4],\qquad |h_i/h-1|\le\lambda,\qquad
+ \E(U_i\mid B_i)=0,\qquad |U_i|\le\lambda h,              \label{eq:cluster-bounds}\\
+ \E Z_j=0,\qquad |Z_j|\le\lambda h,\qquad
+                        \sum_{j=1}^s\Var Z_j\le\lambda m h^2, \label{eq:extra-bounds}
 \end{gather}
-The representations are coordinatewise. Each pair $(B_i,U_i)$ is
-independent of the other pairs and of all $Z_j$.
+with the pairs $(B_i,U_i)$ ($1\le i\le m$) and variables $Z_j$ ($1\le j\le s$)
+mutually independent.
 \end{proposition}
 
-The proof is in Appendix~\ref{app:confinement}. Rounding at the period
-from Proposition~\ref{prop:jitter} loses a controlled total second
-moment. The deficit in Esseen's inequality forces that period close to
-$\he$ and the maximizing threshold close to zero. Using the same
-jitter for every deletion shows that its one-sided smoothing loss is
-small at each support point. Comparing two such losses restricts every
-difference of support points to a small neighborhood of $h\Z$.
-The cubic expansion of \eqref{eq:deletion} bounds each scaled support
-diameter by $7/2$ and puts the two-cluster probabilities in $[1/4,3/4]$.
-Coordinates with small diameter have small total variance by moment
-stability.
-No lower bound on individual atom masses enters the argument.
+The complete proof of Proposition~\ref{prop:reduction} is given in
+Appendix~\ref{app:confinement}. In brief: rounding $Y_i=X_i/\ell$ to its
+nearest lattice coset of span $h=2\pi/p$ incurs a total $L^2$ error bounded
+by $h^2g(p)/8\le(hr/4)^2$. Quantitative stability in Esseen's lattice moment
+inequality forces $h$ close to $\he=(\pe^2+\qe^2)^{-1}$ and the threshold $z$
+close to $0$. Retaining the same jitter scale $h$ for each one-summand
+deletion shows that the one-sided smoothing loss $J_i(z-y+h\ell/2)-G_i(z-y)$
+is small at every $y\in\supp X_i$, which forces all pairwise distances
+between support points of $Y_i$ to lie near $h\Z$. The cubic contact
+polynomial \eqref{eq:support-polynomial} bounds $\operatorname{diam}(\supp Y_i)<7/2<2h$,
+so each summand either has diameter $<h/2$ (and thus lies in a narrow
+neighborhood of zero, forming the $Z_j$'s) or has diameter $\approx h$ with
+all support points concentrated near its two endpoints (forming the
+two-cluster variables $Y_i=h_i(B_i-p_i)+U_i$ with $p_i\in[1/4,3/4]$).
 
 \input{local-comparison.tex}
 
-\section{Evaluation of the threshold}\label{sec:completion}
-Take $\lambda,N$ from \eqref{eq:local-constants} and
-$\rho,\eta,L_*$ from \eqref{eq:reduction-parameters}. A violation
-with Lyapunov ratio at most
-\begin{equation}\label{eq:tstar}
-             t_*:=\min\{L_*/2,\eta^3/108,1/2000\}
-\end{equation}
-would give, by Lemma~\ref{lem:selection}, an attained violating
-maximizer with $\ell<2t_*\le L_*$. Proposition~\ref{prop:reduction}
-puts the entire array into the class of Theorem~\ref{thm:local},
-contradicting $R>\be$.
+\section{Composition of constants and proof of Theorem~\ref{thm:main}}\label{sec:completion}
 
-It remains to show $\ell_0<t_*$. Write $A=\mathcal A=38e^{43}$,
-so $\lambda=e^{-A}$, $N=\lceil e^A\rceil$,
-$\rho=10^{-26}e^{-2A}$, and $\eta=10^{-10}e^{-A}$.
-For the jitter parameters put
-\[
- Q=T/\delta=5120/\rho,\quad B_0=Q+2,\quad
- J=\lceil\log_2Q\rceil+1,\quad r=\rho/(48\cdot4096),
- \quad\eps=r/(2B_0^J).
-\]
-Since $A>1000$, $\log2>2/3$, and $\log10<3$,
+Take $\mathcal A=38e^{43}$, $\lambda=e^{-\mathcal A}$, and $N=\lceil e^{\mathcal A}\rceil$
+from \eqref{eq:local-constants}, and define $\rho,\eta,L_*$ by
+\eqref{eq:reduction-parameters}. If an independent array violated
+$\Delta\le\be\ell$ at some Lyapunov ratio $\ell\le t_*$, where
+\begin{equation}\label{eq:tstar}
+             t_*:=\min\left\{\frac{L_*}2,\,\frac{\eta^3}{108},\,\frac1{2000}\right\},
+\end{equation}
+then Lemma~\ref{lem:selection} would produce an attained maximizer with
+$\ell<2t_*\le L_*$ and ratio $R>\be$. Proposition~\ref{prop:reduction} would
+then place that maximizer in the class \eqref{eq:clusters}--\eqref{eq:extra-bounds}
+with $m\ge N$, contradicting Theorem~\ref{thm:local}.
+
+It remains only to verify that $\ell_0=\exp(-\exp(97))<t_*$. Put
+$A=\mathcal A=38e^{43}>1000$, so $\lambda=e^{-A}$, $N=\lceil e^A\rceil$,
+$\rho=10^{-26}e^{-2A}$, and $\eta=10^{-10}e^{-A}$. In \eqref{eq:jitter-parameters},
+with $Q=T/\delta=5120/\rho$, $B_0=Q+2$, $J=\lceil\log_2Q\rceil+1$,
+$r=\rho/(48\cdot4096)$, and $\eps=r/(2B_0^J)$, the bounds $\log2>2/3$ and
+$\log10<3$ give
 \[
  \log(1/\rho),\ \log Q,\ \log B_0,\ \log(1/r)<3A,
- \qquad J<5A.
+ \qquad J<\frac{\log Q}{\log2}+2<5A,
 \]
-The ceiling is included: $J<\log Q/\log2+2<5A$. Thus
-$\log(1/\eps)<3A+1+15A^2<16A^2$.
-The negative logarithm of the third entry defining $L_{\rm jit}$ is
+and hence $\log(1/\eps)<3A+1+15A^2<16A^2$. Consequently,
 \[
- \log(1/\rho)+2\log(1/\eps)+\log(8\log Q)
-                         <32A^2+4A<40A^2.
+ -\log L_{\rm jit}(\rho)
+ \le\log(1/\rho)+2\log(1/\eps)+\log(8\log Q)
+ <32A^2+4A<40A^2.
 \]
-The first two entries have smaller negative logarithms. Also
-$N<2e^A$, so $\log(2\sqrt N)<A$ and $-\log L_*<40A^2$.
-The other entries of \eqref{eq:tstar} have negative logarithms
+Since $\log(2\sqrt N)<A$ and $3A+30\log10+\log108<4A$, we obtain
 \[
- 3A+30\log10+\log108<4A,\qquad\log2000<A.
+ -\log t_*<41A^2=41\cdot38^2e^{86}=59204e^{86}.
 \]
-Therefore $-\log t_*<41A^2=59204e^{86}$.
-The positive exponential series gives $e>163/60$, and the rational
-comparison $(163/60)^{11}>59204$ gives
+Using $e>163/60$ and $(163/60)^{11}>59204$ gives
 \[
- -\log\ell_0=e^{97}>59204e^{86}>-\log t_*.
+ -\log\ell_0=e^{97}>59204e^{86}>-\log t_*,
 \]
-This completes the proof of Theorem~\ref{thm:main}.
+so $\ell_0<t_*$. This completes the proof of Theorem~\ref{thm:main}.
 
 \appendix
 \input{fourier-estimates.tex}

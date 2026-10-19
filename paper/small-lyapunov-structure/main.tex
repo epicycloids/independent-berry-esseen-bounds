@@ -20,235 +20,270 @@ urlcolor=blue!45!black,pdftitle={Small Lyapunov ratios and the structure of Berr
 \newcommand{\E}{\mathbb E}\newcommand{\Pp}{\mathbb P}
 \newcommand{\R}{\mathbb R}\newcommand{\Z}{\mathbb Z}
 \newcommand{\ind}{\mathbf1}\newcommand{\ce}{C_{\mathrm E}}
+\newcommand{\Cind}{C_{\mathrm{ind}}}
 \newcommand{\pe}{p_*}\newcommand{\qe}{q_*}\newcommand{\re}{r_*}
 \newcommand{\te}{t_*}\newcommand{\be}{\beta_*}\newcommand{\nus}{\nu_*}
 \newcommand{\phz}{\phi(0)}
+\newcommand{\ii}{\mathrm i}
 \title{Small Lyapunov ratios and the structure\\of Berry--Esseen maximizers}
 \author{Logan Bell}\date{6 October 2026}
 \begin{document}\maketitle
 \begin{abstract}
-For changing finite independent centered arrays whose Lyapunov ratio
-tends to zero and whose Berry--Esseen ratio tends to Esseen's constant,
-we prove approximation by coordinatewise laws on one common lattice.
-The sum of their squared and cubed Wasserstein errors is smaller than
-the corresponding lattice scale, and the original additive zero-bias
-transport bound is asymptotically an equality. If each row is an actual
-global maximizer at its own finite horizon, then every original
-representation is eventually exactly an IID two-point array padded by
-zeros. The resulting Lyapunov threshold is qualitative. The proof
-retains the absolute third moments of the original coordinates and
-uses a relative conditional first-moment estimate to exclude phase
-noise of arbitrarily small size.
+We establish asymptotic and exact structural theorems for independent
+centered real arrays with small Lyapunov ratio. First, for any sequence of
+finite independent arrays whose Lyapunov ratios $L_n$ tend to zero and whose
+Berry--Esseen ratios $C_n$ tend to Esseen's constant
+$\ce=(3+\sqrt{10})/(6\sqrt{2\pi})$, we prove that the summands are
+approximated coordinatewise by centered distributions supported on cosets of
+a common lattice $h_n\Z$ with summed squared and cubed Wasserstein errors
+$o(h_n^2)$ and $o(h_n^3)$, while the normalized zero-bias transport ratio
+$2B_n^2W_1(S_n,S_n^*)/R_n$ converges to $1$. Second, we prove that there
+exists an absolute constant $\varepsilon_0>0$ such that every global
+maximizer of the Berry--Esseen ratio over all $N$-summand independent arrays
+with $L<\varepsilon_0$ consists of identically distributed nondegenerate
+two-point summands and deterministic zero summands. To eliminate rounding
+residuals of arbitrarily small amplitude modulo $h_n\Z$, the proof combines
+variational contact equations on the topological supports with a relative
+conditional first-moment bound $\E(|T|\mid K=k)\ge c\E|T|$ valid for
+arbitrarily small $\E|T|>0$, followed by a discrete Green-function concavity
+argument on the lattice.
 \end{abstract}
 \tableofcontents
 
-\section{The results}
-Let $X_1,\ldots,X_N$ be independent centered real variables with finite
-third absolute moments. Write
+\section{Introduction and main results}
+
+\subsection{Asymptotic and exact structure at small Lyapunov ratio}
+
+Let $X_1,\ldots,X_N$ be independent centered real random variables with
+positive total variance and finite third absolute moments, and set
 \begin{equation}\label{eq:original-data}
- S=\sum_iX_i,\quad B^2=\sum_i\E X_i^2>0,\quad
- R=\sum_i\E|X_i|^3,\quad L=R/B^3,\quad
- C=L^{-1}d_K(S/B,Z),
+ S=\sum_{i=1}^N X_i,\qquad B^2=\sum_{i=1}^N\E X_i^2>0,\qquad
+ R=\sum_{i=1}^N\E|X_i|^3<\infty,\qquad L=\frac{R}{B^3},\qquad
+ C=\frac{d_{\mathrm K}(S/B,Z)}{L},
 \end{equation}
-where $Z$ is standard normal. All sums of third moments below refer
-to these original coordinates. Centered zero coordinates are allowed.
-Set
+where $Z\sim N(0,1)$ and $d_{\mathrm K}$ denotes Kolmogorov distance.
+Deterministic zero summands are permitted. Define the Esseen constants
 \[
- \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},\quad
- \pe=\frac{4-\sqrt{10}}2,\quad\qe=1-\pe,\quad
+ \ce=\frac{3+\sqrt{10}}{6\sqrt{2\pi}},\qquad
+ \pe=\frac{4-\sqrt{10}}2,\qquad\qe=1-\pe,\qquad
  \te=\qe-\pe=\sqrt{10}-3,
 \]
 \[
- \re=\pe^2+\qe^2,\quad
- \be=\frac{\re}{\sqrt{\pe\qe}},\quad\nus=\re^{-1}.
+ \re=\pe^2+\qe^2,\qquad
+ \be=\frac{\re}{\sqrt{\pe\qe}},\qquad\nus=\re^{-1},
 \]
-The variance-one Esseen law $W$ is specified by
-$\Pp(W=\sqrt{\qe/\pe})=\pe$ and
-$\Pp(W=-\sqrt{\pe/\qe})=\qe$.
-For laws with finite $j$th moments, $W_j$ denotes Wasserstein distance,
-with $W_j^j(X,Y)=\inf\E|\widetilde X-\widetilde Y|^j$, where the infimum
-is over couplings with the stated marginal laws. The zero-biased law $S^*$ is defined by
-$\E[Sf(S)]=B^2\E f'(S^*)$. The independent-sum zero-bias construction
-and the sharp single-law bound give
+and let $W$ denote the centered unit-variance Esseen two-point random
+variable with $\Pp(W=\sqrt{\qe/\pe})=\pe$ and $\Pp(W=-\sqrt{\pe/\qe})=\qe$.
+For probability laws with finite $j$th moments, $W_j(X,Y)=(\inf\E|\widetilde X-\widetilde Y|^j)^{1/j}$
+denotes the $L^j$-Wasserstein distance. The zero-biased distribution $S^*$ is
+defined by $\E[Sf(S)]=B^2\E f'(S^*)$ \citep{GoldsteinReinert1997}, and
+satisfies the normalized transport inequality
 \begin{equation}\label{eq:additive}
- \mathcal B(X):=\frac{2B^2W_1(S,S^*)}{R}\le1;
+ \mathcal B(X):=\frac{2B^2W_1(S,S^*)}{R}\le1
 \end{equation}
-see \citet{GoldsteinReinert1997,Goldstein2010,Tyurin2009} and the
-equality classification in \citet[Theorem~1.1]{BellTransport2026}.
+\citep{Goldstein2010,Tyurin2009}, with equality if and only if all nonconstant
+summands share a single two-point distribution \citep[Theorem~1.1]{BellTransport2026}.
 
-\begin{theorem}[Changing arrays near Esseen's constant]\label{thm:near}
-In each row $n$, take a finite array satisfying
-\eqref{eq:original-data}. Its length may change. Suppose
+Our first theorem characterizes arbitrary sequences of independent arrays
+that approach Esseen's constant $\ce$ as $L_n\to0$.
+
+\begin{theorem}[Asymptotic lattice and Esseen structure as $L_n\to0$]\label{thm:near}
+For each $n\ge1$, let $(X_{n,1},\ldots,X_{n,N_n})$ be a finite independent
+array satisfying \eqref{eq:original-data}, and suppose that
 \begin{equation}\label{eq:near-assumption}
                          L_n\longrightarrow0,
                   \qquad C_n\longrightarrow\ce.
 \end{equation}
-There are positive gaps $h_n\sim R_n/(\re B_n^2)$ and centered laws
-$X_{ni}^{\rm lat}$ on individual cosets of $h_n\Z$, coupled independently
-coordinate by coordinate to the original laws, such that
+Then there exist lattice spacings $h_n\sim R_n/(\re B_n^2)$ and centered
+distributions $X_{n,i}^{\rm lat}$ supported on cosets of $h_n\Z$ such that
 \begin{equation}\label{eq:strong-lattice}
- \sum_iW_2^2(X_{ni},X_{ni}^{\rm lat})=o(h_n^2),\qquad
- \sum_iW_3^3(X_{ni},X_{ni}^{\rm lat})=o(h_n^3).
+ \sum_{i=1}^{N_n}W_2^2(X_{n,i},X_{n,i}^{\rm lat})=o(h_n^2),\qquad
+ \sum_{i=1}^{N_n}W_3^3(X_{n,i},X_{n,i}^{\rm lat})=o(h_n^3),
 \end{equation}
-Moreover $\mathcal B(X_n)\to1$.
+and the zero-bias transport ratio satisfies $\mathcal B(X_n)\to1$.
 
-There also exist subsets $I_n$ of active original coordinates,
-$m_n=|I_n|$, and a common sign within each row, such that
-$I_n$ retains $1-o(1)$ of both total variance and original price,
-$m_nL_n^2/\be^2\to1$, and the padded IID laws
+Furthermore, there exist subsets $I_n\subseteq\{1,\ldots,N_n\}$ of cardinality
+$m_n=|I_n|$ satisfying $m_nL_n^2/\be^2\to1$ and carrying $1-o(1)$ of both
+$B_n^2$ and $R_n$, together with a sign choice $\pm W$ for each row, such that
+the padded i.i.d.\ Esseen distributions
 \[
- Q_{ni}=\Law(B_nW/\sqrt{m_n})\quad(i\in I_n),\qquad
- Q_{ni}=\delta_0\quad(i\notin I_n)
+ Q_{n,i}=\Law\!\left(\frac{B_n(\pm W)}{\sqrt{m_n}}\right)\quad(i\in I_n),\qquad
+ Q_{n,i}=\delta_0\quad(i\notin I_n)
 \]
-obey
+satisfy
 \[
- \sum_iW_2^2(X_{ni},Q_{ni})=o(B_n^2),\qquad
- \sum_iW_3^3(X_{ni},Q_{ni})=o(R_n).
+ \sum_{i=1}^{N_n}W_2^2(X_{n,i},Q_{n,i})=o(B_n^2),\qquad
+ \sum_{i=1}^{N_n}W_3^3(X_{n,i},Q_{n,i})=o(R_n).
 \]
-Here $W$ is the variance-one Esseen two-point law or its reflection.
-The total variance of the target is exactly $B_n^2$ and its original
-price is asymptotic to $R_n$.
 \end{theorem}
 
-The lattice comparators in \eqref{eq:strong-lattice} may have more
-than two atoms. Their exact coordinate variances and cubic prices can
-differ from those of the originals. The IID approximation has a weaker
-error scale. A rare integer excursion can have a negligible contribution
-relative to $R_n$ while preventing a binary approximation at scale $h_n$.
+Notice the distinction between the two approximations in Theorem~\ref{thm:near}:
+the common-lattice comparators $X_{n,i}^{\rm lat}$ in \eqref{eq:strong-lattice}
+achieve error smaller than the microscopic lattice spacing $h_n$, but may be
+supported on more than two points of their respective cosets of $h_n\Z$; the
+two-point comparators $Q_{n,i}$ achieve error smaller than the macroscopic
+array scales $B_n$ and $R_n^{1/3}$ because a rare multi-step lattice
+excursion can contribute $o(R_n)$ to the third moment while having size of
+order $h_n$.
 
-Let $C_N$ be the supremum of \eqref{eq:original-data} over all arrays
-with at most $N$ coordinates. An actual global maximizer means an array
-attaining this full supremum, with all centered finite-third-moment
-laws admitted as competitors.
+When each array in the sequence is an actual global maximizer of the
+Berry--Esseen ratio at its own number of summands $N$, both approximations
+collapse to exact identity. For each $N\ge1$, let $C_N$ denote the supremum
+of $C$ in \eqref{eq:original-data} over all independent centered arrays of at
+most $N$ summands.
 
-\begin{theorem}[Exact structure of small-Lyapunov globals]\label{thm:global}
-Suppose each row is an actual global maximizer at its own finite horizon
-$N_n$, and $L_n\to0$. Then every sufficiently late original array has
-identically distributed nonzero two-point coordinates and zero
-coordinates. The assertion applies to every original representation.
-Equivalently, there exists an absolute $\varepsilon_0>0$ such that every
-actual full global maximizer with $L<\varepsilon_0$ is padded IID binary.
+\begin{theorem}[Exact structure of small-Lyapunov global maximizers]\label{thm:global}
+There exists an absolute constant $\varepsilon_0>0$ such that every
+independent array $(X_1,\ldots,X_N)$ attaining $C_N$ with $L<\varepsilon_0$
+consists of identically distributed nondegenerate two-point summands and
+deterministic zero summands. Equivalently, along any sequence of global
+maximizers of $C_{N_n}$ with $L_n\to0$, every sufficiently late array is a
+padded i.i.d.\ two-point array.
 \end{theorem}
 
-The threshold in Theorem~\ref{thm:global} is ineffective. Zero padding
-increases the horizon without changing $L$, so the theorem is stated
-in terms of $L$. It does not specify the winning active count or binary
-probability. The universal independent sharp-constant problem outside
-the small-Lyapunov regime remains open.
+\subsection{Open questions and relationship to companion papers}
 
-The quantitative value theorem of \citet{BellSmall2026} concerns every
-array with $L\le\exp(-\exp(97))$. Its penalized counterexample selection
-and explicit local comparison are separate from the present classification
-of actual globals, whose finite ratios can be below $\ce$. We use the
-published asymptotic upper estimate
+Let us clarify how Theorems~\ref{thm:near} and~\ref{thm:global} relate to
+the companion papers in this collection and to the open finite-$N$
+conjectures:
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item \emph{Qualitative exact structure versus explicit value cutoff:}
+The companion paper \citet{BellSmall2026} proves the explicit value bound
+$\Delta\le\ce L$ for every independent array with $L\le\exp(-\exp(97))$ by
+selecting a penalized hypothetical counterexample above $\ce$. By contrast,
+at any finite $N$, the maximum $C_N$ is strictly smaller than $\ce$ on
+binomial arrays \citep{Schulz2016}. Theorem~\ref{thm:global} classifies the
+actual maximizers attaining $C_N$ when $L<\varepsilon_0$; its threshold
+$\varepsilon_0>0$ is established by compactness and is not effective.
+Instead of depending on \citet{BellSmall2026}, our proof of
+Theorem~\ref{thm:near} uses Shevtsova's published asymptotic upper bound
 \begin{equation}\label{eq:asymptotic-upper}
- d_K(S/B,Z)\le\ce L+0.2538L^{4/3}\qquad(L\le10^{-3})
+ d_{\mathrm K}(S/B,Z)\le\ce L+0.2538L^{4/3}\qquad(L\le10^{-3})
 \end{equation}
-from \citet[Corollary~4.18, p.~303]{Shevtsova2012}, rather than the
-quantitative companion theorem, for the near-Esseen selection.
-The moment and Fourier estimates extracted from that source are proved
-with their retained losses in Section~\ref{sec:shape}.
-The contamination contact argument follows
-\citet[Section~2.1, equations~(7)--(12)]{HeChengCurrent2026}, applied
-to one original coordinate rather than a common IID law.
-The changing-array common-scale and lattice arguments, and the relative
-conditional estimates required for exact phase collapse, are supplied
-in the proofs below.
+\citep[Corollary~4.18, p.~303]{Shevtsova2012} and extracts the nonnegative
+moment and tail losses directly from her smoothing proof.
+\item \emph{Fixed-$N$ conjectures for unrestricted $L$:}
+Because adjoining zero summands increases $N$ without changing $L$, an
+$N$-summand global maximizer could a priori use a bounded number of active
+summands with $L\ge\varepsilon_0$ even when $N$ is large. Proving that
+$L_n\to0$ automatically along $N_n\to\infty$---or proving that every global
+maximizer of $C_N$ is a padded i.i.d.\ two-point array for \emph{all}
+$N\ge1$---remains open and would imply $\Cind=\ce$.
+\end{enumerate}
 
-For exact structure, an approximation with an absolute error tending
-to zero is insufficient. The remaining phase noise can be smaller than
-that error by an arbitrary amount. We first confine every support phase,
-then estimate conditional phase moments relative to the actual norm
-$\E|T|$. Here a phase means the residual modulo the common lattice gap.
-The integer count labels record the nearest lattice sites; the centered
-rounding residuals may depend on their labels within each coordinate,
-while the coordinate pairs remain independent. The integer endpoint
-competitor has a loss of the actual phase norm, and
-each comparison error is $o(\E|T|)$. This is the part of the argument
-that uses full globality.
+\subsection{Overview of the proofs}
 
-\section{Finite horizons and selected endpoints}\label{sec:finite}
-We use closed and strict CDFs,
-$F_S(y)=\Pp(S\le y)$ and $F_S^-(y)=\Pp(S<y)$. Continuity of the
-normal target gives
+The proofs of Theorems~\ref{thm:near} and~\ref{thm:global} proceed through
+seven sections:
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Existence of fixed-$N$ maximizers (Section~\ref{sec:finite}):}
+Lemma~\ref{lem:attainment} proves that $C_N$ is attained for every $N\ge1$
+and that every maximizing sequence normalized to $B=1$ has a subsequence
+converging coordinatewise in $W_3$.
+\item \textbf{Retained smoothing losses and the Esseen core
+(Section~\ref{sec:shape}):} Inspecting the Prawitz smoothing proof of
+\citet[pp.~289--303]{Shevtsova2012} under $L_n\to0$ and $C_n\to\ce$ shows that
+the individual moment deficits $\delta_i=\sqrt{10}\rho_i-|\kappa_i|-3b_iv_i$,
+the truncation tails above $R^{1/6}$, and the orientation cancellation
+$\sum_i|\kappa_i|-|\sum_i\kappa_i|$ are all $o(R)$, while
+$\sum_i\sigma_i^3/R\to1/\be$ (Lemma~\ref{lem:retained}). A high-frequency
+Prawitz window lower bound (Lemma~\ref{lem:window}) then forces the variance
+distribution of $\sigma_i/R$ to concentrate at $1/\be$, yielding a core $I_n$
+of $m_n\sim\be^2/R_n^2$ summands uniformly close in $W_3$ to scaled Esseen
+two-point variables (Proposition~\ref{prop:core}).
+\item \textbf{First nonzero Fourier peak and integer lifts
+(Sections~\ref{sec:alias}--\ref{sec:joint}):} In gap units $h_n\sim\nus R_n$,
+locating the maximum of the core characteristic function near $2\pi$ allows
+us to decompose each rescaled summand as $Y_i=J_i+Z_i$, where $J_i=K_i-\E K_i$
+($K_i\in\Z$) is a centered integer variable and $Z_i$ is a centered rounding
+residual with $Q=\sum_i\E Z_i^2=O(1)$ and $\Cov(K,T)=o(\sqrt M)$
+(Lemma~\ref{lem:first-alias}). A joint local limit theorem for
+$((K-\mu)/\sqrt A,T)$ (Lemma~\ref{lem:joint-local}) and the closed-threshold
+envelope (Lemma~\ref{lem:endpoints}) then force $\E\dist(S-\vartheta_n,\Z)\to0$,
+which implies both $\mathcal B(X_n)\to1$ (by Kantorovich--Rubinstein duality
+against a sawtooth test function) and $Q=\sum_i\E Z_i^2\to0$, completing
+Theorem~\ref{thm:near}.
+\item \textbf{Elimination of rounding residuals for global maximizers
+(Sections~\ref{sec:contacts}--\ref{sec:comparison}):} For a global maximizer
+of $C_N$, the coordinatewise variational contact inequality
+\eqref{eq:full-contact-unit} (adapting \citet[Section~2.1]{HeChengCurrent2026})
+bounds all supports by $|Y_i|\le H=O(V^{1/3})$ and forces the uniform
+residual bound $\eta_n=\max_i\|Z_i\|_\infty\to0$ (Lemma~\ref{lem:whole-phase}),
+which implies $Q=o(t)$ whenever $t=\E|T|>0$. Rescaling slightly to place the
+full characteristic product at an exact local maximum at frequency $2\pi$
+gives $|\Cov(K,T)|\le KHQ$ (Lemma~\ref{lem:full-peak}). Using a Khintchine
+truncation multiplier bound (Lemma~\ref{lem:multiplier}) and a two-copy
+conditional Fourier expansion, Lemma~\ref{lem:conditional-relative} proves
+the \emph{relative} conditional first-moment bounds
+$ct\le\E(|T|\mid K=k)\le Kt$ and $|\E(T\mid K=k)|=o(t)$, valid even if
+$t=\E|T|$ tends to zero arbitrarily fast. Replacing $Y_i=J_i+Z_i$ by the
+pure lattice summands $J_i$ at the same $N$ then increases the Berry--Esseen
+ratio by at least $c't$ whenever $t>0$, forcing $t=0$ and hence $Z_i=0$
+almost surely for every $i$ (Proposition~\ref{prop:collapse}).
+\item \textbf{Discrete Green-function concavity and reduction to two points
+(Section~\ref{sec:lattice}):} Once all summands lie on cosets of $h_n\Z$, a
+local Edgeworth expansion of the deleted point mass differences shows that
+the second difference $\Delta^2g_i(u)$ of the contact function on the lattice
+coset is strictly negative between support extremes. Discrete Green-function
+inversion then rules out any support span $\ge2$, reducing every nonzero
+summand to two adjacent lattice points (Lemma~\ref{lem:adjacent}), where the
+common-diameter classification of \citet[Theorem~1.1]{BellBernoulli2026}
+completes the proof of Theorem~\ref{thm:global}.
+\end{itemize}
+
+\section{Attainment of the finite-\texorpdfstring{$N$}{N} supremum}\label{sec:finite}
+
+Writing $F_S(y)=\Pp(S\le y)$ and $F_S^-(y)=\Pp(S<y)$, continuity of $\Phi$
+gives
 \begin{equation}\label{eq:branches}
- d_K(S/B,Z)=\sup_y\max\{F_S(y)-\Phi(y/B),\,
-                                  \Phi(y/B)-F_S^-(y)\}.
+ d_{\mathrm K}(S/B,Z)=\sup_{y\in\R}\max\bigl\{F_S(y)-\Phi(y/B),\,
+                                  \Phi(y/B)-F_S^-(y)\bigr\},
 \end{equation}
-Reflection turns the strict negative branch into a closed positive
-branch. For positive discrepancy, the selected closed branch attains
-its maximum: it is upper semicontinuous and tends to zero in both tails.
+and reflection $X_i\mapsto-X_i$ interchanges the two one-sided branches.
 
-\begin{lemma}[Attainment at a fixed horizon]\label{lem:attainment}
-For each finite $N$, $C_N$ is attained with zeros allowed. Every sequence
-with ratio tending to $C_N$, normalized to total variance one, has a
-subsequence converging coordinatewise in $W_3$ to a maximizing array.
+\begin{lemma}[Existence and $W_3$ compactness of fixed-$N$ maximizers]\label{lem:attainment}
+For each integer $N\ge1$, the supremum $C_N$ is attained (with zero summands
+allowed). Every sequence of $N$-summand arrays with $B=1$ and ratio tending
+to $C_N$ has a subsequence converging coordinatewise in $W_3$ to a maximizing
+array.
 \end{lemma}
 \begin{proof}
-A symmetric binary coordinate padded with zeros gives a positive
-benchmark $c_0=\Phi(1)-1/2$. Since discrepancy is at most one, a ratio
-at least $c_0$ implies $R\le1/c_0$. In the product weak topology the
-centered $N$-tuples with total variance one and that cubic budget form
-a compact set: tightness follows from the variance bound, and bounded
-third moments give uniform integrability of first and second moments.
-The cubic budget is lower semicontinuous. Convolution is weak-continuous
-for fixed $N$. CDF bracketing against the continuous normal target shows
-that discrepancy is weak-continuous. Finally
-$R\ge\sum_i(\E X_i^2)^{3/2}\ge N^{-1/2}$, so discrepancy divided by
-$R$ is upper semicontinuous. Arrays outside this compact set have smaller
-ratio than the benchmark.
-
-Along an extremizing subsequence, the discrepancies converge. Their
-cubic sums therefore converge to the discrepancy of the limiting array
-divided by $C_N$. Lower semicontinuity and maximality force equality
-with its actual cubic sum. Each individual cubic moment converges,
-because there are finitely many nonnegative terms. Weak convergence
-together with third-moment convergence is $W_3$ convergence.
+A single symmetric two-point summand padded with $N-1$ zeros achieves
+$c_0=\Phi(1)-1/2>0$, so any array with ratio $\ge c_0$ and $B=1$ satisfies
+$N^{-1/2}\le R\le1/c_0$. In the product weak topology, centered $N$-tuples
+with $B=1$ and $R\le1/c_0$ form a compact set (by tightness and uniform
+integrability of first and second moments), on which $d_{\mathrm K}(S,Z)$ is
+continuous and $R$ is lower semicontinuous. Along an extremizing subsequence,
+maximality and lower semicontinuity of each $\E|X_i|^3$ force
+$\lim_k\E|X_{k,i}|^3=\E|X_i|^3$ for every $1\le i\le N$; weak convergence
+together with convergence of third absolute moments is equivalent to
+convergence in $W_3$.
 \end{proof}
-
-The same supremum is obtained if every individual variance is required
-to be positive, by replacing zero laws with arbitrarily small centered
-bounded laws; that restricted class need not attain it. A separate
-probability-Hessian result gives at most four support points in every
-original global law and some equally optimal three-point representative
-preserving each variance and price
-\cite[Theorem~3.2]{BellExtremizers2026}.
-The exact proof below works on the original laws directly and does not
-use an existential replacement to change their support.
 
 \input{near-esseen.tex}
 \input{joint-limit.tex}
 \input{exact-globals.tex}
 
-\section{A large binary group}\label{sec:large-group-example}
-As an example of Theorem~\ref{thm:global}, suppose an actual full global
-array at horizon $M+r_M$ contains $M\to\infty$ active binary laws of a
-common diameter $h_M$, with probabilities in a fixed compact
-$J\subset(0,1)$. Let
-\[
- R_{\rm rem}=\sum_{i\text{ outside the group}}\E|X_i|^3.
-\]
-The direct original-price condition
+\section{Application to arrays containing a large two-point group}\label{sec:large-group-example}
+
+As an immediate illustration of Theorem~\ref{thm:global}, suppose a global
+maximizer of $C_{M+r_M}$ contains $M\to\infty$ active two-point summands
+sharing a support diameter $h_M>0$ with probabilities in a fixed compact set
+$J\subset(0,1)$, and that the remaining $r_M$ summands satisfy
 \begin{equation}\label{eq:large-group-price}
-                      R_{\rm rem}=o(M^{3/2}h_M^3)
+                      R_{\rm rem}:=\sum_{i\notin\text{group}}\E|X_i|^3=o(M^{3/2}h_M^3).
 \end{equation}
-is sufficient. The given group contributes variance at least
-$c_JMh_M^2$ and price at most $KMh_M^3$, so
+Because the two-point group contributes variance at least $c_JMh_M^2$ and
+third absolute moment sum at most $KMh_M^3$, the full array has Lyapunov ratio
 \[
  L\le\frac{KMh_M^3+R_{\rm rem}}
                  {(c_JMh_M^2)^{3/2}}\longrightarrow0.
 \]
-Theorem~\ref{thm:global} therefore makes every sufficiently late original
-array padded IID binary. Its common diameter is $h_M$, because the
-original group is active: each remaining coordinate is either the
-same binary law or zero. No bound on the number of remaining
-coordinates is needed beyond their stated additive price.
-
-For instance, if all remaining centered laws have support diameter at
-most $H_Mh_M$, then
-$R_{\rm rem}\le r_MH_M^3h_M^3$.
-Thus $r_MH_M^3=o(M^{3/2})$ implies
-\eqref{eq:large-group-price} directly.
+Theorem~\ref{thm:global} therefore implies that for all sufficiently large
+$M$, the entire $(M+r_M)$-summand global maximizer is a padded i.i.d.\
+two-point array of common diameter $h_M$. In particular, if all $r_M$
+remaining summands have support diameter at most $H_Mh_M$ with
+$r_MH_M^3=o(M^{3/2})$, then \eqref{eq:large-group-price} holds automatically.
 
 \begingroup\small\raggedright
 \bibliographystyle{plainnat}\bibliography{refs}

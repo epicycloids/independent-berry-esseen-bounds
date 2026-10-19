@@ -1,21 +1,25 @@
-\section{Contact calculations}\label{app:contacts}
-Throughout this appendix, suppose that two nondegenerate independent laws
-attain the maximum ratio $C=C_2\ge49/120$. The companion upper bound gives
-$C<227/500$. Each law has at most three support points, and at least one
-is a genuine triple: three distinct points with positive masses.
-Initially normalize the total variance to one. Write $F$ for the selected
-closed event probability, $D=F-\Phi(z)$, and $R$ for the sum of the two
-third absolute moments. Strict Lyapunov convexity gives $R>1/\sqrt2$.
-A representation of the threshold is a pair of support points whose sum
-is $z$. The row-count notation for the event is defined in
-Proposition~\ref{prop:finite-contact-exclusion}.
+\section{Contact calculations for two three-point summands}\label{app:contacts}
+Throughout this appendix, suppose that two nondegenerate independent centered
+distributions $X_1,X_2$ attain the two-summand supremum $C=C_2\ge49/120$.
+By Theorem~1.1 of \citet{BellIndependent2026}, $C<227/500$. By
+Lemma~\ref{lem:c2-attainment} and Theorem~\ref{thm:two-summands}, each
+marginal is supported on at most three points and at least one is a
+nondegenerate three-point distribution (a \emph{triple}, having three
+distinct atoms of positive mass).
 
-That proposition disposes of the zero-event, largest-point, and
-negative-mixed-derivative cases. The remaining arguments are indexed
-below. Transposition interchanges the two marginal laws. The certificate
-identifiers refer to domains in
-\path{certificates/finite/current-results.json}; the partitions and
-formulas are checked as described in Section~\ref{sec:verification}.
+We initially normalize total variance to $B^2=1$ and write $F$ for the
+selected closed event probability, $D=F-\Phi(z)$, and $R=\E|X_1|^3+\E|X_2|^3$
+(so that $R>1/\sqrt2$ by strict convexity of $u\mapsto u^{3/2}$). A
+\emph{representation} of the threshold $z$ is a pair of support points
+$(x_j,y_k)\in\supp X_1\times\supp X_2$ with $x_j+y_k=z$.
+
+Proposition~\ref{prop:finite-contact-exclusion} rules out the zero-event,
+largest-point, and negative-mixed-derivative downsets. The table below
+indexes the remaining downsets and threshold-representation patterns.
+Transposition interchanges the two marginal distributions, and the
+certificate identifiers refer to the domains in
+\path{certificates/finite/current-results.json} described in
+Section~\ref{sec:verification}.
 
 {\small
 \begin{longtable}{>{\raggedright\arraybackslash}p{.19\linewidth}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.45\linewidth}}
@@ -85,7 +89,7 @@ $-3/2$.\\[4pt]
 Unit-span scale &
 Translate the supports to start at zero and divide by the chosen
 outer support span. Center these raw laws when computing $V,R_0,o$.
-Setting a support span to one does not set the contact parameter to one.\\
+\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -208,11 +212,9 @@ one necessarily has
 \tag{B.3.1}\label{contact:fixed-c2-threshold-collar-1}
 \]
 
-This scalar lemma does not assume stationarity or a finite support. Its
-application to a violating fixed-$C_2$ maximum uses only the already proved
-$R_{\mathrm{normalized}}\ge 1/\sqrt{2}$ and $C\ge49/120$. It does not supply a uniform
-threshold bound for arbitrary numbers of summands, whose normalized
-additive third absolute moment sum can be arbitrarily small.
+Since any two-summand maximizer with $C\ge49/120$ satisfies
+$R_{\mathrm{normalized}}\ge1/\sqrt2$, its discrepancy obeys $D=CR_{\mathrm{normalized}}\ge d_0$
+and therefore satisfies \eqref{contact:fixed-c2-threshold-collar-1}.
 
 \paragraph{The negative threshold}
 
@@ -437,8 +439,7 @@ All event probability comes from that triple point, so
  F=l f_T(-a)=Cl(a-K)^2(a+K/2)<Cl a^3\leq CR.
 \]
 
-This contradicts $F-\Phi(z)=CR>0$. Shape $200$ need not be the full
-sum's lower endpoint, so this slightly extends the endpoint argument.
+This contradicts $F-\Phi(z)=CR>0$, excluding both $100$ and $200$.
 
 For shape $211$, the only possible representation is triple-low/Bernoulli-high.
 The two nonselected triple points have the same deletion level, hence
@@ -713,9 +714,6 @@ The unique-representation support derivative is $m f'(c)=-\phi(z)$. Therefore
  m=\frac{\phi(z)}{C(a+c)^2}.
 \tag{B.7.4}\label{contact:two-triple-nonpositive-rectangle-4}
 \]
-
-The use of \eqref{contact:two-triple-nonpositive-rectangle-4} is exactly where uniqueness of the selected representation
-is needed. The proof does not extend \eqref{contact:two-triple-nonpositive-rectangle-4} to a collision.
 
 \paragraph{A variance loss forced by the selected mass}
 
@@ -1214,10 +1212,9 @@ negative derivative. The representation identity gives
 \tag{B.10.3}\label{contact:one-triple-bernoulli-upper-shape-3}
 \]
 
-We also need $d<1$, which does not follow from \eqref{contact:one-triple-bernoulli-upper-shape-3} alone. The actual
-Bernoulli deletion levels are $1,1-r$. Set $t=e/d>0$ and
-$P(t)=t^3+3t+2$. Subtracting the two contact heights, using the smooth
-derivative equation at $-Kd$, gives exactly
+To show that $d<1$, note that the Bernoulli deletion levels are $1$ and $1-r$. Set $t=e/d>0$ and
+$P(t)=t^3+3t+2$. Subtracting the two contact heights and using the smooth
+derivative equation at $-Kd$ gives
 
 \[
  -r=f_B(Ke)-f_B(-Kd)
@@ -1855,9 +1852,8 @@ Both possible representation signs have exact closed parameter charts $0\le k\le
 \tag{B.13.1}\label{contact:lower-110-contact-reduction-1}
 \]
 
-The two charts share the $c=0$ boundary and cover the entire genuine
-equal-height representation range. Their other faces include limiting contacts
-that need not be genuine triples. Keep all faces in the certificate.
+The two charts share the $c=0$ boundary and together cover the entire
+equal-height representation range.
 
 Put
 
@@ -2803,12 +2799,8 @@ $(s_b,s_t,w) \in [0,1]^3$, set
 
 and take $c=-t(1-w)$ on the negative chart or $c=wb$ on the positive chart.
 Compute $m$ by \eqref{contact:collision-210-mass-elimination-1} or \eqref{contact:collision-210-mass-elimination-2} and retain all genuine-support, probability,
-height, slope, ratio, variance, width and global-dual constraints. Every
-original candidate has a preimage in one of these two closed three-cubes;
-the shared $c=0$ face remains covered. Conversely, any candidate satisfying
-the retained tests and four remaining equations satisfies the eliminated
-support equation identically. This statement only identifies necessary
-systems; it does not assert that every solution is a maximizing law.
+height, slope, ratio, variance, width and global-dual constraints. Every candidate has a preimage in one of these two closed unit cubes,
+including along the shared boundary $c=0$.
 
 \paragraph{Four explicit equations without an independent mass variable}
 
@@ -3624,12 +3616,10 @@ The necessary conditions from the original variance Hessian are
 \tag{B.23.8}\label{contact:three-owner-321-contact-reduction-13}
 \]
 
-To verify the normalization, start with the independent unnormalized Hessian
-derived at the end of
-Section~\ref{contact:two-triple-collision-221-reduction},
-replace its $G$ by $R/D$, and multiply all matrix entries by $D>0$.
-The raw support scale need not equal $K$ for that calculation. Formula \eqref{contact:three-owner-321-contact-reduction-12}
-uses the actual $\phi'''(z)=(3z-z^3)\phi(z)$.
+To verify this normalization, start from the unnormalized Hessian
+derived at the end of Section~\ref{contact:two-triple-collision-221-reduction},
+substitute $G=R/D$, and multiply all matrix entries by $D>0$, with
+$\phi'''(z)=(3z-z^3)\phi(z)$.
 
 \subsection{Three representations: the gap product}\label{contact:three-owner-321-gap-collar}
 Use the unit-span scale of Section~\ref{contact:three-owner-321-contact-reduction}.
@@ -3820,10 +3810,9 @@ $\mu,\nu$ appearing in $B_0$. This gives
 \tag{B.25.6}\label{contact:three-owner-321-variance-upper-6}
 \]
 
-The maximizing means lie in $[0,1]$; the displayed inequality also follows
-by completing the two squares and does not need this observation.
-The function $M$ strictly decreases on $0\le T\le 1/4$. Indeed, with
-$L=1-T$, it is
+Completing the two squares gives \eqref{contact:three-owner-321-variance-upper-6}, and
+$M(T)$ strictly decreases on $0\le T\le 1/4$. Indeed, with
+$L=1-T$, we have
 
 \[
  M=L/2-1/4+1/(2L)-1/(4L^2),\qquad
@@ -4254,8 +4243,7 @@ Finally $e>t+b-a>t$, so $o=e-t>0$. We have proved
 \tag{B.28.3}\label{contact:two-owner-321-contact-reduction-3}
 \]
 
-The strict span ordering also implies $-a<d<e$; it need not be imposed by
-a separate chart. Set $h=t+c=e-d>0$, $v=b-c>0$.
+The strict span ordering also implies $-a<d<e$. Set $h=t+c=e-d>0$ and $v=b-c>0$.
 
 \paragraph{Endpoint representations}
 
@@ -4678,19 +4666,16 @@ $g>1/20$, negative tail & 22 & 0 & $[-5/4,-3/4]$\\
 $g>1/20$, remaining thresholds & 22 & $7/200$ & $[-3/4,3/5]$\\
 \bottomrule\end{tabular}\end{center}
 
-Every row has the same $V$ interval $[2401/24964,1/2]$. The first row uses
+Every row uses the $V$ interval $[2401/24964,1/2]$. The first row uses
 \eqref{contact:endpoint-owner-321-scalar-reduction-3} directly; the others use \eqref{contact:endpoint-owner-321-scalar-reduction-4}, and the last also uses \eqref{contact:endpoint-owner-321-scalar-reduction-15}.
-Closed shared faces do not omit any genuine candidate.
 
-The whole-box derivatives are the ones in
-Section~\ref{contact:three-owner-321-scalar-closure}, with
-the displayed coefficient and slack. They hold independently of all
-candidate restrictions throughout these rectangles.
+The whole-box derivative bounds are those of
+Section~\ref{contact:three-owner-321-scalar-closure} with
+the displayed coefficient and slack.
 The fixed certificate \texttt{endpoint\_owner321} covers all three
-rectangles and proves that every point has a nonpositive applicable
-expression in \eqref{contact:endpoint-owner-321-scalar-reduction-16}.
-Hence the endpoint-representation case has no maximizing pair.
-Section~\ref{sec:verification} gives the enclosure and partition rules.
+rectangles and certifies that every point has a nonpositive applicable
+expression in \eqref{contact:endpoint-owner-321-scalar-reduction-16},
+excluding the endpoint-representation case.
 
 \subsection{Two triples: the collided asymmetric event}\label{contact:two-triple-collision-221-reduction}
 
@@ -5142,10 +5127,6 @@ The two retained representation-gradient equations can be written
  A_2(G-g)H_b-(eG-Uv)H_t=0.}
 \tag{B.32.7}\label{contact:two-triple-221-mass-elimination-7}
 \]
-
-They are just the original equations multiplied by candidate-positive
-factors. The second-middle height equation has been used exactly, not
-discarded.
 
 \paragraph{Remaining equations, probability signs and curvature}
 

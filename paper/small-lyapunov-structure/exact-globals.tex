@@ -1,629 +1,271 @@
-\section{Full contacts and every support phase}\label{sec:contacts}
-For the remainder of the proof each row is an actual full global
-maximizer and $L\to0$. The active count is at least $L^{-2}$, by
-Lyapunov and the power-mean inequality, so its horizon tends to infinity.
-An IID Esseen array at the same horizon has ratio tending to $\ce$
-\cite[pp.~160--163]{Esseen1956};
-globality and \eqref{eq:asymptotic-upper} therefore give $C\to\ce$.
-Theorem~\ref{thm:near} and all its preceding estimates apply.
+\section{Variational contacts and uniform phase confinement}\label{sec:contacts}
 
-\begin{lemma}[Original support coercivity]\label{lem:coercivity}
-Normalize total variance to one and let $R=L$.
-For all sufficiently late global rows every original support point
-satisfies $|u|\le246R^{1/3}$. At a positive closed maximizing threshold $z$,
-put $D=F(z)-\Phi(z)$, $\alpha=\phi(z)$, $A_0=(3D+z\alpha)/2$.
-For coordinate $i$, write $v=\E X_i^2$, $\rho=\E|X_i|^3$ and
-$M_i=\E[X_i|X_i|]$. The full contact inequality is
+For the remainder of the paper, each array in the sequence is a global
+maximizer of $C_{N_n}$ at its number of summands $N_n$ and satisfies
+$L_n\to0$. Since the number of nonzero summands is at least $L_n^{-2}\to\infty$,
+we have $N_n\to\infty$, and comparing with an $N_n$-summand i.i.d.\ Esseen
+array gives $C_{N_n}\to\ce$, so Theorem~\ref{thm:near} applies.
+
+\begin{lemma}[Variational contact and support coercivity]\label{lem:coercivity}
+Normalize total variance to $B=1$, so $R=L$. For all sufficiently late global
+maximizers, every support point of every summand satisfies
+$|u|\le246R^{1/3}$. At an attaining positive closed threshold $z$, with
+$D=F(z)-\Phi(z)$, $\alpha=\phi(z)$, $A_0=(3D+z\alpha)/2$, $v=\E X_i^2$,
+$\rho=\E|X_i|^3$, and $M_i=\E[X_i|X_i|]$, every summand $X_i$ satisfies
 \begin{equation}\label{eq:full-contact-unit}
  F_{-i}(z-u)+(\alpha+3CM_i)u+A_0u^2-C|u|^3
-       \le F(z)+A_0v-C\rho,
+       \le F(z)+A_0v-C\rho\qquad(u\in\R),
 \end{equation}
-with equality at every topological support point of $X_i$.
+with equality at every $u\in\supp X_i$.
 \end{lemma}
 \begin{proof}
-We use the independent-coordinate form of the contamination derivation
-of \citet[Section~2.1, equations~(7)--(12)]{HeChengCurrent2026}.
-Their variation changes the common IID law; here it changes just one
-original coordinate and retains its contribution to the additive
-absolute cubic price.
-Replace the unstandardized coordinate law by
-$(1-e)\Law(X_i)+e\delta_u$, keep its unstandardized closed threshold, and recenter
-and restandardize. The derivatives of mean, total variance, and
-original absolute cubic price are respectively
-$u,u^2-v,|u|^3-\rho-3uM_i$.
-The ratio derivative gives \eqref{eq:full-contact-unit} for every
-real $u$. Its integral under $X_i$ is equality. The deleted closed
-CDF is upper semicontinuous, so equality extends from a full-measure
-set to every topological support point, including arbitrarily small
-atoms.
-
-Eventually $C\ge199/500$, $R<1/750$ and the general bound of
-\citet[Theorem~2.1]{ChenShao2001} gives $C\le41/10$.
-Lyapunov gives $v^{3/2}\le\rho\le R$ and $v<1/2$.
-The deleted normal approximation has uniform error at most
-$(123/10)R$. Put $s=\sqrt{1-v}$. Uniform Gaussian scale estimates are
-\[
- |\Phi(z/s)-\Phi(z)-z\phi(z)v/2|\le2v^2,
-\]
-\[
- |\phi(z/s)/s-\phi(z)|\le3v/5,\qquad
- |z\phi(z/s)/(2s^3)-z\phi(z)/2|\le4v.
-\]
-They follow by differentiating in $v$ and using
-$\|(1-x^2)\phi(x)\|_\infty=\phz<2/5$ and
-$|x(3-x^2)\phi(x)|<4$. The cubic translation remainder is
-at most $\phz|u|^3/(6s^3)<|u|^3/5$.
-Substitute the deleted approximation into contact equality and use
-$|M_i|\le v$, $D\le(41/10)R$, $v^2\le\rho\le R$. This gives
-\[
- (C-1/5)|u|^3\le\frac{1023}{40}R+\frac{129}{10}v|u|
-                      +\left(\frac{123}{20}R+4v\right)u^2.
-\]
-For $|u|=R^{1/3}w$, divide by $R$ and use $v\le R^{2/3}$:
-\[
- \frac{99}{500}w^3\le\frac{1023}{40}+\frac{129}{10}w
-                                             +\frac{203}{20}w^2.
-\]
-For $w\ge1$ the right side is at most $(389/8)w^2$, so
-$w\le48625/198<246$. The other case is immediate. Reflection
-of a strict negative threshold gives the same bound.
+Perturbing $\Law(X_i)$ to $(1-e)\Law(X_i)+e\delta_u$ at the fixed closed
+threshold $z$ and recentering and restandardizing gives \eqref{eq:full-contact-unit}
+by maximality (adapting \citet[Section~2.1, eqs.~(7)--(12)]{HeChengCurrent2026}
+to a single coordinate), and upper semicontinuity of $F_{-i}(z-u)$ extends
+equality from a set of full $\Law(X_i)$-measure to $\supp X_i$. Substituting
+the deleted Berry--Esseen bound $|F_{-i}(z-u)-\Phi((z-u)/\sqrt{1-v})|\le(123/10)R$
+\citep[Theorem~2.1]{ChenShao2001} into the equality at $u=R^{1/3}w\in\supp X_i$
+gives $(99/500)w^3\le1023/40+(129/10)w+(203/20)w^2$, which forces $w<246$.
 \end{proof}
 
-In the selected gap units write the original laws as $Y_i=J_i+Z_i$
-from Lemma~\ref{lem:first-alias}. Put
-\[
- V=\sum_i\E Y_i^2,\quad d=V^{-1/2},\quad P=\sum_i\E|Y_i|^3,
- \quad Q=\sum_i\E Z_i^2,\quad T=\sum_iZ_i,
-\]
-and select a positive closed threshold $y$, with $z=y/\sqrt V$.
-The preceding results give
+In the gap units of Lemma~\ref{lem:first-alias}, write $Y_i=J_i+Z_i$ with
+$V=\sum_i\E Y_i^2$, $d=V^{-1/2}$, $P=\sum_i\E|Y_i|^3$, $Q=\sum_i\E Z_i^2$,
+$T=\sum_i Z_i$, and standardized threshold $z=y/\sqrt V$. By
+Theorem~\ref{thm:near} and Lemma~\ref{lem:coercivity}, $|Y_i|\le H=O(V^{1/3})$,
+$\sup_i\E|Y_i|^3=o(V)$, and
 \begin{equation}\label{eq:contact-inputs}
- P/V\to\re,\quad \kappa/V\to\te,\quad Q\to0,\quad
- z\to0,\quad D/d\to\phz(1/2+\te/6),\quad
+ \frac PV\to\re,\qquad \frac\kappa V\to\te,\qquad Q\to0,\qquad
+ z\to0,\qquad \frac Dd\to\phz\left(\frac12+\frac\te6\right),\qquad
  \Cov(K,T)=o(\sqrt V).
 \end{equation}
-The support bound is $|Y_i|\le H=O(V^{1/3})$.
-The uniform retained core and resource retention give
-$\sup_i\E|Y_i|^3=o(V)$. Consequently
-$\max_i\E Y_i^2=o(V)$ and $\sum_i\E Y_i^4=O(HV)$.
 
-\begin{lemma}[Whole-support fractional confinement]\label{lem:whole-phase}
-For the actual lifts just constructed,
+\begin{lemma}[Uniform support-phase confinement]\label{lem:whole-phase}
+For the decomposition $Y_i=J_i+Z_i$,
 \begin{equation}\label{eq:whole-phase}
-       \eta_n:=\max_i\|Z_i\|_\infty\longrightarrow0.
+       \eta_n:=\max_{1\le i\le N_n}\|Z_i\|_\infty\longrightarrow0,
 \end{equation}
-The nearest representative of $\{y+\mu\}$ on the circle tends to zero.
-If $t=\E|T|>0$, then $Q=o(t)$.
+and the fractional part $\{y+\mu\}$ converges to $0$ modulo $1$. In
+particular, whenever $t:=\E|T|>0$, we have $Q=o(t)$.
 \end{lemma}
 \begin{proof}
-The modular concentration and $Q\to0$ already proved imply that
-$\{y+\mu\}$ tends to zero on the circle. This also follows directly
-from the saturated closed envelope and $T\to0$ in $L^2$.
-
-Delete any one coordinate. Let its original variance be $v_i$, its
-deleted original variance be $w_i=V-v_i$, and its integer deleted
-variance be $A_i$. Uniformly in the deletion,
-\[
- w_i\sim V,\quad A_i-w_i=o(\sqrt V),\quad
- \kappa(K_{-i})/A_i-\kappa(Y_{-i})/w_i=o(1).
-\]
-The total covariance is $o(\sqrt V)$ and each individual deleted
-covariance is at most $(H+1)\sqrt Q=o(\sqrt V)$.
-Cubic differences are at most
-$K(\sqrt{HVQ}+HQ+Q)=o(V)$. The retained core still damps all
-deleted products. Lemma~\ref{lem:integer} therefore applies uniformly
-after these deletions. Its fourth-moment version has a zero-cell
-CDF remainder $O(H/V)=o(d)$ and exponentially small outer-frequency
-error; it follows by the same inversion with log remainder
-$O(HV u^4)$.
-
-For $|u|\le H$, set
-\[
- x_i=(y-u)/\sqrt{w_i},\quad \gamma_i=\kappa(Y_{-i})/w_i,\quad
- G_i(u)=\Phi(x_i)+w_i^{-1/2}\phi(x_i)
-                      \{1/2+\gamma_i(1-x_i^2)/6\},
-\]
-and $\tau_i(u)=\{y-u+\mu_{-i}\}$. If $\tau_i(u)$ stays in
-$[\epsilon,1-\epsilon]$, the deleted all-layer bound gives a crossing
-error at most
-\[
- \sum_{\ell\in\Z}\frac{KQd}{(\ell-\tau_i(u))^2}=o(d).
-\]
-No stationary covariance is needed after deletion: the quotient-free
-second-moment integrand is bounded by
-$K[Q+A_iQu^2]e^{-cVu^2}$. Thus uniformly over this phase range,
+For any deleted coordinate $i$ and $|u|\le H$, if the deleted fractional part
+$\tau_i(u)=\{y-u+\mu_{-i}\}$ lies in $[\epsilon,1-\epsilon]$, then
+Lemma~\ref{lem:integer} applied to the deleted sum gives
 \begin{equation}\label{eq:away-phase}
-               F_{-i}(y-u)=G_i(u)-d\phz\tau_i(u)+o(d).
+               F_{-i}(y-u)=G_i(u)-d\phz\tau_i(u)+o(d),
 \end{equation}
-
-In gap units the contact score and level are
-\[
- g_i(u)=F_{-i}(y-u)+b_i u+A_0u^2-\lambda|u|^3,\quad
- \ell_i=F(y)+A_0v_i-\lambda\rho_i,
-\]
-\[
- b_i=d\phi(z)+3\lambda\E[Y_i|Y_i|],\quad
- \lambda=D/P=Cd^3,\quad A_0=(3D+z\phi(z))/(2V).
-\]
-They satisfy $g_i\le\ell_i$, with equality on all original supports.
-We claim
+where $G_i(u)=\Phi(x_i)+w_i^{-1/2}\phi(x_i)\{1/2+\gamma_i(1-x_i^2)/6\}$
+($x_i=(y-u)/\sqrt{w_i}$) is the smooth deleted Edgeworth approximation, which
+satisfies uniformly for $|u|\le H$:
 \begin{equation}\label{eq:smooth-contact-bound}
        G_i(u)+b_iu+A_0u^2-\lambda|u|^3-\ell_i\le o(d)
 \end{equation}
-uniformly over $i$ and $|u|\le H$.
-At $u=0$ the leading deleted-variance term is
-$z\phi(z)v_i/(2V)$, exactly the same as its term in $A_0v_i$.
-The second-order error is $O(d^4v_i^2)\le O(d^4H^4)=o(d)$;
-the remaining level terms are $O(d^3v_i+d^3\rho_i)=o(d)$.
-For changes from zero to $u$, cancel the normal quadratic threshold term
-before expansion. The linear derivative error is $O(d^3v_i)$,
-the remaining quadratic terms are $O(d^3u^2)$, and the normal cubic
-remainder is at most $(\phz/6+o(1))d^3|u|^3$.
-The even Edgeworth correction has changes at most
-$K(d^2|z||u|+d^3u^2)$. Thus, since $C\to\ce>\phz/6$,
-the left side of \eqref{eq:smooth-contact-bound} is at most
-\[
- -cd^3|u|^3+K d^3u^2+K d^3v_i|u|+K d^2|z||u|+o(d).
-\]
-Young's inequality absorbs the positive terms, leaving
-$O(d^3+d^3v_i^{3/2}+d^{3/2}|z|^{3/2})=o(d)$, since
-$v_i^{3/2}\le\rho_i=o(V)$. This proves the claim.
-
-If an original support phase $u+\E K_i$ stayed a positive circle
-distance from zero, its deleted phase $\tau_i(u)$ would stay away
-from the boundary because $\{y+\mu\}\to0$. Equations
-\eqref{eq:away-phase} and \eqref{eq:smooth-contact-bound} would give
-$g_i(u)<\ell_i$, contradicting its exact original contact.
-Hence every support phase approaches its integer coset uniformly.
-The aligned errors lie in $[-1/2,1/2]$ and their means tend uniformly
-to zero, proving \eqref{eq:whole-phase}.
-Finally independence gives
-$\E T^4\le3Q^2+\eta_n^2Q$; interpolation implies
-$t\ge Q/\sqrt{3Q+\eta_n^2}$, hence $Q=o(t)$ when $t>0$.
+(since $C\to\ce>\phz/6$ makes the cubic coefficient $-\lambda+\phz d^3/6$
+strictly negative). If $u\in\supp Y_i$ had $u+\E K_i$ bounded away from $\Z$,
+then $\tau_i(u)$ would stay in $[\epsilon,1-\epsilon]$ (since $\{y+\mu\}\to0$)
+and \eqref{eq:away-phase}--\eqref{eq:smooth-contact-bound} would give strict
+inequality in \eqref{eq:full-contact-unit}, contradicting $u\in\supp Y_i$.
+Thus $\eta_n=\max_i\|Z_i\|_\infty\to0$. Finally, $\E T^4\le3Q^2+\eta_n^2Q$
+and $t=\E|T|\ge Q^{3/2}/(\E T^4)^{1/2}\ge Q/\sqrt{3Q+\eta_n^2}$ imply
+$Q=o(t)$ whenever $t>0$.
 \end{proof}
 
-\section{Relative conditional phase moments}\label{sec:relative}
-We now retain the actual phase norm in the local estimates. Before
-conditioning, we move the same integer labels to a stationary peak
-of the full characteristic product. This supplies the stronger
-covariance estimate required below.
+\section{Relative conditional first-moment bounds}\label{sec:relative}
 
-\begin{lemma}[The same lifts at a full peak]\label{lem:full-peak}
-After a common scaling tending to one, the original laws and the same
-integer labels satisfy
+To compare the global maximizer against its exact integer rounding $J_i$ when
+$t=\E|T|>0$ is arbitrarily small, we first adjust the common scale by
+$1+\delta=1+o(A^{-1/2})$ to place the full characteristic product at its exact
+local maximum near $2\pi$, keeping the integer labels $K_i$ unchanged.
+
+\begin{lemma}[Alignment at the exact full-product peak]\label{lem:full-peak}
+After a common rescaling by $1+o(A^{-1/2})$, the summands $Y_i=J_i+Z_i$
+retain the same integer parts $J_i$ and satisfy \eqref{eq:whole-phase} and
 \begin{equation}\label{eq:relative-hypotheses}
- A=\Var K\to\infty,\quad |J_i|\le H=O(A^{1/3}),\quad
- \sum_i\E|J_i|^3=O(A),\quad Q\to0,\quad
-                 |\Cov(K,T)|\le KHQ,
+\begin{gathered}
+ A=\Var K\to\infty,\qquad |J_i|\le H=O(A^{1/3}),\\
+ \sum_{i=1}^N\E|J_i|^3=O(A),\qquad Q\to0,\qquad
+                 |\Cov(K,T)|\le KHQ.
+\end{gathered}
 \end{equation}
-as well as \eqref{eq:whole-phase}. The retained core still has at
-least $cA$ laws with masses at two adjacent integers bounded below
-by $c>0$; the selected threshold has circle phase tending to zero.
 \end{lemma}
 \begin{proof}
-For bounded $x$ the integer sum satisfies
-$|\E e^{i(2\pi+x/\sqrt A)\sum J_i}|\to e^{-x^2/2}$ uniformly
-on compact $x$ intervals, by its cubic $O(A)$ log expansion.
-The original and integer characteristic functions differ there by at
-most $K\E|T|\to0$. The actual full modulus at $2\pi$ tends to
-one, while its values at $2\pi\pm1/\sqrt A$ tend to $e^{-1/2}$.
-Its maximum on that interval is interior, at
-$s=2\pi+x_n/\sqrt A$ with $x_n\to0$.
-Put $a=s/(2\pi)=1+\delta$ and keep exactly the same $J_i$:
-\[
-        Y_i^{\rm new}=aY_i,\qquad Z_i^{\rm new}=Z_i+\delta Y_i.
-\]
-Then $\delta\sqrt A\to0$,
-$\eta_{\mathrm{new}}\le\eta+|\delta|H\to0$, and
-$Q_{\mathrm{new}}\le2Q+2\delta^2V\to0$.
-The selected threshold's phase changes by $\delta y=o(1)$.
-
-Align the individual arguments by
-$\beta_i=(2\pi)^{-1}\arg\E e^{2\pi iZ_i^{\rm new}}$.
-The errors $E_i=Z_i^{\rm new}-\beta_i$ remain inside
-$[-1/2,1/2]$; their nearest integer labels are unchanged.
-Centering them returns $Z_i^{\rm new}$ exactly. The sine identity
-and $\E Z_i^{\rm new}=0$ give
-\[
- |\beta_i|\le K\E|Z_i^{\rm new}|^3
- \le K\eta_{\mathrm{new}}\E(Z_i^{\rm new})^2,\qquad
- \sum_i\E E_i^2=Q_{\mathrm{new}}(1+o(1)).
-\]
-Full log-modulus stationarity at $2\pi$ is
-$\sum_i\E[Y_i^{\rm new}\sin(2\pi E_i)]/r_i=0$.
-Removing denominators and replacing sine by its linear term costs
-at most $KH\sum_i\E E_i^2$, using bounded original support and
-$1-r_i\le K\E E_i^2$.
-Thus $|\Cov(\sum Y_i^{\rm new},T_{\mathrm{new}})|\le KHQ_{\mathrm{new}}$.
-Subtract $Q_{\mathrm{new}}$ to obtain \eqref{eq:relative-hypotheses}.
-All resource limits are invariant under the common scaling. No
-stationarity has been imposed on the rounded comparator.
+Because $|\E e^{\ii(2\pi+x/\sqrt A)\sum_i J_i}|\to e^{-x^2/2}$ and $T\to0$ in
+$L^1$, the full product $|\E e^{\ii s\sum_i Y_i}|$ attains a local maximum at
+$s=2\pi(1+\delta)$ with $\delta=o(A^{-1/2})$. Rescaling $Y_i$ by $1+\delta$
+and realigning the phases $\beta_i=(2\pi)^{-1}\arg\E e^{2\pi\ii Z_i^{\rm new}}$
+keeps the nearest-integer labels $K_i$ unchanged, while stationarity
+$\sum_i\E[Y_i^{\rm new}\sin(2\pi E_i)]/r_i=0$ at the full peak yields
+$|\Cov(\sum_i Y_i^{\rm new},T_{\rm new})|\le KHQ_{\rm new}$, proving
+\eqref{eq:relative-hypotheses}.
 \end{proof}
 
-\begin{lemma}[A multiplier first-moment bound]\label{lem:multiplier}
-For independent centered $Z_i$ and $t=\E|\sum Z_i|$, any
-same-coordinate multipliers $W_i$ with $\|W_i\|_\infty\le M_W$
-satisfy
+\begin{lemma}[Multiplier bound in terms of $t=\E|\sum_i Z_i|$]\label{lem:multiplier}
+Let $Z_1,\ldots,Z_N$ be independent centered random variables with
+$t=\E|\sum_{i=1}^N Z_i|$. For any random variables $W_1,\ldots,W_N$ such that
+each pair $(W_i,Z_i)$ is independent of $(W_j,Z_j)_{j\ne i}$ and
+$\|W_i\|_\infty\le M_W$,
 \begin{equation}\label{eq:multiplier}
- \left|\sum_i\E W_iZ_i\right|
-       \le8t\left(\sum_i\E W_i^2\right)^{1/2}+5M_Wt.
+ \left|\sum_{i=1}^N\E[W_iZ_i]\right|
+       \le8t\left(\sum_{i=1}^N\E W_i^2\right)^{1/2}+5M_Wt.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Let $Z_i'$ be independent copies and $D_i=Z_i-Z_i'$. By the
-second/fourth-moment Khintchine estimate,
-$\E(\sum D_i^2)^{1/2}\le2\sqrt3\,t=:C_0t$.
-Truncate at $b=4C_0t$. Markov gives probability at least $3/4$
-that all other differences are small. Disjoint events with exactly
-one large difference therefore give
-$\sum\E[|D_i|\ind_{\{|D_i|>b\}}]\le(4/3)C_0t<5t$.
-For $U=\sum\E[D_i^2\ind_{\{|D_i|\le b\}}]$, independence and
-second/fourth interpolation give
-$U/\sqrt{U+b^2}\le\E(\sum D_i^2\ind_{\{|D_i|\le b\}})^{1/2}
-\le C_0t$, hence $U<60t^2$.
-Since $\E W_iZ_i'=0$, apply Cauchy to the small differences and
-the uniform multiplier bound to the others. If $t=0$, independence
-forces every centered phase to be zero and the result is immediate.
+Let $Z_i'$ be an independent copy of $Z_i$ (independent of $W_i$) and set
+$D_i=Z_i-Z_i'$. By Khintchine's inequality, $\E(\sum_i D_i^2)^{1/2}\le2\sqrt3\,t=:C_0t$.
+Truncating at $b=4C_0t$, Markov's inequality gives
+$\Pp(\max_{j\ne i}|D_j|\le b)\ge3/4$, so summing over the disjoint events
+where exactly one $|D_i|>b$ yields $\sum_i\E[|D_i|\ind_{\{|D_i|>b\}}]\le(4/3)C_0t<5t$.
+For $U=\sum_i\E[D_i^2\ind_{\{|D_i|\le b\}}]$, second/fourth-moment
+interpolation gives $U/\sqrt{U+b^2}\le C_0t$, so $U<60t^2$. Applying
+$\E[W_iZ_i]=\E[W_iD_i]$, Cauchy--Schwarz on $\{|D_i|\le b\}$, and
+$\|W_i\|_\infty\le M_W$ on $\{|D_i|>b\}$ proves \eqref{eq:multiplier}.
 \end{proof}
 
-The inputs for the next lemma are the independent coordinate pairs
-$(K_i,Z_i)$ from Lemma~\ref{lem:full-peak}, with $K_i\in\Z$,
-$J_i=K_i-\E K_i$, and $\E Z_i=0$. They obey
-\eqref{eq:relative-hypotheses}, $\max_i\|Z_i\|_\infty\to0$, and have
-a core of at least $cA$ laws with two adjacent integer masses bounded
-below. This core supplies the uniform local estimates after finitely
-many deletions. The integer label and residual within one pair may
-be dependent. There is no lower bound on the positive norm $t$.
-
-\begin{lemma}[Relative conditional first moments]\label{lem:conditional-relative}
-Under these hypotheses, whenever $t=\E|T|>0$, for
-each fixed $B_0$ and uniformly over $|k-\mu|\le B_0\sqrt A$,
+\begin{lemma}[Relative conditional first-moment bounds]\label{lem:conditional-relative}
+Under the hypotheses of Lemma~\ref{lem:full-peak}, whenever $t=\E|T|>0$, for
+each fixed $B_0>0$ and uniformly over $|k-\mu|\le B_0\sqrt A$,
 \begin{equation}\label{eq:conditional-relative}
  c\,t\le\E(|T|\mid K=k)\le Kt,\qquad
                       |\E(T\mid K=k)|=o(t).
 \end{equation}
-The constants and the relative errors are uniform even if $t$ tends
-to zero arbitrarily fast.
 \end{lemma}
 \begin{proof}
-Take two independent row copies, with differences
-$D_i=Z_i-Z_i'$ and $D=\sum D_i$. Then
-$t\le\E|D|\le2t$ and
-$\E(\sum D_i^2)^{1/2}\le2\sqrt3\,t$.
-Fix a large constant $B$, truncate at $b=Bt$, and put
-\[
- d_i=D_i\ind_{\{|D_i|\le b\}},\quad W=\sum_i d_i,\quad
- U=\sum_i\E d_i^2,\quad
- \Delta=\sum_i\E[|D_i|\ind_{\{|D_i|>b\}}].
-\]
-The $d_i$ are independent, centered, and antisymmetric under exchange
-of copies. The preceding truncation calculation gives
+Take two independent copies $(K,T)$ and $(K',T')$ of the row, with
+$D_i=Z_i-Z_i'$ and $D=\sum_i D_i$. Fix a large constant $B>1$, truncate at
+$b=Bt$, and set $d_i=D_i\ind_{\{|D_i|\le b\}}$, $W=\sum_i d_i$,
+$U=\sum_i\E d_i^2$, and $\Delta=\sum_i\E[|D_i|\ind_{\{|D_i|>b\}}]$. As in the
+proof of Lemma~\ref{lem:multiplier},
 \begin{equation}\label{eq:two-copy-truncation}
- \Delta\le Kt,\quad \sum_i\Pp(|D_i|>b)\le K/B,\quad
-                      U\le K_Bt^2,\qquad K_B=O(B).
+ \Delta\le Kt,\qquad \sum_{i=1}^N\Pp(|D_i|>b)\le \frac KB,\qquad
+                      U\le K_Bt^2\quad\bigl(K_B=O(B)\bigr).
 \end{equation}
-In the last bound use $\E S_b^2\le U^2+b^2U$ and
-$\E\sqrt{S_b}\le2\sqrt3\,t$, where $S_b=\sum d_i^2$.
-
-We establish, for bounded standardized count positions, the relative
-two-count estimates
+On the frequency cell $\|s\|\le c/H$ ($s=(s_1,s_2)$), let
+$m_{ir}(s)=\E[d_i^re^{\ii(s_1J_i+s_2J_i')}]/[f_i(s_1)f_i(s_2)]$. Applying
+Lemma~\ref{lem:multiplier} to the antisymmetric variables $d_i$ bounds the
+linear twisted sum by
+\begin{equation}\label{eq:relative-Fourier}
+ \left|\sum_{i=1}^N m_{i1}(s)\right|\le Kt\Bigl\{H\|s\|
+  +(\sqrt{HA}+H^2)\|s\|^2+(H^2\sqrt A+H^3)\|s\|^3\Bigr\},
+\end{equation}
+which is $o(t)$ on the Gaussian scale $\|s\|=O(A^{-1/2})$. Fourier inversion
+of the second and fourth moments of $W$ (using \eqref{eq:torus-damping}
+outside $\|s\|\le c/H$) yields, uniformly for $|k_1-\mu|,|k_2-\mu|\le B_0\sqrt A$,
 \begin{equation}\label{eq:two-count-moments}
  \E(W^2\mid K=k_1,K'=k_2)=U+o(t^2),\qquad
  \E(W^4\mid K=k_1,K'=k_2)\le C_Bt^4.
 \end{equation}
-Here $C_B$ is distinct from the variance constant $K_B$:
-we may take $C_B=O(B^3)$ for each fixed count range.
-Indeed its leading terms are $U^2+b^2U$, and
-$U\le K_Bt^2$ with $K_B=O(B)$ and $b=Bt$.
-We fix $B$ before letting the row index tend to infinity.
-The estimates hold uniformly after one pair coordinate is specified and
-removed; its integer shifts have size $O(H)=o(\sqrt A)$.
-
-Here are the Fourier estimates retaining their relative factors.
-For $s=(s_1,s_2)$ in $\|s\|\le c/H$, let
-$f_i(u)=\E e^{iuJ_i}$,
-$\Psi(s)=\prod_i f_i(s_1)f_i(s_2)$, and
-\[
- m_{ir}(s)=\frac{\E[d_i^r e^{i(s_1J_i+s_2J_i')}]}
-                                      {f_i(s_1)f_i(s_2)},\quad1\le r\le4.
-\]
-The denominators are bounded away from zero in this cell only.
-Antisymmetry gives $\E d_i=0$ and
-$c_i=\E J_id_i=-\E J_i'd_i$.
-For the untruncated differences the summed covariance is
-$\Cov(K,T)=O(HQ)$; since $|Z_i|\le1$, interpolation gives $Q\le2t$
-eventually. Removing tails costs at most $2H\Delta$ and removing
-one pair at most $4Ht$, so $|\sum c_i|\le KHt$ uniformly.
-Lemma~\ref{lem:multiplier}, applied to the independent $d_i$, gives
-\[
- \sum_i\E[(J_i^2+J_i'^2)|d_i|]
-                         \le K(\sqrt{HA}+H^2)t,
-\]
-\[
- \sum_i a_i|c_i|\le K(H^2\sqrt A+H^3)t,\qquad a_i=\E J_i^2.
-\]
-For these estimates the multipliers are respectively
-$(J_i^2+J_i'^2)\operatorname{sign}d_i$ and
-$a_i|J_i|\operatorname{sign}d_i$; their summed squared moments are
-$O(HA)$ and $O(H^4A)$, and their uniform bounds are $O(H^2),O(H^3)$.
-Also $\E|W|\le\E|D|+\Delta=O(t)$.
-Numerator and denominator Taylor expansions now give
-\begin{equation}\label{eq:relative-Fourier}
- \left|\sum_i m_{i1}\right|\le Kt\left\{H\|s\|
-  +(\sqrt{HA}+H^2)\|s\|^2+(H^2\sqrt A+H^3)\|s\|^3\right\}.
-\end{equation}
-All terms are $o(t)$ on the Gaussian integration scale. Further,
-\[
- \left|\sum_i m_{i2}-U\right|\le KU(H\|s\|+H^2\|s\|^2),\quad
- \sum_i|m_{i1}|^2\le KH^2U\|s\|^2,
-\]
-\[
- \sum_i|m_{i2}|\le KU,\qquad\sum_i|m_{i3}|\le KbU,
-                         \qquad\sum_i|m_{i4}|\le Kb^2U.
-\]
-The exact second transform is
-$\Psi[(\sum m_{i1})^2+\sum(m_{i2}-m_{i1}^2)]$.
-Its leading term $U\Psi$ integrates to
-$U\Pp(K=k_1)\Pp(K'=k_2)$ exactly, and its remaining Gaussian
-integral is $o(t^2/A)$. For the fourth transform use
-\[
- \Psi(M_1^4+6M_1^2C_2+3C_2^2+4M_1C_3+C_4),
-\]
-where $M_1=\sum m_{i1}$ and $C_r$ are the sums of the individual
-cumulant polynomials:
-\[
- C_2=\sum(m_{i2}-m_{i1}^2),\quad
- C_3=\sum(m_{i3}-3m_{i2}m_{i1}+2m_{i1}^3),
-\]
-\[
- C_4=\sum(m_{i4}-4m_{i3}m_{i1}-3m_{i2}^2
-                         +12m_{i2}m_{i1}^2-6m_{i1}^4).
-\]
-The displayed bounds give integral at most $C_Bt^4/A$.
-Outside the zero cell use quotient-free partition formulas and
-delete at most four pair coordinates. Every singleton keeps a
-relative factor because antisymmetry gives
-\[
- |\E[d_i e^{i(s_1J_i+s_2J_i')}]|
- \le K\|s\|\E[|d_i||J_i-J_i'|],\qquad
- \sum_i\E[|d_i||J_i-J_i'|]\le K\sqrt A\,t.
-\]
-The last bound is again Lemma~\ref{lem:multiplier}.
-Other numerators sum to at most $U,bU,b^2U$.
-Torus damping leaves a fixed polynomial in $A$ times $t^2$ or $t^4$
-times $e^{-cA/H^2}$, which is negligible as $H=O(A^{1/3})$.
-The ordinary integer local limit gives
-$\Pp(K=k_1)\Pp(K'=k_2)\ge c(B_0)/A$ and deletion ratios $1+o(1)$
-uniform over shifts $O(H)$. Divide these relative integrals to obtain
-\eqref{eq:two-count-moments}.
-
-If $\Delta\ge\epsilon t$, condition on an actually large coordinate
-and its two integer labels. Fixed-deletion ratios preserve its tail
-integral up to $1+o(1)$. Other large coordinates have conditional
-union probability $O(1/B)$, and the truncated remainder has
-conditional first absolute moment at most $K\sqrt B\,t$.
-On the disjoint events with exactly one large coordinate,
-\[
- \E[|D_i+\sum_{j\ne i}d_j|\ind_{\{\text{others small}\}}
-                     \mid\text{labels and counts}]
- \ge(1-K/B)|D_i|-K\sqrt B\,t\ge |D_i|/2
-\]
-for sufficiently large fixed $B$. Thus conditional $\E|D|\ge c\Delta$.
-Otherwise $\Delta<\epsilon t$ and
-$\E|W|\ge(1-\epsilon)t$, so $U\ge(1-\epsilon)^2t^2$.
-Interpolation in \eqref{eq:two-count-moments} gives conditional
-$\E|W|\ge c_Bt$. Conditional discarded-tail first moments are
-at most $2\Delta$, by one-pair deletion ratios. Choose
-$\epsilon<c_B/4$ after $B$, to obtain conditional $\E|D|\ge c_Bt/2$.
-The same decomposition gives the upper bound $K(B)t$.
-With $k_1=k_2=k$, the two rows are conditionally independent and
-$\E(|D|\mid K=K'=k)\le2\E(|T|\mid K=k)$, proving the lower bound.
-
-For the one-count mean, apply Lemma~\ref{lem:multiplier} directly
-to $Z_i$. Its zero-cell singleton sum has the analogue of
-\eqref{eq:relative-Fourier}, using
-$|\Cov(K,T)|=O(HQ)=O(Ht)$. Gaussian inversion gives $o(t/\sqrt A)$,
-and quotient-free outer inversion retains $t$ by the singleton
-multiplier bound. Divide by the central mass to obtain mean $o(t)$.
-Finally conditional Jensen gives
-\[
- \E(|T|\mid K=k)\le\E(|T-T'|\mid K=K'=k)
-                                      +|\E(T\mid K=k)|\le K(B)t.
-\]
+If $\Delta\ge\epsilon t$, conditioning on the disjoint events where a single
+$|D_i|>b$ gives $\E(|D|\mid K=K'=k)\ge c\Delta\ge c\epsilon t$ for large $B$;
+if $\Delta<\epsilon t$, then $U\ge(1-\epsilon)^2t^2$ and moment interpolation
+in \eqref{eq:two-count-moments} gives $\E(|W|\mid K=K'=k)\ge c_Bt$, so
+choosing $\epsilon<c_B/4$ gives $2\E(|T|\mid K=k)\ge\E(|D|\mid K=K'=k)\ge c_Bt/2$.
+Finally, applying the one-copy Fourier expansion with \eqref{eq:relative-Fourier}
+and $|\Cov(K,T)|\le KHQ=o(Ht)$ gives $|\E(T\mid K=k)|=o(t)$.
 \end{proof}
 
-\section{An exact integer endpoint comparison}\label{sec:comparison}
-Under the preceding hypotheses, $\eta\to0$, $Q=o(t)$ when $t>0$,
-and the nearest selected integer phase $\theta$ tends to zero.
-For its central layer $k$, put
+\section{Exact phase collapse for global maximizers}\label{sec:comparison}
+
+For the central integer layer $k=\operatorname{round}(y+\mu)$ and offset
+$\theta=y+\mu-k\to0$, define
 \[
  w(\theta)=\Pp(T>\theta\mid K=k),\qquad
                         f(\theta)=\theta+w(\theta).
 \]
-The strict inequality in $w$ is dictated by the closed original CDF.
 
-\begin{lemma}[Relative closed loss]\label{lem:closed-loss}
-If $t>0$, then at the selected layer and phase
+\begin{lemma}[Relative closed-threshold loss]\label{lem:closed-loss}
+If $t=\E|T|>0$, then at the attaining central layer $k$ and offset $\theta$,
 \begin{equation}\label{eq:relative-closed-loss}
         f(\theta)\ge ct,\qquad
                    |\theta|+w(\theta)+t\le K f(\theta).
 \end{equation}
 \end{lemma}
 \begin{proof}
-Condition on $K=k$ and truncate $T$ to
-$X=T\ind_{\{|T|\le1/4\}}$. The all-layer second-moment bound,
-divided by the central count mass, gives $\E(T^2\mid K=k)\le KQ$.
-Its CDF, mean and first absolute moment change under this truncation
-by $O(Q)=o(t)$. Let $m=\E X=o(t)$ and $s=\E|X|\ge ct$.
-For $0\le\theta\le1/4$, with $u=\Pp(X>\theta)$,
-\[
-        s=2\E X_+-m\le2\theta+u/2-m\le2(\theta+u)-m.
-\]
-For $\theta=-b\in[-1/4,0)$,
-\[
- m\le(1/4+b)u-b\le u/2-b,\qquad s\le u/2-m.
-\]
-Thus $\theta+u\ge s+2m$ in the negative case, and
-$u\le2(\theta+u-m)$, $b\le\theta+u-2m$.
-These inequalities bound $|\theta|+u+t$ by a fixed multiple of
-$\theta+u$. Transfer the $o(t)$ truncation errors back to $T$.
+Truncating $T$ to $X=T\ind_{\{|T|\le1/4\}}$ changes its conditional CDF,
+mean, and $L^1$ norm by $O(Q)=o(t)$ (via \eqref{eq:all-layer}), so
+$m=\E(X\mid K=k)=o(t)$ and $s=\E(|X|\mid K=k)\ge ct$ by
+Lemma~\ref{lem:conditional-relative}. For $0\le\theta\le1/4$,
+$s=2\E(X_+\mid K=k)-m\le2\theta+\frac12\Pp(X>\theta\mid K=k)-m\le2(\theta+u)-m$;
+for $\theta=-b\in[-1/4,0)$, $m\le(1/4+b)u-b\le u/2-b$ and $s\le u/2-m$ give
+$\theta+u\ge s+2m$, proving \eqref{eq:relative-closed-loss}.
 \end{proof}
 
-\begin{proposition}[Collapse of original phase noise]\label{prop:collapse}
-Every sufficiently late actual full global row has $T=0$ almost surely.
-Each original coordinate is then exactly on its constructed lattice coset.
+\begin{proposition}[Exact collapse of rounding residuals]\label{prop:collapse}
+For every sufficiently late global maximizer in the sequence, $T=0$ almost
+surely, so every summand $Y_i=J_i$ is supported on a single coset of $\Z$.
 \end{proposition}
 \begin{proof}
-Suppose $t>0$ along a subsequence. Retain exactly the same integer
-labels and replace the original laws $Y_i=J_i+Z_i$ by the centered
-integer laws $J_i$ at the same horizon. Write $k$ for the integer
-nearest $y+\mu$ and $\theta=y+\mu-k$. The exact closed-CDF difference is
+Suppose $t=\E|T|>0$ along a subsequence. Compare the global maximizer
+$(Y_1,\ldots,Y_N)$ directly against the centered integer array
+$(J_1,\ldots,J_N)$ at the same number of summands $N$ and integer threshold
+$k-\mu$. By \eqref{eq:all-layer}, decomposing $\{S\le k+\theta-\mu\}$ by the
+value of $K$ gives
 \begin{equation}\label{eq:exact-crossing}
  F_Y(k+\theta-\mu)=F_K(k)-p_kw(\theta)+E_{\rm cross},\qquad
-                         |E_{\rm cross}|\le KdQ.
+                         |E_{\rm cross}|\le KdQ=o\bigl(df(\theta)\bigr).
 \end{equation}
-The central term is exact. Every other count layer is at distance
-at least $1/2$ from this threshold. Its crossing probability is bounded
-by the all-layer second moment divided by its squared distance;
-summing the inverse-square series proves the stated error.
-
-Let $A=\Var K$, $V=\Var\sum Y_i$, $P_Y=\sum\E|Y_i|^3$, and
-$P_J=\sum\E|J_i|^3$. Full-peak covariance gives
-$|V-A|\le KHQ$. The integer local limit gives
-$p_k=d\phi(z)+o(d)$, uniformly at this bounded standardized threshold.
-The normal threshold shift is $d\phi(z)\theta+O(d^2\theta^2)$;
-changing its variance costs $O(HQ/A)=o(df)$.
-In \eqref{eq:exact-crossing}, $dQ=o(df)$ and both $|\theta|$ and
-$w$ are controlled by $f$ from Lemma~\ref{lem:closed-loss}.
-Consequently the selected discrepancies satisfy
+Since $p_k=d\phi(z)+o(d)$, $\Phi((k+\theta-\mu)/\sqrt V)=\Phi((k-\mu)/\sqrt A)+d\phi(z)\theta+o(df(\theta))$
+(using $|V-A|\le KHQ=o(At)$), and Lemma~\ref{lem:closed-loss} controls both
+$|\theta|$ and $w(\theta)$ by $f(\theta)$, the discrepancies satisfy
 \begin{equation}\label{eq:selected-comparison}
-          D_Y=D_J-d\phi(z)f(\theta)+o(df(\theta)).
+          D_Y=D_J-d\phi(z)f(\theta)+o\bigl(df(\theta)\bigr).
 \end{equation}
-The local-mass error multiplies $w$ and the normal error multiplies
-$\theta$, so they remain relative to this actual loss.
-
-For original cubic price use the centered path
-$Y_i(s)=J_i+sZ_i$, $0\le s\le1$. Its support is $O(H)$, its
-summed cubic moments are $O(A)$, and its fourth moments sum to $O(HA)$.
-Lemma~\ref{lem:multiplier}, with
-$W_i=3Y_i(s)|Y_i(s)|$, gives uniformly along the path
-\[
- \left|\frac{d}{ds}\sum_i\E|Y_i(s)|^3\right|
-           \le K(\sqrt{HA}+H^2)t=o(At).
-\]
-Thus $|P_Y-P_J|=o(At)$, retaining the original absolute price.
-Both prices are asymptotic to $\re A$. The prefactors
-$V^{3/2}/P_Y$ and $A^{3/2}/P_J$ differ by relative $o(t)$.
-At the selected competitive threshold $D_Y=O(d)$, and
-\eqref{eq:selected-comparison} gives $D_J=O(d)$ as well.
-Multiplying that exact comparison by the prefactors yields a
-positive ratio gain at least $cf\ge ct$, for all sufficiently late rows.
-The full objective of the integer competitor is at least its selected
-closed branch. It therefore contradicts full globality.
-
-Hence $t=0$ eventually. Independence and centeredness imply
-$\Var T=\sum_i\Var Z_i=0$, so every original $Z_i=0$ almost surely.
-No collision set has been held fixed during the finite comparison.
+Along the interpolation $Y_i(s)=J_i+sZ_i$ ($0\le s\le1$),
+Lemma~\ref{lem:multiplier} with $W_i=3Y_i(s)|Y_i(s)|$ bounds
+$\bigl|\frac{d}{ds}\sum_i\E|Y_i(s)|^3\bigr|\le K(\sqrt{HA}+H^2)t=o(At)$, so
+$|P_Y-P_J|=o(At)$. Consequently, the prefactors $V^{3/2}/P_Y$ and
+$A^{3/2}/P_J$ differ by $o(t)$, and \eqref{eq:selected-comparison} shows that
+$(J_1,\ldots,J_N)$ has Berry--Esseen ratio strictly larger than that of
+$(Y_1,\ldots,Y_N)$ by at least $c'f(\theta)\ge c''t>0$, contradicting global
+maximality of $(Y_1,\ldots,Y_N)$. Thus $t=0$ eventually, so $Z_i=0$ almost
+surely for all $i$.
 \end{proof}
 
-\section{Exact lattice contacts and binary support}\label{sec:lattice}
-The original laws now lie exactly on individual cosets of the same
-unit lattice in the selected gap units. The support coercivity bound
-makes them finite, while $P/V\to\re$, $\kappa/V\to\te$ and $z\to0$.
-The retained core has two adjacent atoms with masses bounded below,
-so all deleted characteristic products satisfy torus damping.
+\section{Discrete concavity and reduction to two adjacent lattice points}\label{sec:lattice}
 
-\begin{lemma}[Adjacent original contacts]\label{lem:adjacent}
-Eventually every original law is binary at adjacent integer sites or zero.
+By Proposition~\ref{prop:collapse}, for all sufficiently late global
+maximizers, each summand $Y_i$ is supported on a single coset of $\Z$.
+
+\begin{lemma}[Reduction to two adjacent lattice points]\label{lem:adjacent}
+For all sufficiently late global maximizers, every nonconstant summand $Y_i$
+is supported on two adjacent points of its lattice coset.
 \end{lemma}
 \begin{proof}
-Put $v_i=\E Y_i^2$, $w_i=V-v_i$, and let $c_i(x)$ be the mass
-function of the deleted original sum. For $x$ on its lattice coset,
-Fourier inversion with multiplier $e^{-iu}-1$ gives uniformly in
-the deletion and in $x$
+Let $c_i(x)=\Pp(\sum_{j\ne i}Y_j=x)$ be the deleted point mass function on
+its coset, with deleted variance $w_i=V-v_i$ and $d_i=w_i^{-1/2}$. Fourier
+inversion with multiplier $e^{-\ii u}-1$ and \eqref{eq:torus-damping} gives,
+uniformly in $i$ and $x$,
 \begin{equation}\label{eq:pmf-first-difference}
  c_i(x+1)-c_i(x)=d_i^2\phi'(d_ix)+\frac{d_i^3}2\phi''(d_ix)
-       +d_i^3\frac{\kappa_i}{6w_i}(H_3\phi)'(d_ix)+o(d^3),
+       +d_i^3\frac{\kappa_i}{6w_i}(H_3\phi)'(d_ix)+o(d^3).
 \end{equation}
-where $d_i=w_i^{-1/2}$ and $\kappa_i$ is the deleted signed cubic
-sum. In the cell $|u|\le c/H$ the deleted log characteristic
-function has remainder $O(HPu^4)$, since
-$\sum\E Y_j^4\le HP=O(HV)$; summed squared variances are
-absorbed by this fourth-moment bound. The first-difference multiplier
-adds a factor $O(d|s|)$ on $u=d_is$, so Gaussian integration costs
-$O(Hd^4+d^4)=o(d^3)$. Outside this cell torus damping is at most
-$e^{-cV/H^2}$. This proves \eqref{eq:pmf-first-difference} without
-dividing by an atom mass.
-
-At the selected positive closed threshold, the finite sum attains its
-discrepancy at an atom. Thus $y-u$ lies on the deleted coset for
-every test site $u$ of the original coordinate coset.
-For $|u|\le H+1$, Taylor expansion in $d_i u$, retaining $z$
-before expansion, gives
-\[
- c_i(y-u+1)-c_i(y-u)
- =-d^2z\phi(z)+d^3\phz\{u-(1+\te)/2\}
-       +o(d^3(1+|u|))+O(d^4|z|v_i).
-\]
-The last term records the deletion variance; no rate for the
-unstandardized selected threshold is imposed.
-
-For the centered second difference
-$\Delta^2g(u)=g(u+1)-2g(u)+g(u-1)$,
-the contact score has exact deleted-CDF contribution equal to the
-mass difference just displayed. Its term $2A_0=d^2z\phi(z)+3d^2D$
-cancels the leading normal term exactly. Hence
+For the contact function $g_i(u)=F_{-i}(y-u)+b_iu+A_0u^2-\lambda|u|^3$ on the
+coset of $Y_i$, its centered second difference
+$\Delta^2g_i(u)=g_i(u+1)-2g_i(u)+g_i(u-1)$ has deleted-CDF contribution
+$c_i(y-u+1)-c_i(y-u)$, whose leading $-d^2z\phi(z)$ term cancels the
+$d^2z\phi(z)$ part of $2A_0$, leaving for $|u|\le H+1$:
 \begin{equation}\label{eq:lattice-concavity}
  d^{-3}\Delta^2g_i(u)=\phz(1+u)-\ce
-       \{|u+1|^3+|u-1|^3-2|u|^3\}
+       \bigl\{|u+1|^3+|u-1|^3-2|u|^3\bigr\}
        +o(1+|u|)+O(d|z|v_i).
 \end{equation}
-The leading expression is at most $-c(1+|u|)$.
-For $|u|\ge1$ use the exact absolute-cubic difference $6|u|$;
-for $0\le u\le1$ use its bound $2+4u^2$, giving a negative
-margin since $\ce>\phz$; the negative interval has still larger
-margin. In particular there are fixed $c,K>0$ such that
-\[
- \Delta^2g_i(u)\le d^3\{KE_i-c|u|\},\qquad
-                           E_i=1+d|z|v_i.
-\]
-
-Two maximizing contacts at integer distance $L\ge2$ have all
-intermediate grid tests bounded above by their common contact value.
-For $j=\lfloor L/2\rfloor$ the discrete Green formula is
+Because $\ce>\phz$ and $|u+1|^3+|u-1|^3-2|u|^3$ equals $6|u|$ for $|u|\ge1$
+and $2+6u^2\ge2+4u^2$ for $|u|\le1$, the leading expression in
+\eqref{eq:lattice-concavity} is bounded above by $-c(1+|u|)$ with $c>0$.
+Applying the discrete Green identity on any interval of length $L\ge2$
+between two contact points $u_0,u_0+L\in\supp Y_i$,
 \[
  g_i(u_0+j)-g_i(u_0)
- =-\sum_{k=1}^{L-1}G_{jk}\Delta^2g_i(u_0+k),\quad
- G_{jk}=\frac{\min(j,k)(L-\max(j,k))}{L}.
+ =-\sum_{k=1}^{L-1}\frac{\min(j,k)(L-\max(j,k))}{L}\Delta^2g_i(u_0+k)\le0,
 \]
-Here $\sum G_{jk}=j(L-j)/2$. For $L\ge16$ the weighted average
-of $|u_0+k|$ is at least $L/32$, independently of the coset offset:
-the interval $|u|<L/16$ contains at most $L/8+1$ test sites and
-carries less than half of that Green mass. It follows that the
-original span satisfies
-\[
-                 \operatorname{span}_i\le K(1+d|z|v_i).
-\]
-Centering and $\sqrt{v_i}\le H$ give
-$\sqrt{v_i}\le K+Kd|z|H\sqrt{v_i}$.
-Since $dH\to0$, this bounds all $v_i$ and then all spans by a
-fixed constant. With these improved bounds the last term in
-\eqref{eq:lattice-concavity} vanishes uniformly. The score is
-strictly concave between original support extrema. Two contacts
-at distance at least two would have an intermediate site strictly
-above their contact value by the same Green formula, a contradiction.
-Each nonconstant original therefore has two adjacent support points.
+first bounds $L$ and $v_i$ by a uniform constant (making $d|z|v_i=o(1)$ in
+\eqref{eq:lattice-concavity}), and then implies $\Delta^2g_i(u)<0$ strictly
+at every coset point, which makes $L\ge2$ impossible. Thus $L=1$ for every
+nonconstant summand.
 \end{proof}
 
-All active coordinates now have a common diameter. Full globality
-implies that they also maximize in the restricted common-diameter class
-at this same horizon. The finite common-diameter classification of
-\citet[Theorem~1.1]{BellBernoulli2026} says that every such maximizing
-array is padded IID. Its theorem includes all horizons and has its
-finite arithmetic premises supplied there. This proves the sequence
-conclusion of Theorem~\ref{thm:global}.
-
-If no absolute $\varepsilon_0$ existed, choose at horizon $N_j$ an
-actual non-IID full global with $L<1/j$. The sequence conclusion
-would make those same original arrays padded IID eventually, a
-contradiction. This proves the qualitative threshold statement.
+Since every nonconstant summand is supported on two points at distance $1$,
+all active summands share a common support diameter. Applying Theorem~1.1 of
+\citet{BellBernoulli2026} at the same horizon $N_n$ shows that all active
+summands are identically distributed, completing the proof of
+Theorem~\ref{thm:global}.

@@ -1,29 +1,20 @@
-# Interval evaluation code
+# Interval Evaluation Kernel
 
-These modules contain the interval arithmetic and evaluators used to
-subdivide the feasible moment parameters and bound characteristic functions
-and smoothing integrals on each parameter box.
-The JSON files supply scalar coefficient tables. The
-[cover](../../certificates/cover.json) records the SHA-256 of each source
-and table file used by the calculation.
+Navigation: [Repository Root](../../README.md) · [Verification Guide](../README.md) · [Scalar Certificates](../../certificates/scalar/README.md)
 
-The checking wrappers reconstruct stored partitions or recompute numerical
-bounds using these routines. The [verification guide](../README.md)
-describes the commands and the scope of each check; the
-[scalar guide](../../certificates/scalar/README.md) describes the coefficient
-certificates.
+---
 
-The [fixed-input evaluator](../fixed_moment.py) checks the nested moment
-proofs stored inside final boxes. It uses the unsigned and signed
-smoothing bounds with their corresponding exterior-tail estimates.
-The additional routines implement the split Cauchy–Schwarz estimate,
-its endpoint reduction, and the convex bound on moment weights stated
-in the paper. They preserve the reference center and change only the
-forcing bound or error radius. They check their hypotheses and rational
-contraction bounds on each parameter box.
+The modules in `verify/kernel/` implement the outward-rounded IEEE-754 binary64 interval arithmetic and Arb ball-arithmetic routines used to prove the upper bound $C_{\mathrm{ind}} < 0.44988$ in [Manuscript 1](../../paper/independent-berry-esseen.pdf). The SHA-256 digest of every kernel source file and coefficient table is pinned in [`certificates/cover.json`](../../certificates/cover.json).
 
-For the intersection of two disks, the certificate specifies the
-rational complex coefficient $h$ in the paper's support inequality on
-each frequency and threshold rectangle. Reevaluation checks the two
-disk bounds, the signed division by $L$, and every subdivision before
-replacing the corresponding integrated cell contribution.
+## Principal Components
+
+1. **Characteristic-function product bounds (`interval_bounds.py`, `stable_bounds.py`, `moment_log.py`, `higher_log_bounds.py`, `dual_log_bounds.py`, `weighted_log_bounds.py`):**
+   Bound the modulus of $\prod_j f_{X_j}(t)$ and of products with one factor omitted over boxes of the moment parameters $(L, d, b, \tau)$, combining Prawitz–Tyurin cubic/cosine bounds with quadratic and tangent-line lower bounds for $-\frac{1}{2}\log(1 - 2q_j)$.
+2. **Zero-bias error bounds (`directional_bounds.py`, `even_bounds.py`, `paired_bounds.py`, `quadratic_prefactor.py`, `concave_bounds.py`, `scalar_table_bounds.py`, `disk_table_bounds.py`):**
+   Bound $\sum_i v_i |f_{X_i}(t) - f_{X_i^*}(t)|$ using the third-moment excess $\rho_i - 1$, least concave majorants, and the certified affine modulus and directional tables in `scalar_table.json` and `disk_table.json`.
+3. **Cosine-product reference comparison (`reference_bounds.py`, `energy_reference.py`, `energy_signed.py`, `packed_energy_reference.py`, `packed_energy_signed.py`, `cauchy_reference_adapter.py`, `cauchy_endpoint_adapter.py`, `packed_weight_adapter.py`, `packed_weight_general_adapter.py`):**
+   Bound the error $|f_S(t) - \prod_i \cos(t\sqrt{v_i})|$ via the first-order differential recurrence in Section 6 of Manuscript 1 and the scalar majorant table `energy_table_complete.json`, while enclosing the signed displacement $\prod_i \cos(t\sqrt{v_i}) - e^{-t^2/2} \le 0$.
+4. **Prawitz smoothing and threshold covers (`refined_integral.py`, `interval_signed.py`, `signed_gaussian.py`, `gaussian_batch.py`, `cantelli_gaussian_tail.py`, `full_b_consumer.py`):**
+   Integrate the unsigned and signed Prawitz smoothing bounds over frequency grids, combine them with the Arb-enclosed Gaussian defect tables, and evaluate threshold covers on $[-2, 2]$ and $[-69/32, 69/32]$ together with Cantelli exterior-tail bounds.
+5. **Moment-box and nested-proof evaluators (`stable_cover.py`, `full_b_cover.py`, `adaptive_b_consumer.py`, `../fixed_moment.py`, `../moment_proofs.py`):**
+   Traverse the outer $(d, b, \tau)$ partition trees and nested $b$- or $d$-subdivision proofs, verifying moment-feasibility exclusions, two-disk complex support inequalities, and outward-rounded cell sums.
