@@ -19,7 +19,7 @@ L &= \frac{R}{V^{3/2}}, \\
 
 where $`\Phi`$ is the standard normal distribution function. Here $`L`$ is the Lyapunov ratio and $`\Delta / L`$ is the Berry–Esseen ratio. We denote by $`C_{\mathrm{ind}} = \sup \Delta / L`$ the universal constant over all finite independent arrays, and by $`C_n`$ the supremum over arrays of at most $`n`$ independent summands.
 
-A *two-point* (or *centered Bernoulli*) summand is a centered random variable supported on at most two points, which takes the form $`X_i = h_i(B_i - p_i)`$ with $`B_i \sim \operatorname{Bern}(p_i)`$, $`p_i \in (0, 1)`$, and support diameter $`h_i > 0`$ (or $`X_i = 0`$ in the degenerate case).
+A *two-point* (or *centered Bernoulli*) summand is a centered random variable supported on at most two points, which takes the form $`X_i = h_i(B_i - p_i)`$ with $`B_i \sim \mathrm{Bern}(p_i)`$, $`p_i \in (0, 1)`$, and support diameter $`h_i > 0`$ (or $`X_i = 0`$ in the degenerate case).
 
 ## 1. Global Bounds on $`C_{\mathrm{ind}}`$
 

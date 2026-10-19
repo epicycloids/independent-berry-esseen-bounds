@@ -37,7 +37,7 @@ Adding `--limit N` restricts reevaluation to the first `N` certificates in each 
 
 | File | Mathematical content |
 | --- | --- |
-| `odd-quadratic.json`, `source/odd_polynomial.py` | Exact rational polynomial generator and Bernstein coefficient bounds for Lemma 5.1 and Appendix A (quadratic bound on $`\operatorname{Im}(f_W - f_{W^*})`$). |
+| `odd-quadratic.json`, `source/odd_polynomial.py` | Exact rational polynomial generator and Bernstein coefficient bounds for Lemma 5.1 and Appendix A (quadratic bound on $`\mathrm{Im}(f_W - f_{W^*})`$). |
 | `direct-log.json`, `source/direct_log.py` | 2,006 certified tangent lower bounds for $`-\frac{1}{2}\log(1 - 2q) - q`$ across $`\lambda \in \{3/4, 1, 3/2, 2, 3\}`$ (Lemmas 2.2–2.3). |
 | `affine-index.json`, `disk.zip`, `source/disk.py` | 640 modulus certificates (75,046 leaves) across 128 frequency cells on $`[0, 2]`$ and common slopes $`\lambda \in \{5/4, 3/2, 2, 3, 4\}`$ (Section 5.2). |
 | `affine-index.json`, `directional.zip`, `source/directional.py` | 7,625 directional projection certificates (1,558,869 leaves) across 61 frequency cells, 5 slopes, and 25 upper-half-plane directions (reflected by conjugation to 48 directions). |

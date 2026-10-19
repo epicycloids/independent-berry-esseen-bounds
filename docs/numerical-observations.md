@@ -28,7 +28,7 @@ X_i = \frac{B_i - p}{\sqrt{mpq}} \quad (1 \le i \le m), \qquad
 X_i = 0 \quad (m < i \le n),
 ```
 
-where $`B_1, \dots, B_m`$ are independent $`\operatorname{Bern}(p)`$ random variables with $`0 < p < 1`$ and $`q = 1 - p`$. This array has total variance $`V = 1`$, common support diameter $`h = 1/\sqrt{mpq}`$, and Lyapunov ratio $`L = (p^2 + q^2)/\sqrt{mpq}`$. Writing $`K \sim \operatorname{Bin}(m, p)`$ and $`z_k = (k - mp)/\sqrt{mpq}`$, its Berry–Esseen ratio is
+where $`B_1, \dots, B_m`$ are independent $`\mathrm{Bern}(p)`$ random variables with $`0 < p < 1`$ and $`q = 1 - p`$. This array has total variance $`V = 1`$, common support diameter $`h = 1/\sqrt{mpq}`$, and Lyapunov ratio $`L = (p^2 + q^2)/\sqrt{mpq}`$. Writing $`K \sim \mathrm{Bin}(m, p)`$ and $`z_k = (k - mp)/\sqrt{mpq}`$, its Berry–Esseen ratio is
 
 ```math
 R_m(p) = \frac{\sqrt{mpq}}{p^2 + q^2} \max_{0 \le k \le m} \bigl\{ \mathbb{P}(K \le k) - \Phi(z_k), \, \Phi(z_k) - \mathbb{P}(K < k) \bigr\}.
@@ -75,7 +75,7 @@ As $`m \to \infty`$, the optimizing probability $`p`$ converges to $`p_{\mathrm{
 In Section 4 of [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf), a uniform Edgeworth–Euler–Maclaurin expansion establishes that
 
 ```math
-B_m = C_{\mathrm{E}} - \frac{Q_*}{m} - \frac{H_* + \alpha \operatorname{dist}(m p_{\mathrm{E}} - \delta_0, \mathbb{Z})^2}{m^2} + O(m^{-3}),
+B_m = C_{\mathrm{E}} - \frac{Q_*}{m} - \frac{H_* + \alpha \mathrm{dist}(m p_{\mathrm{E}} - \delta_0, \mathbb{Z})^2}{m^2} + O(m^{-3}),
 ```
 
 where $`H_*`$ is a constant independent of $`m`$, and
@@ -89,11 +89,11 @@ Q_* = \frac{\phi(0)(867 + 287\sqrt{10})}{25920}, \qquad
 Consequently, when comparing $`m = n - j`$ against $`n`$ for bounded $`j \ge 0`$, choosing $`j`$ zero summands minimizes the second-order loss
 
 ```math
-\eta j + \operatorname{dist}(\theta_n + j p_{\mathrm{E}}, \mathbb{Z})^2, \qquad
+\eta j + \mathrm{dist}(\theta_n + j p_{\mathrm{E}}, \mathbb{Z})^2, \qquad
 \eta = \frac{Q_*}{\alpha} = \frac{2510 - 747\sqrt{10}}{8640} \approx 0.01709,
 ```
 
-where $`\theta_n = \operatorname{round}(n p_{\mathrm{E}} - \delta_0) - (n p_{\mathrm{E}} - \delta_0) \in [-1/2, 1/2]`$. The linear term $`\eta j`$ measures the $`O(n^{-1})`$ penalty for reducing the active sample size from $`n`$ to $`n - j`$, while the quadratic term measures the phase mismatch of the integer threshold.
+where $`\theta_n = \mathrm{round}(n p_{\mathrm{E}} - \delta_0) - (n p_{\mathrm{E}} - \delta_0) \in [-1/2, 1/2]`$. The linear term $`\eta j`$ measures the $`O(n^{-1})`$ penalty for reducing the active sample size from $`n`$ to $`n - j`$, while the quadratic term measures the phase mismatch of the integer threshold.
 
 Because $`5\eta`$ exceeds the maximum of the lower envelope of the first five parabolas $`j \in \{0, 1, 2, 3, 4\}`$ over $`\theta \in [-1/2, 1/2]`$, at most four zero summands are ever optimal for sufficiently large $`n`$. By equidistribution of the irrational rotation $`n p_{\mathrm{E}} \bmod 1`$, the asymptotic frequencies of $`j_n = 0, 1, 2, 3, 4`$ are
 
@@ -134,7 +134,7 @@ Thus this unequal-diameter configuration is a strict local maximizer among four-
 
 ### Binomial arrays with a compound-Poisson component
 
-[`data/empirical-observations.json`](../data/empirical-observations.json) also records numerical comparisons for centered sums of the form $`S_{\mathrm{raw}} = \operatorname{Bin}(M, p) + g(N_+ - N_-)`$, where $`N_\pm \sim \operatorname{Pois}(\ell_\pm)`$ are independent Poisson variables representing a limit of rare summands of step size $`g`$, with variance $`V = Mpq + g^2(\ell_+ + \ell_-)`$ and third-moment sum $`R = Mpq(p^2 + q^2) + g^3(\ell_+ + \ell_-)`$. Across all tested configurations ($`M \in \{1, 2, 3, 5, 10, 20\}`$, $`g \in \{1/2, 1, 2\}`$), every positive-intensity candidate has a strictly smaller ratio than the pure binomial sum ($`\ell_+ = \ell_- = 0`$) at the same probability $`p`$, consistent with the elimination of Poisson components in Manuscript 7.
+[`data/empirical-observations.json`](../data/empirical-observations.json) also records numerical comparisons for centered sums of the form $`S_{\mathrm{raw}} = \mathrm{Bin}(M, p) + g(N_+ - N_-)`$, where $`N_\pm \sim \mathrm{Pois}(\ell_\pm)`$ are independent Poisson variables representing a limit of rare summands of step size $`g`$, with variance $`V = Mpq + g^2(\ell_+ + \ell_-)`$ and third-moment sum $`R = Mpq(p^2 + q^2) + g^3(\ell_+ + \ell_-)`$. Across all tested configurations ($`M \in \{1, 2, 3, 5, 10, 20\}`$, $`g \in \{1/2, 1, 2\}`$), every positive-intensity candidate has a strictly smaller ratio than the pure binomial sum ($`\ell_+ = \ell_- = 0`$) at the same probability $`p`$, consistent with the elimination of Poisson components in Manuscript 7.
 
 ### Comparison with zero-bias transport
 
