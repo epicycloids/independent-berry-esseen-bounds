@@ -124,9 +124,11 @@ and raw threshold $`k = 2`$. At this threshold, four binary configurations $`(1,
 The verifier [`verify/observations/local_trap.py`](../verify/observations/local_trap.py) checks the interval certificate [`certificates/observations/local-trap.json`](../certificates/observations/local-trap.json) using 320-bit Arb ball arithmetic in a box of radius $`10^{-28}`$ around $`(p, r)`$, certifying that:
 
 1. The box contains a unique stationary point of the $`(p, p, p, r)`$ probability family, with negative-definite $`4 \times 4`$ probability Hessian and Berry–Esseen ratio
+
    ```math
    \mathcal{C} \in 0.28248894967964153979405802 \pm 5.54 \times 10^{-27}.
    ```
+
 2. The first-order diameter derivative is a positive multiple of $`\beta \cdot d - \max_{v} v \cdot d`$, where $`\beta`$ lies strictly in the interior of the tetrahedron of colliding configurations with barycentric weights $`(0.31153, 0.31153, 0.31153, 0.06541)`$. Consequently, every diameter perturbation $`d`$ transverse to overall scaling strictly decreases the ratio at linear rate $`-c \|d_\perp\|`$.
 3. Every single-summand variational contact majorant holds globally on $`\mathbb{R}`$.
 
@@ -153,9 +155,11 @@ equals $`1`$ if and only if all nonzero summands are identically distributed two
 The theoretical results in Manuscripts 2–8 and the numerical evidence above point to two open conjectures for every fixed number of summands $`n \ge 1`$ (together with the uniqueness questions analyzed in [Manuscript 8](../paper/structural-conjecture/structural-conjecture.pdf), Section 6):
 
 1. **Finite-$`n`$ Value Conjecture:** For every $`n \ge 1`$,
+
    ```math
    C_n = P_n = \max_{1 \le m \le n} B_m.
    ```
+
 2. **Finite-$`n`$ Extremizer Conjecture:** For every $`n \ge 1`$, every independent array $`(X_1, \dots, X_n)`$ attaining $`C_n`$ consists of $`m \le n`$ identically distributed two-point summands and $`n - m`$ zero summands, up to a common scale factor, reflection, and permutation of coordinates.
 
 What is currently proved toward these conjectures:

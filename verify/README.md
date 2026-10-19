@@ -17,9 +17,11 @@ This command runs in the pinned Python 3.12 environment managed by `uv` and perf
 1. **Manifest integrity (`SHA256SUMS`):** Verifies the SHA-256 digest of every file in the repository.
 2. **Unit and regression tests (`verify/test_*.py`):** Verifies the partition validator, evaluator parameter bindings, nested moment-proof consumers, and failure-rejection controls.
 3. **Moment-domain cover (`verify/check_saved.py` and `verify/check_replays.py`):** Reconstructs all 1,670 closed intervals of the Lyapunov ratio $`L`$ and their binary partition trees in [`certificates/cover.json`](../certificates/cover.json) and `certificates/cover.zip`, verifies every infeasibility exclusion and nested moment proof, checks the Gaussian defect interpolation tables in `certificates/gaussian-*.zip`, and confirms that every accepted region satisfies
+
    ```math
    \frac{\Delta}{L} \le U_* = \frac{1013039690742047}{2251799813685248} < 0.44988,
    ```
+
    together with the small-$`L`$ and large-$`L`$ analytic complements (`verify/scalars.py`) and manuscript constants (`verify/paper_values.py`).
 4. **Scalar majorant certificates (`verify/check_scalar_certificates.py`):** Verifies the polynomial, logarithmic, directional, disk, and cosine-comparison scalar certificates used in [Manuscript 1](../paper/independent-berry-esseen.pdf); see [Scalar Certificates](../certificates/scalar/README.md).
 5. **Two-summand and three-Bernoulli certificates (`verify/finite/check.py`):** Verifies the partition trees, recipes, and exact Bernstein odds certificates used in [Manuscript 2](../paper/finite-arrays/finite-arrays.pdf); see [Finite-Array Certificates](../certificates/finite/README.md).
