@@ -125,9 +125,7 @@ The verifier [`verify/observations/local_trap.py`](../verify/observations/local_
 
 1. The box contains a unique stationary point of the $`(p, p, p, r)`$ probability family, with negative-definite $`4 \times 4`$ probability Hessian and Berry–Esseen ratio
 
-   ```math
-   \mathcal{C} \in 0.28248894967964153979405802 \pm 5.54 \times 10^{-27}.
-   ```
+   $`\displaystyle \mathcal{C} \in 0.28248894967964153979405802 \pm 5.54 \times 10^{-27}.`$
 
 2. The first-order diameter derivative is a positive multiple of $`\beta \cdot d - \max_{v} v \cdot d`$, where $`\beta`$ lies strictly in the interior of the tetrahedron of colliding configurations with barycentric weights $`(0.31153, 0.31153, 0.31153, 0.06541)`$. Consequently, every diameter perturbation $`d`$ transverse to overall scaling strictly decreases the ratio at linear rate $`-c \|d_\perp\|`$.
 3. Every single-summand variational contact majorant holds globally on $`\mathbb{R}`$.
@@ -156,9 +154,7 @@ The theoretical results in Manuscripts 2–8 and the numerical evidence above po
 
 1. **Finite-$`n`$ Value Conjecture:** For every $`n \ge 1`$,
 
-   ```math
-   C_n = P_n = \max_{1 \le m \le n} B_m.
-   ```
+   $`\displaystyle C_n = P_n = \max_{1 \le m \le n} B_m.`$
 
 2. **Finite-$`n`$ Extremizer Conjecture:** For every $`n \ge 1`$, every independent array $`(X_1, \dots, X_n)`$ attaining $`C_n`$ consists of $`m \le n`$ identically distributed two-point summands and $`n - m`$ zero summands, up to a common scale factor, reflection, and permutation of coordinates.
 

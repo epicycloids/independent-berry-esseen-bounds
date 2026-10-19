@@ -65,23 +65,17 @@ Beyond upper bounds on $`\Delta / L`$, Manuscripts 4–7 establish exact formula
 
 1. **One summand and two binary summands:** By [Bentkus and Kirša (1989)](https://doi.org/10.1007/BF00966194), the one-summand constant is achieved by a two-point distribution:
 
-   ```math
-   C_1 = \max_{0 < p < 1} \frac{\sqrt{p(1 - p)}}{p^2 + (1 - p)^2} \left\{\Phi\!\left(\sqrt{\frac{p}{1 - p}}\right) - p\right\} = 0.370351523474378920\ldots.
-   ```
+   $`\displaystyle C_1 = \max_{0 < p < 1} \frac{\sqrt{p(1 - p)}}{p^2 + (1 - p)^2} \left\{\Phi\!\left(\sqrt{\frac{p}{1 - p}}\right) - p\right\} = 0.370351523474378920\ldots.`$
 
    [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf) (Theorem 1.2) proves that the two-summand two-point supremum $`C_{2,\mathrm{bin}}`$ equals $`C_1`$, and that every attaining two-summand two-point array has one zero summand.
 2. **Common-diameter two-point maximizers:** [Manuscript 5](../paper/bernoulli-structure/bernoulli-structure.pdf) (Theorem 1.1) proves that for every $`n \ge 1`$, the maximum $`C_n^{\mathrm{com}}`$ of $`\Delta / L`$ over at most $`n`$ two-point summands with a common support diameter satisfies
 
-   ```math
-   C_n^{\mathrm{com}} = P_n := \max_{1 \le m \le n} B_m,
-   ```
+   $`\displaystyle C_n^{\mathrm{com}} = P_n := \max_{1 \le m \le n} B_m,`$
 
    where $`B_m`$ is the $`m`$-summand i.i.d. binomial optimum, and every maximizing array consists of $`m`$ identically distributed two-point summands and $`n - m`$ zero summands.
 3. **Global maximizers at small Lyapunov ratio:** [Manuscript 6](../paper/small-lyapunov-structure/small-lyapunov-structure.pdf) (Theorem 1.2) proves that there exists an absolute constant $`\varepsilon_0 > 0`$ (not explicitly computed) such that any array attaining the unrestricted $`n`$-summand supremum $`C_n`$ with $`L < \varepsilon_0`$ consists of identically distributed two-point summands and zero summands.
 4. **Repeated finite blocks:** Given a fixed finite independent block $`(X_1, \dots, X_n)`$ with variance $`V`$, third absolute moment sum $`R`$, third signed moment sum $`\kappa = \sum_{i=1}^n \mathbb{E} X_i^3`$, and maximal sum-lattice span $`h \ge 0`$ ($`h = 0`$ if nonlattice), [Manuscript 4](../paper/transport/transport.pdf) (Theorem 1.2) proves that for $`m`$ independent copies of the block,
 
-   ```math
-   \lim_{m \to \infty} \frac{\Delta_m}{L_m} = \frac{|\kappa| + 3hV}{6\sqrt{2\pi}\,R} \le C_{\mathrm{E}} \frac{2V W_1(S, S^*)}{R} \le C_{\mathrm{E}},
-   ```
+   $`\displaystyle \lim_{m \to \infty} \frac{\Delta_m}{L_m} = \frac{|\kappa| + 3hV}{6\sqrt{2\pi}\,R} \le C_{\mathrm{E}} \frac{2V W_1(S, S^*)}{R} \le C_{\mathrm{E}},`$
 
    with equality at $`C_{\mathrm{E}}`$ if and only if all nonzero $`X_i`$ are identically distributed Esseen two-point variables.
