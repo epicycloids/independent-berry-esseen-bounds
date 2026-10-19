@@ -9,9 +9,11 @@ Navigation: [Repository Root](../README.md) · [Summary of Bounds](bounds.md) ·
 Let $`X_1, \dots, X_n`$ be independent centered real random variables with positive total variance $`V = \sum_{i=1}^n \mathbb{E} X_i^2 > 0`$ and finite third absolute moments $`R = \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty`$. Write
 
 ```math
-S = \sum_{i=1}^n X_i, \qquad
-L = \frac{R}{V^{3/2}}, \qquad
-\Delta = \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{S}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\begin{aligned}
+S &= \sum_{i=1}^n X_i, \\
+L &= \frac{R}{V^{3/2}}, \\
+\Delta &= \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{S}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\end{aligned}
 ```
 
 where $`\Phi`$ is the standard normal distribution function. The classical Berry–Esseen theorem asserts that the ratio $`\Delta / L`$ is bounded above by a universal constant $`C_{\mathrm{ind}}`$ across all finite independent arrays. Similarly, for each fixed integer $`n \ge 1`$, let $`C_n`$ denote the supremum of $`\Delta / L`$ over arrays of at most $`n`$ independent summands (permitting deterministic zero summands), so that $`C_1 \le C_2 \le \cdots`$ and $`C_{\mathrm{ind}} = \sup_{n \ge 1} C_n`$.

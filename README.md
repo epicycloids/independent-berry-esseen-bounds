@@ -9,10 +9,12 @@ Navigation: [Overview & Reading Guide](docs/overview.md) · [Summary of Bounds](
 Let $`X_1, \dots, X_n`$ be independent centered real random variables with positive total variance and finite third absolute moments. Set
 
 ```math
-V = \sum_{i=1}^n \mathbb{E} X_i^2 > 0, \qquad
-R = \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty, \qquad
-L = \frac{R}{V^{3/2}}, \qquad
-\Delta = \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{\sum_{i=1}^n X_i}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\begin{aligned}
+V &= \sum_{i=1}^n \mathbb{E} X_i^2 > 0, \\
+R &= \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty, \\
+L &= \frac{R}{V^{3/2}}, \\
+\Delta &= \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{\sum_{i=1}^n X_i}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\end{aligned}
 ```
 
 where $`\Phi`$ is the standard normal distribution function and $`L`$ is the Lyapunov ratio. The universal Berry–Esseen constant for independent summands is

@@ -9,10 +9,12 @@ Navigation: [Repository Root](../README.md) · [Overview & Reading Guide](overvi
 For a finite family of independent centered real random variables $`X_1, \dots, X_n`$ with positive total variance and finite third absolute moments, we write
 
 ```math
-V = \sum_{i=1}^n \mathbb{E} X_i^2 > 0, \qquad
-R = \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty, \qquad
-L = \frac{R}{V^{3/2}}, \qquad
-\Delta = \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{\sum_{i=1}^n X_i}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\begin{aligned}
+V &= \sum_{i=1}^n \mathbb{E} X_i^2 > 0, \\
+R &= \sum_{i=1}^n \mathbb{E}|X_i|^3 < \infty, \\
+L &= \frac{R}{V^{3/2}}, \\
+\Delta &= \sup_{x \in \mathbb{R}} \left|\mathbb{P}\!\left(\frac{\sum_{i=1}^n X_i}{\sqrt{V}} \le x\right) - \Phi(x)\right|,
+\end{aligned}
 ```
 
 where $`\Phi`$ is the standard normal distribution function. Here $`L`$ is the Lyapunov ratio and $`\Delta / L`$ is the Berry–Esseen ratio. We denote by $`C_{\mathrm{ind}} = \sup \Delta / L`$ the universal constant over all finite independent arrays, and by $`C_n`$ the supremum over arrays of at most $`n`$ independent summands.
